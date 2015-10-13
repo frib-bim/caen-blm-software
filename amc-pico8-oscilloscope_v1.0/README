@@ -1,0 +1,45 @@
+
+                          AMC-Pico-8 Oscilloscope
+
+
+The CAEN ELS AMC-Pico-8 Oscilloscope is an application which offers a graphical
+environment for easy interfacing with AMC-Pico-8 board. It displays the captured
+current signals in time and frequency domain, calculates the signal statistics
+(mean value and standard deviation), enables selection of the analog front-end
+range and control of acquisition and trigger options.
+
+
+
+Installation
+=============
+
+The AMC-Pico-8 oscilloscope requires Python3, PyQt5 framework and PyQtGraph
+library.
+
+The command to install the required modules on Ubuntu/Debian are the following:
+
+Python
+------
+
+    sudo apt-get install python3
+
+
+PyQt5
+-----
+
+    sudo apt-get install python3-pyqt5 python3-pyqt5.qtsvg
+
+
+PyQtGraph
+---------
+
+    git clone -b pyqt5 https://github.com/pyqtgraph/pyqtgraph.git
+    cd pyqtgraph
+    sudo python3 setup.py install
+
+
+
+Usage
+=====
+
+Run the oscilloscope.py from terminal.
