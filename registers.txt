@@ -1,0 +1,105 @@
+FW TODO:
+  Interrupt sharing (add IRQ status register?)
+
+= Register map =
+
+PCI BAR #0
+
+== Control (0x0) ==
+
+0x00000001 - Channel 0 range (clear - 1 uA, set - 1 mA)
+0x00000002 - Channel 1 range (clear - 1 uA, set - 1 mA)
+0x00000004 - Channel 2 range (clear - 1 uA, set - 1 mA)
+0x00000008 - Channel 3 range (clear - 1 uA, set - 1 mA)
+0x00000010 - Channel 4 range (clear - 1 uA, set - 1 mA)
+0x00000020 - Channel 5 range (clear - 1 uA, set - 1 mA)
+0x00000040 - Channel 6 range (clear - 1 uA, set - 1 mA)
+0x00000080 - Channel 7 range (clear - 1 uA, set - 1 mA)
+
+== PICO_CONV_TRG (0x4) ==
+
+0x00000007 - MUX_TRG
+ 0 - Fixed at 1
+ 1 - Fixed at 0
+ 2 - Internal
+ 3 - reserved
+ 4 - AMC Port 17 RX
+ 5 - AMC Port 18 RX
+ 6 - AMC Port 19 RX
+ 7 - AMC Port 20 RX
+0x00000700 - MUX_CONV
+ 0 - Internal
+ 1 - AMC TCLKA
+ 2 - AMC TCLKB
+ 3 - reserved
+ 4 - AMC Port 17 RX
+ 5 - AMC Port 18 RX
+ 6 - AMC Port 19 RX
+ 7 - AMC Port 20 RX
+
+== PICO_CONV_GEN (0x8) ==
+
+Set sample frequency.
+
+#define PICO_CLK_FREQ       (300000000)
+
+scaler = PICO_CLK_FREQ / value - 1;
+
+value = [1, 2047]
+
+== RING_BUFF_OFFS_DELAY (0xc) ==
+
+# of pre-trigger samples?
+
+== TRG_OFFS_CTRL (0x10) ==
+
+Trigger control
+
+0x00000003 - Trigger mode: 0 - disable, 1 - rising, 2 - falling, 3 - both}
+0x00000700 - Channel select (0-7)
+
+== TRG_OFFS_LIMIT (0x14) ==
+
+Trigger threshold?
+
+ieee float32?
+
+== TRG_OFFS_NRSAMP (0x18) ==
+
+# of trigger samples???
+
+
+== FPGA_VER_OFFSET (0x78) ==
+
+== FPGA_TS_OFFSET (0x7C) ==
+
+== DMA Status (0x00010000) ==
+
+0x07FF0000 - count? (# response fifo entries?)
+
+Read 0 when fifo empty
+
+== DMA Control (0x00010004) ==
+
+0x00000100 - Enable
+0x00000001 - Reset
+
+== DMA Command (0x00010008) ==
+
+0x80000000 - Go (add to command fifo)
+0x08000000 - IRQ when done
+
+== DMA Command Start Address (0x0001000C) ==
+== DMA Command Length (0x00010010) ==
+== DMA Response Length (0x00010014) ==
+
+In bytes.
+
+Write (0) to pop response fifo entry.
+
+== DMA Response Address (0x00010018) ==
+
+== Mux. Address (0x20000) ==
+
+1 - BIST test
+? - Normal operation
