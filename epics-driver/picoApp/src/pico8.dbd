@@ -1,0 +1,24 @@
+device(waveform, INST_IO, devPico8WfMessage, "Last Message")
+device(mbbi, INST_IO, devPico8MbbiStatus, "Run Status")
+
+device(ao, INST_IO, devPico8AoClock, "Clock Freq")
+device(ai, INST_IO, devPico8AiClock, "Clock Freq")
+device(mbbo, INST_IO, devPico8MbboClockSrc, "Clock Source")
+
+device(mbbo, INST_IO, devPico8MbboRunMode, "Run Mode")
+
+device(ao, INST_IO, devPico8AoTrigLvl, "Trigger Level")
+device(mbbo, INST_IO, devPico8MbboTrigChan, "Trigger Channel")
+device(mbbo, INST_IO, devPico8MbboTrigMode, "Trigger Mode")
+device(longout, INST_IO, devPico8LoTrigSamp, "Trigger Samples")
+
+device(longout, INST_IO, devPico8LoPreSamp, "Pre-trig Samples")
+device(mbbo, INST_IO, devPico8MbboTrigGate, "Trigger Gate")
+
+
+device(mbbo, INST_IO, devPico8MbboRange, "Channel Range")
+
+device(waveform, INST_IO, devPico8WfChanData, "Channel Data")
+
+driver(drvpico8)
+registrar(pico8registrar)

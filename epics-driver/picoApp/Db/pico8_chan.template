@@ -1,0 +1,11 @@
+record(mbbo, "$(P)Range-Sel") {
+	field(DTYP, "Channel Range")
+	field(OUT , "@$(NAME) $(N)")
+}
+
+record(waveform, "$(P)I-I") {
+	field(DTYP, "Channel Data")
+	field(INP , "@$(NAME) $(N)")
+	field(FTVL, "FLOAT")
+	field(NELM, "$(NELM=1024)")
+}

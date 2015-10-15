@@ -1,0 +1,17 @@
+
+file "pico8_base.template"
+{
+	{P="\$(SYS){\$(D)}", NAME="\$(NAME)"}
+}
+
+file "pico8_chan.template"
+{
+	{N=0, P="\$(SYS){\$(D)-Ch:$(N)}", NAME="\$(NAME)"}
+	{N=1, P="\$(SYS){\$(D)-Ch:$(N)}", NAME="\$(NAME)"}
+	{N=2, P="\$(SYS){\$(D)-Ch:$(N)}", NAME="\$(NAME)"}
+	{N=3, P="\$(SYS){\$(D)-Ch:$(N)}", NAME="\$(NAME)"}
+	{N=4, P="\$(SYS){\$(D)-Ch:$(N)}", NAME="\$(NAME)"}
+	{N=5, P="\$(SYS){\$(D)-Ch:$(N)}", NAME="\$(NAME)"}
+	{N=6, P="\$(SYS){\$(D)-Ch:$(N)}", NAME="\$(NAME)"}
+	{N=7, P="\$(SYS){\$(D)-Ch:$(N)}", NAME="\$(NAME)"}
+}

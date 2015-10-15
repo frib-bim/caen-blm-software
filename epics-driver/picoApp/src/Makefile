@@ -16,13 +16,16 @@ DBD += pico.dbd
 pico_DBD += base.dbd
 
 # Include dbd files from all support applications:
-#pico_DBD += xxx.dbd
+pico_DBD += pico8.dbd
 
 # Add all the support libraries needed by this IOC
 #pico_LIBS += xxx
 
 # pico_registerRecordDeviceDriver.cpp derives from pico.dbd
 pico_SRCS += pico_registerRecordDeviceDriver.cpp
+
+pico_SRCS += pico.cpp
+pico_SRCS += dev.cpp
 
 # Build the main IOC entry point on workstation OSs.
 pico_SRCS_DEFAULT += picoMain.cpp
