@@ -37,7 +37,6 @@ struct PicoDevice : public epicsThreadRunable {
     PicoDevice(const std::string& fname);
 
     void open();
-    void halt();
     void resize(unsigned nsamp);
     unsigned readChan(unsigned chan, epicsFloat32 *arr, unsigned nsamp);
 

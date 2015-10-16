@@ -313,9 +313,9 @@ long write_run_mode(mbboRecord *prec)
 
         info->dev->mode = (PicoDevice::mode_t)prec->rval;
 
-        if(info->dev->target_state==PicoDevice::Idle)
+        if(info->dev->target_state!=PicoDevice::Reading)
         {
-            /* start reading */
+            info->dev->debug(3)<<"start reading";
             info->dev->target_state = PicoDevice::Reading;
             info->dev->workerNotify.signal();
         }

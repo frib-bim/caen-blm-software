@@ -47,21 +47,6 @@ PicoDevice::open()
 }
 
 void
-PicoDevice::halt()
-{
-    Guard G(lock);
-    if(cur_state==Idle || fd==-1) return;
-    target_state = Idle;
-
-    this->ioctl(ABORT_READ, 0l);
-
-    while(cur_state!=Idle) {
-        UnGuard U(G);
-        coreNotify.wait();
-    }
-}
-
-void
 PicoDevice::resize(unsigned nsamp)
 {
     data.resize(NCHANS*nsamp);
@@ -102,14 +87,18 @@ PicoDevice::run()
         case Idle:
         {
             UnGuard U(G);
+            debug(5)<<"Working gone idle\n";
             workerNotify.wait();
+            debug(5)<<"Working done idle\n";
         }
             break;
         case Reading:
             ssize_t ret;
         {
             UnGuard U(G);
+            debug(5)<<"Working enter read()\n";
             ret = ::read(fd, &dbuf[0], 4*NCHANS*dbuf.size());
+            debug(5)<<"Working leave read() -> "<<ret<<"\n";
         }
             if(ret<0) {
                 int err = errno;
