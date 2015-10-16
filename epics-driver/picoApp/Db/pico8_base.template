@@ -53,6 +53,25 @@ record(mbbo, "$(P)Src:Clk-Sel") {
 	field(SXVL, "7")
 }
 
+record(mbbo, "$(P)Src:Trig-Sel") {
+	field(DTYP, "Trigger Gate")
+	field(OUT , "@$(NAME)")
+	field(ZRST, "Immediate")
+	field(ONST, "Off")
+	field(TWST, "Internal")
+	field(THST, "Port 17")
+	field(FRST, "Port 18")
+	field(FVST, "Port 19")
+	field(SXST, "Port 20")
+	field(ZRVL, "0")
+	field(ONVL, "1")
+	field(TWVL, "2")
+	field(THVL, "4")
+	field(FRVL, "5")
+	field(FVVL, "6")
+	field(SXVL, "7")
+}
+
 record(mbbo, "$(P)Mode-Sel") {
 	field(DTYP, "Run Mode")
 	field(OUT , "@$(NAME)")
@@ -99,6 +118,11 @@ record(mbbo, "$(P)Mode:Trg-Sel") {
 	field(ONVL, "1")
 	field(TWVL, "2")
 	field(THVL, "3")
+}
+
+record(longout, "$(P)Samp:Cnt-SP") {
+	field(DTYP, "Num Samples")
+	field(OUT , "@$(NAME)")
 }
 
 record(longout, "$(P)Samp:Trg-SP") {

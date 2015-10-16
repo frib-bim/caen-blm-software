@@ -12,6 +12,7 @@ device(mbbo, INST_IO, devPico8MbboTrigChan, "Trigger Channel")
 device(mbbo, INST_IO, devPico8MbboTrigMode, "Trigger Mode")
 device(longout, INST_IO, devPico8LoTrigSamp, "Trigger Samples")
 
+device(longout, INST_IO, devPico8LoNSamp, "Num Samples")
 device(longout, INST_IO, devPico8LoPreSamp, "Pre-trig Samples")
 device(mbbo, INST_IO, devPico8MbboTrigGate, "Trigger Gate")
 

@@ -271,6 +271,15 @@ long write_pre_trig(longoutRecord *prec)
     } END(0)
 }
 
+long write_nsamp(longoutRecord *prec)
+{
+    BEGIN {
+        Guard G(info->dev->lock);
+
+        info->dev->resize(prec->val);
+    } END(0)
+}
+
 long write_chan_range(mbboRecord *prec)
 {
     BEGIN {
@@ -402,6 +411,7 @@ DSET(devPico8MbboTrigChan, mbbo, NULL, &write_trig_chan);
 DSET(devPico8MbboTrigMode, mbbo, NULL, &write_trig_mode);
 DSET(devPico8LoTrigSamp, longout, NULL, &write_trig_samples);
 
+DSET(devPico8LoNSamp, longout, NULL, &write_nsamp);
 DSET(devPico8LoPreSamp, longout, NULL, &write_pre_trig);
 DSET(devPico8MbboTrigGate, mbbo, NULL, &write_trig_gate);
 
@@ -428,6 +438,7 @@ epicsExportAddress(dset, devPico8MbboTrigChan);
 epicsExportAddress(dset, devPico8MbboTrigMode);
 epicsExportAddress(dset, devPico8LoTrigSamp);
 
+epicsExportAddress(dset, devPico8LoNSamp);
 epicsExportAddress(dset, devPico8LoPreSamp);
 epicsExportAddress(dset, devPico8MbboTrigGate);
 
