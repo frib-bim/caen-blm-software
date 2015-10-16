@@ -19,6 +19,7 @@ PicoDevice::PicoDevice(const std::string &fname)
              epicsThreadPriorityHigh)
     ,cur_state(Idle)
     ,target_state(Idle)
+    ,mode(Single)
     ,reload(true)
     ,running(true)
     ,debug_level(0)
@@ -44,6 +45,7 @@ PicoDevice::open()
     int F = ::open(devname.c_str(), O_RDWR|O_CLOEXEC);
     if(F==-1)
         throw system_error(errno);
+    fd = F;
 }
 
 void
@@ -95,9 +97,10 @@ PicoDevice::run()
         case Reading:
             ssize_t ret;
         {
+            dbuf.resize(data.size());
             UnGuard U(G);
             debug(5)<<"Working enter read()\n";
-            ret = ::read(fd, &dbuf[0], 4*NCHANS*dbuf.size());
+            ret = ::read(fd, &dbuf[0], 4*dbuf.size());
             debug(5)<<"Working leave read() -> "<<ret<<"\n";
         }
             if(ret<0) {
@@ -118,6 +121,7 @@ PicoDevice::run()
                 this->debug(2)<<"Data ready\n";
                 if(mode==Single)
                     target_state = Idle;
+                dbuf.swap(data);
                 scanIoRequest(dataupdate);
             }
         }

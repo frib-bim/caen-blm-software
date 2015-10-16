@@ -6,6 +6,7 @@ record(mbbo, "$(P)Range-Sel") {
 record(waveform, "$(P)I-I") {
 	field(DTYP, "Channel Data")
 	field(INP , "@$(NAME) $(N)")
+	field(SCAN, "I/O Intr")
 	field(FTVL, "FLOAT")
 	field(NELM, "$(NELM=1024)")
 }

@@ -54,7 +54,7 @@ record(mbbo, "$(P)Src:Clk-Sel") {
 }
 
 record(mbbo, "$(P)Mode-Sel") {
-	field(DTYP, "Clock Source")
+	field(DTYP, "Run Mode")
 	field(OUT , "@$(NAME)")
 	field(ZRST, "Single")
 	field(ONST, "Normal")

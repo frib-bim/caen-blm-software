@@ -342,7 +342,8 @@ long pico_report(int lvl)
         std::cout<<"Pico "<<cur->first<<"\n"
                    "Dev: "<<dev->devname<<"\n"
                    "TState: "<<dev->target_state<<"\n"
-                   "CState: "<<dev->cur_state<<"\n";
+                   "CState: "<<dev->cur_state<<"\n"
+                   "Mode: "<<dev->mode<<"\n";
     }
     return 0;
 }
@@ -406,7 +407,7 @@ DSET(devPico8MbboTrigGate, mbbo, NULL, &write_trig_gate);
 
 DSET(devPico8MbboRange, mbbo, NULL, &write_chan_range);
 
-DSET(devPico8WfChanData, waveform, NULL, &read_chan_data);
+DSET(devPico8WfChanData, waveform, &get_data_update, &read_chan_data);
 
 } // namespace
 
