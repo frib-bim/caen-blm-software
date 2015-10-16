@@ -1,5 +1,6 @@
 FW TODO:
   Interrupt sharing (add IRQ status register?)
+  Command FIFO overflow?
 
 = Register map =
 
@@ -101,5 +102,5 @@ Write (0) to pop response fifo entry.
 
 == Mux. Address (0x20000) ==
 
+0 - Normal operation
 1 - BIST test
-? - Normal operation
