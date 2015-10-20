@@ -170,18 +170,18 @@ long get_data_update(int, dbCommon* prec, IOSCANPVT* scan)
     } END(0)
 }
 
-long write_clock(aoRecord *prec)
+long write_clock(longoutRecord *prec)
 {
     BEGIN {
         Guard G(info->dev->lock);
 
-        epicsUInt32 val = prec->rval;
+        epicsUInt32 val = prec->val;
 
         info->dev->ioctl(SET_FSAMP, &val);
     } END(0)
 }
 
-long read_clock(aiRecord *prec)
+long read_clock(longinRecord *prec)
 {
     BEGIN {
         Guard G(info->dev->lock);
@@ -190,7 +190,7 @@ long read_clock(aiRecord *prec)
 
         info->dev->ioctl(GET_FSAMP, &val);
 
-        prec->rval = val;
+        prec->val = val;
     } END(0)
 }
 
@@ -324,7 +324,7 @@ long write_run_mode(mbboRecord *prec)
 
         if(info->dev->target_state!=PicoDevice::Reading)
         {
-            info->dev->debug(3)<<"start reading";
+            info->dev->debug(3)<<"start reading\n";
             info->dev->target_state = PicoDevice::Reading;
             info->dev->workerNotify.signal();
         }
@@ -399,8 +399,8 @@ struct dset5 {
 
 DSET(devPico8WfMessage, waveform, &get_data_update, &read_lastmsg);
 
-DSET(devPico8AoClock, ao,  NULL, &write_clock);
-DSET(devPico8AiClock, ai,  NULL, &read_clock);
+DSET(devPico8LoClock, longout,  NULL, &write_clock);
+DSET(devPico8LiClock, longin,  NULL, &read_clock);
 DSET(devPico8MbboClockSrc, mbbo, NULL, &write_clocksrc);
 
 DSET(devPico8MbboRunMode, mbbo, NULL, &write_run_mode);
@@ -426,8 +426,8 @@ DSET(devPico8WfChanData, waveform, &get_data_update, &read_chan_data);
 epicsExportAddress(drvet, drvpico8);
 
 epicsExportAddress(dset, devPico8WfMessage);
-epicsExportAddress(dset, devPico8AoClock);
-epicsExportAddress(dset, devPico8AiClock);
+epicsExportAddress(dset, devPico8LoClock);
+epicsExportAddress(dset, devPico8LiClock);
 epicsExportAddress(dset, devPico8MbboClockSrc);
 
 epicsExportAddress(dset, devPico8MbboRunMode);

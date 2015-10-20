@@ -1,6 +1,11 @@
 record(mbbo, "$(P)Range-Sel") {
 	field(DTYP, "Channel Range")
 	field(OUT , "@$(NAME) $(N)")
+    field(PINI, "YES")
+	field(ZRST, "1 ma")
+	field(ONST, "1 ua")
+	field(ZRVL, "0")
+	field(ONVL, "1")
 }
 
 record(waveform, "$(P)I-I") {

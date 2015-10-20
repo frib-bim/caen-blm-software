@@ -1,8 +1,8 @@
 device(waveform, INST_IO, devPico8WfMessage, "Last Message")
 device(mbbi, INST_IO, devPico8MbbiStatus, "Run Status")
 
-device(ao, INST_IO, devPico8AoClock, "Clock Freq")
-device(ai, INST_IO, devPico8AiClock, "Clock Freq")
+device(longout, INST_IO, devPico8LoClock, "Clock Div")
+device(longin, INST_IO, devPico8LiClock, "Clock Div")
 device(mbbo, INST_IO, devPico8MbboClockSrc, "Clock Source")
 
 device(mbbo, INST_IO, devPico8MbboRunMode, "Run Mode")
