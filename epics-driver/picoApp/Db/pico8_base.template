@@ -124,6 +124,7 @@ record(mbbo, "$(P)Mode:Trg-Sel") {
 	field(ONVL, "1")
 	field(TWVL, "2")
 	field(THVL, "3")
+	field(RVAL, "1")
 }
 
 record(longout, "$(P)Samp:Cnt-SP") {

@@ -14,4 +14,10 @@ record(waveform, "$(P)I-I") {
 	field(SCAN, "I/O Intr")
 	field(FTVL, "FLOAT")
 	field(NELM, "$(NELM=1024)")
+	# workaround for NORD not posting monitors in 3.14.12
+	field(FLNK, "$(P)I:Len-I")
+}
+
+record(longin, "$(P)I:Len-I") {
+    field(INP, "$(P)I-I.NORD NPP")
 }
