@@ -37,6 +37,10 @@ pico_SRCS_vxWorks += -nil-
 # Finally link to the EPICS Base libraries
 pico_LIBS += $(EPICS_BASE_IOC_LIBS)
 
+PROD_IOC += picocli
+
+picocli_SRCS += cli.cpp
+
 #===========================
 
 include $(TOP)/configure/RULES

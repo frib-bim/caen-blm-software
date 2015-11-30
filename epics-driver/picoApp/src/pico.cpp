@@ -57,8 +57,8 @@ PicoDevice::resize(unsigned nsamp)
 unsigned
 PicoDevice::readChan(unsigned chan, epicsFloat32 *arr, unsigned nsamp)
 {
-    const unsigned N = std::min(nsamp, (unsigned)(data.size()/NCHANS)),
-                   n = N;
+    const unsigned N = std::min(nsamp, (unsigned)(data.size()/NCHANS));
+    unsigned n = N;
     const epicsFloat32 *src = &data[chan];
 
     while(n--) {
