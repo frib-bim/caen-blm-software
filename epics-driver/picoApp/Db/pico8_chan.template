@@ -1,7 +1,7 @@
 record(mbbo, "$(P)Range-Sel") {
-	field(DTYP, "Channel Range")
+	field(DTYP, "Pico8 Channel Range")
 	field(OUT , "@$(NAME) $(N)")
-    field(PINI, "YES")
+	field(PINI, "YES")
 	field(ZRST, "1 ma")
 	field(ONST, "1 ua")
 	field(ZRVL, "0")
@@ -9,7 +9,7 @@ record(mbbo, "$(P)Range-Sel") {
 }
 
 record(waveform, "$(P)I-I") {
-	field(DTYP, "Channel Data")
+	field(DTYP, "Pico8 Channel Data")
 	field(INP , "@$(NAME) $(N)")
 	field(SCAN, "I/O Intr")
 	field(FTVL, "FLOAT")

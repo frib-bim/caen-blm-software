@@ -260,6 +260,24 @@ long write_trig_samples(longoutRecord *prec)
     } END(0)
 }
 
+long write_scale_ao(aoRecord *prec)
+{
+    BEGIN {
+        if(info->chan>=NELEMENTS(info->dev->scale))
+            throw std::invalid_argument("Channel out of range");
+        info->dev->scale[info->chan] = prec->val;
+    } END(0)
+}
+
+long write_offset_ao(aoRecord *prec)
+{
+    BEGIN {
+        if(info->chan>=NELEMENTS(info->dev->offset))
+            throw std::invalid_argument("Channel out of range");
+        info->dev->offset[info->chan] = prec->val;
+    } END(0)
+}
+
 long write_pre_trig(longoutRecord *prec)
 {
     BEGIN {
@@ -298,12 +316,19 @@ long read_chan_data(waveformRecord *prec)
 {
     assert(prec->ftvl==menuFtypeFLOAT);
     BEGIN {
+        if(info->chan>=NELEMENTS(info->dev->data))
+            return 0;
         Guard G(info->dev->lock);
 
-        size_t N = std::min(info->dev->data.size()/PicoDevice::NCHANS,
-                            (size_t)prec->nelm);
+        PicoDevice::data_t &cdata = info->dev->data[info->chan];
+        size_t N = std::min(cdata.size(), (size_t)prec->nelm);
+        memcpy(prec->bptr, &cdata[0], sizeof(PicoDevice::data_t::value_type)*N);
 
-        prec->nord = info->dev->readChan(info->chan, (epicsFloat32*)prec->bptr, N);
+        prec->nord = N;
+
+        if(prec->tse==epicsTimeEventDeviceTime) {
+            prec->time = info->dev->updatetime;
+        }
     } END(0)
 }
 
@@ -417,6 +442,9 @@ DSET(devPico8MbboTrigGate, mbbo, NULL, &write_trig_gate);
 
 DSET(devPico8MbboRange, mbbo, NULL, &write_chan_range);
 
+DSET2(devPico8AoScale, ao, NULL, &write_scale_ao);
+DSET2(devPico8AoOffset, ao, NULL, &write_offset_ao);
+
 DSET(devPico8WfChanData, waveform, &get_data_update, &read_chan_data);
 
 } // namespace
@@ -443,6 +471,9 @@ epicsExportAddress(dset, devPico8LoPreSamp);
 epicsExportAddress(dset, devPico8MbboTrigGate);
 
 epicsExportAddress(dset, devPico8MbboRange);
+
+epicsExportAddress(dset, devPico8AoScale);
+epicsExportAddress(dset, devPico8AoOffset);
 
 epicsExportAddress(dset, devPico8WfChanData);
 

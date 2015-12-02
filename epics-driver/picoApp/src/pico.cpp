@@ -24,11 +24,17 @@ PicoDevice::PicoDevice(const std::string &fname)
     ,running(true)
     ,debug_level(0)
     ,ranges(0)
+    ,nsamp(100)
 {
     trig.nr_samp = 1;
     trig.ch_sel = 0;
     trig.limit = 0.0;
     trig.mode = trg_ctrl::DISABLED;
+
+    for(unsigned i=0; i<NCHANS; i++) {
+        scale[i] = 1.0;
+        offset[i] = 0.0;
+    }
 
     open();
 
@@ -51,21 +57,7 @@ PicoDevice::open()
 void
 PicoDevice::resize(unsigned nsamp)
 {
-    data.resize(NCHANS*nsamp);
-}
-
-unsigned
-PicoDevice::readChan(unsigned chan, epicsFloat32 *arr, unsigned nsamp)
-{
-    const unsigned N = std::min(nsamp, (unsigned)(data.size()/NCHANS));
-    unsigned n = N;
-    const epicsFloat32 *src = &data[chan];
-
-    while(n--) {
-        *arr++ = *src;
-        src += NCHANS;
-    }
-    return N;
+    this->nsamp = nsamp;
 }
 
 void
@@ -75,7 +67,9 @@ PicoDevice::run()
     coreNotify.signal();
     Guard G(lock);
 
-    std::vector<epicsFloat32> dbuf(data.size());
+    PicoDevice::data_t dbuf;
+    PicoDevice::data_t prep[NCHANS];
+    epicsTimeStamp now;
 
     while(running) {
         debug(4)<<"Worker "<<cur_state<<" -> "<<target_state<<"\n";
@@ -98,11 +92,26 @@ PicoDevice::run()
         case Reading:
             ssize_t ret;
         {
-            dbuf.resize(data.size());
+            unsigned dsize = this->nsamp;
+            double S[NCHANS], O[NCHANS];
+            memcpy(S, scale, sizeof(scale));
+            memcpy(O, offset, sizeof(offset));
+
             UnGuard U(G);
+
+            dbuf.resize(dsize*NCHANS);
+            for(unsigned i=0; i<NCHANS; i++)
+                prep[i].resize(dsize);
+
             debug(5)<<"Working enter read()\n";
             ret = ::read(fd, &dbuf[0], 4*dbuf.size());
+            epicsTimeGetCurrent(&now);
             debug(5)<<"Working leave read() -> "<<ret<<"\n";
+
+            for(unsigned i=0; i<NCHANS; i++) {
+                for(size_t s=0; s<dsize; s++)
+                    prep[i][s] = O[i] + S[i]*dbuf[i+NCHANS*s];
+            }
         }
             if(ret<0) {
                 int err = errno;
@@ -122,7 +131,10 @@ PicoDevice::run()
                 this->debug(2)<<"Data ready\n";
                 if(mode==Single)
                     target_state = Idle;
-                dbuf.swap(data);
+                for(unsigned i=0; i<NCHANS; i++) {
+                    data[i].swap(prep[i]);
+                }
+                updatetime = now;
                 scanIoRequest(dataupdate);
             }
         }

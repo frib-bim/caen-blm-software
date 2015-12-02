@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 
+#include <epicsTime.h>
 #include <epicsTypes.h>
 #include <epicsMutex.h>
 #include <epicsEvent.h>
@@ -38,7 +39,6 @@ struct PicoDevice : public epicsThreadRunable {
 
     void open();
     void resize(unsigned nsamp);
-    unsigned readChan(unsigned chan, epicsFloat32 *arr, unsigned nsamp);
 
     virtual void run();
 
@@ -71,7 +71,14 @@ struct PicoDevice : public epicsThreadRunable {
     trg_ctrl trig;
     epicsUInt8 ranges;
 
-    std::vector<epicsFloat32> data;
+    unsigned nsamp;
+
+    typedef std::vector<epicsFloat32> data_t;
+    data_t data[NCHANS];
+    // linear scaling for raw data
+    double scale[NCHANS], offset[NCHANS];
+
+    epicsTimeStamp updatetime;
 
     std::string lasterror;
 
