@@ -13,7 +13,7 @@ record(waveform, "$(P)I-I") {
 	field(INP , "@$(NAME) $(N)")
 	field(SCAN, "I/O Intr")
 	field(FTVL, "FLOAT")
-	field(NELM, "$(NELM=1024)")
+	field(NELM, "$(NELM)")
 	# workaround for NORD not posting monitors in 3.14.12
 	field(FLNK, "$(P)I:Len-I")
 }

@@ -1,7 +1,7 @@
 
 file "pico8_base.template"
 {
-	{P="\$(SYS){\$(D)}", NAME="\$(NAME)"}
+	{P="\$(SYS){\$(D)}", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
 }
 
 file "pico8_chan.template"

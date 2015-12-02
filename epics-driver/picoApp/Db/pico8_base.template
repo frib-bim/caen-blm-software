@@ -132,6 +132,8 @@ record(longout, "$(P)Samp:Cnt-SP") {
 	field(OUT , "@$(NAME)")
 	field(PINI, "YES")
 	field(VAL , "200")
+	field(DRVL, "1")
+	field(DRVH, "$(NELM)")
 }
 
 record(longout, "$(P)Samp:Trg-SP") {
