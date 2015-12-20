@@ -1,3 +1,7 @@
+/*
+ * This software is Copyright by the Board of Trustees of Michigan
+ * State University (c) Copyright 2015.
+ */
 #ifndef PICO_H
 #define PICO_H
 
