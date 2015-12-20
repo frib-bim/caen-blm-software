@@ -170,6 +170,14 @@ long get_data_update(int, dbCommon* prec, IOSCANPVT* scan)
     } END(0)
 }
 
+long get_status_update(int, dbCommon* prec, IOSCANPVT* scan)
+{
+    BEGIN {
+        *scan = info->dev->stsupdate;
+        return 0;
+    } END(0)
+}
+
 long write_clock(longoutRecord *prec)
 {
     BEGIN {
@@ -429,7 +437,7 @@ DSET(devPico8LiClock, longin,  NULL, &read_clock);
 DSET(devPico8MbboClockSrc, mbbo, NULL, &write_clocksrc);
 
 DSET(devPico8MbboRunMode, mbbo, NULL, &write_run_mode);
-DSET2(devPico8MbbiStatus, mbbi, NULL, &read_run_status);
+DSET2(devPico8MbbiStatus, mbbi, &get_status_update, &read_run_status);
 
 DSET(devPico8AoTrigLvl, ao, NULL, &write_trig_lvl);
 DSET(devPico8MbboTrigChan, mbbo, NULL, &write_trig_chan);

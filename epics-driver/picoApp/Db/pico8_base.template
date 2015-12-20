@@ -11,9 +11,9 @@ record(waveform, "$(P)Msg-I") {
 record(mbbi, "$(P)Run-Sts") {
 	field(DTYP, "Pico8 Run Status")
 	field(INP , "@$(NAME)")
-	field(SCAN, ".1 second")
+	field(SCAN, "I/O Intr")
 	field(ZRST, "Idle")
-	field(ONST, "Normal")
+	field(ONST, "Sample")
 	field(TWST, "Error")
 	field(ZRVL, "0")
 	field(ONVL, "1")

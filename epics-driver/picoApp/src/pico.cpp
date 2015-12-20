@@ -38,6 +38,7 @@ PicoDevice::PicoDevice(const std::string &fname)
 
     open();
 
+    scanIoInit(&stsupdate);
     scanIoInit(&dataupdate);
     resize(100); // some default size
 
@@ -74,6 +75,7 @@ PicoDevice::run()
     while(running) {
         debug(4)<<"Worker "<<cur_state<<" -> "<<target_state<<"\n";
 
+        if(target_state != cur_state) scanIoRequest(stsupdate);
         state_t T = target_state;
         cur_state = T;
 

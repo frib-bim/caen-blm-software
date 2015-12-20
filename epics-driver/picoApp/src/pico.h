@@ -66,6 +66,7 @@ struct PicoDevice : public epicsThreadRunable {
     int debug_level;
     std::ostream& debug(int lvl);
 
+    IOSCANPVT stsupdate;
     IOSCANPVT dataupdate;
 
     trg_ctrl trig;
