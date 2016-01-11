@@ -20,10 +20,17 @@
 #include <epicsEvent.h>
 #include <epicsGuard.h>
 #include <epicsThread.h>
+#include <errlog.h>
 
 #include <dbScan.h>
 
 #include "amc_pico.h"
+
+#define DPRINTF3(D, LVL, fmt, ...) do{ if((D)->debug_lvl>=(LVL)) { \
+    errlogPrintf(fmt, ## __VA_ARGS__); \
+}} while(0)
+
+#define DPRINTF(LVL, fmt, ...) DPRINTF3(this, LVL, fmt, ## __VA_ARGS__)
 
 struct system_error : public std::exception {
     int num;
@@ -67,8 +74,7 @@ struct PicoDevice : public epicsThreadRunable {
     bool reload;
     bool running;
 
-    int debug_level;
-    std::ostream& debug(int lvl);
+    int debug_lvl;
 
     IOSCANPVT stsupdate;
     IOSCANPVT dataupdate;

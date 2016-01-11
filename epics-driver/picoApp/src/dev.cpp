@@ -77,6 +77,20 @@ void createPICO(const std::string& name, const std::string& devname)
     }
 }
 
+void debugPICO(const std::string& name, int lvl)
+{
+    try{
+        dev_map_t::const_iterator it = dev_map.find(name);
+        if(it==dev_map.end())
+            throw std::invalid_argument("Unknown PICO8 device");
+
+        Guard G(it->second->lock);
+        it->second->debug_lvl = lvl;
+    }catch(std::exception& e){
+        fprintf(stderr, "error %s\n", e.what());
+    }
+}
+
 struct dsetInfo
 {
     PicoDevice *dev;
@@ -360,7 +374,7 @@ long write_run_mode(mbboRecord *prec)
 
         if(info->dev->target_state!=PicoDevice::Reading)
         {
-            info->dev->debug(3)<<"start reading\n";
+            DPRINTF3(info->dev, 3, "start reading\n");
             info->dev->target_state = PicoDevice::Reading;
             info->dev->workerNotify.signal();
         }
@@ -411,9 +425,22 @@ void createPICOCall(const iocshArgBuf *args)
     createPICO(args[0].sval, args[1].sval);
 }
 
+const iocshArg debugPICOArg0 = {"name", iocshArgString};
+const iocshArg debugPICOArg1 = {"lvl", iocshArgInt};
+const iocshArg * const debugPICOArgs[] = {&debugPICOArg0, &debugPICOArg1};
+const iocshFuncDef debugPICOFuncDef = {
+    "debugPICO", NELEMENTS(debugPICOArgs), debugPICOArgs
+};
+
+void debugPICOCall(const iocshArgBuf *args)
+{
+    debugPICO(args[0].sval, args[1].ival);
+}
+
 void pico8registrar()
 {
     iocshRegister(&createPICOFuncDef, &createPICOCall);
+    iocshRegister(&debugPICOFuncDef, &debugPICOCall);
 }
 
 template<typename R>

@@ -25,7 +25,7 @@ PicoDevice::PicoDevice(const std::string &fname)
     ,mode(Single)
     ,reload(true)
     ,running(true)
-    ,debug_level(0)
+    ,debug_lvl(0)
     ,ranges(0)
     ,nsamp(100)
 {
@@ -67,7 +67,7 @@ PicoDevice::resize(unsigned nsamp)
 void
 PicoDevice::run()
 {
-    this->debug(1)<<"Working started\n";
+    DPRINTF(1, "Working started\n");
     coreNotify.signal();
     Guard G(lock);
 
@@ -76,8 +76,7 @@ PicoDevice::run()
     epicsTimeStamp now;
 
     while(running) {
-        debug(4)<<"Worker "<<cur_state<<" -> "<<target_state<<"\n";
-
+        DPRINTF(4, "Worker %u -> %u\n", (unsigned)cur_state, (unsigned)target_state);
         if(target_state != cur_state) scanIoRequest(stsupdate);
         state_t T = target_state;
         cur_state = T;
@@ -89,9 +88,9 @@ PicoDevice::run()
         case Idle:
         {
             UnGuard U(G);
-            debug(5)<<"Working gone idle\n";
+            DPRINTF(5, "Working gone idle\n");
             workerNotify.wait();
-            debug(5)<<"Working done idle\n";
+            DPRINTF(5, "Working done idle\n");
         }
             break;
         case Reading:
@@ -108,10 +107,10 @@ PicoDevice::run()
             for(unsigned i=0; i<NCHANS; i++)
                 prep[i].resize(dsize);
 
-            debug(5)<<"Working enter read()\n";
+            DPRINTF(5, "Working enter read()\n");
             ret = ::read(fd, &dbuf[0], 4*dbuf.size());
             epicsTimeGetCurrent(&now);
-            debug(5)<<"Working leave read() -> "<<ret<<"\n";
+            DPRINTF(5, "Working done read() -> %u\n", (unsigned)ret);
 
             for(unsigned i=0; i<NCHANS; i++) {
                 for(size_t s=0; s<dsize; s++)
@@ -133,7 +132,7 @@ PicoDevice::run()
                 lasterror = "read zero";
                 target_state = Idle;
             } else {
-                this->debug(2)<<"Data ready\n";
+                DPRINTF(2, "Data ready\n");
                 if(mode==Single)
                     target_state = Idle;
                 for(unsigned i=0; i<NCHANS; i++) {
@@ -145,13 +144,7 @@ PicoDevice::run()
         }
     }
 
-    this->debug(1)<<"Working stopping\n";
-}
-
-std::ostream&
-PicoDevice::debug(int lvl)
-{
-    return std::cerr;
+    DPRINTF(1, "Working stopping\n");
 }
 
 const char *
