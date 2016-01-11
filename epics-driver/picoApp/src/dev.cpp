@@ -266,24 +266,7 @@ long write_trig_lvl(aoRecord *prec)
 
         Guard G(info->dev->lock);
 
-        if(info->dev->trig.ch_sel<0 || info->dev->trig.ch_sel>7)
-            throw std::logic_error("Invalid trigger channel selection");
-
-        // cooked = A*raw + B
-        double A = info->dev->scale[info->dev->trig.ch_sel],
-               B = info->dev->scale[info->dev->trig.ch_sel];
-
-        double raw = (prec->val-B)/A;
-
-        DPRINTF3(info->dev, 2, "Trig Lvl Scale (%f - %f)/%f -> %f\n",
-                 prec->val, B, A, raw);
-
-        if(!isfinite(raw))
-            throw std::invalid_argument("Converted trigger threshold is not finite");
-
-        info->dev->trig.limit = raw;
-
-        info->dev->ioctl(SET_TRG, &info->dev->trig);
+        info->dev->trig_level = prec->val;
     } END(0)
 }
 

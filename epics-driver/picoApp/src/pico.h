@@ -81,6 +81,7 @@ struct PicoDevice : public epicsThreadRunable {
 
     trg_ctrl trig;
     epicsUInt8 ranges;
+    double trig_level;
 
     unsigned nsamp;
 

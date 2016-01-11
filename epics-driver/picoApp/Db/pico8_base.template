@@ -101,10 +101,6 @@ record(mbbo, "$(P)Src:Trg_CMD") {
     field(TEVL, "10")
     field(ELVL, "11")
     field(TVVL, "12")
-    # user trigger level has channel scaling applied in reverse
-    # to get raw threshold.  So must recompute when trigger source
-    # changes.
-    field(FLNK, "$(P)TrgLvl_CSET")
 }
 
 record(ao, "$(P)TrgLvl_CSET") {

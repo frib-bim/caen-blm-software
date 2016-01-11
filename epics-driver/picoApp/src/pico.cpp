@@ -4,6 +4,7 @@
  */
 #include <errno.h>
 #include <string.h>
+#include <math.h>
 
 #include <iostream>
 
@@ -27,6 +28,7 @@ PicoDevice::PicoDevice(const std::string &fname)
     ,running(true)
     ,debug_lvl(0)
     ,ranges(0)
+    ,trig_level(0.0)
     ,nsamp(100)
 {
     trig.nr_samp = 1;
@@ -106,6 +108,25 @@ PicoDevice::run()
                 trig.nr_samp = dsize;
 
                 ioctl(SET_TRG, &trig);
+            }
+
+            {
+                assert(trig.ch_sel<NCHANS);
+                double A = scale[trig.ch_sel], B = offset[trig.ch_sel];
+
+                // cooked = A*raw + B
+                double raw = (trig_level-B)/A;
+
+                if(!isfinite(raw)) {
+                    lasterror = "Computed trigger level is not finite";
+                    target_state = Error;
+                    continue;
+                }
+
+                if(raw!=trig.limit) {
+                    trig.limit = raw;
+                    ioctl(SET_TRG, &trig);
+                }
             }
 
             UnGuard U(G);
