@@ -14,6 +14,7 @@ DBD += pico.dbd
 
 # pico.dbd will be made up from these files:
 pico_DBD += base.dbd
+pico_DBD += system.dbd
 
 # Include dbd files from all support applications:
 pico_DBD += pico8.dbd
@@ -30,6 +31,11 @@ pico_SRCS += dev.cpp
 # Build the main IOC entry point on workstation OSs.
 pico_SRCS_DEFAULT += picoMain.cpp
 pico_SRCS_vxWorks += -nil-
+
+ifneq ($(AUTOSAVE),)
+pico_DBD += asSupport.dbd
+pico_LIBS += autosave
+endif
 
 # Add support from base/src/vxWorks if needed
 #pico_OBJS_vxWorks += $(EPICS_BASE_BIN)/vxComLibrary

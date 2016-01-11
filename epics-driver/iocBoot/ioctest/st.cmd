@@ -9,4 +9,25 @@ createPICO8("PICO", "/dev/pico0")
 
 dbLoadRecords("../../db/pico8.db","SYS=TST,D=pico,NAME=PICO")
 
+# Auto save/restore
+save_restoreDebug(2)
+
+#dbLoadRecords("db/save_restoreStatus.db", "P=picotest:")
+#save_restoreSet_status_prefix("picotest:")
+
+set_savefile_path("${PWD}/as","/save")
+set_requestfile_path("${PWD}/as","/req")
+
+set_pass0_restoreFile("pico_settings.sav")
+set_pass1_restoreFile("pico_waveforms.sav")
+
+system("install -d as/req")
+system("install -d as/save")
+
 iocInit()
+
+makeAutosaveFileFromDbInfo("as/req/pico_settings.req", "autosaveFields_pass0")
+makeAutosaveFileFromDbInfo("as/req/pico_waveforms.req", "autosaveFields_pass1")
+
+create_monitor_set("pico_settings.req", 10 , "")
+create_monitor_set("pico_waveforms.req", 30 , "")

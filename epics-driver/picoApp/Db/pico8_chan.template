@@ -2,6 +2,7 @@ record(waveform, "$(P)LBL_RD") {
     field(DESC, "Label")
     field(FTVL, "CHAR")
     field(NELM, "128")
+    info(autosaveFields_pass1, "VAL")
 }
 
 record(mbbo, "$(P)Range_CMD") {
@@ -13,6 +14,7 @@ record(mbbo, "$(P)Range_CMD") {
 	field(ONST, "1 ua")
 	field(ZRVL, "0")
 	field(ONVL, "1")
+    info(autosaveFields_pass0, "RVAL")
 }
 
 record(waveform, "$(P)I_RD") {
@@ -38,6 +40,7 @@ record(ao, "$(P)SLO_CSET") {
     field(PINI, "YES")
     field(PREC, "3")
     field(VAL , "$(ASLO=1)")
+    info(autosaveFields_pass0, "VAL")
 }
 
 record(ao, "$(P)OFF_CSET") {
@@ -47,4 +50,5 @@ record(ao, "$(P)OFF_CSET") {
     field(PINI, "YES")
     field(PREC, "3")
     field(VAL , "$(AOFF=0)")
+    info(autosaveFields_pass0, "VAL")
 }

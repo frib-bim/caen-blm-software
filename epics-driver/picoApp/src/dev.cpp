@@ -465,7 +465,7 @@ DSET(devPico8MbboClockSrc, mbbo, NULL, &write_clocksrc);
 DSET(devPico8MbboRunMode, mbbo, NULL, &write_run_mode);
 DSET2(devPico8MbbiStatus, mbbi, &get_status_update, &read_run_status);
 
-DSET(devPico8AoTrigLvl, ao, NULL, &write_trig_lvl);
+DSET2(devPico8AoTrigLvl, ao, NULL, &write_trig_lvl);
 DSET(devPico8MbboTrigMode, mbbo, NULL, &write_trig_mode);
 
 DSET(devPico8LoNSamp, longout, NULL, &write_nsamp);
