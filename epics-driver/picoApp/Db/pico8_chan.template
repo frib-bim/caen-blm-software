@@ -1,4 +1,5 @@
-record(mbbo, "$(P)Range-Sel") {
+record(mbbo, "$(P)Range_CMD") {
+    field(DESC, "Channel dynamic range")
 	field(DTYP, "Pico8 Channel Range")
 	field(OUT , "@$(NAME) $(N)")
 	field(PINI, "YES")
@@ -8,16 +9,36 @@ record(mbbo, "$(P)Range-Sel") {
 	field(ONVL, "1")
 }
 
-record(waveform, "$(P)I-I") {
+record(waveform, "$(P)I_RD") {
+    field(DESC, "Sample data")
 	field(DTYP, "Pico8 Channel Data")
 	field(INP , "@$(NAME) $(N)")
 	field(SCAN, "I/O Intr")
 	field(FTVL, "FLOAT")
 	field(NELM, "$(NELM)")
 	# workaround for NORD not posting monitors in 3.14.12
-	field(FLNK, "$(P)I:Len-I")
+	field(FLNK, "$(P)ILen_RD")
 }
 
-record(longin, "$(P)I:Len-I") {
-    field(INP, "$(P)I-I.NORD NPP")
+record(longin, "$(P)ILen_RD") {
+    field(DESC, "Sample data length")
+    field(INP, "$(P)I_RD.NORD NPP")
+}
+
+record(ao, "$(P)SLO_CSET") {
+    field(DESC, "Multiplier from raw")
+    field(DTYP, "Pico8 Chan Scale")
+    field(OUT , "@$(NAME) $(N)")
+    field(PINI, "YES")
+    field(PREC, "3")
+    field(VAL , "$(ASLO=1)")
+}
+
+record(ao, "$(P)OFF_CSET") {
+    field(DESC, "Offset from raw")
+    field(DTYP, "Pico8 Chan Offset")
+    field(OUT , "@$(NAME) $(N)")
+    field(PINI, "YES")
+    field(PREC, "3")
+    field(VAL , "$(AOFF=0)")
 }

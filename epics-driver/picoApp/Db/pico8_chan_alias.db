@@ -1,0 +1,5 @@
+alias("$(P)Range_CMD", "$(A)Range_CMD")
+alias("$(P)I_RD", "$(A)I_RD")
+alias("$(P)ILen_RD", "$(A)ILen_RD")
+alias("$(P)SLO_CSET", "$(A)SLO_CSET")
+alias("$(P)OFF_CSET", "$(A)OFF_CSET")

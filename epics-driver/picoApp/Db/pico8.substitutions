@@ -1,17 +1,17 @@
 
 file "pico8_base.template"
 {
-	{P="\$(SYS){\$(D)}", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
+	{P="\$(SYS):\$(D)_CTRL:", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
 }
 
 file "pico8_chan.template"
 {
-	{N=0, P="\$(SYS){\$(D)-Ch:$(N)}", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
-	{N=1, P="\$(SYS){\$(D)-Ch:$(N)}", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
-	{N=2, P="\$(SYS){\$(D)-Ch:$(N)}", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
-	{N=3, P="\$(SYS){\$(D)-Ch:$(N)}", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
-	{N=4, P="\$(SYS){\$(D)-Ch:$(N)}", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
-	{N=5, P="\$(SYS){\$(D)-Ch:$(N)}", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
-	{N=6, P="\$(SYS){\$(D)-Ch:$(N)}", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
-	{N=7, P="\$(SYS){\$(D)-Ch:$(N)}", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
+	{N=0, P="\$(SYS):\$(D)_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
+	{N=1, P="\$(SYS):\$(D)_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
+	{N=2, P="\$(SYS):\$(D)_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
+	{N=3, P="\$(SYS):\$(D)_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
+	{N=4, P="\$(SYS):\$(D)_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
+	{N=5, P="\$(SYS):\$(D)_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
+	{N=6, P="\$(SYS):\$(D)_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
+	{N=7, P="\$(SYS):\$(D)_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
 }

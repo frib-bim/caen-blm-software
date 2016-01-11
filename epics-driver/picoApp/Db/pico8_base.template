@@ -1,5 +1,6 @@
 
-record(waveform, "$(P)Msg-I") {
+record(waveform, "$(P)MSG_RD") {
+    field(DESC, "Last Error")
 	field(DTYP, "Pico8 Last Message")
 	field(INP , "@$(NAME)")
 	field(SCAN, "I/O Intr")
@@ -8,12 +9,13 @@ record(waveform, "$(P)Msg-I") {
 	field(NELM, "128")
 }
 
-record(mbbi, "$(P)Run-Sts") {
+record(mbbi, "$(P)Run_RSTS") {
+    field(DESC, "Run Status")
 	field(DTYP, "Pico8 Run Status")
 	field(INP , "@$(NAME)")
 	field(SCAN, "I/O Intr")
 	field(ZRST, "Idle")
-	field(ONST, "Arm")
+	field(ONST, "Armed")
 	field(TWST, "Error")
 	field(ZRVL, "0")
 	field(ONVL, "1")
@@ -21,20 +23,23 @@ record(mbbi, "$(P)Run-Sts") {
 	field(TWSV, "MAJOR")
 }
 
-record(longout, "$(P)F:Clk-SP") {
+record(longout, "$(P)DIVCLK_CSET") {
+    field(DESC, "Sample clk divider")
 	field(DTYP, "Pico8 Clock Div")
 	field(OUT , "@$(NAME)")
 	field(PINI, "YES")
 	field(VAL , "299")
-	field(FLNK, "$(P)F:Clk-RB")
+	field(FLNK, "$(P)DIVCLK_RSET")
 }
 
-record(longin, "$(P)F:Clk-RB") {
+record(longin, "$(P)DIVCLK_RSET") {
+    field(DESC, "Sample clk divider")
 	field(DTYP, "Pico8 Clock Div")
 	field(INP , "@$(NAME)")
 }
 
-record(mbbo, "$(P)Src:Clk-Sel") {
+record(mbbo, "$(P)CLKSRC_CMD") {
+    field(DESC, "Sample clk source")
 	field(DTYP, "Pico8 Clock Source")
 	field(OUT , "@$(NAME)")
 	field(PINI, "YES")
@@ -54,7 +59,8 @@ record(mbbo, "$(P)Src:Clk-Sel") {
 	field(SXVL, "7")
 }
 
-record(mbbo, "$(P)Src:Trg-Sel") {
+record(mbbo, "$(P)Src:Trg_CMD") {
+    field(DESC, "Trigger source")
     field(DTYP, "Pico8 Trigger Source")
     field(OUT , "@$(NAME)")
     field(PINI, "YES")
@@ -86,7 +92,8 @@ record(mbbo, "$(P)Src:Trg-Sel") {
     field(TVVL, "12")
 }
 
-record(mbbo, "$(P)Mode-Sel") {
+record(mbbo, "$(P)Mode_CMD") {
+    field(DESC, "Trigger re-arm mode")
 	field(DTYP, "Pico8 Run Mode")
 	field(OUT , "@$(NAME)")
 	field(PINI, "RUNNING") # last init step, when I/O Intr is possible
@@ -96,13 +103,17 @@ record(mbbo, "$(P)Mode-Sel") {
 	field(ONVL, "1")
 }
 
-record(ao, "$(P)Lvl:Trg-SP") {
+record(ao, "$(P)TrgLvl_CSET") {
+    field(DESC, "Ext. trig threshold")
 	field(DTYP, "Pico8 Trigger Level")
 	field(OUT , "@$(NAME)")
+	field(PREC, "3")
+	field(EGU , "A")
 	field(PINI, "YES")
 }
 
-record(mbbo, "$(P)Edge:Trg-Sel") {
+record(mbbo, "$(P)TrgEdge_CMD") {
+    field(DESC, "Ext. trig edge")
 	field(DTYP, "Pico8 Trigger Mode")
 	field(OUT , "@$(NAME)")
 	field(PINI, "YES")
@@ -117,7 +128,8 @@ record(mbbo, "$(P)Edge:Trg-Sel") {
 	field(RVAL, "1")
 }
 
-record(longout, "$(P)Samp:Cnt-SP") {
+record(longout, "$(P)SampCnt_CSET") {
+    field(DESC, "Num. samples to acquire")
 	field(DTYP, "Pico8 Num Samples")
 	field(OUT , "@$(NAME)")
 	field(PINI, "YES")
@@ -126,8 +138,10 @@ record(longout, "$(P)Samp:Cnt-SP") {
 	field(DRVH, "$(NELM)")
 }
 
-record(longout, "$(P)PreSamp-SP") {
+record(longout, "$(P)PreSamp_CSET") {
+    field(DESC, "Num. samples before trig point")
 	field(DTYP, "Pico8 Pre-trig Samples")
 	field(OUT , "@$(NAME)")
+	field(VAL , "0")
 	field(PINI, "YES")
 }
