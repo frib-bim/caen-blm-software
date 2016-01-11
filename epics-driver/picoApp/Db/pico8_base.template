@@ -13,7 +13,7 @@ record(mbbi, "$(P)Run-Sts") {
 	field(INP , "@$(NAME)")
 	field(SCAN, "I/O Intr")
 	field(ZRST, "Idle")
-	field(ONST, "Sample")
+	field(ONST, "Arm")
 	field(TWST, "Error")
 	field(ZRVL, "0")
 	field(ONVL, "1")
@@ -55,23 +55,35 @@ record(mbbo, "$(P)Src:Clk-Sel") {
 }
 
 record(mbbo, "$(P)Src:Trg-Sel") {
-	field(DTYP, "Pico8 Trigger Gate")
-	field(OUT , "@$(NAME)")
-	field(PINI, "YES")
-	field(ZRST, "Immediate")
-	field(ONST, "Off")
-	field(TWST, "Internal")
-	field(THST, "Port 17")
-	field(FRST, "Port 18")
-	field(FVST, "Port 19")
-	field(SXST, "Port 20")
-	field(ZRVL, "0")
-	field(ONVL, "1")
-	field(TWVL, "2")
-	field(THVL, "4")
-	field(FRVL, "5")
-	field(FVVL, "6")
-	field(SXVL, "7")
+    field(DTYP, "Pico8 Trigger Source")
+    field(OUT , "@$(NAME)")
+    field(PINI, "YES")
+    field(ZRST, "Software")
+    field(ONST, "Channel 0")
+    field(TWST, "Channel 1")
+    field(THST, "Channel 2")
+    field(FRST, "Channel 3")
+    field(FVST, "Channel 4")
+    field(SXST, "Channel 5")
+    field(SVST, "Channel 6")
+    field(EIST, "Channel 7")
+    field(NIST, "Port 17")
+    field(TEST, "Port 18")
+    field(ELST, "Port 19")
+    field(TVST, "Port 20")
+    field(ZRVL, "0")
+    field(ONVL, "1")
+    field(TWVL, "2")
+    field(THVL, "3")
+    field(FRVL, "4")
+    field(FVVL, "5")
+    field(SXVL, "6")
+    field(SVVL, "7")
+    field(EIVL, "8")
+    field(NIVL, "9")
+    field(TEVL, "10")
+    field(ELVL, "11")
+    field(TVVL, "12")
 }
 
 record(mbbo, "$(P)Mode-Sel") {
@@ -90,29 +102,7 @@ record(ao, "$(P)Lvl:Trg-SP") {
 	field(PINI, "YES")
 }
 
-record(mbbo, "$(P)Chan:Trg-Sel") {
-	field(DTYP, "Pico8 Trigger Channel")
-	field(OUT , "@$(NAME)")
-	field(PINI, "YES")
-	field(ZRST, "Chan 0")
-	field(ONST, "Chan 1")
-	field(TWST, "Chan 2")
-	field(THST, "Chan 3")
-	field(FRST, "Chan 4")
-	field(FVST, "Chan 5")
-	field(SXST, "Chan 6")
-	field(SVST, "Chan 7")
-	field(ZRVL, "0")
-	field(ONVL, "1")
-	field(TWVL, "2")
-	field(THVL, "3")
-	field(FRVL, "4")
-	field(FVVL, "5")
-	field(SXVL, "6")
-	field(SVVL, "7")
-}
-
-record(mbbo, "$(P)Mode:Trg-Sel") {
+record(mbbo, "$(P)Edge:Trg-Sel") {
 	field(DTYP, "Pico8 Trigger Mode")
 	field(OUT , "@$(NAME)")
 	field(PINI, "YES")
@@ -134,12 +124,6 @@ record(longout, "$(P)Samp:Cnt-SP") {
 	field(VAL , "200")
 	field(DRVL, "1")
 	field(DRVH, "$(NELM)")
-}
-
-record(longout, "$(P)Samp:Trg-SP") {
-	field(DTYP, "Pico8 Trigger Samples")
-	field(OUT , "@$(NAME)")
-	field(PINI, "YES")
 }
 
 record(longout, "$(P)PreSamp-SP") {

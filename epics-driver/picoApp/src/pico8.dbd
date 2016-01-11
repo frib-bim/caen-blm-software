@@ -8,13 +8,11 @@ device(mbbo, INST_IO, devPico8MbboClockSrc, "Pico8 Clock Source")
 device(mbbo, INST_IO, devPico8MbboRunMode, "Pico8 Run Mode")
 
 device(ao, INST_IO, devPico8AoTrigLvl, "Pico8 Trigger Level")
-device(mbbo, INST_IO, devPico8MbboTrigChan, "Pico8 Trigger Channel")
 device(mbbo, INST_IO, devPico8MbboTrigMode, "Pico8 Trigger Mode")
-device(longout, INST_IO, devPico8LoTrigSamp, "Pico8 Trigger Samples")
 
 device(longout, INST_IO, devPico8LoNSamp, "Pico8 Num Samples")
 device(longout, INST_IO, devPico8LoPreSamp, "Pico8 Pre-trig Samples")
-device(mbbo, INST_IO, devPico8MbboTrigGate, "Pico8 Trigger Gate")
+device(mbbo, INST_IO, devPico8MbboTrigSrc, "Pico8 Trigger Source")
 
 device(mbbo, INST_IO, devPico8MbboRange, "Pico8 Channel Range")
 

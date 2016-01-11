@@ -101,6 +101,13 @@ PicoDevice::run()
             memcpy(S, scale, sizeof(scale));
             memcpy(O, offset, sizeof(offset));
 
+            if(trig.nr_samp != dsize) {
+                // nr_samp only seems to matter for external trig, but keep it in sync regardless
+                trig.nr_samp = dsize;
+
+                ioctl(SET_TRG, &trig);
+            }
+
             UnGuard U(G);
 
             dbuf.resize(dsize*NCHANS);

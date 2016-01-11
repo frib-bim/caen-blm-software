@@ -230,14 +230,30 @@ long write_clocksrc(mbboRecord *prec)
     } END(0)
 }
 
-long write_trig_gate(mbboRecord *prec)
+long write_trig_src(mbboRecord *prec)
 {
     BEGIN {
+        if(prec->rval<0 || prec->rval>12)
+            throw std::invalid_argument("invalid trigger source");
+
         Guard G(info->dev->lock);
 
-        epicsUInt32 val = prec->rval;
+        epicsUInt32 gate;
+        if(prec->rval==0) { // soft trigger
+            gate = 0;
+            info->dev->trig.ch_sel = 0;
+        } else if(prec->rval>=1 && prec->rval<=8) {
+            info->dev->trig.ch_sel = prec->rval-1;
+            gate = 2;
+        } else if(prec->rval>=9 && prec->rval<=12) {
+            gate = prec->rval-9u+3u; // Port 17, rval==9, gate==3
+            info->dev->trig.ch_sel = 0;
+        } else {
+            throw std::logic_error("Invalid trigger source case");
+        }
 
-        info->dev->ioctl(SET_GATE_MUX, &val);
+        info->dev->ioctl(SET_TRG, &info->dev->trig);
+        info->dev->ioctl(SET_GATE_MUX, &gate);
     } END(0)
 }
 
@@ -252,34 +268,12 @@ long write_trig_lvl(aoRecord *prec)
     } END(0)
 }
 
-long write_trig_chan(mbboRecord *prec)
-{
-    BEGIN {
-        Guard G(info->dev->lock);
-
-        info->dev->trig.ch_sel = prec->val;
-
-        info->dev->ioctl(SET_TRG, &info->dev->trig);
-    } END(0)
-}
-
 long write_trig_mode(mbboRecord *prec)
 {
     BEGIN {
         Guard G(info->dev->lock);
 
         info->dev->trig.mode = (trg_ctrl::mode_t)prec->rval;
-
-        info->dev->ioctl(SET_TRG, &info->dev->trig);
-    } END(0)
-}
-
-long write_trig_samples(longoutRecord *prec)
-{
-    BEGIN {
-        Guard G(info->dev->lock);
-
-        info->dev->trig.nr_samp = prec->val;
 
         info->dev->ioctl(SET_TRG, &info->dev->trig);
     } END(0)
@@ -470,13 +464,11 @@ DSET(devPico8MbboRunMode, mbbo, NULL, &write_run_mode);
 DSET2(devPico8MbbiStatus, mbbi, &get_status_update, &read_run_status);
 
 DSET(devPico8AoTrigLvl, ao, NULL, &write_trig_lvl);
-DSET(devPico8MbboTrigChan, mbbo, NULL, &write_trig_chan);
 DSET(devPico8MbboTrigMode, mbbo, NULL, &write_trig_mode);
-DSET(devPico8LoTrigSamp, longout, NULL, &write_trig_samples);
 
 DSET(devPico8LoNSamp, longout, NULL, &write_nsamp);
 DSET(devPico8LoPreSamp, longout, NULL, &write_pre_trig);
-DSET(devPico8MbboTrigGate, mbbo, NULL, &write_trig_gate);
+DSET(devPico8MbboTrigSrc, mbbo, NULL, &write_trig_src);
 
 DSET(devPico8MbboRange, mbbo, NULL, &write_chan_range);
 
@@ -500,13 +492,11 @@ epicsExportAddress(dset, devPico8MbboRunMode);
 epicsExportAddress(dset, devPico8MbbiStatus);
 
 epicsExportAddress(dset, devPico8AoTrigLvl);
-epicsExportAddress(dset, devPico8MbboTrigChan);
 epicsExportAddress(dset, devPico8MbboTrigMode);
-epicsExportAddress(dset, devPico8LoTrigSamp);
 
 epicsExportAddress(dset, devPico8LoNSamp);
 epicsExportAddress(dset, devPico8LoPreSamp);
-epicsExportAddress(dset, devPico8MbboTrigGate);
+epicsExportAddress(dset, devPico8MbboTrigSrc);
 
 epicsExportAddress(dset, devPico8MbboRange);
 
