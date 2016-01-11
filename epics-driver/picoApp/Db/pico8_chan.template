@@ -1,3 +1,9 @@
+record(waveform, "$(P)LBL_RD") {
+    field(DESC, "Label")
+    field(FTVL, "CHAR")
+    field(NELM, "128")
+}
+
 record(mbbo, "$(P)Range_CMD") {
     field(DESC, "Channel dynamic range")
 	field(DTYP, "Pico8 Channel Range")

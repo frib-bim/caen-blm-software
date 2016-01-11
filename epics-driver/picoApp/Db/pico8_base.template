@@ -1,4 +1,10 @@
 
+record(waveform, "$(P)LBL_RD") {
+    field(DESC, "Label")
+    field(FTVL, "CHAR")
+    field(NELM, "128")
+}
+
 record(waveform, "$(P)MSG_RD") {
     field(DESC, "Last Error")
 	field(DTYP, "Pico8 Last Message")
