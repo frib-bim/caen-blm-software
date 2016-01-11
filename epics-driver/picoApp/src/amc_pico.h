@@ -1,1 +1,1 @@
-../../../amc-pico-driver-1.0.7/amc_pico.h
+../../../linux-driver/amc_pico.h
