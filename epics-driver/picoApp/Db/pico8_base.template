@@ -38,6 +38,17 @@ record(longin, "$(P)DIVCLK_RSET") {
 	field(INP , "@$(NAME)")
 }
 
+record(mbbo, "$(P)Mode_CMD") {
+    field(DESC, "Trigger re-arm mode")
+    field(DTYP, "Pico8 Run Mode")
+    field(OUT , "@$(NAME)")
+    field(PINI, "RUNNING") # last init step, when I/O Intr is possible
+    field(ZRST, "Single")
+    field(ONST, "Normal")
+    field(ZRVL, "0")
+    field(ONVL, "1")
+}
+
 record(mbbo, "$(P)CLKSRC_CMD") {
     field(DESC, "Sample clk source")
 	field(DTYP, "Pico8 Clock Source")
@@ -90,17 +101,10 @@ record(mbbo, "$(P)Src:Trg_CMD") {
     field(TEVL, "10")
     field(ELVL, "11")
     field(TVVL, "12")
-}
-
-record(mbbo, "$(P)Mode_CMD") {
-    field(DESC, "Trigger re-arm mode")
-	field(DTYP, "Pico8 Run Mode")
-	field(OUT , "@$(NAME)")
-	field(PINI, "RUNNING") # last init step, when I/O Intr is possible
-	field(ZRST, "Single")
-	field(ONST, "Normal")
-	field(ZRVL, "0")
-	field(ONVL, "1")
+    # user trigger level has channel scaling applied in reverse
+    # to get raw threshold.  So must recompute when trigger source
+    # changes.
+    field(FLNK, "$(P)TrgLvl_CSET")
 }
 
 record(ao, "$(P)TrgLvl_CSET") {
@@ -108,7 +112,6 @@ record(ao, "$(P)TrgLvl_CSET") {
 	field(DTYP, "Pico8 Trigger Level")
 	field(OUT , "@$(NAME)")
 	field(PREC, "3")
-	field(EGU , "A")
 	field(PINI, "YES")
 }
 
