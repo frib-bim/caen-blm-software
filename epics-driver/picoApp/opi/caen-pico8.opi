@@ -9,15 +9,16 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <DEV>TST:pico_CTRL:</DEV>
-    <CHAN0>TST:pico_CH0:</CHAN0>
-    <CHAN1>TST:pico_CH1:</CHAN1>
-    <CHAN2>TST:pico_CH2:</CHAN2>
-    <CHAN3>TST:pico_CH3:</CHAN3>
-    <CHAN4>TST:pico_CH4:</CHAN4>
-    <CHAN5>TST:pico_CH5:</CHAN5>
-    <CHAN6>TST:pico_CH6:</CHAN6>
-    <CHAN7>TST:pico_CH7:</CHAN7>
+    <P>TST:pico2</P>
+    <DEV>$(P)_CTRL:</DEV>
+    <CHAN0>$(P)_CH0:</CHAN0>
+    <CHAN1>$(P)_CH1:</CHAN1>
+    <CHAN2>$(P)_CH2:</CHAN2>
+    <CHAN3>$(P)_CH3:</CHAN3>
+    <CHAN4>$(P)_CH4:</CHAN4>
+    <CHAN5>$(P)_CH5:</CHAN5>
+    <CHAN6>$(P)_CH6:</CHAN6>
+    <CHAN7>$(P)_CH7:</CHAN7>
   </macros>
   <boy_version>4.0.103.201506251634</boy_version>
   <show_edit_range>true</show_edit_range>
@@ -705,49 +706,49 @@ $(trace_0_y_pv_value)</tooltip>
         <exp bool_exp="true">
           <value>pvInt0</value>
         </exp>
-        <pv trig="true">$(CHAN0)I_LEN_RD</pv>
+        <pv trig="true">$(CHAN0)I_RD_LEN</pv>
       </rule>
       <rule name="array size 1" prop_id="trace_1_buffer_size" out_exp="true">
         <exp bool_exp="true">
           <value>pvInt0</value>
         </exp>
-        <pv trig="true">$(CHAN1)I_LEN_RD</pv>
+        <pv trig="true">$(CHAN1)I_RD_LEN</pv>
       </rule>
       <rule name="array size 2" prop_id="trace_2_buffer_size" out_exp="true">
         <exp bool_exp="true">
           <value>pvInt0</value>
         </exp>
-        <pv trig="true">$(CHAN2)I_LEN_RD</pv>
+        <pv trig="true">$(CHAN2)I_RD_LEN</pv>
       </rule>
       <rule name="array size 3" prop_id="trace_3_buffer_size" out_exp="true">
         <exp bool_exp="true">
           <value>pvInt0</value>
         </exp>
-        <pv trig="true">$(CHAN3)I_LEN_RD</pv>
+        <pv trig="true">$(CHAN3)I_RD_LEN</pv>
       </rule>
       <rule name="array size 4" prop_id="trace_4_buffer_size" out_exp="true">
         <exp bool_exp="true">
           <value>pvInt0</value>
         </exp>
-        <pv trig="true">$(CHAN4)I_LEN_RD</pv>
+        <pv trig="true">$(CHAN4)I_RD_LEN</pv>
       </rule>
       <rule name="array size 5" prop_id="trace_5_buffer_size" out_exp="true">
         <exp bool_exp="true">
           <value>pvInt0</value>
         </exp>
-        <pv trig="true">$(CHAN5)I_LEN_RD</pv>
+        <pv trig="true">$(CHAN5)I_RD_LEN</pv>
       </rule>
       <rule name="array size 6" prop_id="trace_6_buffer_size" out_exp="true">
         <exp bool_exp="true">
           <value>pvInt0</value>
         </exp>
-        <pv trig="true">$(CHAN6)I_LEN_RD</pv>
+        <pv trig="true">$(CHAN6)I_RD_LEN</pv>
       </rule>
       <rule name="array size 7" prop_id="trace_7_buffer_size" out_exp="true">
         <exp bool_exp="true">
           <value></value>
         </exp>
-        <pv trig="true">$(CHAN7)I_LEN_RD</pv>
+        <pv trig="true">$(CHAN7)I_RD_LEN</pv>
       </rule>
     </rules>
     <trace_5_plot_mode>0</trace_5_plot_mode>
