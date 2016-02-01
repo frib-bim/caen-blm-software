@@ -1,11 +1,11 @@
-record(waveform, "$(P)LBL_RD") {
+record(waveform, "$(P)DESC_RD") {
     field(DESC, "Label")
     field(FTVL, "CHAR")
     field(NELM, "128")
     info(autosaveFields_pass1, "VAL")
 }
 
-record(mbbo, "$(P)Range_CMD") {
+record(mbbo, "$(P)RNG_CMD") {
     field(DESC, "Channel dynamic range")
 	field(DTYP, "Pico8 Channel Range")
 	field(OUT , "@$(NAME) $(N)")
@@ -25,10 +25,10 @@ record(waveform, "$(P)I_RD") {
 	field(FTVL, "FLOAT")
 	field(NELM, "$(NELM)")
 	# workaround for NORD not posting monitors in 3.14.12
-	field(FLNK, "$(P)ILen_RD")
+	field(FLNK, "$(P)I_RD_LEN")
 }
 
-record(longin, "$(P)ILen_RD") {
+record(longin, "$(P)I_RD_LEN") {
     field(DESC, "Sample data length")
     field(INP, "$(P)I_RD.NORD NPP")
 }
@@ -43,7 +43,7 @@ record(ao, "$(P)SLO_CSET") {
     info(autosaveFields_pass0, "VAL")
 }
 
-record(ao, "$(P)OFF_CSET") {
+record(ao, "$(P)OFST_CSET") {
     field(DESC, "Offset from raw")
     field(DTYP, "Pico8 Chan Offset")
     field(OUT , "@$(NAME) $(N)")

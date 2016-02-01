@@ -66,7 +66,7 @@ $(pv_value)</tooltip>
     </scale_options>
     <items_from_pv>true</items_from_pv>
     <visible>true</visible>
-    <pv_name>$(DEV)Mode_CMD</pv_name>
+    <pv_name>$(DEV)MODE_CMD</pv_name>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
@@ -155,7 +155,7 @@ $(pv_value)</tooltip>
     <multiline_input>false</multiline_input>
     <border_width>1</border_width>
     <visible>true</visible>
-    <pv_name>$(DEV)TrgLvl_CSET</pv_name>
+    <pv_name>$(DEV)TRIG_CSET</pv_name>
     <selector_type>0</selector_type>
     <border_color>
       <color red="0" green="128" blue="255" />
@@ -223,7 +223,7 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <visible>true</visible>
-    <pv_name>$(DEV)Run_RSTS</pv_name>
+    <pv_name>$(DEV)MODE_RSTS</pv_name>
     <vertical_alignment>1</vertical_alignment>
     <border_color>
       <color red="0" green="128" blue="255" />
@@ -271,7 +271,7 @@ $(pv_value)</tooltip>
     </scale_options>
     <image></image>
     <visible>true</visible>
-    <pv_name>$(DEV)Mode_CMD</pv_name>
+    <pv_name>$(DEV)MODE_CMD</pv_name>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
@@ -326,7 +326,7 @@ $(pv_value)</tooltip>
     </scale_options>
     <items_from_pv>true</items_from_pv>
     <visible>true</visible>
-    <pv_name>$(CHAN0)Range_CMD</pv_name>
+    <pv_name>$(CHAN0)RNG_CMD</pv_name>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
@@ -363,7 +363,7 @@ $(pv_value)</tooltip>
     <multiline_input>false</multiline_input>
     <border_width>1</border_width>
     <visible>true</visible>
-    <pv_name>$(DEV)SampCnt_CSET</pv_name>
+    <pv_name>$(DEV)NSMP_CSET</pv_name>
     <selector_type>0</selector_type>
     <border_color>
       <color red="0" green="128" blue="255" />
@@ -426,7 +426,7 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <visible>true</visible>
-    <pv_name>$(DEV)TrgEdge_CMD</pv_name>
+    <pv_name>$(DEV)TMOD_CMD</pv_name>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
@@ -469,7 +469,7 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <visible>true</visible>
-    <pv_name>$(DEV)CLKSRC_CMD</pv_name>
+    <pv_name>$(DEV)CLK_CMD</pv_name>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
@@ -512,7 +512,7 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <visible>true</visible>
-    <pv_name>$(DEV)Src:Trg_CMD</pv_name>
+    <pv_name>$(DEV)TRIG_CMD</pv_name>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
@@ -705,49 +705,49 @@ $(trace_0_y_pv_value)</tooltip>
         <exp bool_exp="true">
           <value>pvInt0</value>
         </exp>
-        <pv trig="true">$(CHAN0)ILen_RD</pv>
+        <pv trig="true">$(CHAN0)I_LEN_RD</pv>
       </rule>
       <rule name="array size 1" prop_id="trace_1_buffer_size" out_exp="true">
         <exp bool_exp="true">
           <value>pvInt0</value>
         </exp>
-        <pv trig="true">$(CHAN1)ILen_RD</pv>
+        <pv trig="true">$(CHAN1)I_LEN_RD</pv>
       </rule>
       <rule name="array size 2" prop_id="trace_2_buffer_size" out_exp="true">
         <exp bool_exp="true">
           <value>pvInt0</value>
         </exp>
-        <pv trig="true">$(CHAN2)ILen_RD</pv>
+        <pv trig="true">$(CHAN2)I_LEN_RD</pv>
       </rule>
       <rule name="array size 3" prop_id="trace_3_buffer_size" out_exp="true">
         <exp bool_exp="true">
           <value>pvInt0</value>
         </exp>
-        <pv trig="true">$(CHAN3)ILen_RD</pv>
+        <pv trig="true">$(CHAN3)I_LEN_RD</pv>
       </rule>
       <rule name="array size 4" prop_id="trace_4_buffer_size" out_exp="true">
         <exp bool_exp="true">
           <value>pvInt0</value>
         </exp>
-        <pv trig="true">$(CHAN4)ILen_RD</pv>
+        <pv trig="true">$(CHAN4)I_LEN_RD</pv>
       </rule>
       <rule name="array size 5" prop_id="trace_5_buffer_size" out_exp="true">
         <exp bool_exp="true">
           <value>pvInt0</value>
         </exp>
-        <pv trig="true">$(CHAN5)ILen_RD</pv>
+        <pv trig="true">$(CHAN5)I_LEN_RD</pv>
       </rule>
       <rule name="array size 6" prop_id="trace_6_buffer_size" out_exp="true">
         <exp bool_exp="true">
           <value>pvInt0</value>
         </exp>
-        <pv trig="true">$(CHAN6)ILen_RD</pv>
+        <pv trig="true">$(CHAN6)I_LEN_RD</pv>
       </rule>
       <rule name="array size 7" prop_id="trace_7_buffer_size" out_exp="true">
         <exp bool_exp="true">
           <value></value>
         </exp>
-        <pv trig="true">$(CHAN7)ILen_RD</pv>
+        <pv trig="true">$(CHAN7)I_LEN_RD</pv>
       </rule>
     </rules>
     <trace_5_plot_mode>0</trace_5_plot_mode>
@@ -865,7 +865,7 @@ $(pv_value)</tooltip>
     <multiline_input>false</multiline_input>
     <border_width>1</border_width>
     <visible>true</visible>
-    <pv_name>$(DEV)PreSamp_CSET</pv_name>
+    <pv_name>$(DEV)PTRG_CSET</pv_name>
     <selector_type>0</selector_type>
     <border_color>
       <color red="0" green="128" blue="255" />
@@ -1382,7 +1382,7 @@ $(pv_value)</tooltip>
     </scale_options>
     <items_from_pv>true</items_from_pv>
     <visible>true</visible>
-    <pv_name>$(CHAN1)Range_CMD</pv_name>
+    <pv_name>$(CHAN1)RNG_CMD</pv_name>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
@@ -1469,7 +1469,7 @@ $(pv_value)</tooltip>
     </scale_options>
     <items_from_pv>true</items_from_pv>
     <visible>true</visible>
-    <pv_name>$(CHAN2)Range_CMD</pv_name>
+    <pv_name>$(CHAN2)RNG_CMD</pv_name>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
@@ -1556,7 +1556,7 @@ $(pv_value)</tooltip>
     </scale_options>
     <items_from_pv>true</items_from_pv>
     <visible>true</visible>
-    <pv_name>$(CHAN3)Range_CMD</pv_name>
+    <pv_name>$(CHAN3)RNG_CMD</pv_name>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
@@ -1643,7 +1643,7 @@ $(pv_value)</tooltip>
     </scale_options>
     <items_from_pv>true</items_from_pv>
     <visible>true</visible>
-    <pv_name>$(CHAN4)Range_CMD</pv_name>
+    <pv_name>$(CHAN4)RNG_CMD</pv_name>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
@@ -1730,7 +1730,7 @@ $(pv_value)</tooltip>
     </scale_options>
     <items_from_pv>true</items_from_pv>
     <visible>true</visible>
-    <pv_name>$(CHAN5)Range_CMD</pv_name>
+    <pv_name>$(CHAN5)RNG_CMD</pv_name>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
@@ -1817,7 +1817,7 @@ $(pv_value)</tooltip>
     </scale_options>
     <items_from_pv>true</items_from_pv>
     <visible>true</visible>
-    <pv_name>$(CHAN6)Range_CMD</pv_name>
+    <pv_name>$(CHAN6)RNG_CMD</pv_name>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
@@ -1904,7 +1904,7 @@ $(pv_value)</tooltip>
     </scale_options>
     <items_from_pv>true</items_from_pv>
     <visible>true</visible>
-    <pv_name>$(CHAN7)Range_CMD</pv_name>
+    <pv_name>$(CHAN7)RNG_CMD</pv_name>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
@@ -2039,7 +2039,7 @@ $(pv_value)</tooltip>
     <multiline_input>false</multiline_input>
     <border_width>1</border_width>
     <visible>true</visible>
-    <pv_name>$(CHAN0)OFF_CSET</pv_name>
+    <pv_name>$(CHAN0)OFST_CSET</pv_name>
     <selector_type>0</selector_type>
     <border_color>
       <color red="0" green="128" blue="255" />
@@ -2153,7 +2153,7 @@ $(pv_value)</tooltip>
     <multiline_input>false</multiline_input>
     <border_width>1</border_width>
     <visible>true</visible>
-    <pv_name>$(CHAN1)OFF_CSET</pv_name>
+    <pv_name>$(CHAN1)OFST_CSET</pv_name>
     <selector_type>0</selector_type>
     <border_color>
       <color red="0" green="128" blue="255" />
@@ -2267,7 +2267,7 @@ $(pv_value)</tooltip>
     <multiline_input>false</multiline_input>
     <border_width>1</border_width>
     <visible>true</visible>
-    <pv_name>$(CHAN2)OFF_CSET</pv_name>
+    <pv_name>$(CHAN2)OFST_CSET</pv_name>
     <selector_type>0</selector_type>
     <border_color>
       <color red="0" green="128" blue="255" />
@@ -2381,7 +2381,7 @@ $(pv_value)</tooltip>
     <multiline_input>false</multiline_input>
     <border_width>1</border_width>
     <visible>true</visible>
-    <pv_name>$(CHAN3)OFF_CSET</pv_name>
+    <pv_name>$(CHAN3)OFST_CSET</pv_name>
     <selector_type>0</selector_type>
     <border_color>
       <color red="0" green="128" blue="255" />
@@ -2495,7 +2495,7 @@ $(pv_value)</tooltip>
     <multiline_input>false</multiline_input>
     <border_width>1</border_width>
     <visible>true</visible>
-    <pv_name>$(CHAN4)OFF_CSET</pv_name>
+    <pv_name>$(CHAN4)OFST_CSET</pv_name>
     <selector_type>0</selector_type>
     <border_color>
       <color red="0" green="128" blue="255" />
@@ -2609,7 +2609,7 @@ $(pv_value)</tooltip>
     <multiline_input>false</multiline_input>
     <border_width>1</border_width>
     <visible>true</visible>
-    <pv_name>$(CHAN5)OFF_CSET</pv_name>
+    <pv_name>$(CHAN5)OFST_CSET</pv_name>
     <selector_type>0</selector_type>
     <border_color>
       <color red="0" green="128" blue="255" />
@@ -2723,7 +2723,7 @@ $(pv_value)</tooltip>
     <multiline_input>false</multiline_input>
     <border_width>1</border_width>
     <visible>true</visible>
-    <pv_name>$(CHAN6)OFF_CSET</pv_name>
+    <pv_name>$(CHAN6)OFST_CSET</pv_name>
     <selector_type>0</selector_type>
     <border_color>
       <color red="0" green="128" blue="255" />
@@ -2837,7 +2837,7 @@ $(pv_value)</tooltip>
     <multiline_input>false</multiline_input>
     <border_width>1</border_width>
     <visible>true</visible>
-    <pv_name>$(CHAN7)OFF_CSET</pv_name>
+    <pv_name>$(CHAN7)OFST_CSET</pv_name>
     <selector_type>0</selector_type>
     <border_color>
       <color red="0" green="128" blue="255" />
