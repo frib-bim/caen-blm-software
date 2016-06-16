@@ -30,6 +30,7 @@ PicoDevice::PicoDevice(const std::string &fname)
     ,ranges(0)
     ,trig_level(0.0)
     ,nsamp(100)
+    ,ndecim(1)
 {
     trig.nr_samp = 1;
     trig.ch_sel = 0;
@@ -45,7 +46,6 @@ PicoDevice::PicoDevice(const std::string &fname)
 
     scanIoInit(&stsupdate);
     scanIoInit(&dataupdate);
-    resize(100); // some default size
 
     readerT.start();
     coreNotify.wait();
@@ -58,12 +58,6 @@ PicoDevice::open()
     if(F==-1)
         throw system_error(errno);
     fd = F;
-}
-
-void
-PicoDevice::resize(unsigned nsamp)
-{
-    this->nsamp = nsamp;
 }
 
 void
@@ -98,14 +92,18 @@ PicoDevice::run()
         case Reading:
             ssize_t ret;
         {
-            unsigned dsize = this->nsamp;
+            const unsigned usize  = this->nsamp,
+                           decim  = this->ndecim,
+                           hwsize = usize*decim;
             double S[NCHANS], O[NCHANS];
+
+            // copy scale factors for use w/o lock
             memcpy(S, scale, sizeof(scale));
             memcpy(O, offset, sizeof(offset));
 
-            if(trig.nr_samp != dsize) {
+            if(trig.nr_samp != hwsize) {
                 // nr_samp only seems to matter for external trig, but keep it in sync regardless
-                trig.nr_samp = dsize;
+                trig.nr_samp = hwsize;
 
                 ioctl(SET_TRG, &trig);
             }
@@ -130,20 +128,33 @@ PicoDevice::run()
             }
 
             UnGuard U(G);
+            // ======= unlock
 
-            dbuf.resize(dsize*NCHANS);
+            dbuf.resize(hwsize*NCHANS);
             for(unsigned i=0; i<NCHANS; i++)
-                prep[i].resize(dsize);
+                prep[i].resize(usize);
 
             DPRINTF(5, "Working enter read()\n");
             ret = ::read(fd, &dbuf[0], 4*dbuf.size());
             epicsTimeGetCurrent(&now);
             DPRINTF(5, "Working done read() -> %u\n", (unsigned)ret);
 
+            // demux and average by decim
             for(unsigned i=0; i<NCHANS; i++) {
-                for(size_t s=0; s<dsize; s++)
-                    prep[i][s] = O[i] + S[i]*dbuf[i+NCHANS*s];
+                const double Scale = S[i], Offset = O[i];
+                PicoDevice::data_t& D = prep[i];
+
+                for(size_t s=0; s<usize; s++) {
+                    const size_t index = s*NCHANS*decim + i;
+                    double sum=0.0;
+                    for(unsigned d=0; d<decim; d++) {
+                        sum += Offset + Scale*dbuf[index + d*NCHANS];
+                    }
+                    D[s] = sum/decim;
+                }
             }
+
+            // ======= relock
         }
             if(ret<0) {
                 int err = errno;

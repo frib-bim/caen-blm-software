@@ -49,7 +49,6 @@ struct PicoDevice : public epicsThreadRunable {
     PicoDevice(const std::string& fname);
 
     void open();
-    void resize(unsigned nsamp);
 
     virtual void run();
 
@@ -83,7 +82,10 @@ struct PicoDevice : public epicsThreadRunable {
     epicsUInt8 ranges;
     double trig_level;
 
+    //! # of samples requested by user.  data[].size==nsamp after acquisition
     unsigned nsamp;
+    //! SW decimation factor.  HW read() is nsamp*ndecim
+    unsigned ndecim;
 
     typedef std::vector<epicsFloat32> data_t;
     data_t data[NCHANS];

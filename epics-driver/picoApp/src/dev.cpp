@@ -27,6 +27,7 @@
 #include <mbboRecord.h>
 #include <mbbiRecord.h>
 #include <waveformRecord.h>
+#include <epicsExport.h>
 
 #include "pico.h"
 
@@ -315,7 +316,22 @@ long write_nsamp(longoutRecord *prec)
     BEGIN {
         Guard G(info->dev->lock);
 
-        info->dev->resize(prec->val);
+        if(prec->val>0)
+            info->dev->nsamp = prec->val;
+        else
+            (void)recGblSetSevr(prec, WRITE_ALARM, INVALID_ALARM);
+    } END(0)
+}
+
+long write_ndecim(longoutRecord *prec)
+{
+    BEGIN {
+        Guard G(info->dev->lock);
+
+        if(prec->val>0)
+            info->dev->ndecim = prec->val;
+        else
+            (void)recGblSetSevr(prec, WRITE_ALARM, INVALID_ALARM);
     } END(0)
 }
 
@@ -450,11 +466,13 @@ struct dset5 {
     long (*linconv)(R*);
 };
 
-#define DSET(NAME, REC, IOINTR, RW) dset5<REC ## Record> NAME = \
-    {6, NULL, NULL, &init_record_common, IOINTR, RW, NULL}
+} // namespace
 
-#define DSET2(NAME, REC, IOINTR, RW) dset5<REC ## Record> NAME = \
-    {6, NULL, NULL, &init_record_common2, IOINTR, RW, NULL}
+#define DSET(NAME, REC, IOINTR, RW) static dset5<REC ## Record> NAME = \
+    {6, NULL, NULL, &init_record_common, IOINTR, RW, NULL}; epicsExportAddress(dset, NAME)
+
+#define DSET2(NAME, REC, IOINTR, RW) static dset5<REC ## Record> NAME = \
+    {6, NULL, NULL, &init_record_common2, IOINTR, RW, NULL}; epicsExportAddress(dset, NAME)
 
 DSET(devPico8WfMessage, waveform, &get_data_update, &read_lastmsg);
 
@@ -469,6 +487,7 @@ DSET2(devPico8AoTrigLvl, ao, NULL, &write_trig_lvl);
 DSET(devPico8MbboTrigMode, mbbo, NULL, &write_trig_mode);
 
 DSET(devPico8LoNSamp, longout, NULL, &write_nsamp);
+DSET(devPico8LoNDecim, longout, NULL, &write_ndecim);
 DSET(devPico8LoPreSamp, longout, NULL, &write_pre_trig);
 DSET(devPico8MbboTrigSrc, mbbo, NULL, &write_trig_src);
 
@@ -479,32 +498,6 @@ DSET2(devPico8AoOffset, ao, NULL, &write_offset_ao);
 
 DSET(devPico8WfChanData, waveform, &get_data_update, &read_chan_data);
 
-} // namespace
-
-#include <epicsExport.h>
-
 epicsExportAddress(drvet, drvpico8);
-
-epicsExportAddress(dset, devPico8WfMessage);
-epicsExportAddress(dset, devPico8LoClock);
-epicsExportAddress(dset, devPico8LiClock);
-epicsExportAddress(dset, devPico8MbboClockSrc);
-
-epicsExportAddress(dset, devPico8MbboRunMode);
-epicsExportAddress(dset, devPico8MbbiStatus);
-
-epicsExportAddress(dset, devPico8AoTrigLvl);
-epicsExportAddress(dset, devPico8MbboTrigMode);
-
-epicsExportAddress(dset, devPico8LoNSamp);
-epicsExportAddress(dset, devPico8LoPreSamp);
-epicsExportAddress(dset, devPico8MbboTrigSrc);
-
-epicsExportAddress(dset, devPico8MbboRange);
-
-epicsExportAddress(dset, devPico8AoScale);
-epicsExportAddress(dset, devPico8AoOffset);
-
-epicsExportAddress(dset, devPico8WfChanData);
 
 epicsExportRegistrar(pico8registrar);

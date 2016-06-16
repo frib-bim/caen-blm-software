@@ -151,6 +151,17 @@ record(longout, "$(P)NSMP_CSET") {
     info(autosaveFields_pass0, "VAL")
 }
 
+record(longout, "$(P)NDEC_CSET") {
+    field(DESC, "SW decimation factor")
+    field(DTYP, "Pico8 Decimate")
+    field(OUT , "@$(NAME)")
+    field(PINI, "YES")
+    field(VAL , "1")
+    field(DRVL, "1")
+    field(DRVH, "999999")
+    info(autosaveFields_pass0, "VAL")
+}
+
 record(longout, "$(P)PTRG_CSET") {
     field(DESC, "Num. samples before trig point")
 	field(DTYP, "Pico8 Pre-trig Samples")

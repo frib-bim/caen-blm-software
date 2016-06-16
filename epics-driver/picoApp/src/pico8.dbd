@@ -11,6 +11,7 @@ device(ao, INST_IO, devPico8AoTrigLvl, "Pico8 Trigger Level")
 device(mbbo, INST_IO, devPico8MbboTrigMode, "Pico8 Trigger Mode")
 
 device(longout, INST_IO, devPico8LoNSamp, "Pico8 Num Samples")
+device(longout, INST_IO, devPico8LoNDecim, "Pico8 Decimate")
 device(longout, INST_IO, devPico8LoPreSamp, "Pico8 Pre-trig Samples")
 device(mbbo, INST_IO, devPico8MbboTrigSrc, "Pico8 Trigger Source")
 
