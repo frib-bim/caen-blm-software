@@ -170,3 +170,20 @@ record(longout, "$(P)PTRG_CSET") {
 	field(PINI, "YES")
     info(autosaveFields_pass0, "VAL")
 }
+
+record(longin, "$(P)NTRG_RD") {
+    field(DESC, "# of acquisitions")
+    field(DTYP, "Pico8 Run Count")
+    field(INP , "@$(NAME)")
+    field(SCAN, "I/O Intr")
+}
+
+record(calc, "$(P)RTRG_RD") {
+    field(DESC, "Trigger rate")
+    field(SCAN, "10 second")
+    field(INPA, "$(P)NTRG_RD")
+    field(CALC, "C:=A-B;B:=A;C/10")
+    field(EGU , "Hz")
+    field(PREC, "1")
+    info(autosaveFields_pass0, "HOPR LOPR HSV HHSV LSV LLSV HIHI HIGH LOW LOLO")
+}

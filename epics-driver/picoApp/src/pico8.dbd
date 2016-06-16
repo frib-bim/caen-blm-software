@@ -20,6 +20,7 @@ device(mbbo, INST_IO, devPico8MbboRange, "Pico8 Channel Range")
 device(ao, INST_IO, devPico8AoScale, "Pico8 Chan Scale")
 device(ao, INST_IO, devPico8AoOffset, "Pico8 Chan Offset")
 
+device(longin, INST_IO, devPico8LiRunCount, "Pico8 Run Count")
 device(waveform, INST_IO, devPico8WfChanData, "Pico8 Channel Data")
 
 driver(drvpico8)

@@ -403,6 +403,15 @@ long read_run_status(mbbiRecord *prec)
     } END(0)
 }
 
+long read_run_count(longinRecord *prec)
+{
+    if(prec->val != 0x7fffffff)
+        prec->val++;
+    else
+        prec->val = 0;
+    return 0;
+}
+
 long pico_report(int lvl)
 {
     dev_map_t::const_iterator cur, end;
@@ -496,6 +505,7 @@ DSET(devPico8MbboRange, mbbo, NULL, &write_chan_range);
 DSET2(devPico8AoScale, ao, NULL, &write_scale_ao);
 DSET2(devPico8AoOffset, ao, NULL, &write_offset_ao);
 
+DSET(devPico8LiRunCount, longin, &get_data_update, &read_run_count);
 DSET(devPico8WfChanData, waveform, &get_data_update, &read_chan_data);
 
 epicsExportAddress(drvet, drvpico8);
