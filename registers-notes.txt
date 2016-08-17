@@ -1,0 +1,56 @@
+== Protocols ==
+
+On startup.
+
+1. Reset DMA engine
+1. Clear any pending IRQs
+1. Unmask IRQs to be handled
+
+1. Write FRIB AMC slot number
+
+IRQ handling
+
+1. Read and clear active IRQ mask
+
+For DMA done IRQ see next.
+
+DMA
+
+1. Write start address and length
+1. Write command with GO to enqueue request.  Optionally set IRQ to get notification
+1. Poll response fifo count and/or wait for IRQ
+1. Read response start address and actual length
+1. write 1 to actual length to pop response fifo
+
+FRIB 100Hz record
+
+== Misc ==
+
+From hdl/application_pico/ring_buffer/ring_buffer.v
+
+//    When AXI Stream Slave finally starts reading from output port,        //
+//    it should read faster than master writes to input port to not         //
+//    miss words.                                                           //
+
+So significant contention on the PCIe link during a DMA would, in the best case,
+result in silently dropped samples.
+
+
+DMA command and response queues are deep w/ 11 bit count (2047 max.).
+
+Might be interesting to make DMA mux part of command fifo entry.
+
+DDR and frib 100Hz record in place of dummy sources (see user_logic.v).
+Add more sources.  One per DDR page.
+
+Can read out calibration gain+offset
+Linear scaling of samples could be moved into hardware :)
+
+
+FW introspection.
+
+  DMA fifo size.
+  FW modification ID (site ID register or different PCI IDs?)
+
+For eeprom, the done bit doesn't appear to be latched so the host
+can't reliably detect the done condtion.
