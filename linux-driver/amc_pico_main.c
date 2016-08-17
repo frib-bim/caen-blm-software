@@ -98,11 +98,11 @@ module_param_named(site, dmac_site_name, charp, 0444);
 
 
 /** List of devices this driver recognizes */
-static const struct pci_device_id ids[] = {
-	{ .vendor = PCI_VENDOR_ID_XILINX, .device = 0x0007,
-	  .subvendor = AMC_PICO_SUBVENDOR_ID, .subdevice = AMC_PICO_SUBDEVICE_ID
-	},
-	{ 0, }
+static DEFINE_PCI_DEVICE_TABLE(ids) = {
+    {
+        PCI_DEVICE_SUB(PCI_VENDOR_ID_XILINX, 0x0007, AMC_PICO_SUBVENDOR_ID, AMC_PICO_SUBDEVICE_ID),
+    },
+    { 0, }
 };
 
 MODULE_DEVICE_TABLE(pci, ids);
