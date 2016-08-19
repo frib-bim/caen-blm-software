@@ -115,8 +115,18 @@ void debugPICO(const std::string& name, int lvl)
         if(it==dev_map.end())
             throw std::invalid_argument("Unknown PICO8 device");
 
-        Guard G(it->second->lock);
-        it->second->debug_lvl = lvl;
+        {
+            Guard G(it->second->lock);
+            it->second->debug_lvl = lvl;
+        }
+
+#ifdef BUILD_FRIB
+        dev_cap_map_t::const_iterator it2 = dev_cap_map.find(name);
+        if(it2!=dev_cap_map.end()) {
+            Guard G(it2->second->lock);
+            it2->second->debug_lvl = lvl;
+        }
+#endif
     }catch(std::exception& e){
         fprintf(stderr, "error %s\n", e.what());
     }
@@ -517,6 +527,36 @@ long read_cap_count(longinRecord *prec)
 #endif
 }
 
+long read_cap_msg(waveformRecord *prec)
+{
+#ifdef BUILD_FRIB
+    BEGIN {
+        if(!info->cap || prec->ftvl!=menuFtypeCHAR) {
+            (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+            return 0;
+        }
+        Guard G(info->cap->lock);
+
+        char *buf = (char*)prec->bptr;
+        size_t N = info->cap->lastmsg.size();
+        if(N>prec->nelm-1)
+            N = prec->nelm-1;
+        memcpy(buf, info->cap->lastmsg.c_str(), N);
+        buf[N] = '\0';
+        prec->nord = N+1;
+
+        if(prec->tse==epicsTimeEventDeviceTime) {
+            prec->time = info->cap->updatetime;
+        }
+
+        return 0;
+    } END(0)
+#else
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+    return 0;
+#endif
+}
+
 long read_cap_li(longinRecord *prec)
 {
 #ifdef BUILD_FRIB
@@ -579,20 +619,23 @@ long read_cap_ai(aiRecord *prec)
         if(prec->aslo!=0.0) val*=prec->aslo;
         val+=prec->aoff;
 
+
         switch (prec->linr) {
         case menuConvertNO_CONVERSION:
-            break; /* do nothing*/
-
+            break;
         case menuConvertLINEAR:
         case menuConvertSLOPE:
-            val = (val * prec->eslo) + prec->eoff;
+            if(prec->eslo!=0.0) val*=prec->eslo;
+            val+=prec->eoff;
             break;
-
-        default: /* must use breakpoint table */
+        default:
             if (cvtRawToEngBpt(&val,prec->linr,prec->init,(void **)&prec->pbrk,&prec->lbrk)!=0) {
                 recGblSetSevr(prec,SOFT_ALARM,MAJOR_ALARM);
             }
         }
+
+        prec->val = val;
+        prec->udf = 0;
 
         if(prec->tse==epicsTimeEventDeviceTime) {
             prec->time = info->cap->updatetime;
@@ -601,7 +644,7 @@ long read_cap_ai(aiRecord *prec)
         if(!info->cap->valid)
             (void)recGblSetSevr(prec, READ_ALARM, INVALID_ALARM);
 
-        return 0;
+        return 2;
     } END(0)
 #else
     (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
@@ -707,6 +750,7 @@ DSET(devPico8WfChanData, waveform, &get_data_update, &read_chan_data);
 
 DSET(devPico8BiCapValid, bi, &get_cap_update, &read_cap_valid);
 DSET(devPico8LiCapCount, longin, &get_cap_update, &read_cap_count);
+DSET(devPico8WfCapMsg, waveform, &get_cap_update, &read_cap_msg);
 DSET(devPico8LiCap, longin, &get_cap_update, &read_cap_li);
 DSET(devPico8AiCap, ai, &get_cap_update, &read_cap_ai);
 

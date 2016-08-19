@@ -133,10 +133,13 @@ struct PicoFRIBCapture : public epicsThreadRunable
     IOSCANPVT update;
 
     epicsThread readerT;
+    epicsEvent sync;
     epicsMutex lock;
 
     bool running;
     epicsUInt32 count; // # of updates
+
+    int debug_lvl;
 
     bool valid;
     epicsTimeStamp updatetime;

@@ -216,9 +216,13 @@ PicoFRIBCapture::PicoFRIBCapture(const char *fname)
              epicsThreadGetStackSize(epicsThreadStackSmall),
              epicsThreadPriorityHigh)
     ,running(true)
+    ,count(0)
+    ,debug_lvl(0)
     ,valid(false)
 {
     scanIoInit(&update);
+    updatetime.secPastEpoch = 0;
+    updatetime.nsec = 0;
 
     fd = open(fname, O_RDWR);
     if(fd<0) {
@@ -247,11 +251,30 @@ PicoFRIBCapture::PicoFRIBCapture(const char *fname)
         close(fd);
         throw std::runtime_error("Not FRIB firmware");
     }
+
+    ival = 2;
+    ret = ioctl(fd, SET_SITE_MODE, &ival);
+    if(ret!=0) {
+        close(fd);
+        perror("Failed to set site mode");
+        throw std::runtime_error("Failed to set site mode");
+    }
+
+    if(lseek(fd, 0x30100, 0)<0) {
+        close(fd);
+        perror("Failed to seek to capture buffer start");
+        throw std::runtime_error("Failed to seek to capture buffer start");
+    }
+
+    readerT.start();
+    sync.wait();
 }
 
 void PicoFRIBCapture::run()
 {
     Guard G(lock);
+    DPRINTF(1, "Capture worker starting");
+    sync.signal();
 
     std::vector<epicsUInt32> locbuffer;
 
@@ -264,10 +287,14 @@ void PicoFRIBCapture::run()
 
             locbuffer.resize(4+8*5);
 
+            DPRINTF(5, "capture entering read()\n");
             ssize_t ret = read(fd, &locbuffer[0], 4*locbuffer.size());
             int err = errno;
+            DPRINTF(5, "capture return read() -> %lu (%d)\n", (unsigned long)ret, err);
             epicsTimeGetCurrent(&now);
-            if(ret<0) {
+            if(ret<0 && err==ECANCELED) {
+                continue;
+            } else if(ret<0) {
                 epicsPrintf("capture read error '%s'\n", strerror(err));
             } else if((size_t)ret<16) {
                 epicsPrintf("Incomplete capture read %u\n", (unsigned)ret);
@@ -320,6 +347,28 @@ void PicoFRIBCapture::run()
                 }
             }
 
+            if(debug_lvl>=5) {
+                fprintf(stderr, "Capture record\n");
+                size_t i;
+                for(i=0; i<buffer.size(); i++) {
+                    if(i%4==0)
+                        fprintf(stderr, "%04x : ", (unsigned)i);
+                    fprintf(stderr, "%08x ", (unsigned)buffer[i]);
+                    if(i%4==3)
+                        fprintf(stderr, "\n");
+                }
+                if(i%4!=3)
+                    fprintf(stderr, "\n");
+            }
+
+            /* if HW time isn't availble, use host time so that INVALID
+             * updates can be archived.
+             */
+            if(valid)
+                updatetime = captime;
+            else
+                updatetime = now;
+
         }catch(std::exception& e){
             errlogPrintf("Exception in capture run: \"%s\"\n", e.what());
             nextmsg<<"except \""<<e.what()<<"\", ";
@@ -327,9 +376,13 @@ void PicoFRIBCapture::run()
         }
 
         lastmsg = nextmsg.str();
+        if(!lastmsg.empty())
+            DPRINTF(1, "Capture message: \"%s\"\n", lastmsg.c_str());
         scanIoRequest(update);
 
     }
+
+    DPRINTF(1, "Capture worker stopping");
 }
 
 #endif // BUILD_FRIB
@@ -339,3 +392,9 @@ system_error::what() const throw()
 {
     return strerror(num);
 }
+
+#include <epicsExport.h>
+
+epicsExportAddress(double, picoSlewLimit);
+epicsExportAddress(double, picoStepDiff);
+epicsExportAddress(double, picoStepLimit);

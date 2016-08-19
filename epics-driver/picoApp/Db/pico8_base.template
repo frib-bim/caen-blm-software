@@ -202,3 +202,12 @@ record(longin, "$(P)CAPCNT_RD") {
     field(INP , "@$(NAME)")
     field(SCAN, "I/O Intr")
 }
+
+record(waveform, "$(P)CAPMSG_RD") {
+    field(DTYP, "Pico8 Capture Message")
+    field(INP , "@$(NAME)")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "CHAR")
+    field(NELM, "256")
+    field(PINI, "YES")
+}

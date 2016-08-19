@@ -26,8 +26,13 @@ device(waveform, INST_IO, devPico8WfChanData, "Pico8 Channel Data")
 
 device(bi, INST_IO, devPico8BiCapValid, "Pico8 Capture Valid")
 device(longin, INST_IO, devPico8LiCapCount, "Pico8 Capture Updates")
+device(waveform, INST_IO, devPico8WfCapMsg, "Pico8 Capture Message")
 device(longin, INST_IO, devPico8LiCap, "Pico8 Capture")
 device(ai, INST_IO, devPico8AiCap, "Pico8 Capture")
 
 driver(drvpico8)
 registrar(pico8registrar)
+
+variable(picoSlewLimit, double)
+variable(picoStepDiff, double)
+variable(picoStepLimit, double)
