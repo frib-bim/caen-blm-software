@@ -662,7 +662,7 @@ void pico8registrar()
 }
 
 template<typename R>
-struct dset5 {
+struct dset6 {
     long N;
     long (*report)(R*);
     long (*init)(int);
@@ -674,10 +674,10 @@ struct dset5 {
 
 } // namespace
 
-#define DSET(NAME, REC, IOINTR, RW) static dset5<REC ## Record> NAME = \
+#define DSET(NAME, REC, IOINTR, RW) static dset6<REC ## Record> NAME = \
     {6, NULL, NULL, &init_record_common, IOINTR, RW, NULL}; epicsExportAddress(dset, NAME)
 
-#define DSET2(NAME, REC, IOINTR, RW) static dset5<REC ## Record> NAME = \
+#define DSET2(NAME, REC, IOINTR, RW) static dset6<REC ## Record> NAME = \
     {6, NULL, NULL, &init_record_common2, IOINTR, RW, NULL}; epicsExportAddress(dset, NAME)
 
 DSET(devPico8WfMessage, waveform, &get_data_update, &read_lastmsg);
