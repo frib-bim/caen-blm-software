@@ -23,5 +23,11 @@ device(ao, INST_IO, devPico8AoOffset, "Pico8 Chan Offset")
 device(longin, INST_IO, devPico8LiRunCount, "Pico8 Run Count")
 device(waveform, INST_IO, devPico8WfChanData, "Pico8 Channel Data")
 
+
+device(bi, INST_IO, devPico8BiCapValid, "Pico8 Capture Valid")
+device(longin, INST_IO, devPico8LiCapCount, "Pico8 Capture Updates")
+device(longin, INST_IO, devPico8LiCap, "Pico8 Capture")
+device(ai, INST_IO, devPico8AiCap, "Pico8 Capture")
+
 driver(drvpico8)
 registrar(pico8registrar)

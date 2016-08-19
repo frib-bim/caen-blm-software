@@ -18,14 +18,17 @@
 #include <dbStaticLib.h>
 #include <menuFtype.h>
 #include <epicsExit.h>
+#include <cvtTable.h>
 #include <iocsh.h>
 
+#include <menuConvert.h>
 #include <longoutRecord.h>
 #include <longinRecord.h>
 #include <aoRecord.h>
 #include <aiRecord.h>
 #include <mbboRecord.h>
 #include <mbbiRecord.h>
+#include <biRecord.h>
 #include <waveformRecord.h>
 #include <epicsExport.h>
 
@@ -35,11 +38,15 @@ namespace {
 
 typedef std::map<std::string, PicoDevice*> dev_map_t;
 dev_map_t dev_map;
+#ifdef BUILD_FRIB
+typedef std::map<std::string, PicoFRIBCapture*> dev_cap_map_t;
+dev_cap_map_t dev_cap_map;
+#endif
 
 #define BEGIN if(!prec->dpvt) return 0; dsetInfo *info = (dsetInfo*)prec->dpvt; try
 #define END(N) catch(std::exception& e) { \
     fprintf(stderr, "%s: error %s\n", prec->name, e.what()); \
-    (void)recGblSetSevr(prec, READ_ALARM, INVALID_ALARM); \
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM); \
 } return N;
 
 void shutdownPICO(void *raw)
@@ -63,6 +70,20 @@ void shutdownPICO(void *raw)
     dev->readerT.exitWait();
 }
 
+#ifdef BUILD_FRIB
+void shutdownCapture(void *raw)
+{
+    PicoFRIBCapture *cap = (PicoFRIBCapture*)raw;
+
+    {
+        Guard G(cap->lock);
+        cap->running = false;
+        ::ioctl(cap->fd, ABORT_READ, (long)0);
+    }
+    cap->readerT.exitWait();
+}
+#endif // BUILD_FRIB
+
 void createPICO(const std::string& name, const std::string& devname)
 {
     try{
@@ -74,6 +95,14 @@ void createPICO(const std::string& name, const std::string& devname)
         epicsAtExit(&shutdownPICO, dev);
 
         dev_map[name] = dev;
+
+#ifdef BUILD_FRIB
+        PicoFRIBCapture *cap = new PicoFRIBCapture(devname.c_str());
+
+        epicsAtExit(&shutdownCapture, cap);
+
+        dev_cap_map[name] = cap;
+#endif
     }catch(std::exception& e){
         fprintf(stderr, "error %s\n", e.what());
     }
@@ -96,8 +125,15 @@ void debugPICO(const std::string& name, int lvl)
 struct dsetInfo
 {
     PicoDevice *dev;
-    unsigned chan;
-    dsetInfo() :dev(0), chan(0) {}
+#ifdef BUILD_FRIB
+    PicoFRIBCapture *cap;
+#endif
+    unsigned chan, offset;
+    dsetInfo() :dev(0), chan(0), offset(0) {
+#ifdef BUILD_FRIB
+        cap = 0;
+#endif
+    }
 };
 
 DBLINK* get_dev_link(dbCommon *prec)
@@ -134,6 +170,8 @@ long init_record_common(dbCommon *prec)
     P>>name;
     if(!P.fail() && !P.eof())
         P>>D->chan;
+    if(!P.fail() && !P.eof())
+        P>>std::hex>>D->offset;
 
     if(!P.eof() || P.fail()) {
         fprintf(stderr, "%s: unable to parse '%s'\n", prec->name,
@@ -152,6 +190,13 @@ long init_record_common(dbCommon *prec)
         return 0;
     }
     D->dev = it->second;
+
+#ifdef BUILD_FRIB
+    dev_cap_map_t::const_iterator it2 = dev_cap_map.find(name);
+    if(it2!=dev_cap_map.end()) {
+        D->cap = it2->second;
+    }
+#endif // BUILD_FRIB
 
     prec->dpvt = D.release();
     return 0;
@@ -194,6 +239,18 @@ long get_status_update(int, dbCommon* prec, IOSCANPVT* scan)
     BEGIN {
         *scan = info->dev->stsupdate;
         return 0;
+    } END(0)
+}
+
+long get_cap_update(int, dbCommon* prec, IOSCANPVT* scan)
+{
+    BEGIN {
+        if(info->cap) {
+            *scan = info->cap->update;
+            return 0;
+        } else {
+            return -S_dev_badSignal;
+        }
     } END(0)
 }
 
@@ -412,6 +469,146 @@ long read_run_count(longinRecord *prec)
     return 0;
 }
 
+long read_cap_valid(biRecord *prec)
+{
+#ifdef BUILD_FRIB
+    BEGIN {
+        if(!info->cap) {
+            (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+            return 0;
+        }
+        Guard G(info->cap->lock);
+
+        prec->rval = !!info->cap->valid;
+
+        if(prec->tse==epicsTimeEventDeviceTime) {
+            prec->time = info->cap->updatetime;
+        }
+
+        return 0;
+    } END(0)
+#else
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+    return 0;
+#endif
+}
+
+long read_cap_count(longinRecord *prec)
+{
+#ifdef BUILD_FRIB
+    BEGIN {
+        if(!info->cap) {
+            (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+            return 0;
+        }
+        Guard G(info->cap->lock);
+
+        prec->val = info->cap->count;
+
+        if(prec->tse==epicsTimeEventDeviceTime) {
+            prec->time = info->cap->updatetime;
+        }
+
+        return 0;
+    } END(0)
+#else
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+    return 0;
+#endif
+}
+
+long read_cap_li(longinRecord *prec)
+{
+#ifdef BUILD_FRIB
+    BEGIN {
+        if(!info->cap) {
+            (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+            return 0;
+        }
+        Guard G(info->cap->lock);
+
+        if(info->cap->buffer.size()<info->offset+4) {
+            (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+            return 0;
+        }
+
+        prec->val = info->cap->buffer[info->offset/4];
+
+        if(prec->tse==epicsTimeEventDeviceTime) {
+            prec->time = info->cap->updatetime;
+        }
+
+        if(!info->cap->valid)
+            (void)recGblSetSevr(prec, READ_ALARM, INVALID_ALARM);
+
+        return 0;
+    } END(0)
+#else
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+    return 0;
+#endif
+}
+
+float i2f(epicsUInt32 ival)
+{
+    union {
+        epicsUInt32 ival;
+        float fval;
+    } pun;
+    pun.ival = ival;
+    return pun.fval;
+}
+
+long read_cap_ai(aiRecord *prec)
+{
+#ifdef BUILD_FRIB
+    BEGIN {
+        if(!info->cap) {
+            (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+            return 0;
+        }
+        Guard G(info->cap->lock);
+
+        if(info->cap->buffer.size()<info->offset+4) {
+            (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+            return 0;
+        }
+
+        double val = i2f(info->cap->buffer[info->offset/4]);
+
+        if(prec->aslo!=0.0) val*=prec->aslo;
+        val+=prec->aoff;
+
+        switch (prec->linr) {
+        case menuConvertNO_CONVERSION:
+            break; /* do nothing*/
+
+        case menuConvertLINEAR:
+        case menuConvertSLOPE:
+            val = (val * prec->eslo) + prec->eoff;
+            break;
+
+        default: /* must use breakpoint table */
+            if (cvtRawToEngBpt(&val,prec->linr,prec->init,(void **)&prec->pbrk,&prec->lbrk)!=0) {
+                recGblSetSevr(prec,SOFT_ALARM,MAJOR_ALARM);
+            }
+        }
+
+        if(prec->tse==epicsTimeEventDeviceTime) {
+            prec->time = info->cap->updatetime;
+        }
+
+        if(!info->cap->valid)
+            (void)recGblSetSevr(prec, READ_ALARM, INVALID_ALARM);
+
+        return 0;
+    } END(0)
+#else
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+    return 0;
+#endif
+}
+
 long pico_report(int lvl)
 {
     dev_map_t::const_iterator cur, end;
@@ -507,6 +704,11 @@ DSET2(devPico8AoOffset, ao, NULL, &write_offset_ao);
 
 DSET(devPico8LiRunCount, longin, &get_data_update, &read_run_count);
 DSET(devPico8WfChanData, waveform, &get_data_update, &read_chan_data);
+
+DSET(devPico8BiCapValid, bi, &get_cap_update, &read_cap_valid);
+DSET(devPico8LiCapCount, longin, &get_cap_update, &read_cap_count);
+DSET(devPico8LiCap, longin, &get_cap_update, &read_cap_li);
+DSET(devPico8AiCap, ai, &get_cap_update, &read_cap_ai);
 
 epicsExportAddress(drvet, drvpico8);
 

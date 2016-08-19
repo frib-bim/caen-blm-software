@@ -1,0 +1,13 @@
+
+file "pico8_cap_int.template"
+{
+{N="\$(SYS):\$(D)_CAP:FLG_RSTS", NAME="\$(NAME)", ADDR="c"}
+}
+
+file "pico8_cap_float.template"
+{
+{N="\$(SYS):\$(D)_CH0:AVG_RD", NAME="\$(NAME)", ADDR="10"}
+{N="\$(SYS):\$(D)_CH0:MIN_RD", NAME="\$(NAME)", ADDR="14"}
+{N="\$(SYS):\$(D)_CH0:MAX_RD", NAME="\$(NAME)", ADDR="18"}
+{N="\$(SYS):\$(D)_CH0:STD_RD", NAME="\$(NAME)", ADDR="1c"}
+}

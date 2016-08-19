@@ -5,7 +5,9 @@
 #include <errno.h>
 #include <string.h>
 #include <math.h>
+#include <stdio.h>
 
+#include <iomanip>
 #include <iostream>
 
 #include <unistd.h>
@@ -58,6 +60,19 @@ PicoDevice::open()
     if(F==-1)
         throw system_error(errno);
     fd = F;
+
+#ifdef GET_VERSION
+    uint32_t ival = 0;
+    int ret = ::ioctl(fd, GET_VERSION, &ival);
+    if(ret!=0) {
+        close(fd);
+        perror("Failed to fetch kernel interface version");
+        throw std::runtime_error("Failed to fetch kernel interface version");
+    } else if(ival!=GET_VERSION_CURRENT) {
+        close(fd);
+        throw std::runtime_error("Kernel interface version mis-match");
+    }
+#endif
 }
 
 void
@@ -185,6 +200,139 @@ PicoDevice::run()
 
     DPRINTF(1, "Working stopping\n");
 }
+
+#ifdef BUILD_FRIB
+
+// maximum allowed difference between host and device timestamps
+double picoSlewLimit = 4.0; // sec
+// expected difference in consecuative capture timestamps
+double picoStepDiff = 1.0; // sec
+// maximum difference from expected difference between consecuative capture timestamps
+double picoStepLimit = 0.1; // sec
+
+PicoFRIBCapture::PicoFRIBCapture(const char *fname)
+    :fd(-1)
+    ,readerT(*this, "capture",
+             epicsThreadGetStackSize(epicsThreadStackSmall),
+             epicsThreadPriorityHigh)
+    ,running(true)
+    ,valid(false)
+{
+    scanIoInit(&update);
+
+    fd = open(fname, O_RDWR);
+    if(fd<0) {
+        perror("Can't open");
+        throw std::runtime_error("Can't open");
+    }
+
+    uint32_t ival = 0;
+    int ret = ioctl(fd, GET_VERSION, &ival);
+    if(ret!=0) {
+        close(fd);
+        perror("Failed to fetch kernel interface version");
+        throw std::runtime_error("Failed to fetch kernel interface version");
+    } else if(ival!=GET_VERSION_CURRENT) {
+        close(fd);
+        throw std::runtime_error("Kernel interface version mis-match");
+    }
+
+    ival = 0;
+    ret = ioctl(fd, GET_SITE_ID, &ival);
+    if(ret!=0) {
+        close(fd);
+        perror("Failed to fetch site firmware version");
+        throw std::runtime_error("Failed to fetch kernel interface version");
+    } else if(ival!=USER_SITE_FRIB) {
+        close(fd);
+        throw std::runtime_error("Not FRIB firmware");
+    }
+}
+
+void PicoFRIBCapture::run()
+{
+    Guard G(lock);
+
+    std::vector<epicsUInt32> locbuffer;
+
+    while(running) {
+        epicsTimeStamp now;
+
+        bool havedata = false;
+        {
+            UnGuard U(G);
+
+            locbuffer.resize(4+8*5);
+
+            ssize_t ret = read(fd, &locbuffer[0], 4*locbuffer.size());
+            int err = errno;
+            epicsTimeGetCurrent(&now);
+            if(ret<0) {
+                epicsPrintf("capture read error '%s'\n", strerror(err));
+            } else if((size_t)ret<16) {
+                epicsPrintf("Incomplete capture read %u\n", (unsigned)ret);
+            } else {
+                havedata = true;
+            }
+        }
+
+        if(!havedata) {
+            valid = false;
+            epicsTimeGetCurrent(&updatetime);
+            lastmsg = "I/O Error";
+            {
+                UnGuard U(G);
+                scanIoRequest(update);
+                sleep(5);
+            }
+            continue;
+        }
+
+        count++;
+
+        std::ostringstream nextmsg;
+
+        try {
+            bool lastvalid = valid; // was last cycle OK?
+            valid = true;
+
+            buffer.swap(locbuffer);
+
+            epicsTimeStamp captime;
+            captime.secPastEpoch = buffer[0]-POSIX_TIME_AT_EPICS_EPOCH;
+            captime.nsec         = buffer[1]/80.5e6; // ticks of 80.5 MHz clock
+
+            /* we don't believe the device if the captured time stamp
+             * is too diferent
+             */
+            double diff = epicsTimeDiffInSeconds(&now, &captime);
+            if(fabs(diff)>picoSlewLimit) {
+                nextmsg<<"time slew "<<std::setprecision(3)<<diff*1e3<<" ms, ";
+                valid = false;
+            }
+
+            if(lastvalid) {
+                diff = epicsTimeDiffInSeconds(&captime, &updatetime);
+                /* Difference with last valid capture is too large */
+                if(fabs(diff-picoStepDiff)>picoStepLimit) {
+                    nextmsg<<"time step "<<std::setprecision(3)<<diff*1e3<<" ms, ";
+                    valid = false;
+                }
+            }
+
+        }catch(std::exception& e){
+            errlogPrintf("Exception in capture run: \"%s\"\n", e.what());
+            nextmsg<<"except \""<<e.what()<<"\", ";
+            valid = false;
+        }
+
+        lastmsg = nextmsg.str();
+        scanIoRequest(update);
+
+    }
+}
+
+#endif // BUILD_FRIB
 
 const char *
 system_error::what() const throw()

@@ -12,6 +12,7 @@
 #include <ostream>
 #include <stdexcept>
 #include <string>
+#include <sstream>
 #include <vector>
 
 #include <epicsTime.h>
@@ -26,6 +27,10 @@
 
 #include "amc_pico.h"
 
+#if defined(USER_SITE_FRIB) && !defined(SKIP_FRIB)
+#define BUILD_FRIB 1
+#endif
+
 #define DPRINTF3(D, LVL, fmt, ...) do{ if((D)->debug_lvl>=(LVL)) { \
     errlogPrintf(fmt, ## __VA_ARGS__); \
 }} while(0)
@@ -38,6 +43,14 @@ struct system_error : public std::exception {
     virtual const char *what() const throw();
 };
 
+struct SB {
+    std::ostringstream strm;
+    SB() {}
+    operator std::string() const { return strm.str(); }
+    template<typename T>
+    SB& operator<<(T i) { strm<<i; return *this; }
+};
+
 typedef epicsGuard<epicsMutex> Guard;
 typedef epicsGuardRelease<epicsMutex> UnGuard;
 
@@ -47,6 +60,7 @@ struct PicoDevice : public epicsThreadRunable {
     };
 
     PicoDevice(const std::string& fname);
+    virtual ~PicoDevice() {}
 
     void open();
 
@@ -104,5 +118,34 @@ struct PicoDevice : public epicsThreadRunable {
             throw system_error(errno);
     }
 };
+
+#ifdef BUILD_FRIB
+
+struct PicoFRIBCapture : public epicsThreadRunable
+{
+    PicoFRIBCapture(const char *fname);
+    virtual ~PicoFRIBCapture() {}
+
+    virtual void run();
+
+    int fd;
+
+    IOSCANPVT update;
+
+    epicsThread readerT;
+    epicsMutex lock;
+
+    bool running;
+    epicsUInt32 count; // # of updates
+
+    bool valid;
+    epicsTimeStamp updatetime;
+
+    std::vector<epicsUInt32> buffer;
+
+    std::string lastmsg;
+};
+
+#endif // BUILD_FRIB
 
 #endif // PICO_H

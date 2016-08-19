@@ -4,6 +4,7 @@ include $(TOP)/configure/CONFIG
 #  ADD MACRO DEFINITIONS AFTER THIS LINE
 
 DB += pico8.db
+DB += pico8_frib_capture.db
 DB += pico8_chan_alias.db
 
 ifneq ($(AUTOSAVE),)

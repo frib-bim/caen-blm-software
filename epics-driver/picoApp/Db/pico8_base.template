@@ -187,3 +187,18 @@ record(calc, "$(P)RTRG_RD") {
     field(PREC, "1")
     info(autosaveFields_pass0, "HOPR LOPR HSV HHSV LSV LLSV HIHI HIGH LOW LOLO")
 }
+
+record(bi, "$(P)CAPVLD_RSTS") {
+    field(DTYP, "Pico8 Capture Valid")
+    field(INP , "@$(NAME)")
+    field(SCAN, "I/O Intr")
+    field(ZNAM, "INVALID")
+    field(ONAM, "OK")
+    field(ZSV , "MAJOR")
+}
+
+record(longin, "$(P)CAPCNT_RD") {
+    field(DTYP, "Pico8 Capture Updates")
+    field(INP , "@$(NAME)")
+    field(SCAN, "I/O Intr")
+}
