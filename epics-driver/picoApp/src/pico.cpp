@@ -87,6 +87,7 @@ PicoDevice::run()
     epicsTimeStamp now;
 
     while(running) {
+    try {
         DPRINTF(4, "Worker %u -> %u\n", (unsigned)cur_state, (unsigned)target_state);
         if(target_state != cur_state) scanIoRequest(stsupdate);
         state_t T = target_state;
@@ -196,6 +197,10 @@ PicoDevice::run()
                 scanIoRequest(dataupdate);
             }
         }
+    } catch(std::exception& e) {
+        target_state = Error;
+        lasterror = e.what();
+    }
     }
 
     DPRINTF(1, "Working stopping\n");
