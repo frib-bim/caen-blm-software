@@ -64,11 +64,13 @@ static const struct attribute_group *_name##_groups[] = {	\
     NULL,							\
 }
 
+#ifndef ATTRIBUTE_GROUPS
 #define ATTRIBUTE_GROUPS(_name)					\
 static const struct attribute_group _name##_group = {		\
     .attrs = _name##_attrs,					\
 };								\
 __ATTRIBUTE_GROUPS(_name)
+#endif
 
 static inline int sysfs_create_groups(struct kobject *kobj,
                       const struct attribute_group **groups)
