@@ -1,4 +1,4 @@
-record(ai, "$(N)") {
+record(ai, "$(P)_RD") {
     field(DTYP, "Pico8 Capture")
     field(INP , "@$(NAME) 0 $(ADDR)")
     field(SCAN, "$(SCAN=I/O Intr)")
