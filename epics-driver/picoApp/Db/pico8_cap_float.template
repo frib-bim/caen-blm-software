@@ -9,5 +9,6 @@ record(ai, "$(N)") {
     field(EOFF, "$(EOFF=)")
     field(PREC, "$(PREC=)")
     field(EGU , "$(EGU=)")
+    field(TSE , "$(TSEL=-2)")
     field(FLNK, "$(FLNK=)")
 }

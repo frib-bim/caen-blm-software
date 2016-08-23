@@ -264,6 +264,18 @@ long get_cap_update(int, dbCommon* prec, IOSCANPVT* scan)
     } END(0)
 }
 
+long get_cap_msgupdate(int, dbCommon* prec, IOSCANPVT* scan)
+{
+    BEGIN {
+        if(info->cap) {
+            *scan = info->cap->msgupdate;
+            return 0;
+        } else {
+            return -S_dev_badSignal;
+        }
+    } END(0)
+}
+
 long write_clock(longoutRecord *prec)
 {
     BEGIN {
@@ -750,7 +762,7 @@ DSET(devPico8WfChanData, waveform, &get_data_update, &read_chan_data);
 
 DSET(devPico8BiCapValid, bi, &get_cap_update, &read_cap_valid);
 DSET(devPico8LiCapCount, longin, &get_cap_update, &read_cap_count);
-DSET(devPico8WfCapMsg, waveform, &get_cap_update, &read_cap_msg);
+DSET(devPico8WfCapMsg, waveform, &get_cap_msgupdate, &read_cap_msg);
 DSET(devPico8LiCap, longin, &get_cap_update, &read_cap_li);
 DSET(devPico8AiCap, ai, &get_cap_update, &read_cap_ai);
 

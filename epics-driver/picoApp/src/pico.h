@@ -131,6 +131,7 @@ struct PicoFRIBCapture : public epicsThreadRunable
     int fd;
 
     IOSCANPVT update;
+    IOSCANPVT msgupdate;
 
     epicsThread readerT;
     epicsEvent sync;

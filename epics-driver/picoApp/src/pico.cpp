@@ -211,9 +211,9 @@ PicoDevice::run()
 // maximum allowed difference between host and device timestamps
 double picoSlewLimit = 4.0; // sec
 // expected difference in consecuative capture timestamps
-double picoStepDiff = 1.0; // sec
+double picoStepDiff = 0.01; // sec
 // maximum difference from expected difference between consecuative capture timestamps
-double picoStepLimit = 0.1; // sec
+double picoStepLimit = 0.004; // sec
 
 PicoFRIBCapture::PicoFRIBCapture(const char *fname)
     :fd(-1)
@@ -226,6 +226,7 @@ PicoFRIBCapture::PicoFRIBCapture(const char *fname)
     ,valid(false)
 {
     scanIoInit(&update);
+    scanIoInit(&msgupdate);
     updatetime.secPastEpoch = 0;
     updatetime.nsec = 0;
 
@@ -332,10 +333,10 @@ void PicoFRIBCapture::run()
 
             epicsTimeStamp captime;
             captime.secPastEpoch = buffer[0]-POSIX_TIME_AT_EPICS_EPOCH;
-            captime.nsec         = buffer[1]/80.5e6; // ticks of 80.5 MHz clock
+            captime.nsec         = buffer[1]/80.5e-3; // ticks of 80.5 MHz clock
 
             /* we don't believe the device if the captured time stamp
-             * is too diferent
+             * differs too much from the host.
              */
             double diff = epicsTimeDiffInSeconds(&now, &captime);
             if(fabs(diff)>picoSlewLimit) {
@@ -346,6 +347,11 @@ void PicoFRIBCapture::run()
             if(lastvalid) {
                 diff = epicsTimeDiffInSeconds(&captime, &updatetime);
                 /* Difference with last valid capture is too large */
+                if(captime.secPastEpoch==updatetime.secPastEpoch &&
+                   captime.nsec==updatetime.nsec) {
+                    nextmsg<<"same time, ";
+                    valid = false;
+                }
                 if(fabs(diff-picoStepDiff)>picoStepLimit) {
                     nextmsg<<"time step "<<std::setprecision(3)<<diff*1e3<<" ms, ";
                     valid = false;
@@ -380,10 +386,15 @@ void PicoFRIBCapture::run()
             valid = false;
         }
 
-        lastmsg = nextmsg.str();
+        scanIoRequest(update);
+
+        std::string nextmsg_s = nextmsg.str();
+        if(nextmsg_s!=lastmsg) {
+            nextmsg_s.swap(lastmsg);
+            scanIoRequest(msgupdate);
+        }
         if(!lastmsg.empty())
             DPRINTF(1, "Capture message: \"%s\"\n", lastmsg.c_str());
-        scanIoRequest(update);
 
     }
 

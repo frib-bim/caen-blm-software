@@ -1,6 +1,8 @@
 
 file "pico8_cap_int.template"
 {
+#{N="\$(SYS):\$(D)_CAP:SEC_RSTS", NAME="\$(NAME)", ADDR="0"}
+#{N="\$(SYS):\$(D)_CAP:NS_RSTS", NAME="\$(NAME)", ADDR="4"}
 {N="\$(SYS):\$(D)_CAP:FLG_RSTS", NAME="\$(NAME)", ADDR="c"}
 }
 
