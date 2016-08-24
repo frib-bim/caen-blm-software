@@ -34,6 +34,26 @@
 
 #include "pico.h"
 
+DBLINK* get_dev_link(dbCommon *prec)
+{
+    DBLINK *ret = NULL;
+    DBENTRY ent;
+
+    dbInitEntry(pdbbase, &ent);
+
+    dbFindRecord(&ent, prec->name);
+    assert(ent.precnode->precord==(void*)prec);
+
+    if(dbFindField(&ent, "INP") && dbFindField(&ent, "OUT")) {
+        fprintf(stderr, "%s: can't find dev link\n", prec->name);
+    } else {
+        ret = (DBLINK*)((char*)prec + ent.pflddes->offset);
+    }
+
+    dbFinishEntry(&ent);
+    return ret;
+}
+
 namespace {
 
 typedef std::map<std::string, PicoDevice*> dev_map_t;
@@ -145,26 +165,6 @@ struct dsetInfo
 #endif
     }
 };
-
-DBLINK* get_dev_link(dbCommon *prec)
-{
-    DBLINK *ret = NULL;
-    DBENTRY ent;
-
-    dbInitEntry(pdbbase, &ent);
-
-    dbFindRecord(&ent, prec->name);
-    assert(ent.precnode->precord==(void*)prec);
-
-    if(dbFindField(&ent, "INP") && dbFindField(&ent, "OUT")) {
-        fprintf(stderr, "%s: can't find dev link\n", prec->name);
-    } else {
-        ret = (DBLINK*)((char*)prec + ent.pflddes->offset);
-    }
-
-    dbFinishEntry(&ent);
-    return ret;
-}
 
 long init_record_common(dbCommon *prec)
 {

@@ -1,0 +1,58 @@
+
+record(longout, "$(N)setsamp") {
+    field(DTYP, "TBUF Set Num Samples")
+    field(OUT , "@$(N)")
+}
+
+record(ao, "$(N)setperiod") {
+    field(DTYP, "TBUF Set Period")
+    field(OUT , "@$(N)")
+}
+
+record(ai, "$(N)src") {
+}
+
+record(ao, "$(N)push") {
+    field(DTYP, "TBUF Push Sample")
+    field(OMSL, "closed_loop")
+    field(DOL , "$(N)src")
+    field(OUT , "@$(N)")
+}
+
+record(ai, "$(N)first") {
+    field(DTYP, "TBUF Get Sample")
+    field(INP , "@$(N) First")
+    field(SCAN, "I/O Intr")
+    field(TSE , "-2")
+}
+
+record(ai, "$(N)avg") {
+    field(DTYP, "TBUF Get Sample")
+    field(INP , "@$(N) Mean")
+    field(SCAN, "I/O Intr")
+    field(TSE , "-2")
+}
+
+record(ai, "$(N)min") {
+    field(DTYP, "TBUF Get Sample")
+    field(INP , "@$(N) Min")
+    field(SCAN, "I/O Intr")
+    field(TSE , "-2")
+}
+
+record(ai, "$(N)max") {
+    field(DTYP, "TBUF Get Sample")
+    field(INP , "@$(N) Max")
+    field(SCAN, "I/O Intr")
+    field(TSE , "-2")
+}
+
+record(waveform, "$(N)buf") {
+    field(DTYP, "TBUF Get Buffer")
+    field(INP , "@$(N)")
+    field(FTVL, "FLOAT")
+    field(SCAN, "I/O Intr")
+    field(NELM, "$(MAX=10)")
+    field(TSE , "-2")
+}
+

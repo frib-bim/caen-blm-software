@@ -6,6 +6,7 @@ dbLoadDatabase("../../dbd/pico.dbd",0,0)
 pico_registerRecordDeviceDriver(pdbbase) 
 
 createPICO8("PICO", "/dev/amc_pico_0000:01:00.0")
+#debugPICO("PICO", 5)
 
 dbLoadRecords("../../db/pico8.db","SYS=TST,D=pico,NAME=PICO")
 dbLoadRecords("../../db/pico8_frib_capture.db","SYS=TST,D=pico,NAME=PICO")

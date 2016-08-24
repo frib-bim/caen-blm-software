@@ -8,6 +8,16 @@ include $(TOP)/configure/CONFIG
 #=============================
 # Build the IOC application
 
+LIBRARY_IOC = pico8Support
+
+pico8Support_SRCS += pico.cpp
+pico8Support_SRCS += dev.cpp
+pico8Support_SRCS += tbuf.cpp
+
+DBD += pico8.dbd
+
+ifneq ($(SKIP_TEST),YES)
+
 PROD_IOC = pico
 # pico.dbd will be created and installed
 DBD += pico.dbd
@@ -25,9 +35,6 @@ pico_DBD += pico8.dbd
 # pico_registerRecordDeviceDriver.cpp derives from pico.dbd
 pico_SRCS += pico_registerRecordDeviceDriver.cpp
 
-pico_SRCS += pico.cpp
-pico_SRCS += dev.cpp
-
 # Build the main IOC entry point on workstation OSs.
 pico_SRCS_DEFAULT += picoMain.cpp
 pico_SRCS_vxWorks += -nil-
@@ -41,7 +48,10 @@ endif
 #pico_OBJS_vxWorks += $(EPICS_BASE_BIN)/vxComLibrary
 
 # Finally link to the EPICS Base libraries
+pico_LIBS += pico8Support
 pico_LIBS += $(EPICS_BASE_IOC_LIBS)
+
+endif # SKIP_TEST
 
 PROD_IOC += picocli
 
