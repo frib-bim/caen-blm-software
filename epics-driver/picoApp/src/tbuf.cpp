@@ -423,6 +423,12 @@ long get_buffer(waveformRecord *prec)
 
         ssize_t pos = tb->first();
 
+        if(prec->tse==epicsTimeEventDeviceTime) {
+            // always report time of first sample
+
+            prec->time = tb->times[pos];
+        }
+
         short maxsevr = 0;
         for(size_t n=nelm; n; n--, pos = (pos+1)%tb->size()) {
             *buf++ = tb->values[pos];
@@ -433,12 +439,6 @@ long get_buffer(waveformRecord *prec)
         prec->nord = nelm;
         if(maxsevr)
             (void)recGblSetSevr(prec, READ_ALARM, maxsevr);
-
-        if(prec->tse==epicsTimeEventDeviceTime) {
-            // always report time of most recent sample
-
-            prec->time = tb->times[tb->last()];
-        }
 
         return 0;
     } CATCH()

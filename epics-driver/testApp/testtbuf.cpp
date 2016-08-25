@@ -155,16 +155,16 @@ void testShift()
     assertAI(pmean,  1.5, 0, T0+1, 2000);
     assertAI(pmin,   1.0, 0, T0+1, 2000);
     assertAI(pmax,   2.0, 0, T0+1, 2000);
-    assertWF(pwbuf,       0, T0+1, 2000, 2, 1.0, 2.0);
+    assertWF(pwbuf,       0, T0  , 1000, 2, 1.0, 2.0);
 
     pushval(3.0, 0, T0+2, 3000);
     // [1, 2, 3]
 
-    assertAI(pfirst, 1.0, 0, T0, 1000);
+    assertAI(pfirst, 1.0, 0, T0,   1000);
     assertAI(pmean,  2.0, 0, T0+2, 3000);
     assertAI(pmin,   1.0, 0, T0+2, 3000);
     assertAI(pmax,   3.0, 0, T0+2, 3000);
-    assertWF(pwbuf,       0, T0+2, 3000, 3, 1.0, 2.0, 3.0);
+    assertWF(pwbuf,       0, T0  , 1000, 3, 1.0, 2.0, 3.0);
 
     pushval(4.0, 0, T0+3, 4000);
     // [2, 3, 4]
@@ -173,7 +173,7 @@ void testShift()
     assertAI(pmean,  3.0, 0, T0+3, 4000);
     assertAI(pmin,   2.0, 0, T0+3, 4000);
     assertAI(pmax,   4.0, 0, T0+3, 4000);
-    assertWF(pwbuf,       0, T0+3, 4000, 3, 2.0, 3.0, 4.0);
+    assertWF(pwbuf,       0, T0+1, 2000, 3, 2.0, 3.0, 4.0);
 
     pushval(5.0, 0, T0+4, 5000);
     // [3, 4, 5]
@@ -182,7 +182,7 @@ void testShift()
     assertAI(pmean,  4.0, 0, T0+4, 5000);
     assertAI(pmin,   3.0, 0, T0+4, 5000);
     assertAI(pmax,   5.0, 0, T0+4, 5000);
-    assertWF(pwbuf, 0, T0+4, 5000, 3, 3.0, 4.0, 5.0);
+    assertWF(pwbuf,       0, T0+2, 3000, 3, 3.0, 4.0, 5.0);
 
     pushval(6.0, 0, T0+5, 6000);
     // [4, 5, 6]
@@ -191,7 +191,7 @@ void testShift()
     assertAI(pmean,  5.0, 0, T0+5, 6000);
     assertAI(pmin,   4.0, 0, T0+5, 6000);
     assertAI(pmax,   6.0, 0, T0+5, 6000);
-    assertWF(pwbuf, 0, T0+5, 6000, 3, 4.0, 5.0, 6.0);
+    assertWF(pwbuf,       0, T0+3, 4000, 3, 4.0, 5.0, 6.0);
 }
 
 void testDecim()
@@ -245,7 +245,7 @@ void testDecim()
     assertAI(pmean,  (4.0+ 1.5+ 3.0)/3.0, 0, T0+1, 1500);
     assertAI(pmin,   1.5, 0, T0+1, 1500);
     assertAI(pmax,   4.0, 0, T0+1, 1500);
-    assertWF(pwbuf,       0, T0+1, 1500, 3, 4.0, 1.5, 3.0);
+    assertWF(pwbuf,       0, T0  , 4000, 3, 4.0, 1.5, 3.0);
 }
 
 void testMono()
