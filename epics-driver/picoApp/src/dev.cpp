@@ -579,7 +579,7 @@ long read_cap_li(longinRecord *prec)
         }
         Guard G(info->cap->lock);
 
-        if(info->cap->buffer.size()<info->offset+4) {
+        if(info->cap->buffer.size()<info->offset/4+1) {
             (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
             return 0;
         }
@@ -621,7 +621,8 @@ long read_cap_ai(aiRecord *prec)
         }
         Guard G(info->cap->lock);
 
-        if(info->cap->buffer.size()<info->offset+4) {
+        if(info->cap->buffer.size()<info->offset/4+1) {
+            if(prec->tpro) errlogPrintf("%s: offset out of range %u / %zu\n", prec->name, info->offset, info->cap->buffer.size());
             (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
             return 0;
         }
