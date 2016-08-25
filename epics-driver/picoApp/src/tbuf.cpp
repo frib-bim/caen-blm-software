@@ -74,7 +74,9 @@ struct timebuf {
         lastphase = 0.0;
     }
 
-    bool empty() const { return cnt==0; }
+    inline size_t size() const { return values.size(); }
+
+    inline bool empty() const { return cnt==0; }
 
     // index of first populated element (assumes empty()==false)
     size_t first() const {
@@ -93,7 +95,7 @@ struct timebuf {
     }
 
     // index of next element to be populated
-    size_t next() const { return pos; }
+    inline size_t next() const { return pos; }
 
     const std::string name;
 
@@ -273,14 +275,23 @@ long new_sample(aoRecord *prec)
         {
             Guard G(tb->lock);
 
+            if(tb->cnt!=0) {
+                double delta = epicsTimeDiffInSeconds(&newtime, &tb->times[tb->last()]);
+                if(delta<=0) {
+                    fprintf(stderr, "%s: non-monotonic time (diff=%f).  Clear buffer.\n",
+                                 prec->name, delta);
+                    tb->reset();
+                }
+            }
+
             tb->values[tb->pos]     = newval;
             tb->times[tb->pos]      = newtime;
             tb->severities[tb->pos] = newsevr;
 
-            if(tb->cnt < tb->values.size())
+            if(tb->cnt < tb->size())
                 tb->cnt++;
 
-            tb->pos = (tb->pos+1)%tb->values.size();
+            tb->pos = (tb->pos+1)%tb->size();
 
             if(tb->period > 0.0) {
                 // Trigger update of outputs when phase rolls over (decimation mode)
@@ -324,9 +335,9 @@ void get_value_stat(timebuf *tb, aiRecord *prec, reduce_t reduce)
     double newval = tb->values[pos];
     short newsevr = tb->severities[pos];
 
-    pos = (pos+1)%tb->values.size();
+    pos = (pos+1)%tb->size();
 
-    for(size_t n=tb->cnt-1; n; n--, pos = (pos+1)%tb->values.size()) {
+    for(size_t n=tb->cnt-1; n; n--, pos = (pos+1)%tb->size()) {
         if(tb->severities[pos]>newsevr)
             newsevr = tb->severities[pos];
         switch(reduce) {
@@ -413,7 +424,7 @@ long get_buffer(waveformRecord *prec)
         ssize_t pos = tb->first();
 
         short maxsevr = 0;
-        for(size_t n=nelm; n; n--, pos = (pos+1)%tb->values.size()) {
+        for(size_t n=nelm; n; n--, pos = (pos+1)%tb->size()) {
             *buf++ = tb->values[pos];
             if(tb->severities[pos] > maxsevr)
                 maxsevr = tb->severities[pos];

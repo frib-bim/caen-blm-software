@@ -248,11 +248,47 @@ void testDecim()
     assertWF(pwbuf,       0, T0+1, 1500, 3, 4.0, 1.5, 3.0);
 }
 
+void testMono()
+{
+    testDiag("Check response to non-monotonic times");
+
+    psrc   = (aiRecord*)testdbRecordPtr("tst3:src");
+    pfirst = (aiRecord*)testdbRecordPtr("tst3:first");
+    pmean  = (aiRecord*)testdbRecordPtr("tst3:avg");
+    pmin   = (aiRecord*)testdbRecordPtr("tst3:min");
+    pmax   = (aiRecord*)testdbRecordPtr("tst3:max");
+    pwbuf  = (waveformRecord*)testdbRecordPtr("tst3:buf");
+
+    pushrec= "tst3:push.PROC";
+
+    testdbPutFieldOk("tst2:setsamp", DBR_LONG, 3);
+    testdbPutFieldOk("tst2:setperiod", DBR_DOUBLE, 1.0);
+
+    assertAI(pfirst, 0.0, 3, 0, 0);
+    assertAI(pmean,  0.0, 3, 0, 0);
+    assertAI(pmin,   0.0, 3, 0, 0);
+    assertAI(pmax,   0.0, 3, 0, 0);
+    assertWF(pwbuf,       3, 0, 0, 0);
+
+    pushval(1.0, 0, T0, 1000);
+    pushval(2.0, 0, T0, 2000);
+    pushval(3.0, 0, T0, 3000);
+    testDiag("Push old time");
+    pushval(4.0, 0, T0, 2500);
+
+    assertAI(pfirst, 4.0, 0, T0, 2500);
+    assertAI(pmean,  4.0, 0, T0, 2500);
+    assertAI(pmin,   4.0, 0, T0, 2500);
+    assertAI(pmax,   4.0, 0, T0, 2500);
+    assertWF(pwbuf,       0, T0, 2500, 1, 4.0);
+
+}
+
 } // namespace
 
 MAIN(testtbuf)
 {
-    testPlan(0);
+    testPlan(92);
 
     testdbPrepare();
 
@@ -260,6 +296,7 @@ MAIN(testtbuf)
     picoTest_registerRecordDeviceDriver(pdbbase);
     testdbReadDatabase("tbuf.db", NULL, "N=tst:");
     testdbReadDatabase("tbuf.db", NULL, "N=tst2:");
+    testdbReadDatabase("tbuf.db", NULL, "N=tst3:");
 
     eltc(0);
     testIocInitOk();
@@ -267,6 +304,7 @@ MAIN(testtbuf)
 
     testShift();
     testDecim();
+    testMono();
 
     testIocShutdownOk();
 
