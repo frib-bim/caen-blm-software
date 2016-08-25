@@ -9,36 +9,36 @@ file "pico8_cap_int.template"
 
 file "pico8_cap_float.template"
 {
-{P="\$(SYS):\$(D)_CH0:AVG", NAME="\$(NAME)", ADDR="10", ASLO="1e-4"}
-{P="\$(SYS):\$(D)_CH0:MIN", NAME="\$(NAME)", ADDR="14"}
-{P="\$(SYS):\$(D)_CH0:MAX", NAME="\$(NAME)", ADDR="18"}
-{P="\$(SYS):\$(D)_CH0:STD", NAME="\$(NAME)", ADDR="1c"}
-{P="\$(SYS):\$(D)_CH1:AVG", NAME="\$(NAME)", ADDR="24", ASLO="1e-4"}
-{P="\$(SYS):\$(D)_CH1:MIN", NAME="\$(NAME)", ADDR="28"}
-{P="\$(SYS):\$(D)_CH1:MAX", NAME="\$(NAME)", ADDR="2c"}
-{P="\$(SYS):\$(D)_CH1:STD", NAME="\$(NAME)", ADDR="30"}
-{P="\$(SYS):\$(D)_CH2:AVG", NAME="\$(NAME)", ADDR="38", ASLO="1e-4"}
-{P="\$(SYS):\$(D)_CH2:MIN", NAME="\$(NAME)", ADDR="3c"}
-{P="\$(SYS):\$(D)_CH2:MAX", NAME="\$(NAME)", ADDR="40"}
-{P="\$(SYS):\$(D)_CH2:STD", NAME="\$(NAME)", ADDR="44"}
-{P="\$(SYS):\$(D)_CH3:AVG", NAME="\$(NAME)", ADDR="4c", ASLO="1e-4"}
-{P="\$(SYS):\$(D)_CH3:MIN", NAME="\$(NAME)", ADDR="50"}
-{P="\$(SYS):\$(D)_CH3:MAX", NAME="\$(NAME)", ADDR="54"}
-{P="\$(SYS):\$(D)_CH3:STD", NAME="\$(NAME)", ADDR="58"}
-{P="\$(SYS):\$(D)_CH4:AVG", NAME="\$(NAME)", ADDR="60", ASLO="1e-4"}
-{P="\$(SYS):\$(D)_CH4:MIN", NAME="\$(NAME)", ADDR="64"}
-{P="\$(SYS):\$(D)_CH4:MAX", NAME="\$(NAME)", ADDR="68"}
-{P="\$(SYS):\$(D)_CH4:STD", NAME="\$(NAME)", ADDR="6c"}
-{P="\$(SYS):\$(D)_CH5:AVG", NAME="\$(NAME)", ADDR="74", ASLO="1e-4"}
-{P="\$(SYS):\$(D)_CH5:MIN", NAME="\$(NAME)", ADDR="78"}
-{P="\$(SYS):\$(D)_CH5:MAX", NAME="\$(NAME)", ADDR="7c"}
-{P="\$(SYS):\$(D)_CH5:STD", NAME="\$(NAME)", ADDR="80"}
-{P="\$(SYS):\$(D)_CH6:AVG", NAME="\$(NAME)", ADDR="88", ASLO="1e-4"}
-{P="\$(SYS):\$(D)_CH6:MIN", NAME="\$(NAME)", ADDR="8c"}
-{P="\$(SYS):\$(D)_CH6:MAX", NAME="\$(NAME)", ADDR="90"}
-{P="\$(SYS):\$(D)_CH6:STD", NAME="\$(NAME)", ADDR="94"}
-{P="\$(SYS):\$(D)_CH7:AVG", NAME="\$(NAME)", ADDR="9c", ASLO="1e-4"}
-{P="\$(SYS):\$(D)_CH7:MIN", NAME="\$(NAME)", ADDR="a0"}
-{P="\$(SYS):\$(D)_CH7:MAX", NAME="\$(NAME)", ADDR="a4"}
-{P="\$(SYS):\$(D)_CH7:STD", NAME="\$(NAME)", ADDR="a8"}
+{P="\$(SYS):\$(D)_CH0:AVG", NAME="\$(NAME)", ADDR="10", Stat="Mean", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH0:MIN", NAME="\$(NAME)", ADDR="14", Stat="Min"}
+{P="\$(SYS):\$(D)_CH0:MAX", NAME="\$(NAME)", ADDR="18", Stat="Max"}
+{P="\$(SYS):\$(D)_CH0:STD", NAME="\$(NAME)", ADDR="1c", Stat="Max"}
+{P="\$(SYS):\$(D)_CH1:AVG", NAME="\$(NAME)", ADDR="24", Stat="Mean", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH1:MIN", NAME="\$(NAME)", ADDR="28", Stat="Min"}
+{P="\$(SYS):\$(D)_CH1:MAX", NAME="\$(NAME)", ADDR="2c", Stat="Max"}
+{P="\$(SYS):\$(D)_CH1:STD", NAME="\$(NAME)", ADDR="30", Stat="Max"}
+{P="\$(SYS):\$(D)_CH2:AVG", NAME="\$(NAME)", ADDR="38", Stat="Mean", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH2:MIN", NAME="\$(NAME)", ADDR="3c", Stat="Min"}
+{P="\$(SYS):\$(D)_CH2:MAX", NAME="\$(NAME)", ADDR="40", Stat="Max"}
+{P="\$(SYS):\$(D)_CH2:STD", NAME="\$(NAME)", ADDR="44", Stat="Max"}
+{P="\$(SYS):\$(D)_CH3:AVG", NAME="\$(NAME)", ADDR="4c", Stat="Mean", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH3:MIN", NAME="\$(NAME)", ADDR="50", Stat="Min"}
+{P="\$(SYS):\$(D)_CH3:MAX", NAME="\$(NAME)", ADDR="54", Stat="Max"}
+{P="\$(SYS):\$(D)_CH3:STD", NAME="\$(NAME)", ADDR="58", Stat="Max"}
+{P="\$(SYS):\$(D)_CH4:AVG", NAME="\$(NAME)", ADDR="60", Stat="Mean", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH4:MIN", NAME="\$(NAME)", ADDR="64", Stat="Min"}
+{P="\$(SYS):\$(D)_CH4:MAX", NAME="\$(NAME)", ADDR="68", Stat="Max"}
+{P="\$(SYS):\$(D)_CH4:STD", NAME="\$(NAME)", ADDR="6c", Stat="Max"}
+{P="\$(SYS):\$(D)_CH5:AVG", NAME="\$(NAME)", ADDR="74", Stat="Mean", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH5:MIN", NAME="\$(NAME)", ADDR="78", Stat="Min"}
+{P="\$(SYS):\$(D)_CH5:MAX", NAME="\$(NAME)", ADDR="7c", Stat="Max"}
+{P="\$(SYS):\$(D)_CH5:STD", NAME="\$(NAME)", ADDR="80", Stat="Max"}
+{P="\$(SYS):\$(D)_CH6:AVG", NAME="\$(NAME)", ADDR="88", Stat="Mean", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH6:MIN", NAME="\$(NAME)", ADDR="8c", Stat="Min"}
+{P="\$(SYS):\$(D)_CH6:MAX", NAME="\$(NAME)", ADDR="90", Stat="Max"}
+{P="\$(SYS):\$(D)_CH6:STD", NAME="\$(NAME)", ADDR="94", Stat="Max"}
+{P="\$(SYS):\$(D)_CH7:AVG", NAME="\$(NAME)", ADDR="9c", Stat="Mean", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH7:MIN", NAME="\$(NAME)", ADDR="a0", Stat="Min"}
+{P="\$(SYS):\$(D)_CH7:MAX", NAME="\$(NAME)", ADDR="a4", Stat="Max"}
+{P="\$(SYS):\$(D)_CH7:STD", NAME="\$(NAME)", ADDR="a8", Stat="Max"}
 }
