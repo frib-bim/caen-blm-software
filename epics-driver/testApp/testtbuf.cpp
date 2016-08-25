@@ -225,6 +225,27 @@ void testDecim()
     assertAI(pmin,   1.0, 0, T0, 1000);
     assertAI(pmax,   1.0, 0, T0, 1000);
     assertWF(pwbuf,       0, T0, 1000, 1, 1.0);
+
+    pushval(2.0, 0, T0, 2000);
+    pushval(3.0, 0, T0, 3000);
+    pushval(4.0, 0, T0, 4000);
+    pushval(1.5, 0, T0, 5000);
+
+    testDiag("Further updates within period are not pushed");
+    assertAI(pfirst, 1.0, 0, T0, 1000);
+    assertAI(pmean,  1.0, 0, T0, 1000);
+    assertAI(pmin,   1.0, 0, T0, 1000);
+    assertAI(pmax,   1.0, 0, T0, 1000);
+    assertWF(pwbuf,       0, T0, 1000, 1, 1.0);
+
+    pushval(3.0, 0, T0+1, 1500);
+
+    testDiag("Updated now pushed");
+    assertAI(pfirst, 4.0, 0, T0, 4000);
+    assertAI(pmean,  (4.0+ 1.5+ 3.0)/3.0, 0, T0+1, 1500);
+    assertAI(pmin,   1.5, 0, T0+1, 1500);
+    assertAI(pmax,   4.0, 0, T0+1, 1500);
+    assertWF(pwbuf,       0, T0+1, 1500, 3, 4.0, 1.5, 3.0);
 }
 
 } // namespace
