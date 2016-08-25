@@ -444,6 +444,66 @@ long get_buffer(waveformRecord *prec)
     } CATCH()
 }
 
+long tbuf_report(int level)
+{
+    try {
+        printf("%zu TBUFs\n", timebufs.size());
+        timebufs_t::const_iterator it, end;
+        for(it=timebufs.begin(), end=timebufs.end(); it!=end; ++it)
+        {
+            const timebuf *tb = it->second;
+
+            if(level<2) {
+                printf("TBUF: %s\n", tb->name.c_str());
+                continue;
+            }
+
+            double period;
+            size_t maxn, curn;
+            std::vector<double> values;
+            std::vector<epicsTimeStamp> times;
+            std::vector<short> severities;
+
+            {
+                Guard G(tb->lock);
+                period = tb->period;
+                maxn = tb->size();
+                curn = tb->cnt;
+            }
+
+
+            printf("TBUF: %s, period=%f, count %zu/%zu\n",
+                   tb->name.c_str(), period, curn, maxn);
+
+            if(level<3)
+                continue;
+
+            values.resize(maxn);
+            times.resize(maxn);
+            severities.resize(maxn);
+
+            {
+                Guard G(tb->lock);
+                values = tb->values;
+                times = tb->times;
+                severities = tb->severities;
+            }
+
+            for(size_t i=0; i<values.size(); i++) {
+                char buf[64];
+                epicsTimeToStrftime(buf, sizeof(buf)-1, "%Y-%m-%d %H:%M:%S.%03f", &times[i]);
+                printf(" [%zu] %s %u VAL %f\n", i, buf,  severities[i], values[i]);
+            }
+        }
+
+    }catch(std::exception& e){
+        printf("Error: %s\n", e.what());
+    }
+    return 0;
+}
+
+drvet drvtbuf = {2, (DRVSUPFUN)&tbuf_report, NULL};
+
 template<typename T>
 struct dset6 {
     long N;
@@ -455,6 +515,8 @@ struct dset6 {
 };
 
 } // namespace
+
+epicsExportAddress(drvet, drvtbuf);
 
 #define DSET6(REC, NAME, INIT, IOINT, RW) \
     static dset6<REC ## Record> NAME = {6, NULL, NULL, INIT, IOINT, RW}; epicsExportAddress(dset, NAME)
