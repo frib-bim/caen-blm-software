@@ -490,6 +490,8 @@ void pico_release(struct kobject *obj)
 {
     struct board_data *board = container_of(obj, struct board_data, kobj);
 
+    mutex_destroy(&board->ddr_lock);
+
     /* Free allocated memory */
 #ifdef CONFIG_AMC_PICO_FRIB
     kfree(board->capture_buf);
@@ -600,6 +602,8 @@ static int probe(struct pci_dev *dev, const struct pci_device_id *id)
     }
     /* henceforth must call kobject_put(board) for cleanup */
 
+    mutex_init(&board->ddr_lock);
+
 	board->pci_dev = dev;
     board->irqmode = dmac_irqmode;
     if (board->irqmode>2)
@@ -680,7 +684,7 @@ static struct pci_driver pci_driver = {
 
 static
 void print_all_ioctls(void){
-	printk(KERN_DEBUG MOD_NAME
+    printk(KERN_DEBUG MOD_NAME
 		": supported IOCTL: SET_RANGE = 0x%08x\n", (unsigned int)SET_RANGE);
 	printk(KERN_DEBUG MOD_NAME
 		": supported IOCTL: GET_RANGE = 0x%08x\n", (unsigned int)GET_RANGE);
