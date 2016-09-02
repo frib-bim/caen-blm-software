@@ -31,17 +31,17 @@ record(mbbi, "$(P)MODE_RSTS") {
 }
 
 record(longout, "$(P)PSCL_CSET") {
-    field(DESC, "Sample clk divider")
+    field(DESC, "Sample clk freq")
 	field(DTYP, "Pico8 Clock Div")
 	field(OUT , "@$(NAME)")
 	field(PINI, "YES")
-	field(VAL , "299")
+        field(VAL , "1000000")
 	field(FLNK, "$(P)PSCL_RSET")
     info(autosaveFields_pass0, "VAL")
 }
 
 record(longin, "$(P)PSCL_RSET") {
-    field(DESC, "Sample clk divider")
+    field(DESC, "Sample clk")
 	field(DTYP, "Pico8 Clock Div")
 	field(INP , "@$(NAME)")
 }
