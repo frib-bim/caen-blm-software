@@ -19,7 +19,6 @@
 
 PicoDevice::PicoDevice(const std::string &fname)
     :devname(fname)
-    ,fd(-1)
     ,readerT(*this, "Reader",
              epicsThreadGetStackSize(epicsThreadStackSmall),
              epicsThreadPriorityHigh)
@@ -56,23 +55,7 @@ PicoDevice::PicoDevice(const std::string &fname)
 void
 PicoDevice::open()
 {
-    int F = ::open(devname.c_str(), O_RDWR|O_CLOEXEC);
-    if(F==-1)
-        throw system_error(errno);
-    fd = F;
-
-#ifdef GET_VERSION
-    uint32_t ival = 0;
-    int ret = ::ioctl(fd, GET_VERSION, &ival);
-    if(ret!=0) {
-        close(fd);
-        perror("Failed to fetch kernel interface version");
-        throw std::runtime_error("Failed to fetch kernel interface version");
-    } else if(ival!=GET_VERSION_CURRENT) {
-        close(fd);
-        throw std::runtime_error("Kernel interface version mis-match");
-    }
-#endif
+    fd.open(devname.c_str());
 }
 
 void
@@ -121,7 +104,7 @@ PicoDevice::run()
                 // nr_samp only seems to matter for external trig, but keep it in sync regardless
                 trig.nr_samp = hwsize;
 
-                ioctl(SET_TRG, &trig);
+                fd.ioctl(SET_TRG, &trig);
             }
 
             {
@@ -139,7 +122,7 @@ PicoDevice::run()
 
                 if(raw!=trig.limit) {
                     trig.limit = raw;
-                    ioctl(SET_TRG, &trig);
+                    fd.ioctl(SET_TRG, &trig);
                 }
             }
 
@@ -151,7 +134,7 @@ PicoDevice::run()
                 prep[i].resize(usize);
 
             DPRINTF(5, "Working enter read()\n");
-            ret = ::read(fd, &dbuf[0], 4*dbuf.size());
+            ret = fd.read(&dbuf[0], 4*dbuf.size());
             epicsTimeGetCurrent(&now);
             DPRINTF(5, "Working done read() -> %u\n", (unsigned)ret);
 
@@ -216,8 +199,7 @@ double picoStepDiff = 0.01; // sec
 double picoStepLimit = 0.004; // sec
 
 PicoFRIBCapture::PicoFRIBCapture(const char *fname)
-    :fd(-1)
-    ,readerT(*this, "capture",
+    :readerT(*this, "capture",
              epicsThreadGetStackSize(epicsThreadStackSmall),
              epicsThreadPriorityHigh)
     ,running(true)
@@ -230,47 +212,28 @@ PicoFRIBCapture::PicoFRIBCapture(const char *fname)
     updatetime.secPastEpoch = 0;
     updatetime.nsec = 0;
 
-    fd = open(fname, O_RDWR);
-    if(fd<0) {
-        perror("Can't open");
-        throw std::runtime_error("Can't open");
+    fd_cap.open(fname);
+
+    // regular DDR access
+    fd_reg.open(fname);
+    {
+        std::string ddrname = SB()<<fname<<"_ddr";
+        fd_ddr.open(ddrname.c_str());
     }
 
     uint32_t ival = 0;
-    int ret = ioctl(fd, GET_VERSION, &ival);
-    if(ret!=0) {
-        close(fd);
-        perror("Failed to fetch kernel interface version");
-        throw std::runtime_error("Failed to fetch kernel interface version");
-    } else if(ival!=GET_VERSION_CURRENT) {
-        close(fd);
-        throw std::runtime_error("Kernel interface version mis-match");
-    }
-
-    ival = 0;
-    ret = ioctl(fd, GET_SITE_ID, &ival);
-    if(ret!=0) {
-        close(fd);
-        perror("Failed to fetch site firmware version");
-        throw std::runtime_error("Failed to fetch kernel interface version");
-    } else if(ival!=USER_SITE_FRIB) {
-        close(fd);
+    fd_cap.ioctl(GET_SITE_ID, &ival);
+    if(ival!=USER_SITE_FRIB) {
         throw std::runtime_error("Not FRIB firmware");
     }
 
-    ival = 2;
-    ret = ioctl(fd, SET_SITE_MODE, &ival);
-    if(ret!=0) {
-        close(fd);
-        perror("Failed to set site mode");
-        throw std::runtime_error("Failed to set site mode");
-    }
+    ival = 1; // user register access
+    fd_reg.ioctl(SET_SITE_MODE, &ival);
+    ival = 2; // capture buffer access
+    fd_cap.ioctl(SET_SITE_MODE, &ival);
 
-    if(lseek(fd, 0x30100, 0)<0) {
-        close(fd);
-        perror("Failed to seek to capture buffer start");
-        throw std::runtime_error("Failed to seek to capture buffer start");
-    }
+    fd_reg.seek(0x30000);
+    fd_cap.seek(0x30100);
 
     readerT.start();
     sync.wait();
@@ -294,18 +257,18 @@ void PicoFRIBCapture::run()
             locbuffer.resize(4+8*5);
 
             DPRINTF(5, "capture entering read()\n");
-            ssize_t ret = read(fd, &locbuffer[0], 4*locbuffer.size());
-            int err = errno;
-            DPRINTF(5, "capture return read() -> %lu (%d)\n", (unsigned long)ret, err);
-            epicsTimeGetCurrent(&now);
-            if(ret<0 && err==ECANCELED) {
-                continue;
-            } else if(ret<0) {
-                epicsPrintf("capture read error '%s'\n", strerror(err));
-            } else if((size_t)ret<16) {
-                epicsPrintf("Incomplete capture read %u\n", (unsigned)ret);
-            } else {
-                havedata = true;
+            ssize_t ret;
+            try {
+                ret = fd_cap.read(&locbuffer[0], 4*locbuffer.size());
+                DPRINTF(5, "capture return read() -> %lu\n", (unsigned long)ret);
+                if((size_t)ret<16) {
+                    epicsPrintf("Incomplete capture read %u\n", (unsigned)ret);
+                } else {
+                    havedata = true;
+                }
+            } catch(system_error& e){
+                if(e.num!=ECANCELED)
+                    epicsPrintf("capture read error '%s'\n", e.what());
             }
         }
 

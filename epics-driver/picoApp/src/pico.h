@@ -6,6 +6,7 @@
 #define PICO_H
 
 #include <sys/ioctl.h>
+#include <unistd.h>
 
 #include <errno.h>
 
@@ -37,9 +38,9 @@
 
 #define DPRINTF(LVL, fmt, ...) DPRINTF3(this, LVL, fmt, ## __VA_ARGS__)
 
-struct system_error : public std::exception {
+struct system_error : public std::runtime_error {
     int num;
-    system_error(int e) :num(e) {}
+    system_error(const std::string& msg, int e) :std::runtime_error(msg), num(e) {}
     virtual const char *what() const throw();
 };
 
@@ -49,6 +50,24 @@ struct SB {
     operator std::string() const { return strm.str(); }
     template<typename T>
     SB& operator<<(T i) { strm<<i; return *this; }
+};
+
+// Mostly translates C error returns to C++ exceptions
+struct FDHelper
+{
+    int fd;
+    FDHelper() :fd(-1) {}
+    FDHelper(const char *name) :fd(-1) { open(name); }
+    ~FDHelper() { close(); }
+    void open(const char *name);
+    void close();
+    void ioctl(long req, long arg);
+    void ioctl(long req, void *arg);
+    off_t seek(off_t o, int w=SEEK_CUR);
+    ssize_t write(const void *buf, size_t cnt);
+    ssize_t read(void *buf, size_t cnt);
+    ssize_t write(const void *buf, size_t cnt, off_t o);
+    ssize_t read(void *buf, size_t cnt, off_t o);
 };
 
 typedef epicsGuard<epicsMutex> Guard;
@@ -67,7 +86,7 @@ struct PicoDevice : public epicsThreadRunable {
     virtual void run();
 
     std::string devname; // "/dev/..."
-    int fd;
+    FDHelper fd;
 
     epicsThread readerT;
     epicsMutex lock;
@@ -109,14 +128,6 @@ struct PicoDevice : public epicsThreadRunable {
     epicsTimeStamp updatetime;
 
     std::string lasterror;
-
-    template<typename P>
-    void ioctl(unsigned long req, P arg)
-    {
-        int ret = ::ioctl(fd, req, arg);
-        if(ret)
-            throw system_error(errno);
-    }
 };
 
 #ifdef BUILD_FRIB
@@ -128,7 +139,7 @@ struct PicoFRIBCapture : public epicsThreadRunable
 
     virtual void run();
 
-    int fd;
+    FDHelper fd_cap, fd_reg, fd_ddr;
 
     IOSCANPVT update;
     IOSCANPVT msgupdate;

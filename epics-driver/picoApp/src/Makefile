@@ -11,6 +11,7 @@ include $(TOP)/configure/CONFIG
 LIBRARY_IOC = pico8Support
 
 pico8Support_SRCS += pico.cpp
+pico8Support_SRCS += fdhelper.cpp
 pico8Support_SRCS += dev.cpp
 pico8Support_SRCS += tbuf.cpp
 

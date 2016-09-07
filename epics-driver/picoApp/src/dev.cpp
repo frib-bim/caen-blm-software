@@ -82,7 +82,7 @@ void shutdownPICO(void *raw)
             dev->workerNotify.signal();
             break;
         case PicoDevice::Reading:
-            dev->ioctl(ABORT_READ, (long)0);
+            dev->fd.ioctl(ABORT_READ, (long)0);
             break;
         }
     }
@@ -98,7 +98,7 @@ void shutdownCapture(void *raw)
     {
         Guard G(cap->lock);
         cap->running = false;
-        ::ioctl(cap->fd, ABORT_READ, (long)0);
+        cap->fd_cap.ioctl(ABORT_READ, 0l);
     }
     cap->readerT.exitWait();
 }
@@ -283,7 +283,7 @@ long write_clock(longoutRecord *prec)
 
         epicsUInt32 val = prec->val;
 
-        info->dev->ioctl(SET_FSAMP, &val);
+        info->dev->fd.ioctl(SET_FSAMP, &val);
     } END(0)
 }
 
@@ -294,7 +294,7 @@ long read_clock(longinRecord *prec)
 
         epicsUInt32 val = 0;
 
-        info->dev->ioctl(GET_FSAMP, &val);
+        info->dev->fd.ioctl(GET_FSAMP, &val);
 
         prec->val = val;
     } END(0)
@@ -307,7 +307,7 @@ long write_clocksrc(mbboRecord *prec)
 
         epicsUInt32 val = prec->rval;
 
-        info->dev->ioctl(SET_CONV_MUX, &val);
+        info->dev->fd.ioctl(SET_CONV_MUX, &val);
     } END(0)
 }
 
@@ -333,8 +333,8 @@ long write_trig_src(mbboRecord *prec)
             throw std::logic_error("Invalid trigger source case");
         }
 
-        info->dev->ioctl(SET_TRG, &info->dev->trig);
-        info->dev->ioctl(SET_GATE_MUX, &gate);
+        info->dev->fd.ioctl(SET_TRG, &info->dev->trig);
+        info->dev->fd.ioctl(SET_GATE_MUX, &gate);
     } END(0)
 }
 
@@ -357,7 +357,7 @@ long write_trig_mode(mbboRecord *prec)
 
         info->dev->trig.mode = (trg_ctrl::mode_t)prec->rval;
 
-        info->dev->ioctl(SET_TRG, &info->dev->trig);
+        info->dev->fd.ioctl(SET_TRG, &info->dev->trig);
     } END(0)
 }
 
@@ -386,7 +386,7 @@ long write_pre_trig(longoutRecord *prec)
 
         epicsUInt32 val = prec->val;
 
-        info->dev->ioctl(SET_RING_BUF, &val);
+        info->dev->fd.ioctl(SET_RING_BUF, &val);
     } END(0)
 }
 
@@ -424,7 +424,7 @@ long write_chan_range(mbboRecord *prec)
         else
             info->dev->ranges &= ~(1<<info->chan);
 
-        info->dev->ioctl(SET_RANGE, &info->dev->ranges);
+        info->dev->fd.ioctl(SET_RANGE, &info->dev->ranges);
     } END(0)
 }
 
