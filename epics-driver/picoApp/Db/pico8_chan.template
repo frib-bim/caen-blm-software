@@ -8,7 +8,7 @@ record(waveform, "$(P)DESC_RD") {
 record(mbbo, "$(P)RNG_CMD") {
     field(DESC, "Channel dynamic range")
 	field(DTYP, "Pico8 Channel Range")
-	field(OUT , "@$(NAME) $(N)")
+        field(OUT , "@$(NAME) chan=$(N)")
 	field(PINI, "YES")
 	field(ZRST, "1 ma")
 	field(ONST, "1 ua")
@@ -20,7 +20,7 @@ record(mbbo, "$(P)RNG_CMD") {
 record(waveform, "$(P)I_RD") {
     field(DESC, "Sample data")
 	field(DTYP, "Pico8 Channel Data")
-	field(INP , "@$(NAME) $(N)")
+        field(INP , "@$(NAME) chan=$(N)")
 	field(SCAN, "I/O Intr")
 	field(FTVL, "FLOAT")
 	field(NELM, "$(NELM)")
@@ -36,7 +36,7 @@ record(longin, "$(P)I_RD_LEN") {
 record(ao, "$(P)SLO_CSET") {
     field(DESC, "Multiplier from raw")
     field(DTYP, "Pico8 Chan Scale")
-    field(OUT , "@$(NAME) $(N)")
+    field(OUT , "@$(NAME) chan=$(N)")
     field(PINI, "YES")
     field(PREC, "3")
     field(VAL , "$(ASLO=1)")
@@ -46,7 +46,7 @@ record(ao, "$(P)SLO_CSET") {
 record(ao, "$(P)OFST_CSET") {
     field(DESC, "Offset from raw")
     field(DTYP, "Pico8 Chan Offset")
-    field(OUT , "@$(NAME) $(N)")
+    field(OUT , "@$(NAME) chan=$(N)")
     field(PINI, "YES")
     field(PREC, "3")
     field(VAL , "$(AOFF=0)")

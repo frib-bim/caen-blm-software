@@ -20,8 +20,8 @@
 #include <epicsExit.h>
 #include <cvtTable.h>
 #include <iocsh.h>
+#include <epicsStdlib.h>
 
-#include <menuConvert.h>
 #include <longoutRecord.h>
 #include <longinRecord.h>
 #include <aoRecord.h>
@@ -29,10 +29,13 @@
 #include <mbboRecord.h>
 #include <mbbiRecord.h>
 #include <biRecord.h>
+#include <boRecord.h>
+#include <stringinRecord.h>
 #include <waveformRecord.h>
 #include <epicsExport.h>
 
 #include "pico.h"
+#include "dev.h"
 
 DBLINK* get_dev_link(dbCommon *prec)
 {
@@ -158,16 +161,36 @@ struct dsetInfo
 #ifdef BUILD_FRIB
     PicoFRIBCapture *cap;
 #endif
-    unsigned chan, offset;
-    dsetInfo() :dev(0), chan(0), offset(0) {
+    unsigned chan,
+             offset,
+             step,
+             mask,
+             shft;
+    dsetInfo() :dev(0), chan(0), offset(0), step(0), mask(0), shft(0) {
 #ifdef BUILD_FRIB
         cap = 0;
 #endif
     }
 };
 
+unsigned long parseul(const std::string& s)
+{
+    unsigned long ret;
+    int err = epicsParseULong(s.c_str(), &ret, 0, NULL);
+    if(err)
+        throw std::runtime_error(SB()<<"Failed to parse \""<<s<<"\" as an unsigned integer");
+    return ret;
+}
+
+/* Common link format
+ *
+ * @$(DEVNAME) chan=1 offset=0x100 step=4 mask=0xff00
+ *   offset and step are expressed in bytes
+ *   chan is in [0,7]
+ */
 long init_record_common(dbCommon *prec)
 {
+try{
     DBLINK* plink =  get_dev_link(prec);
     if(!plink) return 0;
     assert(plink->type==INST_IO);
@@ -178,10 +201,29 @@ long init_record_common(dbCommon *prec)
 
     std::string name;
     P>>name;
-    if(!P.fail() && !P.eof())
-        P>>D->chan;
-    if(!P.fail() && !P.eof())
-        P>>std::hex>>D->offset;
+    while(!P.fail() && !P.eof())
+    {
+        std::string word;
+        P>>word;
+        size_t sep(word.find_first_of('='));
+        if(sep==name.npos || sep==0 || sep==word.size()-1) {
+            fprintf(stderr, "%s: expected 'name=val' instead of \"%s\"\n", prec->name, word.c_str());
+            return 0;
+        }
+        std::string pname(word.substr(0, sep));
+        if(pname=="chan")
+            D->chan = parseul(word.substr(sep+1));
+        else if(pname=="offset")
+            D->offset = parseul(word.substr(sep+1));
+        else if(pname=="step")
+            D->step = parseul(word.substr(sep+1));
+        else if(pname=="offset")
+            D->offset = parseul(word.substr(sep+1));
+        else if(pname=="mask")
+            D->mask = parseul(word.substr(sep+1));
+        else
+            fprintf(stderr, "%s: Unknown parameter \"%s\"\n", prec->name, pname.c_str());
+    }
 
     if(!P.eof() || P.fail()) {
         fprintf(stderr, "%s: unable to parse '%s'\n", prec->name,
@@ -192,6 +234,11 @@ long init_record_common(dbCommon *prec)
     if(D->chan>7) {
         fprintf(stderr, "%s: channel %u out of range\n", prec->name, D->chan);
         return 0;
+    }
+
+    if(D->mask && !D->shft) {
+        // automatically calculate shift so that lowest mask'd bit becomes bit 0
+        for(unsigned mask = D->mask; (mask&1)==0; mask>>=1) D->shft++;
     }
 
     dev_map_t::const_iterator it = dev_map.find(name);
@@ -210,6 +257,10 @@ long init_record_common(dbCommon *prec)
 
     prec->dpvt = D.release();
     return 0;
+}catch(std::exception& e) {
+    fprintf(stderr, "%s : Error initializing : %s\n", prec->name, e.what());
+    return 0;
+}
 }
 
 long init_record_common2(dbCommon *prec)
@@ -283,7 +334,8 @@ long write_clock(longoutRecord *prec)
 
         epicsUInt32 val = prec->val;
 
-        info->dev->fd.ioctl(SET_FSAMP, &val);
+        info->dev->fd.ioctl_check<SET_FSAMP>(&val);
+
     } END(0)
 }
 
@@ -294,7 +346,7 @@ long read_clock(longinRecord *prec)
 
         epicsUInt32 val = 0;
 
-        info->dev->fd.ioctl(GET_FSAMP, &val);
+        info->dev->fd.ioctl_check<GET_FSAMP>(&val);
 
         prec->val = val;
     } END(0)
@@ -307,7 +359,7 @@ long write_clocksrc(mbboRecord *prec)
 
         epicsUInt32 val = prec->rval;
 
-        info->dev->fd.ioctl(SET_CONV_MUX, &val);
+        info->dev->fd.ioctl_check<SET_CONV_MUX>(&val);
     } END(0)
 }
 
@@ -333,8 +385,8 @@ long write_trig_src(mbboRecord *prec)
             throw std::logic_error("Invalid trigger source case");
         }
 
-        info->dev->fd.ioctl(SET_TRG, &info->dev->trig);
-        info->dev->fd.ioctl(SET_GATE_MUX, &gate);
+        info->dev->fd.ioctl_check<SET_TRG>(&info->dev->trig);
+        info->dev->fd.ioctl_check<SET_GATE_MUX>(&gate);
     } END(0)
 }
 
@@ -346,7 +398,7 @@ long write_trig_lvl(aoRecord *prec)
 
         Guard G(info->dev->lock);
 
-        info->dev->trig_level = prec->val;
+        info->dev->trig_level = readraw(prec);
     } END(0)
 }
 
@@ -357,7 +409,7 @@ long write_trig_mode(mbboRecord *prec)
 
         info->dev->trig.mode = (trg_ctrl::mode_t)prec->rval;
 
-        info->dev->fd.ioctl(SET_TRG, &info->dev->trig);
+        info->dev->fd.ioctl_check<SET_TRG>(&info->dev->trig);
     } END(0)
 }
 
@@ -386,7 +438,7 @@ long write_pre_trig(longoutRecord *prec)
 
         epicsUInt32 val = prec->val;
 
-        info->dev->fd.ioctl(SET_RING_BUF, &val);
+        info->dev->fd.ioctl_check<SET_RING_BUF>(&val);
     } END(0)
 }
 
@@ -424,23 +476,48 @@ long write_chan_range(mbboRecord *prec)
         else
             info->dev->ranges &= ~(1<<info->chan);
 
-        info->dev->fd.ioctl(SET_RANGE, &info->dev->ranges);
+        info->dev->fd.ioctl_check<SET_RANGE>(&info->dev->ranges);
     } END(0)
 }
 
 long read_chan_data(waveformRecord *prec)
 {
     assert(prec->ftvl==menuFtypeFLOAT);
+    float *bptr = (float*)prec->bptr;
+
     BEGIN {
         if(info->chan>=NELEMENTS(info->dev->data))
             return 0;
         Guard G(info->dev->lock);
 
         PicoDevice::data_t &cdata = info->dev->data[info->chan];
-        size_t N = std::min(cdata.size(), (size_t)prec->nelm);
-        memcpy(prec->bptr, &cdata[0], sizeof(PicoDevice::data_t::value_type)*N);
 
-        prec->nord = N;
+        size_t N = cdata.size();
+        unsigned step = info->step/4u,
+                 offset = info->offset/4u;
+
+        if(step==0) step=1;
+
+        if(step<=1) {
+            if(offset>N)  N=0;
+            else          N-=offset;
+
+            N = std::min(N/step, (size_t)prec->nelm);
+
+            memcpy(bptr, &cdata[offset], sizeof(PicoDevice::data_t::value_type)*N);
+
+            prec->nord = N;
+        } else {
+            // step>1 is additional decimation
+            size_t i, o;
+            for(i=offset, o=0; i<cdata.size() && o<(size_t)prec->nelm; i+=step, o++) {
+                double val = cdata[i];
+                for(unsigned j=1; j<step; j++)
+                    val += cdata[i+j];
+                bptr[o] = val/step;
+            }
+            prec->nord = o+1;
+        }
 
         if(prec->tse==epicsTimeEventDeviceTime) {
             prec->time = info->dev->updatetime;
@@ -491,14 +568,18 @@ long read_run_count(longinRecord *prec)
     return 0;
 }
 
+#undef BEGIN
+#define BEGIN if(!prec->dpvt) return 0; dsetInfo *info = (dsetInfo*)prec->dpvt; \
+    if(!info->cap) { \
+        (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM); \
+        return 0; \
+    } \
+    try
+
 long read_cap_valid(biRecord *prec)
 {
 #ifdef BUILD_FRIB
     BEGIN {
-        if(!info->cap) {
-            (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
-            return 0;
-        }
         Guard G(info->cap->lock);
 
         prec->rval = !!info->cap->valid;
@@ -519,10 +600,6 @@ long read_cap_count(longinRecord *prec)
 {
 #ifdef BUILD_FRIB
     BEGIN {
-        if(!info->cap) {
-            (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
-            return 0;
-        }
         Guard G(info->cap->lock);
 
         prec->val = info->cap->count;
@@ -543,10 +620,6 @@ long read_cap_msg(waveformRecord *prec)
 {
 #ifdef BUILD_FRIB
     BEGIN {
-        if(!info->cap || prec->ftvl!=menuFtypeCHAR) {
-            (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
-            return 0;
-        }
         Guard G(info->cap->lock);
 
         char *buf = (char*)prec->bptr;
@@ -573,18 +646,18 @@ long read_cap_li(longinRecord *prec)
 {
 #ifdef BUILD_FRIB
     BEGIN {
-        if(!info->cap) {
-            (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
-            return 0;
-        }
+        unsigned offset = info->offset/4;
         Guard G(info->cap->lock);
 
-        if(info->cap->buffer.size()<info->offset/4+1) {
+        if(info->cap->buffer.size()<offset+1) {
             (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
             return 0;
         }
 
-        prec->val = info->cap->buffer[info->offset/4];
+        prec->val = info->cap->buffer[offset];
+
+        if(info->mask)
+            prec->val = (prec->val&info->mask)>>info->shft;
 
         if(prec->tse==epicsTimeEventDeviceTime) {
             prec->time = info->cap->updatetime;
@@ -601,54 +674,22 @@ long read_cap_li(longinRecord *prec)
 #endif
 }
 
-float i2f(epicsUInt32 ival)
-{
-    union {
-        epicsUInt32 ival;
-        float fval;
-    } pun;
-    pun.ival = ival;
-    return pun.fval;
-}
-
 long read_cap_ai(aiRecord *prec)
 {
 #ifdef BUILD_FRIB
     BEGIN {
-        if(!info->cap) {
-            (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
-            return 0;
-        }
+        unsigned offset = info->offset/4;
         Guard G(info->cap->lock);
 
-        if(info->cap->buffer.size()<info->offset/4+1) {
+        if(info->cap->buffer.size()<offset+1) {
             if(prec->tpro) errlogPrintf("%s: offset out of range %u / %zu\n", prec->name, info->offset, info->cap->buffer.size());
             (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
             return 0;
         }
 
-        double val = i2f(info->cap->buffer[info->offset/4]);
+        double val = i2f(info->cap->buffer[offset]);
 
-        if(prec->aslo!=0.0) val*=prec->aslo;
-        val+=prec->aoff;
-
-
-        switch (prec->linr) {
-        case menuConvertNO_CONVERSION:
-            break;
-        case menuConvertLINEAR:
-        case menuConvertSLOPE:
-            if(prec->eslo!=0.0) val*=prec->eslo;
-            val+=prec->eoff;
-            break;
-        default:
-            if (cvtRawToEngBpt(&val,prec->linr,prec->init,(void **)&prec->pbrk,&prec->lbrk)!=0) {
-                recGblSetSevr(prec,SOFT_ALARM,MAJOR_ALARM);
-            }
-        }
-
-        prec->val = val;
-        prec->udf = 0;
+        storeraw(prec, val);
 
         if(prec->tse==epicsTimeEventDeviceTime) {
             prec->time = info->cap->updatetime;
@@ -658,6 +699,184 @@ long read_cap_ai(aiRecord *prec)
             (void)recGblSetSevr(prec, READ_ALARM, INVALID_ALARM);
 
         return 2;
+    } END(0)
+#else
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+    return 0;
+#endif
+}
+
+long read_reg_mbbi(mbbiRecord *prec)
+{
+#ifdef BUILD_FRIB
+    BEGIN {
+        Guard G(info->cap->lock);
+
+        epicsUInt32 val;
+        info->cap->fd_reg.read(&val, 4, info->offset);
+
+        if(info->mask)
+            val = (val&info->mask)>>info->shft;
+
+        prec->rval = val;
+
+        return 0;
+    } END(0)
+#else
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+    return 0;
+#endif
+}
+
+long read_reg_li(longinRecord *prec)
+{
+#ifdef BUILD_FRIB
+    BEGIN {
+        Guard G(info->cap->lock);
+
+        epicsUInt32 val;
+        info->cap->fd_reg.read(&val, 4, info->offset);
+
+        if(info->mask)
+            val = (val&info->mask)>>info->shft;
+
+        prec->val = val;
+
+        return 0;
+    } END(0)
+#else
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+    return 0;
+#endif
+}
+
+long read_reg_ai(aiRecord *prec)
+{
+#ifdef BUILD_FRIB
+    BEGIN {
+        Guard G(info->cap->lock);
+
+        epicsUInt32 ival;
+        info->cap->fd_reg.read(&ival, 4, info->offset);
+        double val = i2f(ival);
+
+        storeraw(prec, val);
+
+        return 0;
+    } END(0)
+#else
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+    return 0;
+#endif
+}
+
+long read_regts_si(stringinRecord *prec)
+{
+#ifdef BUILD_FRIB
+    BEGIN {
+        Guard G(info->cap->lock);
+
+        epicsUInt32 ival[2];
+        info->cap->fd_reg.read(&ival, 8, info->offset);
+
+        epicsTimeStamp ts;
+        ts.secPastEpoch = ival[0]-POSIX_TIME_AT_EPICS_EPOCH;
+        ts.nsec = double(ival[1])/info->step; // abuse step = ticks/sec of sub-second counter
+
+        prec->time = ts;
+
+        epicsTimeToStrftime(prec->val, sizeof(prec->val), "%Y-%m-%d %H:%M:%S.%09f %z", &ts);
+        prec->val[sizeof(prec->val)-1] = '\0'; // necesary?
+
+        return 0;
+    } END(0)
+#else
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+    return 0;
+#endif
+}
+
+long write_reg_bo(boRecord *prec)
+{
+#ifdef BUILD_FRIB
+    BEGIN {
+        Guard G(info->cap->lock);
+
+        epicsUInt32 val;
+        info->cap->fd_reg.read(&val, 4, info->offset);
+
+        if(prec->rval)
+            val |= prec->mask;
+        else
+            val &= ~prec->mask;
+
+        info->cap->fd_reg.write(&val, 4, info->offset);
+    }END(0)
+#else
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+    return 0;
+#endif
+}
+
+long write_reg_mbbo(mbboRecord *prec)
+{
+#ifdef BUILD_FRIB
+    BEGIN {
+        Guard G(info->cap->lock);
+
+        epicsUInt32 val = prec->rval<<info->shft;
+
+        if(info->mask) { // RMW
+            val &= info->mask;
+
+            epicsUInt32 rbv;
+            info->cap->fd_reg.read(&rbv, 4, info->offset);
+
+            val |= rbv&~info->mask;
+        }
+
+        info->cap->fd_reg.write(&val, 4, info->offset);
+    }END(0)
+#else
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+    return 0;
+#endif
+}
+
+long write_reg_lo(longoutRecord *prec)
+{
+#ifdef BUILD_FRIB
+    BEGIN {
+        Guard G(info->cap->lock);
+
+        epicsUInt32 val = prec->val<<info->shft;
+
+        if(info->mask) { // RMW
+            val &= info->mask;
+
+            epicsUInt32 rbv;
+            info->cap->fd_reg.read(&rbv, 4, info->offset);
+
+            val |= rbv&~info->mask;
+        }
+
+        info->cap->fd_reg.write(&val, 4, info->offset);
+    } END(0)
+#else
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+    return 0;
+#endif
+}
+
+long write_reg_ao(aoRecord *prec)
+{
+#ifdef BUILD_FRIB
+    BEGIN {
+        Guard G(info->cap->lock);
+
+        epicsUInt32 val = f2i(readraw(prec));
+
+        info->cap->fd_reg.write(&val, 4, info->offset);
     } END(0)
 #else
     (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
@@ -766,6 +985,15 @@ DSET(devPico8LiCapCount, longin, &get_cap_update, &read_cap_count);
 DSET(devPico8WfCapMsg, waveform, &get_cap_msgupdate, &read_cap_msg);
 DSET(devPico8LiCap, longin, &get_cap_update, &read_cap_li);
 DSET(devPico8AiCap, ai, &get_cap_update, &read_cap_ai);
+
+DSET(devPico8MbbiReg, mbbi, NULL, &read_reg_mbbi);
+DSET(devPico8LiReg, longin, NULL, &read_reg_li);
+DSET(devPico8AiReg, ai, NULL, &read_reg_ai);
+DSET(devPico8SiRegTime, stringin, NULL, &read_regts_si);
+DSET(devPico8MbboReg, mbbo, NULL, &write_reg_mbbo);
+DSET(devPico8BoReg, bo, NULL, &write_reg_bo);
+DSET(devPico8LoReg, longout, NULL, &write_reg_lo);
+DSET(devPico8AoReg, ao, NULL, &write_reg_ao);
 
 epicsExportAddress(drvet, drvpico8);
 

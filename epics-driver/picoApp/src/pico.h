@@ -5,6 +5,7 @@
 #ifndef PICO_H
 #define PICO_H
 
+#include <linux/ioctl.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
 
@@ -40,8 +41,8 @@
 
 struct system_error : public std::runtime_error {
     int num;
-    system_error(const std::string& msg, int e) :std::runtime_error(msg), num(e) {}
-    virtual const char *what() const throw();
+    system_error(const std::string& msg, int e);
+    virtual ~system_error() throw() {}
 };
 
 struct SB {
@@ -63,11 +64,19 @@ struct FDHelper
     void close();
     void ioctl(long req, long arg);
     void ioctl(long req, void *arg);
+    // the pico8 driver follows the convention of encoding the pointed size
+    // in the request code.  See <linux/ioctl.h>
+    template<long req, typename T>
+    void ioctl_check(T* arg) {
+        STATIC_ASSERT(sizeof(T)==_IOC_SIZE(req));
+        this->ioctl(req, (void*)arg);
+    }
+
     off_t seek(off_t o, int w=SEEK_CUR);
-    ssize_t write(const void *buf, size_t cnt);
-    ssize_t read(void *buf, size_t cnt);
-    ssize_t write(const void *buf, size_t cnt, off_t o);
-    ssize_t read(void *buf, size_t cnt, off_t o);
+    void write(const void *buf, size_t cnt);
+    void read(void *buf, size_t cnt);
+    void write(const void *buf, size_t cnt, off_t o);
+    void read(void *buf, size_t cnt, off_t o);
 };
 
 typedef epicsGuard<epicsMutex> Guard;

@@ -1,6 +1,6 @@
 record(ai, "$(P)F_RD") {
-    field(DTYP, "Pico8 Capture")
-    field(INP , "@$(NAME) 0 $(ADDR)")
+    field(DTYP, "Pico8 Capture Float")
+    field(INP , "@$(NAME) offset=$(ADDR)")
     field(SCAN, "$(SCAN=I/O Intr)")
     field(LINR, "$(LINR=LINEAR)")
     field(ASLO, "$(ASLO=)")

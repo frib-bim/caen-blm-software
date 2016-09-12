@@ -58,7 +58,7 @@ void FDHelper::ioctl(long req, long arg)
     } while(ret==-1 && errno==EINTR);
     int err = errno;
     if(ret==-1)
-        throw system_error(SB()<<"ioctl("<<req<<") -> ", err);
+        throw system_error(SB()<<"ioctl("<<std::hex<<req<<")", err);
 }
 
 void FDHelper::ioctl(long req, void *arg)
@@ -69,7 +69,7 @@ void FDHelper::ioctl(long req, void *arg)
     } while(ret==-1 && errno==EINTR);
     int err = errno;
     if(ret==-1)
-        throw system_error(SB()<<"ioctl("<<req<<") -> ", err);
+        throw system_error(SB()<<"ioctl("<<std::hex<<req<<")", err);
 }
 
 off_t FDHelper::seek(off_t o, int w)
@@ -84,7 +84,7 @@ off_t FDHelper::seek(off_t o, int w)
     return ret;
 }
 
-ssize_t FDHelper::write(const void *buf, size_t cnt)
+void FDHelper::write(const void *buf, size_t cnt)
 {
     ssize_t ret;
     do {
@@ -93,10 +93,11 @@ ssize_t FDHelper::write(const void *buf, size_t cnt)
     int err = errno;
     if(ret==-1)
         throw system_error(SB()<<"write("<<buf<<","<<cnt<<") -> ", err);
-    return ret;
+    else if((size_t)ret!=cnt)
+        throw std::runtime_error("Incomplete write()");
 }
 
-ssize_t FDHelper::read(void *buf, size_t cnt)
+void FDHelper::read(void *buf, size_t cnt)
 {
     ssize_t ret;
     do {
@@ -105,10 +106,11 @@ ssize_t FDHelper::read(void *buf, size_t cnt)
     int err = errno;
     if(ret==-1)
         throw system_error(SB()<<"read("<<buf<<","<<cnt<<") -> ", err);
-    return ret;
+    else if((size_t)ret!=cnt)
+        throw std::runtime_error("Incomplete read()");
 }
 
-ssize_t FDHelper::write(const void *buf, size_t cnt, off_t o)
+void FDHelper::write(const void *buf, size_t cnt, off_t o)
 {
     ssize_t ret;
     do {
@@ -117,10 +119,11 @@ ssize_t FDHelper::write(const void *buf, size_t cnt, off_t o)
     int err = errno;
     if(ret==-1)
         throw system_error(SB()<<"pwrite("<<buf<<","<<cnt<<","<<o<<") -> ", err);
-    return ret;
+    else if((size_t)ret!=cnt)
+        throw std::runtime_error("Incomplete pwrite()");
 }
 
-ssize_t FDHelper::read(void *buf, size_t cnt, off_t o)
+void FDHelper::read(void *buf, size_t cnt, off_t o)
 {
     ssize_t ret;
     do {
@@ -129,5 +132,6 @@ ssize_t FDHelper::read(void *buf, size_t cnt, off_t o)
     int err = errno;
     if(ret==-1)
         throw system_error(SB()<<"pread("<<buf<<","<<cnt<<","<<o<<") -> ", err);
-    return ret;
+    else if((size_t)ret!=cnt)
+        throw std::runtime_error("Incomplete pread()");
 }

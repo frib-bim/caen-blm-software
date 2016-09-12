@@ -1,6 +1,6 @@
 record(longin, "$(N)") {
-    field(DTYP, "Pico8 Capture")
-    field(INP , "@$(NAME) 0 $(ADDR)")
+    field(DTYP, "Pico8 Capture UInt32")
+    field(INP , "@$(NAME) offset=$(ADDR)")
     field(SCAN, "$(SCAN=I/O Intr)")
     field(TSE , "$(TSEL=-2)")
     field(FLNK, "$(FLNK=)")

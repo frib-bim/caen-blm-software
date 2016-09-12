@@ -89,7 +89,6 @@ PicoDevice::run()
         }
             break;
         case Reading:
-            ssize_t ret;
         {
             const unsigned usize  = this->nsamp,
                            decim  = this->ndecim,
@@ -134,9 +133,16 @@ PicoDevice::run()
                 prep[i].resize(usize);
 
             DPRINTF(5, "Working enter read()\n");
-            ret = fd.read(&dbuf[0], 4*dbuf.size());
+            try {
+                fd.read(&dbuf[0], 4*dbuf.size());
+            } catch(system_error& e) {
+                if(e.num==ECANCELED)
+                    continue;
+                throw;
+            }
+
             epicsTimeGetCurrent(&now);
-            DPRINTF(5, "Working done read() -> %u\n", (unsigned)ret);
+            DPRINTF(5, "Working done read()\n");
 
             // demux and average by decim
             for(unsigned i=0; i<NCHANS; i++) {
@@ -153,33 +159,20 @@ PicoDevice::run()
                 }
             }
 
+        }
             // ======= relock
-        }
-            if(ret<0) {
-                int err = errno;
-                switch(err) {
-                case EINTR:
-                case ECANCELED:
-                    continue;
-                default:
-                    lasterror = "read error: ";
-                    lasterror += strerror(err);
-                    target_state = Error;
-                }
-            } else if(ret==0) {
-                lasterror = "read zero";
+            DPRINTF(2, "Data ready\n");
+            if(mode==Single)
                 target_state = Idle;
-            } else {
-                DPRINTF(2, "Data ready\n");
-                if(mode==Single)
-                    target_state = Idle;
-                for(unsigned i=0; i<NCHANS; i++) {
-                    data[i].swap(prep[i]);
-                }
-                updatetime = now;
-                scanIoRequest(dataupdate);
+            for(unsigned i=0; i<NCHANS; i++) {
+                data[i].swap(prep[i]);
             }
+            updatetime = now;
+            scanIoRequest(dataupdate);
         }
+    } catch(system_error& e) {
+        target_state = Error;
+        lasterror = SB()<<"Error "<<e.num<<" "<<strerror(e.num)<<" : "<<e.what();
     } catch(std::exception& e) {
         target_state = Error;
         lasterror = e.what();
@@ -257,18 +250,13 @@ void PicoFRIBCapture::run()
             locbuffer.resize(4+8*5);
 
             DPRINTF(5, "capture entering read()\n");
-            ssize_t ret;
             try {
-                ret = fd_cap.read(&locbuffer[0], 4*locbuffer.size());
-                DPRINTF(5, "capture return read() -> %lu\n", (unsigned long)ret);
-                if((size_t)ret<16) {
-                    epicsPrintf("Incomplete capture read %u\n", (unsigned)ret);
-                } else {
-                    havedata = true;
-                }
+                fd_cap.read(&locbuffer[0], 4*locbuffer.size());
+                DPRINTF(5, "capture return read()\n");
+                havedata = true;
             } catch(system_error& e){
                 if(e.num!=ECANCELED)
-                    epicsPrintf("capture read error '%s'\n", e.what());
+                    throw;
             }
         }
 
@@ -366,11 +354,9 @@ void PicoFRIBCapture::run()
 
 #endif // BUILD_FRIB
 
-const char *
-system_error::what() const throw()
-{
-    return strerror(num);
-}
+system_error::system_error(const std::string& msg, int e)
+    :std::runtime_error(SB()<<msg<<" : "<<strerror(e)), num(e)
+{}
 
 #include <epicsExport.h>
 

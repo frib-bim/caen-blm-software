@@ -1,44 +1,44 @@
 
 file "pico8_cap_int.template"
 {
-#{N="\$(SYS):\$(D)_CAP:SEC_RSTS", NAME="\$(NAME)", ADDR="0"}
-#{N="\$(SYS):\$(D)_CAP:NS_RSTS", NAME="\$(NAME)", ADDR="4"}
-{N="\$(SYS):\$(D)_CAP:TON_RSTS", NAME="\$(NAME)", ADDR="8"}
-{N="\$(SYS):\$(D)_CAP:FLG_RSTS", NAME="\$(NAME)", ADDR="c"}
+#{N="\$(SYS):\$(D)_CAP:SEC_RSTS", NAME="\$(NAME)", ADDR="0x0"}
+#{N="\$(SYS):\$(D)_CAP:NS_RSTS", NAME="\$(NAME)", ADDR="0x4"}
+{N="\$(SYS):\$(D)_CAP:TON_RSTS", NAME="\$(NAME)", ADDR="0x8"}
+{N="\$(SYS):\$(D)_CAP:FLG_RSTS", NAME="\$(NAME)", ADDR="0xc"}
 }
 
 file "pico8_cap_float.template"
 {
-{P="\$(SYS):\$(D)_CH0:AVG", NAME="\$(NAME)", ADDR="10", Stat="Mean", ASLO="1e-4"}
-{P="\$(SYS):\$(D)_CH0:MIN", NAME="\$(NAME)", ADDR="14", Stat="Min"}
-{P="\$(SYS):\$(D)_CH0:MAX", NAME="\$(NAME)", ADDR="18", Stat="Max"}
-{P="\$(SYS):\$(D)_CH0:STD", NAME="\$(NAME)", ADDR="1c", Stat="Max"}
-{P="\$(SYS):\$(D)_CH1:AVG", NAME="\$(NAME)", ADDR="24", Stat="Mean", ASLO="1e-4"}
-{P="\$(SYS):\$(D)_CH1:MIN", NAME="\$(NAME)", ADDR="28", Stat="Min"}
-{P="\$(SYS):\$(D)_CH1:MAX", NAME="\$(NAME)", ADDR="2c", Stat="Max"}
-{P="\$(SYS):\$(D)_CH1:STD", NAME="\$(NAME)", ADDR="30", Stat="Max"}
-{P="\$(SYS):\$(D)_CH2:AVG", NAME="\$(NAME)", ADDR="38", Stat="Mean", ASLO="1e-4"}
-{P="\$(SYS):\$(D)_CH2:MIN", NAME="\$(NAME)", ADDR="3c", Stat="Min"}
-{P="\$(SYS):\$(D)_CH2:MAX", NAME="\$(NAME)", ADDR="40", Stat="Max"}
-{P="\$(SYS):\$(D)_CH2:STD", NAME="\$(NAME)", ADDR="44", Stat="Max"}
-{P="\$(SYS):\$(D)_CH3:AVG", NAME="\$(NAME)", ADDR="4c", Stat="Mean", ASLO="1e-4"}
-{P="\$(SYS):\$(D)_CH3:MIN", NAME="\$(NAME)", ADDR="50", Stat="Min"}
-{P="\$(SYS):\$(D)_CH3:MAX", NAME="\$(NAME)", ADDR="54", Stat="Max"}
-{P="\$(SYS):\$(D)_CH3:STD", NAME="\$(NAME)", ADDR="58", Stat="Max"}
-{P="\$(SYS):\$(D)_CH4:AVG", NAME="\$(NAME)", ADDR="60", Stat="Mean", ASLO="1e-4"}
-{P="\$(SYS):\$(D)_CH4:MIN", NAME="\$(NAME)", ADDR="64", Stat="Min"}
-{P="\$(SYS):\$(D)_CH4:MAX", NAME="\$(NAME)", ADDR="68", Stat="Max"}
-{P="\$(SYS):\$(D)_CH4:STD", NAME="\$(NAME)", ADDR="6c", Stat="Max"}
-{P="\$(SYS):\$(D)_CH5:AVG", NAME="\$(NAME)", ADDR="74", Stat="Mean", ASLO="1e-4"}
-{P="\$(SYS):\$(D)_CH5:MIN", NAME="\$(NAME)", ADDR="78", Stat="Min"}
-{P="\$(SYS):\$(D)_CH5:MAX", NAME="\$(NAME)", ADDR="7c", Stat="Max"}
-{P="\$(SYS):\$(D)_CH5:STD", NAME="\$(NAME)", ADDR="80", Stat="Max"}
-{P="\$(SYS):\$(D)_CH6:AVG", NAME="\$(NAME)", ADDR="88", Stat="Mean", ASLO="1e-4"}
-{P="\$(SYS):\$(D)_CH6:MIN", NAME="\$(NAME)", ADDR="8c", Stat="Min"}
-{P="\$(SYS):\$(D)_CH6:MAX", NAME="\$(NAME)", ADDR="90", Stat="Max"}
-{P="\$(SYS):\$(D)_CH6:STD", NAME="\$(NAME)", ADDR="94", Stat="Max"}
-{P="\$(SYS):\$(D)_CH7:AVG", NAME="\$(NAME)", ADDR="9c", Stat="Mean", ASLO="1e-4"}
-{P="\$(SYS):\$(D)_CH7:MIN", NAME="\$(NAME)", ADDR="a0", Stat="Min"}
-{P="\$(SYS):\$(D)_CH7:MAX", NAME="\$(NAME)", ADDR="a4", Stat="Max"}
-{P="\$(SYS):\$(D)_CH7:STD", NAME="\$(NAME)", ADDR="a8", Stat="Max"}
+{P="\$(SYS):\$(D)_CH0:AVG", NAME="\$(NAME)", ADDR="0x10", Stat="Mean", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH0:MIN", NAME="\$(NAME)", ADDR="0x14", Stat="Min"}
+{P="\$(SYS):\$(D)_CH0:MAX", NAME="\$(NAME)", ADDR="0x18", Stat="Max"}
+{P="\$(SYS):\$(D)_CH0:STD", NAME="\$(NAME)", ADDR="0x1c", Stat="Max"}
+{P="\$(SYS):\$(D)_CH1:AVG", NAME="\$(NAME)", ADDR="0x24", Stat="Mean", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH1:MIN", NAME="\$(NAME)", ADDR="0x28", Stat="Min"}
+{P="\$(SYS):\$(D)_CH1:MAX", NAME="\$(NAME)", ADDR="0x2c", Stat="Max"}
+{P="\$(SYS):\$(D)_CH1:STD", NAME="\$(NAME)", ADDR="0x30", Stat="Max"}
+{P="\$(SYS):\$(D)_CH2:AVG", NAME="\$(NAME)", ADDR="0x38", Stat="Mean", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH2:MIN", NAME="\$(NAME)", ADDR="0x3c", Stat="Min"}
+{P="\$(SYS):\$(D)_CH2:MAX", NAME="\$(NAME)", ADDR="0x40", Stat="Max"}
+{P="\$(SYS):\$(D)_CH2:STD", NAME="\$(NAME)", ADDR="0x44", Stat="Max"}
+{P="\$(SYS):\$(D)_CH3:AVG", NAME="\$(NAME)", ADDR="0x4c", Stat="Mean", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH3:MIN", NAME="\$(NAME)", ADDR="0x50", Stat="Min"}
+{P="\$(SYS):\$(D)_CH3:MAX", NAME="\$(NAME)", ADDR="0x54", Stat="Max"}
+{P="\$(SYS):\$(D)_CH3:STD", NAME="\$(NAME)", ADDR="0x58", Stat="Max"}
+{P="\$(SYS):\$(D)_CH4:AVG", NAME="\$(NAME)", ADDR="0x60", Stat="Mean", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH4:MIN", NAME="\$(NAME)", ADDR="0x64", Stat="Min"}
+{P="\$(SYS):\$(D)_CH4:MAX", NAME="\$(NAME)", ADDR="0x68", Stat="Max"}
+{P="\$(SYS):\$(D)_CH4:STD", NAME="\$(NAME)", ADDR="0x6c", Stat="Max"}
+{P="\$(SYS):\$(D)_CH5:AVG", NAME="\$(NAME)", ADDR="0x74", Stat="Mean", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH5:MIN", NAME="\$(NAME)", ADDR="0x78", Stat="Min"}
+{P="\$(SYS):\$(D)_CH5:MAX", NAME="\$(NAME)", ADDR="0x7c", Stat="Max"}
+{P="\$(SYS):\$(D)_CH5:STD", NAME="\$(NAME)", ADDR="0x80", Stat="Max"}
+{P="\$(SYS):\$(D)_CH6:AVG", NAME="\$(NAME)", ADDR="0x88", Stat="Mean", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH6:MIN", NAME="\$(NAME)", ADDR="0x8c", Stat="Min"}
+{P="\$(SYS):\$(D)_CH6:MAX", NAME="\$(NAME)", ADDR="0x90", Stat="Max"}
+{P="\$(SYS):\$(D)_CH6:STD", NAME="\$(NAME)", ADDR="0x94", Stat="Max"}
+{P="\$(SYS):\$(D)_CH7:AVG", NAME="\$(NAME)", ADDR="0x9c", Stat="Mean", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH7:MIN", NAME="\$(NAME)", ADDR="0xa0", Stat="Min"}
+{P="\$(SYS):\$(D)_CH7:MAX", NAME="\$(NAME)", ADDR="0xa4", Stat="Max"}
+{P="\$(SYS):\$(D)_CH7:STD", NAME="\$(NAME)", ADDR="0xa8", Stat="Max"}
 }

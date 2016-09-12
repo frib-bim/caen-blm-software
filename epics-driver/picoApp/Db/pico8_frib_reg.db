@@ -1,0 +1,127 @@
+
+record(longin, "$(CTRL)FFWVER_RD") {
+    field(DESC, "FRIB firmware version")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x30040")
+    field(PINI, "YES")
+}
+
+record(longout, "$(FPS)CBUFPOST_CSET") {
+    field(DESC, "# of post trigger samples")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x30044 mask=0xff000000")
+    field(PINI, "YES")
+}
+
+record(longout, "$(FPS)SLT_CSET") {
+    field(DESC, "FPS Slot #")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x30044 mask=0x000f0000")
+    field(PINI, "YES")
+}
+
+record(bo, "$(FPS)FRCTRP_CSET") {
+    field(DESC, "Force FPS trip/NOK")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x30044")
+    field(MASK, "0x8000")
+}
+
+record(bo, "$(FPS)CLR_CSET") {
+    field(DESC, "Clear Trip/NOK")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x30044")
+    field(MASK, "0x4000")
+}
+
+record(bo, "$(FPS)FRZ_CSET") {
+    field(DESC, "Force buffer freeze")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x30044")
+    field(MASK, "0x2000")
+}
+
+record(bo, "$(FPS)THW_CSET") {
+    field(DESC, "Unfreeze buffer")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x30044")
+    field(MASK, "0x1000")
+}
+
+record(bo, "$(FPS)RST_CSET") {
+    field(DESC, "Reset FRIB logic")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x30044")
+    field(MASK, "0x0800")
+}
+
+record(longout, "$(FPS)DTASEL_CSET") {
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x30048")
+}
+
+record(longin, "$(FPS)COMOK_RD") {
+    field(DESC, "# of EVR comm ok")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x3004c mask=0xffff0000")
+    field(SCAN, "1 second")
+    field(FLNK, "$(FPS)COMAT_RD")
+}
+
+record(longin, "$(FPS)COMAT_RD") {
+    field(DESC, "# of EVR comm attempts")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x3004c mask=0x0000ffff")
+    field(FLNK, "$(FPS)COMDFF_RD")
+}
+
+record(calc, "$(FPS)COMDFF_RD") {
+    field(INPA, "$(FPS)COMOK_RD NPP MS")
+    field(INPB, "$(FPS)COMAT_RD NPP MS")
+    field(CALC, "A-B")
+}
+
+record(calc, "$(FPS)COMERR_RD") {
+    field(DESC, "Comm error rate")
+    field(SCAN, "1 second")
+    field(PHAS, "1")
+    field(INPA, "$(FPS)COMDFF_RD NPP MS")
+    field(CALC, "C:=A-B;B:=A;C")
+    field(EGU , "Hz")
+    field(HIGH, "1")
+    field(LOW , "-1")
+    field(HSV , "MAJOR")
+    field(LSV , "MAJOR")
+}
+
+record(stringin, "$(CTRL)TMECUR_RD") {
+    field(DESC, "Current time from EVR")
+    field(DTYP, "Pico8 User Reg Time64")
+    # step= is really sub-sec counter frequency in Hz
+    field(INP , "@$(NAME) offset=0x30050 step=10062500")
+    field(SCAN, "1 second")
+    field(TSE , "-2")
+}
+
+record(longin, "$(FPS)FPSSRC_RD") {
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x30058")
+    field(SCAN, ".5 second")
+    field(FLNK, "$(FPS)FPSSTS_RD")
+}
+
+record(longin, "$(FPS)FPSSTS_RD") {
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x3005c")
+    field(FLNK, "$(FPS)TMETRP_RD")
+}
+
+record(stringin, "$(FPS)TMETRP_RD") {
+    field(DESC, "Trip time")
+    field(DTYP, "Pico8 User Reg Time64")
+    # step= is really sub-sec counter frequency in Hz
+    field(INP , "@$(NAME) offset=0x30060 step=10062500")
+    field(SCAN, "1 second")
+    field(TSE , "-2")
+    field(FLNK, "")
+}
