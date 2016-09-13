@@ -45,6 +45,11 @@ pico_DBD += asSupport.dbd
 pico_LIBS += autosave
 endif
 
+ifneq ($(DEVLIB2),)
+pico_DBD += epicspci.dbd
+pico_LIBS += epicspci
+endif
+
 # Add support from base/src/vxWorks if needed
 #pico_OBJS_vxWorks += $(EPICS_BASE_BIN)/vxComLibrary
 
