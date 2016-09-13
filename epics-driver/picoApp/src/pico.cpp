@@ -255,14 +255,15 @@ void PicoFRIBCapture::run()
                 DPRINTF(5, "capture return read()\n");
                 havedata = true;
             } catch(system_error& e){
-                if(e.num!=ECANCELED)
-                    throw;
+                if(e.num==ECANCELED)
+                    continue;
             }
+            epicsTimeGetCurrent(&now);
         }
 
         if(!havedata) {
             valid = false;
-            epicsTimeGetCurrent(&updatetime);
+            updatetime = now;
             lastmsg = "I/O Error";
             {
                 UnGuard U(G);
