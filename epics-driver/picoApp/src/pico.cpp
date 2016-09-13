@@ -215,15 +215,15 @@ PicoFRIBCapture::PicoFRIBCapture(const char *fname)
     }
 
     uint32_t ival = 0;
-    fd_cap.ioctl(GET_SITE_ID, &ival);
+    fd_cap.ioctl_check<GET_SITE_ID>(&ival);
     if(ival!=USER_SITE_FRIB) {
         throw std::runtime_error("Not FRIB firmware");
     }
 
     ival = 1; // user register access
-    fd_reg.ioctl(SET_SITE_MODE, &ival);
+    fd_reg.ioctl_check<SET_SITE_MODE>(&ival);
     ival = 2; // capture buffer access
-    fd_cap.ioctl(SET_SITE_MODE, &ival);
+    fd_cap.ioctl_check<SET_SITE_MODE>(&ival);
 
     fd_reg.seek(0x30000);
     fd_cap.seek(0x30100);

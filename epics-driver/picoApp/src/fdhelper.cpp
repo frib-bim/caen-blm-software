@@ -28,7 +28,7 @@ void FDHelper::open(const char *name)
 
     try {
         uint32_t ival=0;
-        this->ioctl(GET_VERSION, &ival);
+        this->ioctl_check<GET_VERSION>(&ival);
         if(ival!=GET_VERSION_CURRENT)
             throw std::runtime_error(SB()<<"Kernel ABI version mis-match "<<ival<<"!="<<GET_VERSION_CURRENT);
     } catch(...) {

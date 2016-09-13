@@ -776,14 +776,15 @@ long read_regts_si(stringinRecord *prec)
     BEGIN {
         Guard G(info->cap->lock);
 
-        epicsUInt32 ival[2];
+        epicsUInt32 ival[2] = {0,0};
         info->cap->fd_reg.read(&ival, 8, info->offset);
 
         epicsTimeStamp ts;
         ts.secPastEpoch = ival[0]-POSIX_TIME_AT_EPICS_EPOCH;
-        ts.nsec = double(ival[1])/info->step; // abuse step = ticks/sec of sub-second counter
+        ts.nsec = double(ival[1])/info->step*1e9; // abuse step = ticks/sec of sub-second counter
 
-        prec->time = ts;
+        if(prec->tse==epicsTimeEventDeviceTime)
+            prec->time = ts;
 
         epicsTimeToStrftime(prec->val, sizeof(prec->val), "%Y-%m-%d %H:%M:%S.%09f %z", &ts);
         prec->val[sizeof(prec->val)-1] = '\0'; // necesary?
