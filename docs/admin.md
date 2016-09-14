@@ -22,6 +22,8 @@ kernel version of the build host.
 
 ```
 cd linux-driver
+cp config.example .config
+echo "CONFIG_AMC_PICO_SITE_DEFAULT=frib" >> .config
 make
 ```
 
@@ -106,7 +108,7 @@ createPICO8("dig", "/dev/amc_pico_0000:06:00.0")
 dbLoadRecords("../../db/pico8.db","SYS=TST,D=pico,NAME=dig,NELM=100000")
 ```
 
-The command 'createSIS8300()' associates a device file with an arbitrary internal name,
+The command 'createPICO8()' associates a device file with an arbitrary internal name,
 In this case "dig", which is used in the following line, and which will appear in some log messages.
 
 The process database file 'pico8.db' is loaded with three macros defined.
