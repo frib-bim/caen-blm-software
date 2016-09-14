@@ -34,6 +34,7 @@
 #include <waveformRecord.h>
 #include <epicsExport.h>
 
+#include "basecompat.h"
 #include "pico.h"
 #include "dev.h"
 
