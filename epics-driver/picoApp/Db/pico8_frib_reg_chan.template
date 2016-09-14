@@ -1,0 +1,30 @@
+record(ao, "$(P)CORR_CSET") {
+    field(DTYP, "Pico8 User Reg Float")
+    field(OUT , "@$(NAME) offset=$(CORR)")
+    field(PINI, "YES")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(longout, "$(P)TOF_CSET") {
+    field(DESC, "Time of flight calib")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT, "@$(NAME) offset=$(CTRL) mask=0x1f00<<$(BIT)")
+}
+
+record(bo, "$(P)MON_CSET") {
+    field(DESC, "Always Monitor")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT, "@$(NAME) offset=$(CTRL) mask=0x2<<$(BIT)")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+    # MASK is automagially set from mask=
+}
+
+record(bo, "$(P)TOFAUTO_CSET") {
+    field(DESC, "Auto calc ToF")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT, "@$(NAME) offset=$(CTRL) mask=0x1<<$(BIT)")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+    # MASK is automagially set from mask=
+}

@@ -64,3 +64,15 @@ file "pico8_cap_float.template"
 {P="\$(SYS):\$(D)_CH7:MAX", NAME="\$(NAME)", ADDR="0xa4", Stat="Max"}
 {P="\$(SYS):\$(D)_CH7:STD", NAME="\$(NAME)", ADDR="0xa8", Stat="Max"}
 }
+
+file "pico8_frib_reg_chan.template"
+{
+{P="\$(SYS):\$(D)_CH0:", NAME="\$(NAME)", CORR="0x300c0", CTRL="0x300e0", BIT="0"}
+{P="\$(SYS):\$(D)_CH1:", NAME="\$(NAME)", CORR="0x300c4", CTRL="0x300e0", BIT="16"}
+{P="\$(SYS):\$(D)_CH2:", NAME="\$(NAME)", CORR="0x300c8", CTRL="0x300e4", BIT="0"}
+{P="\$(SYS):\$(D)_CH3:", NAME="\$(NAME)", CORR="0x300cc", CTRL="0x300e4", BIT="16"}
+{P="\$(SYS):\$(D)_CH4:", NAME="\$(NAME)", CORR="0x300d0", CTRL="0x300e8", BIT="0"}
+{P="\$(SYS):\$(D)_CH5:", NAME="\$(NAME)", CORR="0x300d4", CTRL="0x300e8", BIT="16"}
+{P="\$(SYS):\$(D)_CH6:", NAME="\$(NAME)", CORR="0x300d8", CTRL="0x300ec", BIT="0"}
+{P="\$(SYS):\$(D)_CH7:", NAME="\$(NAME)", CORR="0x300dc", CTRL="0x300ec", BIT="16"}
+}

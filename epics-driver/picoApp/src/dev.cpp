@@ -21,6 +21,7 @@
 #include <cvtTable.h>
 #include <iocsh.h>
 #include <epicsStdlib.h>
+#include <postfix.h>
 
 #include <longoutRecord.h>
 #include <longinRecord.h>
@@ -55,6 +56,26 @@ DBLINK* get_dev_link(dbCommon *prec)
 
     dbFinishEntry(&ent);
     return ret;
+}
+
+// Evaluate expression w/ epics calc engine
+// eg. "0x1000+0x100" -> 0x1100
+double epicsEval(const std::string& expr)
+{
+    std::vector<char> rpcl(INFIX_TO_POSTFIX_SIZE(expr.size()));
+    short err;
+
+    if(postfix(expr.c_str(), &rpcl[0], &err)) {
+        throw std::runtime_error(SB()<<"expression \""<<expr<<"\" error "<<calcErrorStr(err));
+    }
+
+    std::vector<double> vars(CALCPERFORM_NARGS, 0.0);
+    double result;
+
+    if(calcPerform(&vars[0], &result, &rpcl[0])) {
+        throw std::runtime_error(SB()<<"expression \""<<expr<<"\" Can't evaluate");
+    }
+    return result;
 }
 
 namespace {
@@ -175,11 +196,15 @@ struct dsetInfo
 
 unsigned long parseul(const std::string& s)
 {
+#if 0
     unsigned long ret;
     int err = epicsParseULong(s.c_str(), &ret, 0, NULL);
     if(err)
         throw std::runtime_error(SB()<<"Failed to parse \""<<s<<"\" as an unsigned integer");
     return ret;
+#else
+    return epicsEval(s);
+#endif
 }
 
 /* Common link format
@@ -241,6 +266,22 @@ try{
         for(unsigned mask = D->mask; (mask&1)==0; mask>>=1) D->shft++;
     }
 
+    if(D->mask) {
+        DBENTRY ent;
+        dbInitEntry(pdbbase, &ent);
+
+        if(dbFindRecord(&ent, prec->name))
+            throw std::logic_error(SB()<<prec->name<<" can't find itself");
+
+        // for aoRecord, copy D->mask to MASK field if on is set and not the other
+        if(!dbFindField(&ent, "MASK") && ent.pflddes->field_type==DBF_ULONG) {
+            epicsUInt32 *pfield = (epicsUInt32*)(((char*)prec)+ent.pflddes->offset);
+            if(!*pfield) *pfield = D->mask;
+        }
+
+        dbFinishEntry(&ent);
+    }
+
     dev_map_t::const_iterator it = dev_map.find(name);
     if(it==dev_map.end()) {
         fprintf(stderr, "%s: unknown device name '%s'\n", prec->name, name.c_str());
@@ -268,7 +309,6 @@ long init_record_common2(dbCommon *prec)
     init_record_common(prec);
     return 2;
 }
-
 
 long read_lastmsg(waveformRecord *prec)
 {

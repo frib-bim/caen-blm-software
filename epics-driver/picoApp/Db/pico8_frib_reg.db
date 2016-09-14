@@ -26,6 +26,9 @@ record(bo, "$(FPS)FRCTRP_CSET") {
     field(DTYP, "Pico8 User Reg UInt32")
     field(OUT , "@$(NAME) offset=0x30044")
     field(MASK, "0x8000")
+    field(ZNAM, "Idle")
+    field(ONAM, "Trip")
+    field(HIGH, "0.1")
     info(autosaveFields_pass0, "VAL")
 }
 
@@ -34,6 +37,9 @@ record(bo, "$(FPS)CLR_CSET") {
     field(DTYP, "Pico8 User Reg UInt32")
     field(OUT , "@$(NAME) offset=0x30044")
     field(MASK, "0x4000")
+    field(ZNAM, "Idle")
+    field(ONAM, "Clear")
+    field(HIGH, "0.1")
     info(autosaveFields_pass0, "RVAL")
 }
 
@@ -42,6 +48,9 @@ record(bo, "$(FPS)FRZ_CSET") {
     field(DTYP, "Pico8 User Reg UInt32")
     field(OUT , "@$(NAME) offset=0x30044")
     field(MASK, "0x2000")
+    field(ZNAM, "Idle")
+    field(ONAM, "Freeze")
+    field(HIGH, "0.1")
     info(autosaveFields_pass0, "RVAL")
 }
 
@@ -50,6 +59,9 @@ record(bo, "$(FPS)THW_CSET") {
     field(DTYP, "Pico8 User Reg UInt32")
     field(OUT , "@$(NAME) offset=0x30044")
     field(MASK, "0x1000")
+    field(ZNAM, "Idle")
+    field(ONAM, "Thaw")
+    field(HIGH, "0.1")
     info(autosaveFields_pass0, "RVAL")
 }
 
@@ -58,6 +70,9 @@ record(bo, "$(FPS)RST_CSET") {
     field(DTYP, "Pico8 User Reg UInt32")
     field(OUT , "@$(NAME) offset=0x30044")
     field(MASK, "0x0800")
+    field(ZNAM, "Idle")
+    field(ONAM, "Reset")
+    field(HIGH, "0.1")
     info(autosaveFields_pass0, "RVAL")
 }
 
@@ -132,67 +147,3 @@ record(stringin, "$(FPS)TMETRP_RD") {
     field(TSE , "-2")
     field(FLNK, "")
 }
-
-record(ao, "$(FPS)CH0CORR_CSET") {
-    field(DTYP, "Pico8 User Reg Float")
-    field(OUT , "@$(NAME) offset=0x300c0")
-    field(PINI, "YES")
-    info(autosaveFields_pass0, "VAL")
-}
-
-record(ao, "$(FPS)CH0CORR_CSET") {
-    field(DTYP, "Pico8 User Reg Float")
-    field(OUT , "@$(NAME) offset=0x300c0")
-    field(PINI, "YES")
-    info(autosaveFields_pass0, "VAL")
-}
-
-record(ao, "$(FPS)CH1CORR_CSET") {
-    field(DTYP, "Pico8 User Reg Float")
-    field(OUT , "@$(NAME) offset=0x300c4")
-    field(PINI, "YES")
-    info(autosaveFields_pass0, "VAL")
-}
-
-record(ao, "$(FPS)CH2CORR_CSET") {
-    field(DTYP, "Pico8 User Reg Float")
-    field(OUT , "@$(NAME) offset=0x300c8")
-    field(PINI, "YES")
-    info(autosaveFields_pass0, "VAL")
-}
-
-record(ao, "$(FPS)CH3CORR_CSET") {
-    field(DTYP, "Pico8 User Reg Float")
-    field(OUT , "@$(NAME) offset=0x300cc")
-    field(PINI, "YES")
-    info(autosaveFields_pass0, "VAL")
-}
-
-record(ao, "$(FPS)CH4CORR_CSET") {
-    field(DTYP, "Pico8 User Reg Float")
-    field(OUT , "@$(NAME) offset=0x300d0")
-    field(PINI, "YES")
-    info(autosaveFields_pass0, "VAL")
-}
-
-record(ao, "$(FPS)CH5CORR_CSET") {
-    field(DTYP, "Pico8 User Reg Float")
-    field(OUT , "@$(NAME) offset=0x300d4")
-    field(PINI, "YES")
-    info(autosaveFields_pass0, "VAL")
-}
-
-record(ao, "$(FPS)CH6CORR_CSET") {
-    field(DTYP, "Pico8 User Reg Float")
-    field(OUT , "@$(NAME) offset=0x300d8")
-    field(PINI, "YES")
-    info(autosaveFields_pass0, "VAL")
-}
-
-record(ao, "$(FPS)CH7CORR_CSET") {
-    field(DTYP, "Pico8 User Reg Float")
-    field(OUT , "@$(NAME) offset=0x300dc")
-    field(PINI, "YES")
-    info(autosaveFields_pass0, "VAL")
-}
-
