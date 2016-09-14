@@ -8,9 +8,8 @@ pico_registerRecordDeviceDriver(pdbbase)
 createPICO8("PICO", "/dev/amc_pico_0000:01:00.0")
 #debugPICO("PICO", 5)
 
-dbLoadRecords("../../db/pico8.db","SYS=TST,D=pico,NAME=PICO")
-dbLoadRecords("../../db/pico8_frib_capture.db","SYS=TST,D=pico,NAME=PICO")
-dbLoadRecords("../../db/pico8_frib_reg.db","CTRL=TST:pico_CTRL:,FPS=TST:pico_FPS:,NAME=PICO")
+#dbLoadRecords("../../db/pico8.db","SYS=TST,D=pico,NAME=PICO")
+dbLoadRecords("../../db/pico8_frib.db","SYS=TST,D=pico,NAME=PICO")
 
 # Auto save/restore
 save_restoreDebug(2)
