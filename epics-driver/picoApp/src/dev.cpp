@@ -824,6 +824,9 @@ long read_regts_si(stringinRecord *prec)
         ts.secPastEpoch = ival[0]-POSIX_TIME_AT_EPICS_EPOCH;
         ts.nsec = double(ival[1])/info->step*1e9; // abuse step = ticks/sec of sub-second counter
 
+        if(ival[1]>=info->step)
+            (void)recGblSetSevr(prec, READ_ALARM, INVALID_ALARM);
+
         if(prec->tse==epicsTimeEventDeviceTime)
             prec->time = ts;
 
