@@ -283,6 +283,11 @@ void PicoFRIBCapture::run()
 
             buffer.swap(locbuffer);
 
+            if(buffer[1]>=80500000) {
+                nextmsg<<"sub-sec out of range "<<buffer[1]<<" ticks, ";
+                valid = false;
+            }
+
             epicsTimeStamp captime;
             captime.secPastEpoch = buffer[0]-POSIX_TIME_AT_EPICS_EPOCH;
             captime.nsec         = buffer[1]/80.5e-3; // ticks of 80.5 MHz clock
