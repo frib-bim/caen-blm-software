@@ -153,13 +153,51 @@ record(longin, "$(FPS)FPSSRC_RD") {
     field(DTYP, "Pico8 User Reg UInt32")
     field(INP , "@$(NAME) offset=0x30058")
     field(SCAN, ".5 second")
-    field(FLNK, "$(FPS)FPSSTS_RD")
+    field(FLNK, "$(FPS)FPSSTS_Fout_")
 }
 
-record(longin, "$(FPS)FPSSTS_RD") {
+record(fanout, "$(FPS)FPSSTS_Fout_") {
+    field(LNK1, "$(FPS)FRZ_RSTS")
+    field(LNK2, "$(FPS)NOKLTH_RSTS")
+    field(LNK3, "$(FPS)NOK_RSTS")
+    field(LNK4, "$(FPS)PMT_RSTS")
+    field(FLNK, "$(FPS)TMETRP_RD")
+}
+
+record(bi, "$(FPS)FRZ_RSTS") {
+    field(DESC, "Circ buffer run")
     field(DTYP, "Pico8 User Reg UInt32")
     field(INP , "@$(NAME) offset=0x3005c")
-    field(FLNK, "$(FPS)TMETRP_RD")
+    field(MASK, "0x8")
+    field(ZNAM, "Run")
+    field(ONAM, "Frozen")
+}
+
+record(bi, "$(FPS)NOKLTH_RSTS") {
+    field(DESC, "FPS NOK Latch")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x3005c")
+    field(MASK, "0x4")
+    field(ZNAM, "OK")
+    field(ONAM, "Trip")
+}
+
+record(bi, "$(FPS)NOK_RSTS") {
+    field(DESC, "FPS NOK Current")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x3005c")
+    field(MASK, "0x2")
+    field(ZNAM, "OK")
+    field(ONAM, "Trip")
+}
+
+record(bi, "$(FPS)PMT_RSTS") {
+    field(DESC, "FPS Permit")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x3005c")
+    field(MASK, "0x8")
+    field(ZNAM, "Run")
+    field(ONAM, "Frozen")
 }
 
 record(stringin, "$(FPS)TMETRP_RD") {

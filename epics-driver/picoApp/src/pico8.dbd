@@ -32,6 +32,7 @@ device(ai, INST_IO, devPico8AiCap, "Pico8 Capture Float")
 
 device(mbbi, INST_IO, devPico8MbbiReg, "Pico8 User Reg UInt32")
 device(longin, INST_IO, devPico8LiReg, "Pico8 User Reg UInt32")
+device(bi, INST_IO, devPico8BiReg, "Pico8 User Reg UInt32")
 device(ai, INST_IO, devPico8AiReg, "Pico8 User Reg Float")
 device(stringin, INST_IO, devPico8SiRegTime, "Pico8 User Reg Time64")
 device(bo, INST_IO, devPico8BoReg, "Pico8 User Reg UInt32")

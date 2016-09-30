@@ -274,7 +274,7 @@ try{
         if(dbFindRecord(&ent, prec->name))
             throw std::logic_error(SB()<<prec->name<<" can't find itself");
 
-        // for aoRecord, copy D->mask to MASK field if on is set and not the other
+        // for bo/biRecord, copy D->mask to MASK field if on is set and not the other
         if(!dbFindField(&ent, "MASK") && ent.pflddes->field_type==DBF_ULONG) {
             epicsUInt32 *pfield = (epicsUInt32*)(((char*)prec)+ent.pflddes->offset);
             if(!*pfield) *pfield = D->mask;
@@ -791,6 +791,25 @@ long read_reg_li(longinRecord *prec)
 #endif
 }
 
+long read_reg_bi(biRecord *prec)
+{
+#ifdef BUILD_FRIB
+    BEGIN {
+        Guard G(info->cap->lock);
+
+        epicsUInt32 val;
+        info->cap->fd_reg.read(&val, 4, info->offset);
+
+        prec->rval = val&prec->mask;
+
+        return 0;
+    } END(0)
+#else
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+    return 0;
+#endif
+}
+
 long read_reg_ai(aiRecord *prec)
 {
 #ifdef BUILD_FRIB
@@ -1035,6 +1054,7 @@ DSET(devPico8AiCap, ai, &get_cap_update, &read_cap_ai);
 
 DSET(devPico8MbbiReg, mbbi, NULL, &read_reg_mbbi);
 DSET(devPico8LiReg, longin, NULL, &read_reg_li);
+DSET(devPico8BiReg, bi, NULL, &read_reg_bi);
 DSET(devPico8AiReg, ai, NULL, &read_reg_ai);
 DSET(devPico8SiRegTime, stringin, NULL, &read_regts_si);
 DSET(devPico8MbboReg, mbbo, NULL, &write_reg_mbbo);
