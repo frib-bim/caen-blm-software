@@ -1,0 +1,3 @@
+[submodule "linux-driver"]
+	path = linux-driver
+	url = https://stash.frib.msu.edu/scm/bcm/amc-pico8-driver.git
