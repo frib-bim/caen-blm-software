@@ -243,8 +243,6 @@ try{
             D->offset = parseul(word.substr(sep+1));
         else if(pname=="step")
             D->step = parseul(word.substr(sep+1));
-        else if(pname=="offset")
-            D->offset = parseul(word.substr(sep+1));
         else if(pname=="mask")
             D->mask = parseul(word.substr(sep+1));
         else
