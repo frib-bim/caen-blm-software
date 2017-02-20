@@ -32,4 +32,4 @@ CROSS_COMPILER_TARGET_ARCHS = $(EPICS_HOST_ARCH)-debug
 #   take effect.
 #IOCS_APPL_TOP = </IOC/path/to/application/top>
 
-#STATIC_BUILD=NO
+STATIC_BUILD=YES
