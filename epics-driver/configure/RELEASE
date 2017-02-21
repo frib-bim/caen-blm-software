@@ -22,10 +22,10 @@
 TEMPLATE_TOP=$(EPICS_BASE)/templates/makeBaseApp/top
 
 # Optional: autosave/restore
-#AUTOSAVE=$(EPICS_BASE)
+AUTOSAVE=$(EPICS_BASE)
 
 # Optional: PCI debugging iocsh
-#DEVLIB2=$(EPICS_BASE)
+DEVLIB2=$(EPICS_BASE)
 
 # EPICS_BASE usually appears last so other apps can override stuff:
 EPICS_BASE=/usr/lib/epics
