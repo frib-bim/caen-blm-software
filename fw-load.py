@@ -66,10 +66,11 @@ def readbitfile(args):
 
 def loadbit(args, blob):
     from cothread import Event
+    from cothread.dbr import DBR_CHAR_STR
     from cothread.catools import caput
 
     print("Load bitfile waveform")
-    caput(args.pv+"bitfile", blob, wait=True)
+    caput(args.pv+"bitfile", blob, wait=True, datatype=DBR_CHAR_STR)
 
     print("Start flash with: caput %sctrl 1"%args.pv)
     print("monior with: camonitor %ssts"%args.pv)
