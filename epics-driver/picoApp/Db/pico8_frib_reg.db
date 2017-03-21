@@ -43,6 +43,7 @@ record(longout, "$(FPS)SLT_CSET") {
     field(DTYP, "Pico8 User Reg UInt32")
     field(OUT , "@$(NAME) offset=0x30044 mask=0x000f0000")
     field(PINI, "YES")
+    field(VAL , "$(SLOT=0)")
 }
 
 record(bo, "$(FPS)FRCTRP_CSET") {
