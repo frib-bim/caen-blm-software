@@ -30,6 +30,36 @@ record(longin, "$(CTRL)FFWVER_RD") {
     field(PINI, "YES")
 }
 
+record(longin, "$(CTRL)IRQT_RD") {
+    field(DESC, "Time between IRQs")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x30028")
+    field(SCAN, ".1 second")
+}
+
+record(longin, "$(CTRL)ISRT_RD") {
+    field(DESC, "ISR time")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x3002c")
+    field(SCAN, ".1 second")
+}
+
+record(longin, "$(CTRL)ISRMAX_RD") {
+    field(DESC, "ISR time")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x30030")
+    field(SCAN, ".1 second")
+}
+
+record(longin, "$(CTRL)ISRMAXCLR_CMD") {
+    field(DESC, "ISR time")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x30030")
+    field(PINI, "YES")
+    field(VAL , "0")
+}
+
+
 record(longout, "$(FPS)CBUFPOST_CSET") {
     field(DESC, "# of post trigger samples")
     field(DTYP, "Pico8 User Reg UInt32")
