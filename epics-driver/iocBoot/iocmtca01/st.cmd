@@ -4,6 +4,8 @@
 
 epicsEnvSet("EPICS_CA_MAX_ARRAY_BYTES","10000000")
 
+epicsEnvSet("AUTOSAVE", "/mnt/iocdata/autosave/mtca01-pico8")
+
 dbLoadDatabase("../../dbd/pico.dbd",0,0)
 pico_registerRecordDeviceDriver(pdbbase)
 
@@ -33,19 +35,16 @@ save_restoreDebug(2)
 dbLoadRecords("db/save_restoreStatus.db", "P=DIAG_MTCA01:CPU_N0101:")
 save_restoreSet_status_prefix("DIAG_MTCA01:CPU_N0101:")
 
-set_savefile_path("${PWD}/as","/save")
-set_requestfile_path("${PWD}/as","/req")
+set_savefile_path("${AUTOSAVE}")
+set_requestfile_path("${AUTOSAVE}")
 
 set_pass0_restoreFile("pico_settings.sav")
 set_pass1_restoreFile("pico_waveforms.sav")
 
-system("install -d as/req")
-system("install -d as/save")
-
 iocInit()
 
-makeAutosaveFileFromDbInfo("as/req/pico_settings.req", "autosaveFields_pass0")
-makeAutosaveFileFromDbInfo("as/req/pico_waveforms.req", "autosaveFields_pass1")
+makeAutosaveFileFromDbInfo("${AUTOSAVE}/pico_settings.req", "autosaveFields_pass0")
+makeAutosaveFileFromDbInfo("${AUTOSAVE}/pico_waveforms.req", "autosaveFields_pass1")
 
 create_monitor_set("pico_settings.req", 10 , "")
 create_monitor_set("pico_waveforms.req", 30 , "")
