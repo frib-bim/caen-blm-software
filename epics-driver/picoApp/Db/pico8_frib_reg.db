@@ -51,7 +51,7 @@ record(longin, "$(CTRL)ISRMAX_RD") {
     field(SCAN, ".1 second")
 }
 
-record(longin, "$(CTRL)ISRMAXCLR_CMD") {
+record(longout, "$(CTRL)ISRMAXCLR_CMD") {
     field(DESC, "ISR time")
     field(DTYP, "Pico8 User Reg UInt32")
     field(OUT , "@$(NAME) offset=0x30030")
