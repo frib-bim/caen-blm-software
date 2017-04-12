@@ -29,6 +29,59 @@ dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA01,D=PICO7,NAME=PICO7,NELM=
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA01,D=PICO8,NAME=PICO8,NELM=1000000")
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA01,D=PICO9,NAME=PICO9,NELM=1000000")
 
+# record name aliases
+# (SYS):(D)_CHX:Y_Z -> (A)Y_Z
+
+# Slot 3
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO3_CH0:,A=FE_SCS2:EMS_D0718Y:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO3_CH1:,A=FE_SCS2:EMS_D0718X:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO3_CH4:,A=FE_SCS1:EMS_D0739Y:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO3_CH5:,A=FE_SCS1:EMS_D0739X:")
+
+# Slot 4
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO4_CH0:,A=FE_LEBT:PM_D0913Y:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO4_CH1:,A=FE_LEBT:PM_D0913X:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO4_CH2:,A=FE_LEBT:PM_D0884Y:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO4_CH4:,A=FE_LEBT:PM_D0884X:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO4_CH5:,A=FE_LEBT:PM_D0856Y:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO4_CH6:,A=FE_LEBT:PM_D0856X:")
+
+# Slot 5
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO5_CH0:,A=FE_LEBT:PM_D0783A:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO5_CH1:,A=FE_LEBT:PM_D0783B:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO5_CH2:,A=FE_LEBT:PM_D0783C:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO5_CH4:,A=FE_SCS2:PM_D0752A:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO5_CH5:,A=FE_SCS2:PM_D0752B:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO5_CH6:,A=FE_SCS2:PM_D0752C:")
+
+# Slot 6
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO6_CH0:,A=FE_LEBT:PM_D0824A:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO6_CH1:,A=FE_LEBT:PM_D0824B:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO6_CH2:,A=FE_LEBT:PM_D0824C:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO6_CH4:,A=FE_LEBT:PM_D0811A:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO6_CH5:,A=FE_LEBT:PM_D0811B:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO6_CH6:,A=FE_LEBT:PM_D0811C:")
+
+# Slot 7
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO7_CH0:,A=FE_MEBT:PM_D1092A:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO7_CH1:,A=FE_MEBT:PM_D1092B:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO7_CH2:,A=FE_MEBT:PM_D1092C:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO7_CH4:,A=FE_LEBT:PM_D0998A:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO7_CH5:,A=FE_LEBT:PM_D0998B:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO7_CH6:,A=FE_LEBT:PM_D0998C:")
+
+# Slot 8
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH0:,A=FE_LEBT:FC_D0998:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH1:,A=FE_LEBT:FC_D0976:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH2:,A=FE_LEBT:FC_D0811:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH4:,A=FE_LEBT:FC_D0794:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH5:,A=FE_SCS1:FC_D0739:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH6:,A=FE_SCS2:FC_D0718:")
+
+# Slot 9
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO9_CH4:,A=FE_MEBT:FC_D1123:")
+dbLoadRecords("../../pico8_chan_alias.db", "P=DIAG_MTCA01:PICO9_CH5:,A=FE_EML:FC_D1100:")
+
 # Auto save/restore
 save_restoreDebug(2)
 
