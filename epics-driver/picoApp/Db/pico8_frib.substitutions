@@ -32,10 +32,12 @@ file "pico8_cap_int.template"
 file "pico8_cap_float.template"
 {
 {P="\$(SYS):\$(D)_CH0:AVG", NAME="\$(NAME)", ADDR="0x10", Stat="Mean", PREC="6", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH0:ASTD",NAME="\$(NAME)", ADDR="0x10", Stat="Std",  PREC="6"}
 {P="\$(SYS):\$(D)_CH0:MIN", NAME="\$(NAME)", ADDR="0x14", Stat="Min",  PREC="6"}
 {P="\$(SYS):\$(D)_CH0:MAX", NAME="\$(NAME)", ADDR="0x18", Stat="Max",  PREC="6"}
 {P="\$(SYS):\$(D)_CH0:STD", NAME="\$(NAME)", ADDR="0x1c", Stat="Mean",  PREC="6"}
 {P="\$(SYS):\$(D)_CH1:AVG", NAME="\$(NAME)", ADDR="0x24", Stat="Mean", PREC="6", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH0:ASTD",NAME="\$(NAME)", ADDR="0x24", Stat="Std",  PREC="6"}
 {P="\$(SYS):\$(D)_CH1:MIN", NAME="\$(NAME)", ADDR="0x28", Stat="Min",  PREC="6"}
 {P="\$(SYS):\$(D)_CH1:MAX", NAME="\$(NAME)", ADDR="0x2c", Stat="Max",  PREC="6"}
 {P="\$(SYS):\$(D)_CH1:STD", NAME="\$(NAME)", ADDR="0x30", Stat="Mean",  PREC="6"}
