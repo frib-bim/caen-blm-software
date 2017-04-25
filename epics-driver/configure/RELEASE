@@ -27,6 +27,9 @@ AUTOSAVE=$(EPICS_BASE)
 # Optional: PCI debugging iocsh
 DEVLIB2=$(EPICS_BASE)
 
+# Optional
+RECSYNC=$(EPICS_BASE)
+
 # EPICS_BASE usually appears last so other apps can override stuff:
 EPICS_BASE=/usr/lib/epics
 
