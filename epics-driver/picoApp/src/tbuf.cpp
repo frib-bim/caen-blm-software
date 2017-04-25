@@ -53,7 +53,8 @@ enum reduce_t {
     First,   // FIFO
     Average,
     Min,
-    Max
+    Max,
+    Stdev
 };
 
 struct timebuf {
@@ -156,6 +157,7 @@ long init_record_tbuf_common(dbCommon *prec, DBLINK *plink)
 
                     if     (reduce=="First")   dev->reduce = First;
                     else if(reduce=="Mean")    dev->reduce = Average;
+                    else if(reduce=="Std")     dev->reduce = Stdev;
                     else if(reduce=="Max")     dev->reduce = Max;
                     else if(reduce=="Min")     dev->reduce = Min;
                     else throw std::runtime_error("Unknown reduction mode "+reduce);
@@ -332,6 +334,7 @@ void get_value_stat(timebuf *tb, aiRecord *prec, reduce_t reduce)
     assert(tb->cnt>0);
 
     // initialize w/ first sample
+    double meanVal;
     double newval = tb->values[pos];
     short newsevr = tb->severities[pos];
 
@@ -343,6 +346,7 @@ void get_value_stat(timebuf *tb, aiRecord *prec, reduce_t reduce)
         switch(reduce) {
         case First: break;
         case Average:
+        case Stdev:
             newval += tb->values[pos];
             break;
         case Min:
@@ -358,6 +362,18 @@ void get_value_stat(timebuf *tb, aiRecord *prec, reduce_t reduce)
 
     if(reduce == Average)
         newval /= tb->cnt;
+    // For Standard deviation, start with average, then loop data again to calculate variance
+    if(reduce == Stdev) {
+        meanVal = newval / tb->cnt;
+        pos = tb->first();
+        newval = (tb->values[pos] - meanVal)*(tb->values[pos] - meanVal);
+        pos = (pos+1)%tb->size();
+        for(size_t n=tb->cnt-1; n; n--, pos = (pos+1)%tb->size()) {
+            newval += (tb->values[pos] - meanVal)*(tb->values[pos] - meanVal);
+        }
+        // Convert from sum-of squares to std
+        newval = sqrt(newval/tb->cnt);
+    }
 
     prec->val = newval;
     if(newsevr)
@@ -385,6 +401,7 @@ long get_value(aiRecord *prec)
             case First:
                 get_value_first(tb, prec); break;
             case Average:
+            case Stdev:
             case Min:
             case Max:
                 get_value_stat(tb, prec, tdev->reduce); break;
