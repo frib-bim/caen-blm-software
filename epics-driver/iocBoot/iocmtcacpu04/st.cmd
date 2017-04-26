@@ -86,19 +86,19 @@ save_restoreDebug(2)
 #dbLoadRecords("db/save_restoreStatus.db", "P=DIAG_MTCA:CPU_R0404:")
 #save_restoreSet_status_prefix("DIAG_MTCA:CPU_R0404:")
 
-set_savefile_path("${PWD}/as","/save")
-set_requestfile_path("${PWD}/as","/req")
+set_savefile_path("/usr/local/lib/iocapps/pico8/epics-driver/iocBoot/iocmtcacpu04/as","/save")
+set_requestfile_path("/usr/local/lib/iocapps/pico8/epics-driver/iocBoot/iocmtcacpu04/as","/req")
 
 set_pass0_restoreFile("pico_settings.sav")
 set_pass1_restoreFile("pico_waveforms.sav")
 
-system("install -d as/req")
-system("install -d as/save")
+system("install -d /usr/local/lib/iocapps/pico8/epics-driver/iocBoot/iocmtcacpu04/as/req")
+system("install -d /usr/local/lib/iocapps/pico8/epics-driver/iocBoot/iocmtcacpu04/as/save")
 
 iocInit()
 
-makeAutosaveFileFromDbInfo("as/req/pico_settings.req", "autosaveFields_pass0")
-makeAutosaveFileFromDbInfo("as/req/pico_waveforms.req", "autosaveFields_pass1")
+makeAutosaveFileFromDbInfo("/usr/local/lib/iocapps/pico8/epics-driver/iocBoot/iocmtcacpu04/as/req/pico_settings.req", "autosaveFields_pass0")
+makeAutosaveFileFromDbInfo("/usr/local/lib/iocapps/pico8/epics-driver/iocBoot/iocmtcacpu04/as/req/pico_waveforms.req", "autosaveFields_pass1")
 
 create_monitor_set("pico_settings.req", 10 , "")
 create_monitor_set("pico_waveforms.req", 30 , "")
