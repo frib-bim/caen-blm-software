@@ -10,6 +10,7 @@ record(longout, "$(P)TOF_CSET") {
     field(DTYP, "Pico8 User Reg UInt32")
     field(OUT, "@$(NAME) offset=$(CTRL) mask=0x1f00<<$(BIT)")
     field(PINI, "YES")
+    info(autosaveFields_pass0, "VAL")
 }
 
 record(bo, "$(P)MON_CSET") {
@@ -19,6 +20,7 @@ record(bo, "$(P)MON_CSET") {
     field(ZNAM, "OFF")
     field(ONAM, "ON")
     # MASK is automagially set from mask=
+    info(autosaveFields_pass0, "RVAL")
 }
 
 record(bo, "$(P)TOFAUTO_CSET") {
@@ -28,4 +30,5 @@ record(bo, "$(P)TOFAUTO_CSET") {
     field(ZNAM, "OFF")
     field(ONAM, "ON")
     # MASK is automagially set from mask=
+    info(autosaveFields_pass0, "RVAL")
 }
