@@ -17,6 +17,7 @@ record(bo, "$(P)MON_CSET") {
     field(DESC, "Always Monitor")
     field(DTYP, "Pico8 User Reg UInt32")
     field(OUT, "@$(NAME) offset=$(CTRL) mask=0x2<<$(BIT)")
+    field(RVAL, "1")
     field(ZNAM, "OFF")
     field(ONAM, "ON")
     # MASK is automagially set from mask=
