@@ -91,7 +91,7 @@ dev_cap_map_t dev_cap_map;
 #define BEGIN if(!prec->dpvt) return 0; dsetInfo *info = (dsetInfo*)prec->dpvt; try
 #define END(N) catch(std::exception& e) { \
     fprintf(stderr, "%s: error %s\n", prec->name, e.what()); \
-    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM); \
+    (void)recGblSetSevr(prec, READ_ALARM, INVALID_ALARM); \
 } return N;
 
 void shutdownPICO(void *raw)

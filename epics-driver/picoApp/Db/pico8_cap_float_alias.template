@@ -1,0 +1,5 @@
+alias("$(P)F_RD",       "$(A)F_RD")
+alias("$(P)NSAMP_CSET", "$(A)NSAMP_CSET")
+alias("$(P)PRD_CSET",   "$(A)PRD_CSET")
+alias("$(P)_RD",        "$(A)_RD")
+alias("$(P)W_RD",       "$(A)W_RD")

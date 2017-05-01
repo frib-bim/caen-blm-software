@@ -240,3 +240,9 @@ record(stringin, "$(FPS)TMETRP_RD") {
     field(TSE , "-2")
     field(FLNK, "")
 }
+
+record(longin, "$(CTRL)GAIN0_RD") {
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x100")
+    field(PINI, "YES")
+}
