@@ -85,7 +85,7 @@ dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO9_CH5:,A=FE_EML
 # Auto save/restore
 save_restoreDebug(2)
 
-dbLoadRecords("db/save_restoreStatus.db", "P=DIAG_MTCA01:CPU_N0101:")
+dbLoadRecords("../../db/save_restoreStatus.db", "P=DIAG_MTCA01:CPU_N0101:")
 save_restoreSet_status_prefix("DIAG_MTCA01:CPU_N0101:")
 
 set_savefile_path("${AUTOSAVE}")
