@@ -4,6 +4,9 @@
 
 epicsEnvSet("EPICS_CA_MAX_ARRAY_BYTES","10000000")
 
+## Channel Access Security config
+asSetFilename("${EPICS_CA_SEC_FILE}")
+
 dbLoadDatabase("../../dbd/pico.dbd",0,0)
 pico_registerRecordDeviceDriver(pdbbase)
 
