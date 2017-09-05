@@ -74,7 +74,7 @@ dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO7_CH5:,A=FE_LEB
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO7_CH6:,A=FE_LEBT:PM_D0998:C_")
 
 # Slot 8
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH0:,A=FE_LEBT:FC_D0998:")
+#dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH0:,A=FE_LEBT:FC_D0998:")
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH1:,A=FE_LEBT:FC_D0977:")
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH2:,A=FE_LEBT:FC_D0814:")
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH4:,A=FE_LEBT:FC_D0794:")
@@ -82,6 +82,7 @@ dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH5:,A=FE_SCS
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH6:,A=FE_SCS2:FC_D0718:")
 
 # Slot 9
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO9_CH2:,A=FE_LEBT:FC_D0998:")
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO9_CH4:,A=FE_MEBT:FC_D1123:")
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO9_CH5:,A=FE_EML:FC_D1100:")
 
