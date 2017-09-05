@@ -83,7 +83,7 @@ dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH6:,A=FE_SCS
 
 # Slot 9
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO9_CH2:,A=FE_LEBT:FC_D0998:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO9_CH4:,A=FE_MEBT:FC_D1123:")
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO9_CH4:,A=FE_MEBT:FC_D1102:")
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO9_CH5:,A=FE_EML:FC_D1100:")
 
 # Auto save/restore
