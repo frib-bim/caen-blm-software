@@ -20,6 +20,7 @@ record(bo, "$(P)MON_CSET") {
     field(RVAL, "1")
     field(ZNAM, "OFF")
     field(ONAM, "ON")
+    field(PINI, "RUNNING")
     # MASK is automagially set from mask=
     info(autosaveFields_pass0, "RVAL")
 }
