@@ -607,6 +607,26 @@ long read_run_count(longinRecord *prec)
     return 0;
 }
 
+long read_ddr(waveformRecord *prec)
+{
+#ifdef BUILD_FRIB
+    BEGIN {
+        size_t reqsize = prec->nelm * dbValueSize(prec->ftvl);
+
+        info->cap->fd_ddr.read(prec->bptr,
+                               reqsize,
+                               info->offset * dbValueSize(prec->ftvl));
+
+        prec->nord = prec->nelm;
+
+        return 0;
+    }END(0)
+#else
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+    return 0;
+#endif
+}
+
 #undef BEGIN
 #define BEGIN if(!prec->dpvt) return 0; dsetInfo *info = (dsetInfo*)prec->dpvt; \
     if(!info->cap) { \
@@ -1043,6 +1063,8 @@ DSET2(devPico8AoOffset, ao, NULL, &write_offset_ao);
 
 DSET(devPico8LiRunCount, longin, &get_data_update, &read_run_count);
 DSET(devPico8WfChanData, waveform, &get_data_update, &read_chan_data);
+
+DSET(devPico8WfDDR, waveform, NULL, &read_ddr);
 
 DSET(devPico8BiCapValid, bi, &get_cap_update, &read_cap_valid);
 DSET(devPico8LiCapCount, longin, &get_cap_update, &read_cap_count);

@@ -1,0 +1,9 @@
+# NELM and OFF given in units of sizeof(FTVL)
+# eg. FTVL=ULONG, NELM=2, OFF=1
+# reads 8 bytes starting with byte 4
+record(waveform, "$(N)") {
+    field(DTYP, "Pico8 RAM")
+    field(FTVL, "$(FTVL=ULONG)")
+    field(NELM, "$(NELM)")
+    field(INP , "@$(NAME) offset=$(OFF)")
+}
