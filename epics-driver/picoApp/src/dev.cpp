@@ -607,6 +607,14 @@ long read_run_count(longinRecord *prec)
     return 0;
 }
 
+#undef BEGIN
+#define BEGIN if(!prec->dpvt) return 0; dsetInfo *info = (dsetInfo*)prec->dpvt; \
+    if(!info->cap) { \
+        (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM); \
+        return 0; \
+    } \
+    try
+
 long read_ddr(waveformRecord *prec)
 {
 #ifdef BUILD_FRIB
@@ -626,14 +634,6 @@ long read_ddr(waveformRecord *prec)
     return 0;
 #endif
 }
-
-#undef BEGIN
-#define BEGIN if(!prec->dpvt) return 0; dsetInfo *info = (dsetInfo*)prec->dpvt; \
-    if(!info->cap) { \
-        (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM); \
-        return 0; \
-    } \
-    try
 
 long read_cap_valid(biRecord *prec)
 {
