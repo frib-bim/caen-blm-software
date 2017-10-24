@@ -23,6 +23,7 @@
 #include <epicsEvent.h>
 #include <epicsGuard.h>
 #include <epicsThread.h>
+#include <callback.h>
 #include <errlog.h>
 
 #include <dbScan.h>
@@ -168,6 +169,12 @@ struct PicoFRIBCapture : public epicsThreadRunable
     std::vector<epicsUInt32> buffer;
 
     std::string lastmsg;
+
+    // DDR RAM access
+    epicsUInt32 ddr_start,
+                ddr_count;
+    dbCommon *ddr_busy; // effectively a flag to ensure that ddr_cb isn't re-used while queued
+    CALLBACK ddr_cb;
 };
 
 #endif // BUILD_FRIB

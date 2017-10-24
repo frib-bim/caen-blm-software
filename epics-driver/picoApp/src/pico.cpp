@@ -199,6 +199,9 @@ PicoFRIBCapture::PicoFRIBCapture(const char *fname)
     ,count(0)
     ,debug_lvl(0)
     ,valid(false)
+    ,ddr_start(0u)
+    ,ddr_count(0u)
+    ,ddr_busy(0)
 {
     scanIoInit(&update);
     scanIoInit(&msgupdate);

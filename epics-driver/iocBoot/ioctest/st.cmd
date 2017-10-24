@@ -11,6 +11,8 @@ createPICO8("PICO", "/dev/amc_pico_0000:01:00.0")
 #dbLoadRecords("../../db/pico8.db","SYS=TST,D=pico,NAME=PICO")
 dbLoadRecords("../../db/pico8_frib.db","SYS=TST,D=pico,NAME=PICO")
 
+dbLoadRecords("../../db/pico8_ram.template", "P=TST:mem:,NAME=PICO,FTVL=LONG,NELM=7")
+
 # Auto save/restore
 save_restoreDebug(2)
 

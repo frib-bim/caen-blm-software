@@ -23,6 +23,8 @@ device(ao, INST_IO, devPico8AoOffset, "Pico8 Chan Offset")
 device(longin, INST_IO, devPico8LiRunCount, "Pico8 Run Count")
 device(waveform, INST_IO, devPico8WfChanData, "Pico8 Channel Data")
 
+device(longout, INST_IO, devPico8WfDDROff, "Pico8 RAM Offset")
+device(longout, INST_IO, devPico8WfDDRCnt, "Pico8 RAM Count")
 device(waveform, INST_IO, devPico8WfDDR, "Pico8 RAM")
 
 device(bi, INST_IO, devPico8BiCapValid, "Pico8 Capture Valid")

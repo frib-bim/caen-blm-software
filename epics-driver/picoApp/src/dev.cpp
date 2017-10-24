@@ -12,6 +12,7 @@
 
 #include <devSup.h>
 #include <drvSup.h>
+#include <recSup.h>
 #include <recGbl.h>
 #include <alarm.h>
 #include <dbAccess.h>
@@ -615,17 +616,99 @@ long read_run_count(longinRecord *prec)
     } \
     try
 
+long write_ddr_offset(longoutRecord *prec)
+{
+#ifdef BUILD_FRIB
+    BEGIN {
+        Guard G(info->cap->lock);
+        info->cap->ddr_start = prec->val;
+
+        return 0;
+    }END(0)
+#else
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+    return 0;
+#endif
+}
+
+long write_ddr_count(longoutRecord *prec)
+{
+#ifdef BUILD_FRIB
+    BEGIN {
+        Guard G(info->cap->lock);
+        info->cap->ddr_count = prec->val;
+
+        return 0;
+    }END(0)
+#else
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+    return 0;
+#endif
+}
+
+#ifdef BUILD_FRIB
+void ddr_read(CALLBACK *cb)
+{
+    void *pvt;
+    callbackGetUser(pvt, cb);
+    waveformRecord *prec = (waveformRecord *)pvt;
+
+    dbScanLock((dbCommon*)prec);
+    dsetInfo *info = (dsetInfo*)prec->dpvt;
+    void *buf = prec->bptr;
+    rset *prset = prec->rset;
+    long (*process)(dbCommon*) = (long (*)(dbCommon*))prset->process;
+
+    size_t start = info->cap->ddr_start;
+    size_t count = prec->nelm * dbValueSize(prec->ftvl);
+    if(count > info->cap->ddr_count)
+        count = info->cap->ddr_count;
+    dbScanUnlock((dbCommon*)prec);
+
+    try {
+
+        info->cap->fd_ddr.read(buf, count, start);
+
+        dbScanLock((dbCommon*)prec);
+        prec->nord = count / dbValueSize(prec->ftvl);
+    }catch(std::exception& e){
+        errlogPrintf("%s: DDR read error: %s\n", prec->name, e.what());
+
+        dbScanLock((dbCommon*)prec);
+
+        (void)recGblSetSevr(prec, WRITE_ALARM, INVALID_ALARM);
+    }
+
+    (*process)((dbCommon*)prec);
+    dbScanUnlock((dbCommon*)prec);
+}
+#endif
+
 long read_ddr(waveformRecord *prec)
 {
 #ifdef BUILD_FRIB
     BEGIN {
-        size_t reqsize = prec->nelm * dbValueSize(prec->ftvl);
+        if(!prec->pact){
+            // start async action
+            Guard G(info->cap->lock);
 
-        info->cap->fd_ddr.read(prec->bptr,
-                               reqsize,
-                               info->offset * dbValueSize(prec->ftvl));
+            if(info->cap->ddr_busy)
+                throw std::runtime_error("DDR operation already in progress");
 
-        prec->nord = prec->nelm;
+            callbackSetCallback(&ddr_read, &info->cap->ddr_cb);
+            callbackSetPriority(priorityLow, &info->cap->ddr_cb);
+            callbackSetUser(prec, &info->cap->ddr_cb);
+
+            callbackRequest(&info->cap->ddr_cb);
+
+            info->cap->ddr_busy = (dbCommon*)prec;
+            prec->pact = 1;
+
+        } else {
+            // finish async action
+            prec->pact = 0;
+            info->cap->ddr_busy = 0;
+        }
 
         return 0;
     }END(0)
@@ -1064,6 +1147,8 @@ DSET2(devPico8AoOffset, ao, NULL, &write_offset_ao);
 DSET(devPico8LiRunCount, longin, &get_data_update, &read_run_count);
 DSET(devPico8WfChanData, waveform, &get_data_update, &read_chan_data);
 
+DSET(devPico8WfDDROff, longout, NULL, &write_ddr_offset);
+DSET(devPico8WfDDRCnt, longout, NULL, &write_ddr_count);
 DSET(devPico8WfDDR, waveform, NULL, &read_ddr);
 
 DSET(devPico8BiCapValid, bi, &get_cap_update, &read_cap_valid);
