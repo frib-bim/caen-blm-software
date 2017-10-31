@@ -4,7 +4,7 @@
 
 epicsEnvSet("EPICS_CA_MAX_ARRAY_BYTES","10000000")
 
-epicsEnvSet("AUTOSAVE", "/mnt/iocdata/autosave/mtca01-pico8")
+epicsEnvSet("AUTOSAVE", "/mnt/iocdata/autosave/mtca15-pico8")
 
 ## Channel Access Security config
 asSetFilename("${EPICS_CA_SEC_FILE}")
