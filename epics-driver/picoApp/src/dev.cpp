@@ -663,6 +663,8 @@ void ddr_read(CALLBACK *cb)
     size_t count = prec->nelm * dbValueSize(prec->ftvl);
     if(count > info->cap->ddr_count)
         count = info->cap->ddr_count;
+    if(prec->tpro>1)
+        errlogPrintf("%s: DDR read start=%zu count=%zu\n", prec->name, start, count);
     dbScanUnlock((dbCommon*)prec);
 
     try {
@@ -671,6 +673,8 @@ void ddr_read(CALLBACK *cb)
 
         dbScanLock((dbCommon*)prec);
         prec->nord = count / dbValueSize(prec->ftvl);
+        if(prec->tpro>1)
+            errlogPrintf("%s: DDR read complete NORD=%u\n", prec->name, (unsigned)prec->nord);
     }catch(std::exception& e){
         errlogPrintf("%s: DDR read error: %s\n", prec->name, e.what());
 
