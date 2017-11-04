@@ -14,4 +14,9 @@ record(waveform, "$(P)Data-I") {
     field(FTVL, "$(FTVL=ULONG)")
     field(NELM, "$(NELM)")
     field(INP , "@$(NAME)")
+    # Hack: reading ram can take a long time (seconds)
+    #       don't use LOW to avoid interfering with
+    #       100Hz buffer processing
+    # TODO: use dedicated worker thread?
+    field(PRIO, "MEDIUM")
 }

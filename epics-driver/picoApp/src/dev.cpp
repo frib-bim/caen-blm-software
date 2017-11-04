@@ -700,7 +700,7 @@ long read_ddr(waveformRecord *prec)
                 throw std::runtime_error("DDR operation already in progress");
 
             callbackSetCallback(&ddr_read, &info->cap->ddr_cb);
-            callbackSetPriority(priorityLow, &info->cap->ddr_cb);
+            callbackSetPriority(prec->prio, &info->cap->ddr_cb);
             callbackSetUser(prec, &info->cap->ddr_cb);
 
             callbackRequest(&info->cap->ddr_cb);
