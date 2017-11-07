@@ -105,3 +105,13 @@ makeAutosaveFileFromDbInfo("${AUTOSAVE}/pico_waveforms.req", "autosaveFields_pas
 
 create_monitor_set("pico_settings.req", 10 , "")
 create_monitor_set("pico_waveforms.req", 30 , "")
+
+
+## Set PICO card AMC slot numbers on startup for each card.
+dbpf "DIAG_MTCA01:PICO3_FPS:SLT_CSET", "3"
+dbpf "DIAG_MTCA01:PICO4_FPS:SLT_CSET", "4"
+dbpf "DIAG_MTCA15:PICO5_FPS:SLT_CSET", "5"
+dbpf "DIAG_MTCA01:PICO6_FPS:SLT_CSET", "6"
+dbpf "DIAG_MTCA01:PICO7_FPS:SLT_CSET", "7"
+dbpf "DIAG_MTCA01:PICO8_FPS:SLT_CSET", "8"
+dbpf "DIAG_MTCA01:PICO9_FPS:SLT_CSET", "9"
