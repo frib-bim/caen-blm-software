@@ -16,6 +16,11 @@ file "pico8_chan.template"
         {N=7, P="\$(SYS):\$(D)_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
 }
 
+file "pico8_ram.template"
+{
+{P="\$(SYS):\$(D)_mem:", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
+}
+
 file "pico8_frib_reg.db"
 {
 {NAME="\$(NAME)", CTRL="\$(SYS):\$(D)_CTRL:", FPS="\$(SYS):\$(D)_FPS:", SLOT="\$(SLOT=0)"}

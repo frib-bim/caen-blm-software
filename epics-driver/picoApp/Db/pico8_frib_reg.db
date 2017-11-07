@@ -1,3 +1,52 @@
+##  Added by Scott
+## ==================================================
+record(stringin, "$(CTRL)ioc_version") {
+  field(PINI, "YES")
+  field(VAL, "vB110 (2017-Nov)")
+}
+
+record(longin, "$(FPS)FPSSTS_RD") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x3005c")  field(SCAN, ".5 second") field(FLNK, "$(FPS)FPSSTS_Fout_")}
+record(longin, "$(CTRL)EVRSTS_RD") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30058")  field(SCAN, ".5 second") field(FLNK, "$(FPS)FPSSRC1_RD") }
+record(longin, "$(FPS)FPSSRC1_RD") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30068")  field(FLNK, "$(FPS)FPSSRC2_RD") }
+record(longin, "$(FPS)FPSSRC2_RD") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x3006c")  field(FLNK, "$(FPS)FPSMSK1_RD") }
+record(longin, "$(FPS)FPSMSK1_RD") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30070")  field(FLNK, "$(FPS)FPSMSK2_RD") }
+record(longin, "$(FPS)FPSMSK2_RD") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30074")  field(FLNK, "$(FPS)FPSPRE1_RD") }
+record(longin, "$(FPS)FPSPRE1_RD") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30070")  field(FLNK, "$(FPS)FPSPRE2_RD") }
+record(longin, "$(FPS)FPSPRE2_RD") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30074")  }
+record(longin, "$(CTRL)CYCCNT_RD") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30058 mask=0x0000ffff")  field(SCAN, ".5 second") }
+record(longin, "$(CTRL)PLSCNT_RD") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30058 mask=0xffff0000")  field(SCAN, ".5 second") }
+
+## DDR Interface
+record(longin, "$(CTRL)DDR_STS_RD")     {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30004") field(SCAN, ".2 second") }
+record(longin, "$(CTRL)DDR_STS2_RD")    {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30004 mask=0xffff0000") field(SCAN, ".2 second") }
+record(longin, "$(CTRL)DDR_CTRL_RD")    {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30008") field(SCAN, ".2 second") }
+record(longin, "$(CTRL)DDR_PATTERN_RD") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x3000C") field(SCAN, ".2 second") }
+record(longin, "$(CTRL)DDR_LAST_ADDR")  {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30010") field(SCAN, ".2 second") }
+record(longout,"$(CTRL)DDR_CTRL")       {  field(DTYP, "Pico8 User Reg UInt32")  field(OUT , "@$(NAME) offset=0x30008")  field(PINI, "YES")  info(autosaveFields_pass0, "VAL") }
+record(longout,"$(CTRL)DDR_PATTERN")    {  field(DTYP, "Pico8 User Reg UInt32")  field(OUT , "@$(NAME) offset=0x3000C")  field(PINI, "YES")  info(autosaveFields_pass0, "VAL") }
+
+
+## Python DDR readback interface
+record(longout, "$(CTRL)acqDDRwave") { field(DTYP, "Soft Channel") field(VAL,"0")  field(PINI, "YES") }
+record(longout, "$(CTRL)acqDDRnpts") { field(DTYP, "Soft Channel") field(VAL,"20000")  field(PINI, "YES") }
+record(ao,      "$(CTRL)DDR_TIME_RD") { field(DTYP, "Soft Channel") field(VAL,"0")  field(PINI, "YES") }
+record(waveform, "$(CTRL)DDR_NOKW_RD") {  field(DTYP, "Soft Channel")  field(FTVL, "SHORT")  field(NELM, "1048576") }
+record(waveform, "$(CTRL)DDR_BEAMSTATW_RD") {  field(DTYP, "Soft Channel")  field(FTVL, "SHORT")  field(NELM, "1048576") }
+
+
+## CYCLE debug (should probably comment out to not interfere?)
+record(longin, "$(CTRL)CYC_TSEC") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30100") field(SCAN, ".1 second") }
+record(longin, "$(CTRL)CYC_TSUB") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30104") field(SCAN, ".1 second") }
+record(longin, "$(CTRL)CYC_TON")  {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30108") field(SCAN, ".1 second") }
+record(longin, "$(CTRL)CYC_EOCM") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x3010C") field(SCAN, ".1 second") }
+record(calc, "$(CTRL)IRQT_MSEC") {  field(INPA, "$(CTRL)IRQT_RD NPP MS")  field(CALC, "A/125.0e3")  field(EGU , "ms") }
+record(calc, "$(CTRL)ISRT_MSEC") {  field(INPA, "$(CTRL)ISRT_RD NPP MS")  field(CALC, "A/125.0e3")  field(EGU , "ms") }
+record(calc, "$(CTRL)ISRMAX_MSEC") {  field(INPA, "$(CTRL)ISRMAX_RD NPP MS")  field(CALC, "A/125.0e3")  field(EGU , "ms") }
+
+
+
+##  Original from Davidsaver
+## ==================================================
 
 record(bi, "$(CTRL)CAPVLD_RSTS") {
     field(DTYP, "Pico8 Capture Valid")
@@ -35,6 +84,7 @@ record(longin, "$(CTRL)IRQT_RD") {
     field(DTYP, "Pico8 User Reg UInt32")
     field(INP , "@$(NAME) offset=0x30028")
     field(SCAN, ".1 second")
+    field(FLNK, "$(CTRL)IRQT_MSEC")
 }
 
 record(longin, "$(CTRL)ISRT_RD") {
@@ -42,6 +92,7 @@ record(longin, "$(CTRL)ISRT_RD") {
     field(DTYP, "Pico8 User Reg UInt32")
     field(INP , "@$(NAME) offset=0x3002c")
     field(SCAN, ".1 second")
+    field(FLNK, "$(CTRL)ISRT_MSEC")
 }
 
 record(longin, "$(CTRL)ISRMAX_RD") {
@@ -49,6 +100,7 @@ record(longin, "$(CTRL)ISRMAX_RD") {
     field(DTYP, "Pico8 User Reg UInt32")
     field(INP , "@$(NAME) offset=0x30030")
     field(SCAN, ".1 second")
+    field(FLNK, "$(CTRL)ISRMAX_MSEC")
 }
 
 record(longout, "$(CTRL)ISRMAXCLR_CMD") {
@@ -178,13 +230,6 @@ record(stringin, "$(CTRL)TMECUR_RD") {
     field(INP , "@$(NAME) offset=0x30050 step=80500000")
     field(SCAN, "1 second")
     field(TSE , "-2")
-}
-
-record(longin, "$(FPS)FPSSRC_RD") {
-    field(DTYP, "Pico8 User Reg UInt32")
-    field(INP , "@$(NAME) offset=0x30058")
-    field(SCAN, ".5 second")
-    field(FLNK, "$(FPS)FPSSTS_Fout_")
 }
 
 record(fanout, "$(FPS)FPSSTS_Fout_") {

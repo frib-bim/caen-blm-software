@@ -6,7 +6,7 @@ include $(TOP)/configure/CONFIG
 DB += pico8.db
 DB += pico8_frib.db
 DB += pico8_chan_alias.db
-DB += pico8_ram.template
+# DB += pico8_ram.template
 
 ifneq ($(AUTOSAVE),)
 DB_INSTALLS += $(firstword $(wildcard $(AUTOSAVE)/asApp/Db/save_restoreStatus.db $(AUTOSAVE)/db/save_restoreStatus.db))

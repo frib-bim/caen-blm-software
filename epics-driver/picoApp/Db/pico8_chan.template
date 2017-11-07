@@ -52,3 +52,6 @@ record(ao, "$(P)OFST_CSET") {
     field(VAL , "$(AOFF=0)")
     info(autosaveFields_pass0, "VAL")
 }
+
+## Added by Scott
+record(waveform, "$(P)DDRWV_RD") {  field(DTYP, "Soft Channel")  field(FTVL, "FLOAT")  field(NELM, "$(NELM)") }
