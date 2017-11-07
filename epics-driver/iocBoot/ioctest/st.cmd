@@ -15,7 +15,6 @@ createPICO8("PICOD", "/dev/amc_pico_0000:06:00.0")
 #createPICO8("PICO3", "/dev/amc_pico_0000:07:00.0")
 dbLoadRecords("db/pico8_frib.db","SYS=TST,D=picod,NAME=PICOD,NELM=1048576")
 #dbLoadRecords("db/pico8_frib.db","SYS=TST,D=pico3,NAME=PICO3,NELM=1048576")
-#dbLoadRecords("db/pico8_ram.template", "P=TST:picod_mem:,NAME=PICOD,FTVL=LONG,NELM=600000")
 
 
 # Auto save/restore
