@@ -86,6 +86,10 @@ dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO9_CH2:,A=FE_LEB
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO9_CH4:,A=FE_MEBT:FC_D1102:")   # CableDB: D1123
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO9_CH5:,A=FE_EML:FC_D1104:")    # CableDB: D1100
 
+## Start the PICO python helper script
+system "python ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA01:PICO3 DIAG_MTCA01:PICO4 DIAG_MTCA01:PICO5 DIAG_MTCA01:PICO6 DIAG_MTCA01:PICO7 DIAG_MTCA01:PICO8 DIAG_MTCA01:PICO9 &"
+
+
 # Auto save/restore
 save_restoreDebug(2)
 
@@ -110,7 +114,7 @@ create_monitor_set("pico_waveforms.req", 30 , "")
 ## Set PICO card AMC slot numbers on startup for each card.
 dbpf "DIAG_MTCA01:PICO3_FPS:SLT_CSET", "3"
 dbpf "DIAG_MTCA01:PICO4_FPS:SLT_CSET", "4"
-dbpf "DIAG_MTCA15:PICO5_FPS:SLT_CSET", "5"
+dbpf "DIAG_MTCA01:PICO5_FPS:SLT_CSET", "5"
 dbpf "DIAG_MTCA01:PICO6_FPS:SLT_CSET", "6"
 dbpf "DIAG_MTCA01:PICO7_FPS:SLT_CSET", "7"
 dbpf "DIAG_MTCA01:PICO8_FPS:SLT_CSET", "8"
