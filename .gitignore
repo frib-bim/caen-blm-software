@@ -2,3 +2,7 @@
 *.files
 *.includes
 *.creator*
+.cproject
+.project
+.pydevproject
+.settings/

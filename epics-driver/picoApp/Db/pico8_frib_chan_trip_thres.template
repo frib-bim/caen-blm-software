@@ -1,0 +1,8 @@
+record(ao, "$(P)TRIP_$(TRIP)_CSET") {
+    field(DTYP, "Pico8 User Reg Float")
+    field(OUT , "@$(NAME) offset=0x30000+4*$(ADDR)")
+    field(PINI, "YES")
+    field(EGU,  "A")
+    info(autosaveFields_pass0, "VAL")
+}
+
