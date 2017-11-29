@@ -15,21 +15,6 @@ pattern
 { "SPK2",    "\$(SPK2)" }
 }
 
-file "pico8_frib_chan_trip_ctl_sts.template" {
-pattern
-{ TRIP,      NOKMSK,       NOK,       BIT }
-{ "15ULO",   "\$(NOKMSK)", "\$(NOK)", 0   }
-{ "15UHI",   "\$(NOKMSK)", "\$(NOK)", 1   }
-{ "150ULO",  "\$(NOKMSK)", "\$(NOK)", 2   }
-{ "150UHI",  "\$(NOKMSK)", "\$(NOK)", 3   }
-{ "1500ULO", "\$(NOKMSK)", "\$(NOK)", 4   }
-{ "1500UHI", "\$(NOKMSK)", "\$(NOK)", 5   }
-{ "10MLO",   "\$(NOKMSK)", "\$(NOK)", 6   }
-{ "10MHI",   "\$(NOKMSK)", "\$(NOK)", 7   }
-{ "SPK1",    "\$(NOKMSK)", "\$(NOK)", 8   }
-{ "SPK2",    "\$(NOKMSK)", "\$(NOK)", 9   }
-}
-
 file "pico8_frib_trip_ctl_sts.template" {
 pattern
 { NOKMSK,       NOK       }
