@@ -1,6 +1,6 @@
 record(bo, "$(P)TRIP_$(TRIP)_CMD") {
     field(DTYP, "Pico8 User Reg UInt32")
-    field(OUT , "@$(NAME) offset=0x30000+4*$(NOKMSK), mask=0x1<<$(BIT)")
+    field(OUT , "@$(NAME) offset=0x30000+4*$(NOKMSK) mask=0x1<<$(BIT)")
     field(DESC, "$(TRIP) Enable")
     field(PINI, "YES")
     info(autosaveFields_pass0, "VAL")
@@ -8,13 +8,15 @@ record(bo, "$(P)TRIP_$(TRIP)_CMD") {
 
 record(bi, "$(P)TRIP_$(TRIP)_RSTS") {
     field(DTYP, "Pico8 User Reg UInt32")
-    field(INP , "@$(NAME) offset=0x30000+4*$(NOK), mask=0x1<<$(BIT)")
+    field(INP , "@$(NAME) offset=0x30000+4*$(NOK) mask=0x1<<$(BIT)")
     field(DESC, "$(TRIP) Tripped")
+    field(SCAN, "1 second")
 }
 
 record(bi, "$(P)TRIP_$(TRIP)PRE_RSTS") {
     field(DTYP, "Pico8 User Reg UInt32")
-    field(INP , "@$(NAME) offset=0x30000+4*$(NOK), mask=0x10000<<$(BIT)")
+    field(INP , "@$(NAME) offset=0x30000+4*$(NOK) mask=0x10000<<$(BIT)")
     field(DESC, "$(TRIP) Tripped (Preliminary)")
+    field(SCAN, "1 second")
 }
 
