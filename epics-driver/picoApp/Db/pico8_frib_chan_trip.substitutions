@@ -29,3 +29,9 @@ pattern
 { "SPK1",    "\$(NOKMSK)", "\$(NOK)", 8   }
 { "SPK2",    "\$(NOKMSK)", "\$(NOK)", 9   }
 }
+
+file "pico8_frib_trip_ctl_sts.template" {
+pattern
+{ NOKMSK,       NOK       }
+{ "\$(NOKMSK)", "\$(NOK)" }
+}

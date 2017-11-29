@@ -1,0 +1,22 @@
+record(longout, "$(P)TRIP_CMD") {
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x30000+4*$(NOKMSK)")
+    field(DESC, "Enable")
+    field(PINI, "YES")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(longin, "$(P)TRIP_RSTS") {
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x30000+4*$(NOK)")
+    field(DESC, "$(TRIP) Tripped")
+    field(SCAN, "1 second")
+}
+
+record(longin, "$(P)TRIP_PRE_RSTS") {
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x30000+4*$(NOK)")
+    field(DESC, "Tripped (Preliminary)")
+    field(SCAN, "1 second")
+}
+
