@@ -27,14 +27,15 @@ record(ao, "$(P)PSH_CMD_") {
 record(longout, "$(P)NSAMP_CSET") {
     field(DTYP, "TBUF Set Num Samples")
     field(OUT , "@$(P)")
-    field(VAL , "$(NELM=100)")
+    field(VAL , "$(NELM=20)")
     field(PINI, "YES")
 }
 
 record(ao, "$(P)PRD_CSET") {
     field(DTYP, "TBUF Set Period")
     field(OUT , "@$(P)")
-    field(VAL , "$(PERIOD=1.0)")
+    field(VAL , "$(PERIOD=0.2)")
+    field(PREC, "2")
     field(PINI, "YES")
 }
 
