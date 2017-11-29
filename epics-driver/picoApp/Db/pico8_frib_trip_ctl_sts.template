@@ -9,7 +9,7 @@ record(longout, "$(P)TRIP_CMD") {
 record(longin, "$(P)TRIP_RSTS") {
     field(DTYP, "Pico8 User Reg UInt32")
     field(INP , "@$(NAME) offset=0x30000+4*$(NOK)")
-    field(DESC, "$(TRIP) Tripped")
+    field(DESC, "Tripped")
     field(SCAN, "$(SCAN)")
 }
 
