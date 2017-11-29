@@ -6,13 +6,7 @@ record(stringin, "$(CTRL)ioc_version") {
 }
 
 record(longin, "$(FPS)FPSSTS_RD") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x3005c")  field(SCAN, ".5 second") field(FLNK, "$(FPS)FPSSTS_Fout_")}
-record(longin, "$(CTRL)EVRSTS_RD") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30058")  field(SCAN, ".5 second") field(FLNK, "$(FPS)FPSSRC1_RD") }
-record(longin, "$(FPS)FPSSRC1_RD") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30068")  field(FLNK, "$(FPS)FPSSRC2_RD") }
-record(longin, "$(FPS)FPSSRC2_RD") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x3006c")  field(FLNK, "$(FPS)FPSMSK1_RD") }
-record(longin, "$(FPS)FPSMSK1_RD") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30070")  field(FLNK, "$(FPS)FPSMSK2_RD") }
-record(longin, "$(FPS)FPSMSK2_RD") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30074")  field(FLNK, "$(FPS)FPSPRE1_RD") }
-record(longin, "$(FPS)FPSPRE1_RD") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30070")  field(FLNK, "$(FPS)FPSPRE2_RD") }
-record(longin, "$(FPS)FPSPRE2_RD") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30074")  }
+record(longin, "$(CTRL)EVRSTS_RD") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30058")  field(SCAN, ".5 second") }
 record(longin, "$(CTRL)CYCCNT_RD") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30058 mask=0x0000ffff")  field(SCAN, ".5 second") }
 record(longin, "$(CTRL)PLSCNT_RD") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30058 mask=0xffff0000")  field(SCAN, ".5 second") }
 
