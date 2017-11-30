@@ -3,6 +3,7 @@ record(ao, "$(P)TRIP_$(TRIP)_CSET") {
     field(OUT , "@$(NAME) offset=0x30000+4*$(ADDR)")
     field(PINI, "YES")
     field(EGU,  "A")
+    field(PREC, "2")
     info(autosaveFields_pass0, "VAL")
 }
 
