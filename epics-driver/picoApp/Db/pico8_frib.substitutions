@@ -36,43 +36,43 @@ file "pico8_cap_int.template"
 
 file "pico8_cap_float.template"
 {
-{P="\$(SYS):\$(D)_CH0:AVG", NAME="\$(NAME)", ADDR="0x10", Stat="Mean", PREC="6", EGU="A", ASLO="1e-4"}
-{P="\$(SYS):\$(D)_CH0:ASTD",NAME="\$(NAME)", ADDR="0x10", Stat="Std",  PREC="6", EGU="A", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH0:AVG", NAME="\$(NAME)", ADDR="0x10", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME)"}
+{P="\$(SYS):\$(D)_CH0:ASTD",NAME="\$(NAME)", ADDR="0x10", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME)"}
 {P="\$(SYS):\$(D)_CH0:MIN", NAME="\$(NAME)", ADDR="0x14", Stat="Min",  PREC="6", EGU="A"}
 {P="\$(SYS):\$(D)_CH0:MAX", NAME="\$(NAME)", ADDR="0x18", Stat="Max",  PREC="6", EGU="A"}
 {P="\$(SYS):\$(D)_CH0:STD", NAME="\$(NAME)", ADDR="0x1c", Stat="Mean",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH1:AVG", NAME="\$(NAME)", ADDR="0x24", Stat="Mean", PREC="6", EGU="A", ASLO="1e-4"}
-{P="\$(SYS):\$(D)_CH1:ASTD",NAME="\$(NAME)", ADDR="0x24", Stat="Std",  PREC="6", EGU="A", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH1:AVG", NAME="\$(NAME)", ADDR="0x24", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME)"}
+{P="\$(SYS):\$(D)_CH1:ASTD",NAME="\$(NAME)", ADDR="0x24", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME)"}
 {P="\$(SYS):\$(D)_CH1:MIN", NAME="\$(NAME)", ADDR="0x28", Stat="Min",  PREC="6", EGU="A"}
 {P="\$(SYS):\$(D)_CH1:MAX", NAME="\$(NAME)", ADDR="0x2c", Stat="Max",  PREC="6", EGU="A"}
 {P="\$(SYS):\$(D)_CH1:STD", NAME="\$(NAME)", ADDR="0x30", Stat="Mean",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH2:AVG", NAME="\$(NAME)", ADDR="0x38", Stat="Mean", PREC="6", EGU="A", ASLO="1e-4"}
-{P="\$(SYS):\$(D)_CH2:ASTD",NAME="\$(NAME)", ADDR="0x24", Stat="Std",  PREC="6", EGU="A", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH2:AVG", NAME="\$(NAME)", ADDR="0x38", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME)"}
+{P="\$(SYS):\$(D)_CH2:ASTD",NAME="\$(NAME)", ADDR="0x24", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME)"}
 {P="\$(SYS):\$(D)_CH2:MIN", NAME="\$(NAME)", ADDR="0x3c", Stat="Min",  PREC="6", EGU="A"}
 {P="\$(SYS):\$(D)_CH2:MAX", NAME="\$(NAME)", ADDR="0x40", Stat="Max",  PREC="6", EGU="A"}
 {P="\$(SYS):\$(D)_CH2:STD", NAME="\$(NAME)", ADDR="0x44", Stat="Mean",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH3:AVG", NAME="\$(NAME)", ADDR="0x4c", Stat="Mean", PREC="6", EGU="A", ASLO="1e-4"}
-{P="\$(SYS):\$(D)_CH3:ASTD",NAME="\$(NAME)", ADDR="0x4c", Stat="Std",  PREC="6", EGU="A", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH3:AVG", NAME="\$(NAME)", ADDR="0x4c", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME)"}
+{P="\$(SYS):\$(D)_CH3:ASTD",NAME="\$(NAME)", ADDR="0x4c", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME)"}
 {P="\$(SYS):\$(D)_CH3:MIN", NAME="\$(NAME)", ADDR="0x50", Stat="Min",  PREC="6", EGU="A"}
 {P="\$(SYS):\$(D)_CH3:MAX", NAME="\$(NAME)", ADDR="0x54", Stat="Max",  PREC="6", EGU="A"}
 {P="\$(SYS):\$(D)_CH3:STD", NAME="\$(NAME)", ADDR="0x58", Stat="Mean",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH4:AVG", NAME="\$(NAME)", ADDR="0x60", Stat="Mean", PREC="6", EGU="A", ASLO="1e-4"}
-{P="\$(SYS):\$(D)_CH4:ASTD",NAME="\$(NAME)", ADDR="0x60", Stat="Std",  PREC="6", EGU="A", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH4:AVG", NAME="\$(NAME)", ADDR="0x60", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME)"}
+{P="\$(SYS):\$(D)_CH4:ASTD",NAME="\$(NAME)", ADDR="0x60", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME)"}
 {P="\$(SYS):\$(D)_CH4:MIN", NAME="\$(NAME)", ADDR="0x64", Stat="Min",  PREC="6", EGU="A"}
 {P="\$(SYS):\$(D)_CH4:MAX", NAME="\$(NAME)", ADDR="0x68", Stat="Max",  PREC="6", EGU="A"}
 {P="\$(SYS):\$(D)_CH4:STD", NAME="\$(NAME)", ADDR="0x6c", Stat="Mean",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH5:AVG", NAME="\$(NAME)", ADDR="0x74", Stat="Mean", PREC="6", EGU="A", ASLO="1e-4"}
-{P="\$(SYS):\$(D)_CH5:ASTD",NAME="\$(NAME)", ADDR="0x74", Stat="Std",  PREC="6", EGU="A", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH5:AVG", NAME="\$(NAME)", ADDR="0x74", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME)"}
+{P="\$(SYS):\$(D)_CH5:ASTD",NAME="\$(NAME)", ADDR="0x74", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME)"}
 {P="\$(SYS):\$(D)_CH5:MIN", NAME="\$(NAME)", ADDR="0x78", Stat="Min",  PREC="6", EGU="A"}
 {P="\$(SYS):\$(D)_CH5:MAX", NAME="\$(NAME)", ADDR="0x7c", Stat="Max",  PREC="6", EGU="A"}
 {P="\$(SYS):\$(D)_CH5:STD", NAME="\$(NAME)", ADDR="0x80", Stat="Mean",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH6:AVG", NAME="\$(NAME)", ADDR="0x88", Stat="Mean", PREC="6", EGU="A", ASLO="1e-4"}
-{P="\$(SYS):\$(D)_CH6:ASTD",NAME="\$(NAME)", ADDR="0x88", Stat="Std",  PREC="6", EGU="A", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH6:AVG", NAME="\$(NAME)", ADDR="0x88", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME)"}
+{P="\$(SYS):\$(D)_CH6:ASTD",NAME="\$(NAME)", ADDR="0x88", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME)"}
 {P="\$(SYS):\$(D)_CH6:MIN", NAME="\$(NAME)", ADDR="0x8c", Stat="Min",  PREC="6", EGU="A"}
 {P="\$(SYS):\$(D)_CH6:MAX", NAME="\$(NAME)", ADDR="0x90", Stat="Max",  PREC="6", EGU="A"}
 {P="\$(SYS):\$(D)_CH6:STD", NAME="\$(NAME)", ADDR="0x94", Stat="Mean",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH7:AVG", NAME="\$(NAME)", ADDR="0x9c", Stat="Mean", PREC="6", EGU="A", ASLO="1e-4"}
-{P="\$(SYS):\$(D)_CH7:ASTD",NAME="\$(NAME)", ADDR="0x9c", Stat="Std",  PREC="6", EGU="A", ASLO="1e-4"}
+{P="\$(SYS):\$(D)_CH7:AVG", NAME="\$(NAME)", ADDR="0x9c", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME)"}
+{P="\$(SYS):\$(D)_CH7:ASTD",NAME="\$(NAME)", ADDR="0x9c", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME)"}
 {P="\$(SYS):\$(D)_CH7:MIN", NAME="\$(NAME)", ADDR="0xa0", Stat="Min",  PREC="6", EGU="A"}
 {P="\$(SYS):\$(D)_CH7:MAX", NAME="\$(NAME)", ADDR="0xa4", Stat="Max",  PREC="6", EGU="A"}
 {P="\$(SYS):\$(D)_CH7:STD", NAME="\$(NAME)", ADDR="0xa8", Stat="Mean",  PREC="6", EGU="A"}

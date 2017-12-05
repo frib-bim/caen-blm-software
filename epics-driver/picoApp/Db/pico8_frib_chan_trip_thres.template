@@ -4,6 +4,7 @@ record(ao, "$(P)TRIP_$(TRIP)_CSET") {
     field(PINI, "YES")
     field(EGU,  "A")
     field(PREC, "2")
+    field(ASLO, "$(ASLO=0)")
     info(autosaveFields_pass0, "VAL")
 }
 
