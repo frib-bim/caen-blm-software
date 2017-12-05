@@ -2,17 +2,17 @@ global { NAME="\$(NAME)", P="\$(P)", SCAN=".5 second" }
 
 file "pico8_frib_chan_trip_thres.template" {
 pattern
-{ TRIP,      ADDR,       ASLO          }
-{ "15ULO",   "\$(LO1)",  "0"           }
-{ "15UHI",   "\$(HI1)",  "0"           }
-{ "150ULO",  "\$(LO2)",  "0"           }
-{ "150UHI",  "\$(HI2)",  "0"           }
-{ "1500ULO", "\$(LO3)",  "0"           }
-{ "1500UHI", "\$(HI3)",  "0"           }
-{ "10MLO",   "\$(LO4)",  "\$(CYCTIME)" }
-{ "10MHI",   "\$(HI4)",  "\$(CYCTIME)" }
-{ "SPK1",    "\$(SPK1)", "0"           }
-{ "SPK2",    "\$(SPK2)", "0"           }
+{ TRIP,      ADDR,       ASLO               }
+{ "15ULO",   "\$(LO1)",  "0"                }
+{ "15UHI",   "\$(HI1)",  "0"                }
+{ "150ULO",  "\$(LO2)",  "0"                }
+{ "150UHI",  "\$(HI2)",  "0"                }
+{ "1500ULO", "\$(LO3)",  "0"                }
+{ "1500UHI", "\$(HI3)",  "0"                }
+{ "10MLO",   "\$(LO4)",  "\$(CYCTIME=1e-4)" }
+{ "10MHI",   "\$(HI4)",  "\$(CYCTIME=1e-4)" }
+{ "SPK1",    "\$(SPK1)", "0"                }
+{ "SPK2",    "\$(SPK2)", "0"                }
 }
 
 file "pico8_frib_trip_ctl_sts.template" {
