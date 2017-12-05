@@ -105,10 +105,23 @@ record(longout, "$(CTRL)ISRMAXCLR_CMD") {
     field(VAL , "0")
 }
 
+record(ao, "$(FPS)FRZDLY_CSET") {
+    field(DESC, "Length of post trigger samples")
+    field(DTYP, "Raw Soft Channel")
+    field(OUT,  "$(FPS)CBUFPOST_CSET")
+    field(EGU,  "ms")
+    field(PINI, "YES")
+    field(ASLO, "0.254")
+    field(AOFF, "0")
+    field(VAL,  "25")
+    field(FLNK, "$(FPS)CBUFPOST_CSET")
+    info(autosaveFields_pass0, "VAL")
+}
 
 record(longout, "$(FPS)CBUFPOST_CSET") {
     field(DESC, "# of post trigger samples")
     field(DTYP, "Pico8 User Reg UInt32")
+    field(DOL,  "$(FPS)FRZDLY_CSET.RVAL")
     field(OUT , "@$(NAME) offset=0x30044 mask=0xff000000")
     field(PINI, "YES")
     info(autosaveFields_pass0, "VAL")
