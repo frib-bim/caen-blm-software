@@ -61,7 +61,7 @@ dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO6_CH6:,A=FE_LEB
 
 
 ## Start the PICO python helper script
-system "python ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA15:PICO3 DIAG_MTCA15:PICO4 &"
+system "python ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA15:PICO3 DIAG_MTCA15:PICO4 DIAG_MTCA15:PICO5 DIAG_MTCA15:PICO6 &"
 
 
 # Auto save/restore
