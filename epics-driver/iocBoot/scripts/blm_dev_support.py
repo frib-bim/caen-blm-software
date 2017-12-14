@@ -27,7 +27,7 @@ def getCBufData(dev,npts=100000):
         wave = append(wave2, wave);
     #  In case buffer is not at the right offset, clip the data to correct length
     idxs = find(wave==0xFFFFF81B);
-    if not idxs:
+    if isempty(idxs):
         disp( 'Warning: Circle Buffer data not valid.' )
         dat = struct();
         dat.ch0 = 0;
@@ -41,6 +41,7 @@ def getCBufData(dev,npts=100000):
         dat.t0 = 0;
         dat.beamstat = 0;
         dat.nokflags = 0;
+        dat.wave = wave;
         return dat;
     if (idxs[0]==7): wave = wave[4:-8];
     if (idxs[0]==11): wave = wave[8:-4];

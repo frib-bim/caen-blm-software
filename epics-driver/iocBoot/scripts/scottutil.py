@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 Import and define common utilities, including matlab plots, math, sleep, and EPICS CA
-
 @author: cogan
+
+Version History
+Nov 11 2017   Initial checkin
 """
 
 # Import numpy, fft, pyplot in main namespace.
@@ -11,10 +13,12 @@ from datetime import *
 from pprint import *
 from numpy import *                # for basic matlab-like functions
 from numpy.fft import *            # for fft
+from numpy.matlib import repmat    # for repmat
 from scipy.signal import *         # for lfilter
 from scipy.interpolate import interp1d
 from matplotlib.pyplot import figure as mplfigure
 from matplotlib.pyplot import *
+rcParams['axes.formatter.useoffset'] = False;   # disable by default yaxis plot offsets
 import time
 import warnings
 
@@ -30,6 +34,9 @@ def figure(figure_id=None):
     if (os.name=="nt"):
         fig.canvas.manager.window.activateWindow();
         fig.canvas.manager.window.raise_();
+    else:
+        fig.canvas.manager.window.attributes('-topmost',1);
+        fig.canvas.manager.window.attributes('-topmost',0);
     return fig
 def imagesc(data2d):
     if not hasattr(data2d, 'ndim'):
@@ -39,13 +46,14 @@ def imagesc(data2d):
     return imshow(data2d, aspect='auto', interpolation='none', origin='lower');
     #plt.imshow(data, aspect='auto', interpolation='none',extent=extents(x) + extents(y), origin='lower')
 #  Handy FFT getter
-def getfft(y, dt, norm=True, n=None):
-    Y = fft(y,n=n);
-    freq = fftfreq(Y.size, dt);
-    freq = freq[0:Y.size/2];
-    Y = Y[0:Y.size/2];
+def getfft(y, dt, norm=True, npts=None):
+    Y = fft(y,n=npts);
+    npts = uint32(Y.size);
+    freq = fftfreq(npts, dt);
+    freq = freq[0:uint32(npts/2)];
+    Y = Y[0:uint32(npts/2)];
     if norm:
-        Y = 20*log10(abs(Y)*2/Y.size);
+        Y = 20*log10(abs(Y)*2/npts);
     return Y, freq
 #  Cuz I refuse to learn this basic python string format syntax.
 def sprintf(fmt, *args):
@@ -59,9 +67,12 @@ def find(tstval):
     return where(tstval)[0]
 def isempty(val):
     return (val.size==0);
+def inputstr(prompt=""):
+    sys.stdout.flush();  # to be safe, must flush stdout before prompt
+    return input(prompt)
 def pause(secs=-1):
     if (secs<0):
-        input("[Press Enter]");
+        inputstr("[Press Enter]");
     else:
         time.sleep(secs);
 def tic():
