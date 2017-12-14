@@ -3,6 +3,7 @@
 BLM Device Support (beam loss monitor, CAEN PICO8) 
 
 @author: cogan
+2017-12-14  Added proper error handling for invalid data in getCBufData()
 """
 
 # Import and define common utilities, including matlab plots, math, sleep, and EPICS CA
@@ -17,7 +18,7 @@ def getCBufData(dev,npts=100000):
     nbytes = npts*12*4;
     lastaddr = getDDRLastAddr(dev);
     startaddr = lastaddr - nbytes;
-    fprintf('Start = %d, Stop = %08X',startaddr,lastaddr);
+    fprintf('Start = %08X, Stop = %08X',startaddr,lastaddr);
     if (startaddr>=0):
         wave = getDDRwave(dev, startaddr, nbytes);
     else:   # startaddr is negative, wrap to end of buffer
@@ -26,6 +27,21 @@ def getCBufData(dev,npts=100000):
         wave = append(wave2, wave);
     #  In case buffer is not at the right offset, clip the data to correct length
     idxs = find(wave==0xFFFFF81B);
+    if not idxs:
+        disp( 'Warning: Circle Buffer data not valid.' )
+        dat = struct();
+        dat.ch0 = 0;
+        dat.ch1 = 0;
+        dat.ch2 = 0;
+        dat.ch3 = 0;
+        dat.ch4 = 0;
+        dat.ch5 = 0;
+        dat.ch6 = 0;
+        dat.ch7 = 0;
+        dat.t0 = 0;
+        dat.beamstat = 0;
+        dat.nokflags = 0;
+        return dat;
     if (idxs[0]==7): wave = wave[4:-8];
     if (idxs[0]==11): wave = wave[8:-4];
     return parseCBufData(wave);
