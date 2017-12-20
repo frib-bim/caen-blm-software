@@ -205,6 +205,7 @@ PicoFRIBCapture::PicoFRIBCapture(const char *fname)
 {
     scanIoInit(&update);
     scanIoInit(&msgupdate);
+    scanIoInit(&msglogupdate);
     updatetime.secPastEpoch = 0;
     updatetime.nsec = 0;
 
@@ -348,9 +349,12 @@ void PicoFRIBCapture::run()
 
         scanIoRequest(update);
 
+        msglog.add(nextmsg.str());
+        scanIoRequest(msglogupdate);
+
         std::string nextmsg_s = nextmsg.str();
-        if(nextmsg_s!=lastmsg) {
-            nextmsg_s.swap(lastmsg);
+        if(msglog.last()!=lastmsg) {
+            lastmsg = msglog.last();
             scanIoRequest(msgupdate);
         }
         if(!lastmsg.empty())

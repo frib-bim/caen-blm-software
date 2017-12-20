@@ -142,6 +142,100 @@ struct PicoDevice : public epicsThreadRunable {
 
 #ifdef BUILD_FRIB
 
+class PicoFribCaptureMsgLog {
+
+private:
+    size_t maxmsgs;  // maximum number of messages
+    size_t pos;      // next message to be written
+    size_t cnt;      // number of messages stored
+
+    std::vector<std::string> messages;
+    std::vector<epicsTimeStamp> times;
+    mutable epicsMutex lock;
+
+public:
+    PicoFribCaptureMsgLog(size_t maxmsgs=25) :
+        maxmsgs(maxmsgs),
+        messages(maxmsgs),
+        times(maxmsgs)
+    {
+        reset();
+    }
+
+    inline size_t size() const {
+        return messages.size();
+    }
+
+    inline bool empty() const {
+        return cnt == 0;
+    }
+
+    inline size_t firstpos() const {
+        return pos >= cnt ? pos - cnt : pos + size() - cnt;
+    }
+
+    inline size_t lastpos() const {
+        return pos ? pos - 1 : messages.size() - 1;
+    }
+
+    inline std::string last() const {
+        return cnt ? messages[lastpos()] : "";
+    }
+
+    /* Add a message to the circular buffer. Ignore empty messages. */
+    void add(std::string const & message) {
+        if (message.empty())
+            return;
+
+        Guard G(lock);
+
+        printf("add '%s'\n", message.c_str());
+        printf("add  pos=%lu cnt=%lu\n", pos, cnt);
+
+        messages[pos] = message;
+        epicsTimeGetCurrent(&times[pos]);
+
+        if (cnt < size())
+            ++cnt;
+
+        pos = (pos + 1) % size();
+
+        printf("add  pos=%lu cnt=%lu\n", pos, cnt);
+    }
+
+    /* Clear all messages */
+    void reset(void) {
+        pos = cnt = 0;
+    }
+
+    /* Get all messages as a single, new-line separated string */
+    std::string get(void) {
+        Guard G(lock);
+
+        std::ostringstream log;
+        size_t pos, n;
+
+        for (pos = firstpos(), n = cnt; n; n--, pos = (pos + 1) % size()) {
+            char timebuf[256];
+
+            epicsTimeToStrftime(timebuf, sizeof(timebuf), "%F %T", &times[pos]);
+
+            log << "[" << timebuf << "] " << messages[pos] << std::endl;
+        }
+
+        return log.str();
+    }
+
+    void resize(size_t size) {
+        Guard G(lock);
+
+        maxmsgs = size;
+        messages.resize(size);
+        times.resize(size);
+        reset();
+    }
+};
+
 struct PicoFRIBCapture : public epicsThreadRunable
 {
     PicoFRIBCapture(const char *fname);
@@ -153,6 +247,7 @@ struct PicoFRIBCapture : public epicsThreadRunable
 
     IOSCANPVT update;
     IOSCANPVT msgupdate;
+    IOSCANPVT msglogupdate;
 
     epicsThread readerT;
     epicsEvent sync;
@@ -168,6 +263,7 @@ struct PicoFRIBCapture : public epicsThreadRunable
 
     std::vector<epicsUInt32> buffer;
 
+    PicoFribCaptureMsgLog msglog;
     std::string lastmsg;
 
     // DDR RAM access

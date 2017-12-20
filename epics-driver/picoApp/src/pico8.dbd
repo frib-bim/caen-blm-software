@@ -30,6 +30,7 @@ device(waveform, INST_IO, devPico8WfDDR, "Pico8 RAM")
 device(bi, INST_IO, devPico8BiCapValid, "Pico8 Capture Valid")
 device(longin, INST_IO, devPico8LiCapCount, "Pico8 Capture Updates")
 device(waveform, INST_IO, devPico8WfCapMsg, "Pico8 Capture Message")
+device(waveform, INST_IO, devPico8WfCapMsgLog, "Pico8 Capture Message Log")
 device(longin, INST_IO, devPico8LiCap, "Pico8 Capture UInt32")
 device(ai, INST_IO, devPico8AiCap, "Pico8 Capture Float")
 

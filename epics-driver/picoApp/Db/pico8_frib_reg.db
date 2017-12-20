@@ -66,6 +66,15 @@ record(waveform, "$(CTRL)CAPMSG_RD") {
     field(PINI, "YES")
 }
 
+record(waveform, "$(CTRL)CAPMSGLOG_RD") {
+    field(DTYP, "Pico8 Capture Message Log")
+    field(INP , "@$(NAME)")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "CHAR")
+    field(NELM, "4096")
+    field(PINI, "YES")
+}
+
 record(longin, "$(CTRL)FFWVER_RD") {
     field(DESC, "FRIB firmware version")
     field(DTYP, "Pico8 User Reg UInt32")

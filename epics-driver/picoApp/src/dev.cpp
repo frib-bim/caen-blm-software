@@ -367,6 +367,18 @@ long get_cap_msgupdate(int, dbCommon* prec, IOSCANPVT* scan)
     } END(0)
 }
 
+long get_cap_msglogupdate(int, dbCommon* prec, IOSCANPVT* scan)
+{
+    BEGIN {
+        if(info->cap) {
+            *scan = info->cap->msglogupdate;
+            return 0;
+        } else {
+            return -S_dev_badSignal;
+        }
+    } END(0)
+}
+
 long write_clock(longoutRecord *prec)
 {
     BEGIN {
@@ -788,6 +800,35 @@ long read_cap_msg(waveformRecord *prec)
 #endif
 }
 
+long read_cap_msglog(waveformRecord *prec)
+{
+#ifdef BUILD_FRIB
+    BEGIN {
+        Guard G(info->cap->lock);
+
+        char *buf = (char*)prec->bptr;
+
+        std::string log = info->cap->msglog.get();
+
+        size_t N = log.size();
+        if(N>prec->nelm-1)
+            N = prec->nelm-1;
+        memcpy(buf, log.c_str(), N);
+        buf[N] = '\0';
+        prec->nord = N+1;
+
+        if(prec->tse==epicsTimeEventDeviceTime) {
+            prec->time = info->cap->updatetime;
+        }
+
+        return 0;
+    } END(0)
+#else
+    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+    return 0;
+#endif
+}
+
 long read_cap_li(longinRecord *prec)
 {
 #ifdef BUILD_FRIB
@@ -1158,6 +1199,7 @@ DSET(devPico8WfDDR, waveform, NULL, &read_ddr);
 DSET(devPico8BiCapValid, bi, &get_cap_update, &read_cap_valid);
 DSET(devPico8LiCapCount, longin, &get_cap_update, &read_cap_count);
 DSET(devPico8WfCapMsg, waveform, &get_cap_msgupdate, &read_cap_msg);
+DSET(devPico8WfCapMsgLog, waveform, &get_cap_msglogupdate, &read_cap_msglog);
 DSET(devPico8LiCap, longin, &get_cap_update, &read_cap_li);
 DSET(devPico8AiCap, ai, &get_cap_update, &read_cap_ai);
 
