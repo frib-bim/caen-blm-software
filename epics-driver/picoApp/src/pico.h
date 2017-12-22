@@ -196,8 +196,6 @@ public:
             ++cnt;
 
         pos = (pos + 1) % size();
-
-        printf("add  pos=%lu cnt=%lu\n", pos, cnt);
     }
 
     /* Clear all messages */
