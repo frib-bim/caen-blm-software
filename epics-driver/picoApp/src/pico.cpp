@@ -353,8 +353,8 @@ void PicoFRIBCapture::run()
         scanIoRequest(msglogupdate);
 
         std::string nextmsg_s = nextmsg.str();
-        if(msglog.last()!=lastmsg) {
-            lastmsg = msglog.last();
+        if(nextmsg_s!=lastmsg) {
+            lastmsg = nextmsg_s;
             scanIoRequest(msgupdate);
         }
         if(!lastmsg.empty())
