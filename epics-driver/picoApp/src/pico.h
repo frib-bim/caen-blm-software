@@ -189,9 +189,6 @@ public:
 
         Guard G(lock);
 
-        printf("add '%s'\n", message.c_str());
-        printf("add  pos=%lu cnt=%lu\n", pos, cnt);
-
         messages[pos] = message;
         epicsTimeGetCurrent(&times[pos]);
 
