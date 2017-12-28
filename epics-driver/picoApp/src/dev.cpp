@@ -40,6 +40,10 @@
 #include "pico.h"
 #include "dev.h"
 
+#define EEPROM_SIZE     (0x200)
+#define EEPROM_MAX_ADDR (EEPROM_SIZE-4)
+#define EEPROM_MAX      1
+
 DBLINK* get_dev_link(dbCommon *prec)
 {
     DBLINK *ret = NULL;
@@ -188,8 +192,10 @@ struct dsetInfo
              offset,
              step,
              mask,
-             shft;
-    dsetInfo() :dev(0), chan(0), offset(0), step(0), mask(0), shft(0) {
+             shft,
+             eeprom;
+    dsetInfo() :dev(0), chan(0), offset(0), step(0), mask(0), shft(0),
+                eeprom(0) {
 #ifdef BUILD_FRIB
         cap = 0;
 #endif
@@ -246,6 +252,8 @@ try{
             D->step = parseul(word.substr(sep+1));
         else if(pname=="mask")
             D->mask = parseul(word.substr(sep+1));
+        else if(pname=="eeprom")
+            D->eeprom = parseul(word.substr(sep+1));
         else
             fprintf(stderr, "%s: Unknown parameter \"%s\"\n", prec->name, pname.c_str());
     }
@@ -1096,6 +1104,83 @@ long write_reg_ao(aoRecord *prec)
 #endif
 }
 
+long read_eeprom_reg_ai(aiRecord *prec)
+{
+    fprintf(stderr, "read_eeprom_reg_ai %s\n", prec->name);
+
+    BEGIN {
+        Guard G(info->dev->lock);
+
+        if(info->eeprom > EEPROM_MAX) {
+            if(prec->tpro) errlogPrintf("%s: eeprom out of range %u / %d\n", prec->name, info->eeprom, EEPROM_MAX);
+            (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+            return 0;
+        }
+
+        if(info->offset > EEPROM_MAX_ADDR) {
+            if(prec->tpro) errlogPrintf("%s: offset out of range %u / %d\n", prec->name, info->offset, EEPROM_MAX_ADDR);
+            (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+            return 0;
+        }
+
+        eeprom_reg reg;
+        reg.eeprom = (eeprom_reg::eeprom_t)info->eeprom;
+        reg.address = info->offset;
+
+        info->dev->fd.ioctl_check<GET_EEPROM_REG>(&reg);
+
+        storeraw(prec, i2f(reg.data));
+
+        if (!reg.valid) {
+            (void) recGblSetSevr(prec, READ_ALARM, INVALID_ALARM);
+
+            if (prec->tpro > 1)
+                errlogPrintf("%s: timeout\n", prec->name);
+
+            return 0;
+        }
+
+        return 2;
+    } END(0)
+}
+
+long write_eeprom_reg_ao(aoRecord *prec)
+{
+    BEGIN {
+        Guard G(info->dev->lock);
+
+        if(info->eeprom > EEPROM_MAX) {
+            if(prec->tpro) errlogPrintf("%s: eeprom out of range %u / %d\n", prec->name, info->eeprom, EEPROM_MAX);
+            (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+            return 0;
+        }
+
+        if(info->offset > EEPROM_MAX_ADDR) {
+            if(prec->tpro) errlogPrintf("%s: offset out of range %u / %d\n", prec->name, info->offset, EEPROM_MAX_ADDR);
+            (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
+            return 0;
+        }
+
+        eeprom_reg reg;
+        reg.eeprom = (eeprom_reg::eeprom_t)info->eeprom;
+        reg.address = info->offset;
+        reg.data = f2i(readraw(prec));
+
+        info->dev->fd.ioctl_check<SET_EEPROM_REG>(&reg);
+
+        if (!reg.valid) {
+            (void) recGblSetSevr(prec, READ_ALARM, INVALID_ALARM);
+
+            if (prec->tpro > 1)
+                errlogPrintf("%s: timeout\n", prec->name);
+
+            return 0;
+        }
+
+        return 2;
+    } END(0)
+}
+
 long pico_report(int lvl)
 {
     dev_map_t::const_iterator cur, end;
@@ -1212,6 +1297,9 @@ DSET(devPico8MbboReg, mbbo, NULL, &write_reg_mbbo);
 DSET(devPico8BoReg, bo, NULL, &write_reg_bo);
 DSET(devPico8LoReg, longout, NULL, &write_reg_lo);
 DSET(devPico8AoReg, ao, NULL, &write_reg_ao);
+
+DSET(devPico8AiEEPROMReg, ai, NULL, &read_eeprom_reg_ai);
+DSET(devPico8AoEEPROMReg, ao, NULL, &write_eeprom_reg_ao);
 
 epicsExportAddress(drvet, drvpico8);
 

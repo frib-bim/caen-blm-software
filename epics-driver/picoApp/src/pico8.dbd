@@ -44,6 +44,9 @@ device(mbbo, INST_IO, devPico8MbboReg, "Pico8 User Reg UInt32")
 device(longout, INST_IO, devPico8LoReg, "Pico8 User Reg UInt32")
 device(ao, INST_IO, devPico8AoReg, "Pico8 User Reg Float")
 
+device(ai, INST_IO, devPico8AiEEPROMReg, "Pico8 EEPROM Reg Float")
+device(ao, INST_IO, devPico8AoEEPROMReg, "Pico8 EEPROM Reg Float")
+
 driver(drvpico8)
 registrar(pico8registrar)
 

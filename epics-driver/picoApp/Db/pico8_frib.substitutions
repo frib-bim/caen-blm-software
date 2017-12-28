@@ -1,104 +1,155 @@
+global {
+    NAME="\$(NAME)"
+}
 
 file "pico8_base.template"
 {
-        {P="\$(SYS):\$(D)_CTRL:", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
+        {P="\$(SYS):\$(D)_CTRL:", NELM="\$(NELM=1024)"}
 }
 
 file "pico8_chan.template"
 {
-        {N=0, P="\$(SYS):\$(D)_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
-        {N=1, P="\$(SYS):\$(D)_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
-        {N=2, P="\$(SYS):\$(D)_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
-        {N=3, P="\$(SYS):\$(D)_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
-        {N=4, P="\$(SYS):\$(D)_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
-        {N=5, P="\$(SYS):\$(D)_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
-        {N=6, P="\$(SYS):\$(D)_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
-        {N=7, P="\$(SYS):\$(D)_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
+        {N=0, P="\$(SYS):\$(D)_CH$(N):", NELM="\$(NELM=1024)"}
+        {N=1, P="\$(SYS):\$(D)_CH$(N):", NELM="\$(NELM=1024)"}
+        {N=2, P="\$(SYS):\$(D)_CH$(N):", NELM="\$(NELM=1024)"}
+        {N=3, P="\$(SYS):\$(D)_CH$(N):", NELM="\$(NELM=1024)"}
+        {N=4, P="\$(SYS):\$(D)_CH$(N):", NELM="\$(NELM=1024)"}
+        {N=5, P="\$(SYS):\$(D)_CH$(N):", NELM="\$(NELM=1024)"}
+        {N=6, P="\$(SYS):\$(D)_CH$(N):", NELM="\$(NELM=1024)"}
+        {N=7, P="\$(SYS):\$(D)_CH$(N):", NELM="\$(NELM=1024)"}
 }
 
 file "pico8_ram.template"
 {
-{P="\$(SYS):\$(D)_mem:", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
+{P="\$(SYS):\$(D)_mem:", NELM="\$(NELM=1024)"}
 }
 
 file "pico8_frib_reg.db"
 {
-{NAME="\$(NAME)", CTRL="\$(SYS):\$(D)_CTRL:", FPS="\$(SYS):\$(D)_FPS:", SLOT="\$(SLOT=0)"}
+{CTRL="\$(SYS):\$(D)_CTRL:", FPS="\$(SYS):\$(D)_FPS:", SLOT="\$(SLOT=0)"}
 }
 
 file "pico8_cap_int.template"
 {
-{N="\$(SYS):\$(D)_CAP:SEC_RSTS", NAME="\$(NAME)", ADDR="0x0"}
-{N="\$(SYS):\$(D)_CAP:NS_RSTS",  NAME="\$(NAME)", ADDR="0x4"}
-{N="\$(SYS):\$(D)_CAP:TON_RSTS", NAME="\$(NAME)", ADDR="0x8"}
-{N="\$(SYS):\$(D)_CAP:FLG_RSTS", NAME="\$(NAME)", ADDR="0xc"}
+{N="\$(SYS):\$(D)_CAP:SEC_RSTS", ADDR="0x0"}
+{N="\$(SYS):\$(D)_CAP:NS_RSTS",  ADDR="0x4"}
+{N="\$(SYS):\$(D)_CAP:TON_RSTS", ADDR="0x8"}
+{N="\$(SYS):\$(D)_CAP:FLG_RSTS", ADDR="0xc"}
 }
 
 file "pico8_cap_float.template"
 {
-{P="\$(SYS):\$(D)_CH0:AVG", NAME="\$(NAME)", ADDR="0x10", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH0:ASTD",NAME="\$(NAME)", ADDR="0x10", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH0:MIN", NAME="\$(NAME)", ADDR="0x14", Stat="Min",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH0:MAX", NAME="\$(NAME)", ADDR="0x18", Stat="Max",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH0:STD", NAME="\$(NAME)", ADDR="0x1c", Stat="Mean",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH1:AVG", NAME="\$(NAME)", ADDR="0x24", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH1:ASTD",NAME="\$(NAME)", ADDR="0x24", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH1:MIN", NAME="\$(NAME)", ADDR="0x28", Stat="Min",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH1:MAX", NAME="\$(NAME)", ADDR="0x2c", Stat="Max",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH1:STD", NAME="\$(NAME)", ADDR="0x30", Stat="Mean",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH2:AVG", NAME="\$(NAME)", ADDR="0x38", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH2:ASTD",NAME="\$(NAME)", ADDR="0x24", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH2:MIN", NAME="\$(NAME)", ADDR="0x3c", Stat="Min",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH2:MAX", NAME="\$(NAME)", ADDR="0x40", Stat="Max",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH2:STD", NAME="\$(NAME)", ADDR="0x44", Stat="Mean",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH3:AVG", NAME="\$(NAME)", ADDR="0x4c", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH3:ASTD",NAME="\$(NAME)", ADDR="0x4c", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH3:MIN", NAME="\$(NAME)", ADDR="0x50", Stat="Min",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH3:MAX", NAME="\$(NAME)", ADDR="0x54", Stat="Max",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH3:STD", NAME="\$(NAME)", ADDR="0x58", Stat="Mean",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH4:AVG", NAME="\$(NAME)", ADDR="0x60", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH4:ASTD",NAME="\$(NAME)", ADDR="0x60", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH4:MIN", NAME="\$(NAME)", ADDR="0x64", Stat="Min",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH4:MAX", NAME="\$(NAME)", ADDR="0x68", Stat="Max",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH4:STD", NAME="\$(NAME)", ADDR="0x6c", Stat="Mean",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH5:AVG", NAME="\$(NAME)", ADDR="0x74", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH5:ASTD",NAME="\$(NAME)", ADDR="0x74", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH5:MIN", NAME="\$(NAME)", ADDR="0x78", Stat="Min",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH5:MAX", NAME="\$(NAME)", ADDR="0x7c", Stat="Max",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH5:STD", NAME="\$(NAME)", ADDR="0x80", Stat="Mean",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH6:AVG", NAME="\$(NAME)", ADDR="0x88", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH6:ASTD",NAME="\$(NAME)", ADDR="0x88", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH6:MIN", NAME="\$(NAME)", ADDR="0x8c", Stat="Min",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH6:MAX", NAME="\$(NAME)", ADDR="0x90", Stat="Max",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH6:STD", NAME="\$(NAME)", ADDR="0x94", Stat="Mean",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH7:AVG", NAME="\$(NAME)", ADDR="0x9c", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH7:ASTD",NAME="\$(NAME)", ADDR="0x9c", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH7:MIN", NAME="\$(NAME)", ADDR="0xa0", Stat="Min",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH7:MAX", NAME="\$(NAME)", ADDR="0xa4", Stat="Max",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH7:STD", NAME="\$(NAME)", ADDR="0xa8", Stat="Mean",  PREC="6", EGU="A"}
+{P="\$(SYS):\$(D)_CH0:AVG", ADDR="0x10", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
+{P="\$(SYS):\$(D)_CH0:ASTD",ADDR="0x10", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
+{P="\$(SYS):\$(D)_CH0:MIN", ADDR="0x14", Stat="Min",  PREC="6", EGU="A"}
+{P="\$(SYS):\$(D)_CH0:MAX", ADDR="0x18", Stat="Max",  PREC="6", EGU="A"}
+{P="\$(SYS):\$(D)_CH0:STD", ADDR="0x1c", Stat="Mean",  PREC="6", EGU="A"}
+{P="\$(SYS):\$(D)_CH1:AVG", ADDR="0x24", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
+{P="\$(SYS):\$(D)_CH1:ASTD",ADDR="0x24", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
+{P="\$(SYS):\$(D)_CH1:MIN", ADDR="0x28", Stat="Min",  PREC="6", EGU="A"}
+{P="\$(SYS):\$(D)_CH1:MAX", ADDR="0x2c", Stat="Max",  PREC="6", EGU="A"}
+{P="\$(SYS):\$(D)_CH1:STD", ADDR="0x30", Stat="Mean",  PREC="6", EGU="A"}
+{P="\$(SYS):\$(D)_CH2:AVG", ADDR="0x38", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
+{P="\$(SYS):\$(D)_CH2:ASTD",ADDR="0x24", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
+{P="\$(SYS):\$(D)_CH2:MIN", ADDR="0x3c", Stat="Min",  PREC="6", EGU="A"}
+{P="\$(SYS):\$(D)_CH2:MAX", ADDR="0x40", Stat="Max",  PREC="6", EGU="A"}
+{P="\$(SYS):\$(D)_CH2:STD", ADDR="0x44", Stat="Mean",  PREC="6", EGU="A"}
+{P="\$(SYS):\$(D)_CH3:AVG", ADDR="0x4c", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
+{P="\$(SYS):\$(D)_CH3:ASTD",ADDR="0x4c", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
+{P="\$(SYS):\$(D)_CH3:MIN", ADDR="0x50", Stat="Min",  PREC="6", EGU="A"}
+{P="\$(SYS):\$(D)_CH3:MAX", ADDR="0x54", Stat="Max",  PREC="6", EGU="A"}
+{P="\$(SYS):\$(D)_CH3:STD", ADDR="0x58", Stat="Mean",  PREC="6", EGU="A"}
+{P="\$(SYS):\$(D)_CH4:AVG", ADDR="0x60", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
+{P="\$(SYS):\$(D)_CH4:ASTD",ADDR="0x60", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
+{P="\$(SYS):\$(D)_CH4:MIN", ADDR="0x64", Stat="Min",  PREC="6", EGU="A"}
+{P="\$(SYS):\$(D)_CH4:MAX", ADDR="0x68", Stat="Max",  PREC="6", EGU="A"}
+{P="\$(SYS):\$(D)_CH4:STD", ADDR="0x6c", Stat="Mean",  PREC="6", EGU="A"}
+{P="\$(SYS):\$(D)_CH5:AVG", ADDR="0x74", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
+{P="\$(SYS):\$(D)_CH5:ASTD",ADDR="0x74", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
+{P="\$(SYS):\$(D)_CH5:MIN", ADDR="0x78", Stat="Min",  PREC="6", EGU="A"}
+{P="\$(SYS):\$(D)_CH5:MAX", ADDR="0x7c", Stat="Max",  PREC="6", EGU="A"}
+{P="\$(SYS):\$(D)_CH5:STD", ADDR="0x80", Stat="Mean",  PREC="6", EGU="A"}
+{P="\$(SYS):\$(D)_CH6:AVG", ADDR="0x88", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
+{P="\$(SYS):\$(D)_CH6:ASTD",ADDR="0x88", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
+{P="\$(SYS):\$(D)_CH6:MIN", ADDR="0x8c", Stat="Min",  PREC="6", EGU="A"}
+{P="\$(SYS):\$(D)_CH6:MAX", ADDR="0x90", Stat="Max",  PREC="6", EGU="A"}
+{P="\$(SYS):\$(D)_CH6:STD", ADDR="0x94", Stat="Mean",  PREC="6", EGU="A"}
+{P="\$(SYS):\$(D)_CH7:AVG", ADDR="0x9c", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
+{P="\$(SYS):\$(D)_CH7:ASTD",ADDR="0x9c", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
+{P="\$(SYS):\$(D)_CH7:MIN", ADDR="0xa0", Stat="Min",  PREC="6", EGU="A"}
+{P="\$(SYS):\$(D)_CH7:MAX", ADDR="0xa4", Stat="Max",  PREC="6", EGU="A"}
+{P="\$(SYS):\$(D)_CH7:STD", ADDR="0xa8", Stat="Mean",  PREC="6", EGU="A"}
 }
 
 file "pico8_frib_reg_chan.template"
 {
-{P="\$(SYS):\$(D)_CH0:", NAME="\$(NAME)", CORR="0x300c0", CTRL="0x300e0", BIT="0"}
-{P="\$(SYS):\$(D)_CH1:", NAME="\$(NAME)", CORR="0x300c4", CTRL="0x300e0", BIT="16"}
-{P="\$(SYS):\$(D)_CH2:", NAME="\$(NAME)", CORR="0x300c8", CTRL="0x300e4", BIT="0"}
-{P="\$(SYS):\$(D)_CH3:", NAME="\$(NAME)", CORR="0x300cc", CTRL="0x300e4", BIT="16"}
-{P="\$(SYS):\$(D)_CH4:", NAME="\$(NAME)", CORR="0x300d0", CTRL="0x300e8", BIT="0"}
-{P="\$(SYS):\$(D)_CH5:", NAME="\$(NAME)", CORR="0x300d4", CTRL="0x300e8", BIT="16"}
-{P="\$(SYS):\$(D)_CH6:", NAME="\$(NAME)", CORR="0x300d8", CTRL="0x300ec", BIT="0"}
-{P="\$(SYS):\$(D)_CH7:", NAME="\$(NAME)", CORR="0x300dc", CTRL="0x300ec", BIT="16"}
+{P="\$(SYS):\$(D)_CH0:", CORR="0x300c0", CTRL="0x300e0", BIT="0"}
+{P="\$(SYS):\$(D)_CH1:", CORR="0x300c4", CTRL="0x300e0", BIT="16"}
+{P="\$(SYS):\$(D)_CH2:", CORR="0x300c8", CTRL="0x300e4", BIT="0"}
+{P="\$(SYS):\$(D)_CH3:", CORR="0x300cc", CTRL="0x300e4", BIT="16"}
+{P="\$(SYS):\$(D)_CH4:", CORR="0x300d0", CTRL="0x300e8", BIT="0"}
+{P="\$(SYS):\$(D)_CH5:", CORR="0x300d4", CTRL="0x300e8", BIT="16"}
+{P="\$(SYS):\$(D)_CH6:", CORR="0x300d8", CTRL="0x300ec", BIT="0"}
+{P="\$(SYS):\$(D)_CH7:", CORR="0x300dc", CTRL="0x300ec", BIT="16"}
 }
 
 file "pico8_frib_chan_trip.db" {
 pattern
-{P,                    NAME,       LO1,  HI1,  LO2,  HI2,  LO3,  HI3,  LO4,  HI4,  SPK1, SPK2, NOKMSK, NOK  }
-{"\$(SYS):\$(D)_CH0:", "\$(NAME)", 0xB0, 0xB1, 0xB2, 0xB3, 0xB4, 0xB5, 0xB6, 0xB7, 0xF0, 0xF1, 0xA0,   0xA8 }
-{"\$(SYS):\$(D)_CH1:", "\$(NAME)", 0xB8, 0xB9, 0xBA, 0xBB, 0xBC, 0xBD, 0xBE, 0xBF, 0xF2, 0xF3, 0xA1,   0xA9 }
-{"\$(SYS):\$(D)_CH2:", "\$(NAME)", 0xC0, 0xC1, 0xC2, 0xC3, 0xC4, 0xC5, 0xC6, 0xC7, 0xF4, 0xF5, 0xA2,   0xAA }
-{"\$(SYS):\$(D)_CH3:", "\$(NAME)", 0xC8, 0xC9, 0xCA, 0xCB, 0xCC, 0xCD, 0xCE, 0xCF, 0xF6, 0xF7, 0xA3,   0xAB }
-{"\$(SYS):\$(D)_CH4:", "\$(NAME)", 0xD0, 0xD1, 0xD2, 0xD3, 0xD4, 0xD5, 0xD6, 0xD7, 0xF8, 0xF9, 0xA4,   0xAC }
-{"\$(SYS):\$(D)_CH5:", "\$(NAME)", 0xD8, 0xD9, 0xDA, 0xDB, 0xDC, 0xDD, 0xDE, 0xDF, 0xFA, 0xFB, 0xA5,   0xAD }
-{"\$(SYS):\$(D)_CH6:", "\$(NAME)", 0xE0, 0xE1, 0xE2, 0xE3, 0xE4, 0xE5, 0xE6, 0xE7, 0xFC, 0xFD, 0xA6,   0xAE }
-{"\$(SYS):\$(D)_CH7:", "\$(NAME)", 0xE8, 0xE9, 0xEA, 0xEB, 0xEC, 0xED, 0xEE, 0xEF, 0xFE, 0xFF, 0xA7,   0xAF }
+{P,                    LO1,  HI1,  LO2,  HI2,  LO3,  HI3,  LO4,  HI4,  SPK1, SPK2, NOKMSK, NOK  }
+{"\$(SYS):\$(D)_CH0:", 0xB0, 0xB1, 0xB2, 0xB3, 0xB4, 0xB5, 0xB6, 0xB7, 0xF0, 0xF1, 0xA0,   0xA8 }
+{"\$(SYS):\$(D)_CH1:", 0xB8, 0xB9, 0xBA, 0xBB, 0xBC, 0xBD, 0xBE, 0xBF, 0xF2, 0xF3, 0xA1,   0xA9 }
+{"\$(SYS):\$(D)_CH2:", 0xC0, 0xC1, 0xC2, 0xC3, 0xC4, 0xC5, 0xC6, 0xC7, 0xF4, 0xF5, 0xA2,   0xAA }
+{"\$(SYS):\$(D)_CH3:", 0xC8, 0xC9, 0xCA, 0xCB, 0xCC, 0xCD, 0xCE, 0xCF, 0xF6, 0xF7, 0xA3,   0xAB }
+{"\$(SYS):\$(D)_CH4:", 0xD0, 0xD1, 0xD2, 0xD3, 0xD4, 0xD5, 0xD6, 0xD7, 0xF8, 0xF9, 0xA4,   0xAC }
+{"\$(SYS):\$(D)_CH5:", 0xD8, 0xD9, 0xDA, 0xDB, 0xDC, 0xDD, 0xDE, 0xDF, 0xFA, 0xFB, 0xA5,   0xAD }
+{"\$(SYS):\$(D)_CH6:", 0xE0, 0xE1, 0xE2, 0xE3, 0xE4, 0xE5, 0xE6, 0xE7, 0xFC, 0xFD, 0xA6,   0xAE }
+{"\$(SYS):\$(D)_CH7:", 0xE8, 0xE9, 0xEA, 0xEB, 0xEC, 0xED, 0xEE, 0xEF, 0xFE, 0xFF, 0xA7,   0xAF }
+}
+
+file "pico8_eeprom_base.template" {
+{ P="\$(SYS):\$(D)" }
+}
+
+file "pico8_eeprom_reg.template" {
+pattern
+{P,                         R,        EEPROM, OFFSET  }
+# Ch 0-3, Range 0
+{"\$(SYS):\$(D)_CH0:RNG0_", "EEGAIN", "1",    "0xD5"  }
+{"\$(SYS):\$(D)_CH0:RNG0_", "EEOFST", "1",    "0xD9"  }
+{"\$(SYS):\$(D)_CH1:RNG0_", "EEGAIN", "1",    "0xDD"  }
+{"\$(SYS):\$(D)_CH1:RNG0_", "EEOFST", "1",    "0xE1"  }
+{"\$(SYS):\$(D)_CH2:RNG0_", "EEGAIN", "1",    "0xE5"  }
+{"\$(SYS):\$(D)_CH2:RNG0_", "EEOFST", "1",    "0xE9"  }
+{"\$(SYS):\$(D)_CH3:RNG0_", "EEGAIN", "1",    "0xED"  }
+{"\$(SYS):\$(D)_CH3:RNG0_", "EEOFST", "1",    "0xF1"  }
+
+# Ch 0-3, Range 1
+{"\$(SYS):\$(D)_CH0:RNG1_", "EEGAIN", "1",    "0xF5"  }
+{"\$(SYS):\$(D)_CH0:RNG1_", "EEOFST", "1",    "0xF9"  }
+{"\$(SYS):\$(D)_CH1:RNG1_", "EEGAIN", "1",    "0xFD"  }
+{"\$(SYS):\$(D)_CH1:RNG1_", "EEOFST", "1",    "0x101" }
+{"\$(SYS):\$(D)_CH2:RNG1_", "EEGAIN", "1",    "0x105" }
+{"\$(SYS):\$(D)_CH2:RNG1_", "EEOFST", "1",    "0x109" }
+{"\$(SYS):\$(D)_CH3:RNG1_", "EEGAIN", "1",    "0x10D" }
+{"\$(SYS):\$(D)_CH3:RNG1_", "EEOFST", "1",    "0x111" }
+
+# Ch 4-7, Range 0
+{"\$(SYS):\$(D)_CH4:RNG0_", "EEGAIN", "0",    "0xD5"  }
+{"\$(SYS):\$(D)_CH4:RNG0_", "EEOFST", "0",    "0xD9"  }
+{"\$(SYS):\$(D)_CH5:RNG0_", "EEGAIN", "0",    "0xDD"  }
+{"\$(SYS):\$(D)_CH5:RNG0_", "EEOFST", "0",    "0xE1"  }
+{"\$(SYS):\$(D)_CH6:RNG0_", "EEGAIN", "0",    "0xE5"  }
+{"\$(SYS):\$(D)_CH6:RNG0_", "EEOFST", "0",    "0xE9"  }
+{"\$(SYS):\$(D)_CH7:RNG0_", "EEGAIN", "0",    "0xED"  }
+{"\$(SYS):\$(D)_CH7:RNG0_", "EEOFST", "0",    "0xF1"  }
+
+# Ch 4-7, Range 1
+{"\$(SYS):\$(D)_CH4:RNG1_", "EEGAIN", "0",    "0xF5"  }
+{"\$(SYS):\$(D)_CH4:RNG1_", "EEOFST", "0",    "0xF9"  }
+{"\$(SYS):\$(D)_CH5:RNG1_", "EEGAIN", "0",    "0xFD"  }
+{"\$(SYS):\$(D)_CH5:RNG1_", "EEOFST", "0",    "0x101" }
+{"\$(SYS):\$(D)_CH6:RNG1_", "EEGAIN", "0",    "0x105" }
+{"\$(SYS):\$(D)_CH6:RNG1_", "EEOFST", "0",    "0x109" }
+{"\$(SYS):\$(D)_CH7:RNG1_", "EEGAIN", "0",    "0x10D" }
+{"\$(SYS):\$(D)_CH7:RNG1_", "EEOFST", "0",    "0x111" }
 }

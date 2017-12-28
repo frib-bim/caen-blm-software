@@ -1,0 +1,6 @@
+record(ai, "$(P)$(R)_RD") {
+    field(DTYP, "Pico8 EEPROM Reg Float")
+    field(INP,  "@$(NAME) offset=$(OFFSET) eeprom=$(EEPROM)")
+    field(PREC, "8")
+}
+
