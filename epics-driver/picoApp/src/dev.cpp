@@ -1106,8 +1106,6 @@ long write_reg_ao(aoRecord *prec)
 
 long read_eeprom_reg_ai(aiRecord *prec)
 {
-    fprintf(stderr, "read_eeprom_reg_ai %s\n", prec->name);
-
     BEGIN {
         Guard G(info->dev->lock);
 
