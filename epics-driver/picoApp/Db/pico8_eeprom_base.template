@@ -1,8 +1,9 @@
 record(fanout, "$(P):EEPROM_FOUT") {
+    field(PINI, "YES")
     field(LNK1, "$(P):EEPROM_FOUT1")
     field(LNK2, "$(P):EEPROM_FOUT2")
     field(LNK3, "$(P):EEPROM_FOUT3")
-    field(LNK4, "$(P)"EEPROM_FOUT4")
+    field(LNK4, "$(P):EEPROM_FOUT4")
     field(LNK5, "$(P):EEPROM_FOUT5")
     field(LNK6, "$(P):EEPROM_FOUT6")
 }
@@ -55,5 +56,33 @@ record(fanout, "$(P):EEPROM_FOUT5") {
 record(fanout, "$(P):EEPROM_FOUT6") {
     field(LNK1, "$(P)_CH7:RNG1_EEGAIN_RD")
     field(LNK2, "$(P)_CH7:RNG1_EEOFST_RD")
+    field(LNK3, "$(P):EEPROM_RNG0")
+    field(LNK4, "$(P):EEPROM_RNG1")
+}
+
+record(calc, "$(P):EEPROM_RNG0_RD") {
+    field(EGU,  "A")
+    field(INPA, "$(P)_CH0:RNG0_EEGAIN_RD CP")
+    field(INPB, "$(P)_CH1:RNG0_EEGAIN_RD CP")
+    field(INPC, "$(P)_CH2:RNG0_EEGAIN_RD CP")
+    field(INPD, "$(P)_CH3:RNG0_EEGAIN_RD CP")
+    field(INPE, "$(P)_CH4:RNG0_EEGAIN_RD CP")
+    field(INPF, "$(P)_CH5:RNG0_EEGAIN_RD CP")
+    field(INPG, "$(P)_CH6:RNG0_EEGAIN_RD CP")
+    field(INPH, "$(P)_CH7:RNG0_EEGAIN_RD CP")
+    field(CALC, "((A+B+C+D+E+F+G+H)/8)*(2**19)")
+}
+
+record(calc, "$(P):EEPROM_RNG1_RD") {
+    field(EGU,  "A")
+    field(INPA, "$(P)_CH0:RNG1_EEGAIN_RD CP")
+    field(INPB, "$(P)_CH1:RNG1_EEGAIN_RD CP")
+    field(INPC, "$(P)_CH2:RNG1_EEGAIN_RD CP")
+    field(INPD, "$(P)_CH3:RNG1_EEGAIN_RD CP")
+    field(INPE, "$(P)_CH4:RNG1_EEGAIN_RD CP")
+    field(INPF, "$(P)_CH5:RNG1_EEGAIN_RD CP")
+    field(INPG, "$(P)_CH6:RNG1_EEGAIN_RD CP")
+    field(INPH, "$(P)_CH7:RNG1_EEGAIN_RD CP")
+    field(CALC, "((A+B+C+D+E+F+G+H)/8)*(2**19)")
 }
 

@@ -1,0 +1,12 @@
+record(ai, "$(P)$(R)_RD") {
+    field(DTYP, "Pico8 FPGA Reg Float")
+    field(INP,  "@$(NAME) offset=$(OFFSET)")
+    field(PREC, "8")
+}
+
+record(ao, "$(P)$(R)_CSET") {
+    field(DTYP, "Pico8 FPGA Reg Float")
+    field(INP,  "@$(NAME) offset=$(OFFSET)")
+    field(PREC, "8")
+    field(FLNK, "$(P)$(R)_RD")
+}

@@ -153,3 +153,49 @@ pattern
 {"\$(SYS):\$(D)_CH7:RNG1_", "EEGAIN", "0",    "0x10D" }
 {"\$(SYS):\$(D)_CH7:RNG1_", "EEOFST", "0",    "0x111" }
 }
+
+file "pico8_fpga_base.template" {
+{ P="\$(SYS):\$(D)" }
+}
+
+file "pico8_fpga_reg.template" {
+pattern
+{P,                         R,          OFFSET  }
+{"\$(SYS):\$(D)_CH0:RNG0_", "FPGAGAIN", "0x00"  }
+{"\$(SYS):\$(D)_CH1:RNG0_", "FPGAGAIN", "0x04"  }
+{"\$(SYS):\$(D)_CH2:RNG0_", "FPGAGAIN", "0x08"  }
+{"\$(SYS):\$(D)_CH3:RNG0_", "FPGAGAIN", "0x0C"  }
+{"\$(SYS):\$(D)_CH4:RNG0_", "FPGAGAIN", "0x10"  }
+{"\$(SYS):\$(D)_CH5:RNG0_", "FPGAGAIN", "0x14"  }
+{"\$(SYS):\$(D)_CH6:RNG0_", "FPGAGAIN", "0x18"  }
+{"\$(SYS):\$(D)_CH7:RNG0_", "FPGAGAIN", "0x1C"  }
+
+{"\$(SYS):\$(D)_CH0:RNG0_", "FPGAOFST", "0x20"  }
+{"\$(SYS):\$(D)_CH1:RNG0_", "FPGAOFST", "0x24"  }
+{"\$(SYS):\$(D)_CH2:RNG0_", "FPGAOFST", "0x28"  }
+{"\$(SYS):\$(D)_CH3:RNG0_", "FPGAOFST", "0x2C"  }
+{"\$(SYS):\$(D)_CH4:RNG0_", "FPGAOFST", "0x30"  }
+{"\$(SYS):\$(D)_CH5:RNG0_", "FPGAOFST", "0x34"  }
+{"\$(SYS):\$(D)_CH6:RNG0_", "FPGAOFST", "0x38"  }
+{"\$(SYS):\$(D)_CH7:RNG0_", "FPGAOFST", "0x3C"  }
+
+{"\$(SYS):\$(D)_CH0:RNG1_", "FPGAGAIN", "0x40"  }
+{"\$(SYS):\$(D)_CH1:RNG1_", "FPGAGAIN", "0x44"  }
+{"\$(SYS):\$(D)_CH2:RNG1_", "FPGAGAIN", "0x48"  }
+{"\$(SYS):\$(D)_CH3:RNG1_", "FPGAGAIN", "0x4C"  }
+{"\$(SYS):\$(D)_CH4:RNG1_", "FPGAGAIN", "0x50"  }
+{"\$(SYS):\$(D)_CH5:RNG1_", "FPGAGAIN", "0x54"  }
+{"\$(SYS):\$(D)_CH6:RNG1_", "FPGAGAIN", "0x58"  }
+{"\$(SYS):\$(D)_CH7:RNG1_", "FPGAGAIN", "0x5C"  }
+
+{"\$(SYS):\$(D)_CH0:RNG1_", "FPGAOFST", "0x60"  }
+{"\$(SYS):\$(D)_CH1:RNG1_", "FPGAOFST", "0x64"  }
+{"\$(SYS):\$(D)_CH2:RNG1_", "FPGAOFST", "0x68"  }
+{"\$(SYS):\$(D)_CH3:RNG1_", "FPGAOFST", "0x6C"  }
+{"\$(SYS):\$(D)_CH4:RNG1_", "FPGAOFST", "0x70"  }
+{"\$(SYS):\$(D)_CH5:RNG1_", "FPGAOFST", "0x74"  }
+{"\$(SYS):\$(D)_CH6:RNG1_", "FPGAOFST", "0x78"  }
+{"\$(SYS):\$(D)_CH7:RNG1_", "FPGAOFST", "0x7C"  }
+}
+
+

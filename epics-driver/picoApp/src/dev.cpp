@@ -40,6 +40,9 @@
 #include "pico.h"
 #include "dev.h"
 
+#define FPGA_SIZE       (0x100)
+#define FPGA_MAX_ADDR   (FPGA_SIZE-4)
+
 #define EEPROM_SIZE     (0x200)
 #define EEPROM_MAX_ADDR (EEPROM_SIZE-4)
 #define EEPROM_MAX      1
@@ -1104,7 +1107,7 @@ long write_reg_ao(aoRecord *prec)
 #endif
 }
 
-long read_eeprom_reg_ai(aiRecord *prec)
+static long eeprom_rw(dbCommon *prec, int write)
 {
     BEGIN {
         Guard G(info->dev->lock);
@@ -1125,9 +1128,13 @@ long read_eeprom_reg_ai(aiRecord *prec)
         reg.eeprom = (eeprom_reg::eeprom_t)info->eeprom;
         reg.address = info->offset;
 
-        info->dev->fd.ioctl_check<GET_EEPROM_REG>(&reg);
-
-        storeraw(prec, i2f(reg.data));
+        if (write) {
+            reg.data = f2i(readraw((aoRecord*)prec));
+            info->dev->fd.ioctl_check<SET_EEPROM_REG>(&reg);
+        } else {
+            info->dev->fd.ioctl_check<GET_EEPROM_REG>(&reg);
+            storeraw((aiRecord*)prec, i2f(reg.data));
+        }
 
         if (!reg.valid) {
             (void) recGblSetSevr(prec, READ_ALARM, INVALID_ALARM);
@@ -1142,41 +1149,50 @@ long read_eeprom_reg_ai(aiRecord *prec)
     } END(0)
 }
 
+long read_eeprom_reg_ai(aiRecord *prec)
+{
+    return eeprom_rw((dbCommon*)prec, 0);
+}
+
 long write_eeprom_reg_ao(aoRecord *prec)
+{
+    return eeprom_rw((dbCommon*)prec, 1);
+}
+
+static long fpga_rw(dbCommon *prec, int write)
 {
     BEGIN {
         Guard G(info->dev->lock);
 
-        if(info->eeprom > EEPROM_MAX) {
-            if(prec->tpro) errlogPrintf("%s: eeprom out of range %u / %d\n", prec->name, info->eeprom, EEPROM_MAX);
+        if(info->offset > FPGA_MAX_ADDR) {
+            if(prec->tpro) errlogPrintf("%s: offset out of range %u / %d\n", prec->name, info->offset, FPGA_MAX_ADDR);
             (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
             return 0;
         }
 
-        if(info->offset > EEPROM_MAX_ADDR) {
-            if(prec->tpro) errlogPrintf("%s: offset out of range %u / %d\n", prec->name, info->offset, EEPROM_MAX_ADDR);
-            (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
-            return 0;
-        }
-
-        eeprom_reg reg;
-        reg.eeprom = (eeprom_reg::eeprom_t)info->eeprom;
+        fpga_reg reg;
         reg.address = info->offset;
-        reg.data = f2i(readraw(prec));
 
-        info->dev->fd.ioctl_check<SET_EEPROM_REG>(&reg);
-
-        if (!reg.valid) {
-            (void) recGblSetSevr(prec, READ_ALARM, INVALID_ALARM);
-
-            if (prec->tpro > 1)
-                errlogPrintf("%s: timeout\n", prec->name);
-
-            return 0;
+        if (write) {
+            reg.data = f2i(readraw((aoRecord*)prec));
+            info->dev->fd.ioctl_check<SET_FPGA_REG>(&reg);
+        } else {
+            info->dev->fd.ioctl_check<GET_FPGA_REG>(&reg);
+            storeraw((aiRecord*)prec, i2f(reg.data));
         }
 
         return 2;
     } END(0)
+}
+
+long read_fpga_reg_ai(aiRecord *prec)
+{
+    return fpga_rw((dbCommon*)prec, 0);
+}
+
+long write_fpga_reg_ao(aoRecord *prec)
+{
+    return fpga_rw((dbCommon*)prec, 1);
 }
 
 long pico_report(int lvl)
@@ -1298,6 +1314,8 @@ DSET(devPico8AoReg, ao, NULL, &write_reg_ao);
 
 DSET(devPico8AiEEPROMReg, ai, NULL, &read_eeprom_reg_ai);
 DSET(devPico8AoEEPROMReg, ao, NULL, &write_eeprom_reg_ao);
+DSET(devPico8AiFPGAReg, ai, NULL, &read_fpga_reg_ai);
+DSET(devPico8AoFPGAReg, ao, NULL, &write_fpga_reg_ao);
 
 epicsExportAddress(drvet, drvpico8);
 
