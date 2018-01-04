@@ -1107,7 +1107,8 @@ long write_reg_ao(aoRecord *prec)
 #endif
 }
 
-static long eeprom_rw(dbCommon *prec, int write)
+template<typename R>
+static long eeprom_rw(dbCommon *prec, int iswrite)
 {
     BEGIN {
         Guard G(info->dev->lock);
@@ -1124,16 +1125,16 @@ static long eeprom_rw(dbCommon *prec, int write)
             return 0;
         }
 
-        eeprom_reg reg;
+        struct eeprom_reg reg;
         reg.eeprom = (eeprom_reg::eeprom_t)info->eeprom;
         reg.address = info->offset;
 
-        if (write) {
-            reg.data = f2i(readraw((aoRecord*)prec));
+        if (iswrite) {
+            reg.data = f2i(readraw((R*)prec));
             info->dev->fd.ioctl_check<SET_EEPROM_REG>(&reg);
         } else {
             info->dev->fd.ioctl_check<GET_EEPROM_REG>(&reg);
-            storeraw((aiRecord*)prec, i2f(reg.data));
+            storeraw((R*)prec, i2f(reg.data));
         }
 
         if (!reg.valid) {
@@ -1149,17 +1150,25 @@ static long eeprom_rw(dbCommon *prec, int write)
     } END(0)
 }
 
+long init_eeprom_reg_ao(dbCommon *prec)
+{
+    init_record_common(prec);
+    eeprom_rw<aoRecord>(prec, 0);
+    return 2;
+}
+
 long read_eeprom_reg_ai(aiRecord *prec)
 {
-    return eeprom_rw((dbCommon*)prec, 0);
+    return eeprom_rw<aiRecord>((dbCommon*)prec, 0);
 }
 
 long write_eeprom_reg_ao(aoRecord *prec)
 {
-    return eeprom_rw((dbCommon*)prec, 1);
+    return eeprom_rw<aoRecord>((dbCommon*)prec, 1);
 }
 
-static long fpga_rw(dbCommon *prec, int write)
+template<typename R>
+static long fpga_rw(dbCommon *prec, int iswrite)
 {
     BEGIN {
         Guard G(info->dev->lock);
@@ -1170,29 +1179,36 @@ static long fpga_rw(dbCommon *prec, int write)
             return 0;
         }
 
-        fpga_reg reg;
+        struct fpga_reg reg;
         reg.address = info->offset;
 
-        if (write) {
-            reg.data = f2i(readraw((aoRecord*)prec));
+        if (iswrite) {
+            reg.data = f2i(readraw((R*)prec));
             info->dev->fd.ioctl_check<SET_FPGA_REG>(&reg);
         } else {
             info->dev->fd.ioctl_check<GET_FPGA_REG>(&reg);
-            storeraw((aiRecord*)prec, i2f(reg.data));
+            storeraw((R*)prec, i2f(reg.data));
         }
 
         return 2;
     } END(0)
 }
 
+long init_fpga_reg_ao(dbCommon *prec)
+{
+    init_record_common(prec);
+    fpga_rw<aoRecord>(prec, 0);
+    return 2;
+}
+
 long read_fpga_reg_ai(aiRecord *prec)
 {
-    return fpga_rw((dbCommon*)prec, 0);
+    return fpga_rw<aiRecord>((dbCommon*)prec, 0);
 }
 
 long write_fpga_reg_ao(aoRecord *prec)
 {
-    return fpga_rw((dbCommon*)prec, 1);
+    return fpga_rw<aoRecord>((dbCommon*)prec, 1);
 }
 
 long pico_report(int lvl)
@@ -1266,6 +1282,9 @@ struct dset6 {
 #define DSET2(NAME, REC, IOINTR, RW) static dset6<REC ## Record> NAME = \
     {6, NULL, NULL, &init_record_common2, IOINTR, RW, NULL}; epicsExportAddress(dset, NAME)
 
+#define DSET_REG(NAME, REC, INIT, RW) static dset6<REC ## Record> NAME = \
+    {6, NULL, NULL, INIT, NULL, RW, NULL}; epicsExportAddress(dset, NAME)
+
 DSET(devPico8WfMessage, waveform, &get_data_update, &read_lastmsg);
 
 DSET(devPico8LoClock, longout,  NULL, &write_clock);
@@ -1312,10 +1331,10 @@ DSET(devPico8BoReg, bo, NULL, &write_reg_bo);
 DSET(devPico8LoReg, longout, NULL, &write_reg_lo);
 DSET(devPico8AoReg, ao, NULL, &write_reg_ao);
 
-DSET(devPico8AiEEPROMReg, ai, NULL, &read_eeprom_reg_ai);
-DSET(devPico8AoEEPROMReg, ao, NULL, &write_eeprom_reg_ao);
-DSET(devPico8AiFPGAReg, ai, NULL, &read_fpga_reg_ai);
-DSET(devPico8AoFPGAReg, ao, NULL, &write_fpga_reg_ao);
+DSET_REG(devPico8AiEEPROMReg, ai, &init_record_common, &read_eeprom_reg_ai);
+DSET_REG(devPico8AoEEPROMReg, ao, &init_eeprom_reg_ao, &write_eeprom_reg_ao);
+DSET_REG(devPico8AiFPGAReg, ai, &init_record_common, &read_fpga_reg_ai);
+DSET_REG(devPico8AoFPGAReg, ao, &init_fpga_reg_ao, &write_fpga_reg_ao);
 
 epicsExportAddress(drvet, drvpico8);
 

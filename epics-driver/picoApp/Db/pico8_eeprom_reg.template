@@ -6,7 +6,9 @@ record(ai, "$(P)$(R)_RD") {
 
 record(ao, "$(P)$(R)_CSET") {
     field(DTYP, "Pico8 EEPROM Reg Float")
-    field(INP,  "@$(NAME) offset=$(OFFSET) eeprom=$(EEPROM)")
+    field(OUT,  "@$(NAME) offset=$(OFFSET) eeprom=$(EEPROM)")
     field(PREC, "8")
     field(FLNK, "$(P)$(R)_RD")
+    field(SDIS, "$(P):EEPROM_LOCK_CSET")
+    field(DISV, "0")
 }
