@@ -1,0 +1,36 @@
+# Slow average (10s)
+record(compress, "$(P)$(R):AVGS_RD") {
+    field(INP,  "$(P)$(R):AVG_RD CP")
+    field(ALG,  "N to 1 Average")
+    field(N,    "50")
+    field(NSAM, "1")
+    field(PREC, "6")
+}
+
+record(calcout, "$(P)$(R):RNG0_$(SRC)OFST_CALC") {
+    field(INPA, "$(P)$(R):RNG_CMD")
+    field(INPB, "$(P)$(R):RNG0_$(SRC)OFST_RD")
+    field(INPC, "$(P)$(R):AVGS_RD")
+    field(CALC, "A==0")
+    field(OOPT, "When Non-zero")
+    field(DOPT, "Use OCAL")
+    field(OCAL, "B-C")
+    field(PREC, "6")
+    field(OUT,  "$(P)$(R):RNG0_$(SRC)OFST_CSET PP")
+    field(SDIS, "$(P):$(SOURCE)_LOCK_CSET")
+    field(DISV, "0")
+}
+
+record(calcout, "$(P)$(R):RNG1_$(SRC)OFST_CALC") {
+    field(INPA, "$(P)$(R):RNG_CMD")
+    field(INPB, "$(P)$(R):RNG1_$(SRC)OFST_RD")
+    field(INPC, "$(P)$(R):AVGS_RD")
+    field(CALC, "A==1")
+    field(OOPT, "When Non-zero")
+    field(DOPT, "Use OCAL")
+    field(OCAL, "B-C")
+    field(PREC, "6")
+    field(OUT,  "$(P)$(R):RNG1_$(SRC)OFST_CSET PP")
+    field(SDIS, "$(P):$(SOURCE)_LOCK_CSET")
+    field(DISV, "0")
+}
