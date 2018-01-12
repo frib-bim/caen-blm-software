@@ -47,17 +47,17 @@ dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO4_CH6:,A=FE_LEB
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO5_CH0:,A=FE_LEBT:PM_D4051:A_")   # CableDB: D4051
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO5_CH1:,A=FE_LEBT:PM_D4051:B_")   # CableDB: D4051
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO5_CH2:,A=FE_LEBT:PM_D4051:C_")   # CableDB: D4051
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO5_CH4:,A=FE_LEBT:PM_D4143:A_")   # CableDB: D4143
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO5_CH5:,A=FE_LEBT:PM_D4143:B_")   # CableDB: D4143
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO5_CH6:,A=FE_LEBT:PM_D4143:C_")   # CableDB: D4143
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO5_CH4:,A=FE_LEBT:PM_D4144:A_")   # CableDB: D4143
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO5_CH5:,A=FE_LEBT:PM_D4144:B_")   # CableDB: D4143
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO5_CH6:,A=FE_LEBT:PM_D4144:C_")   # CableDB: D4143
 
 # Slot 6
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO6_CH0:,A=FE_MEBT:PM_D3958:A_")   # CableDB: D3958
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO6_CH1:,A=FE_MEBT:PM_D3958:B_")   # CableDB: D3958
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO6_CH2:,A=FE_MEBT:PM_D3958:C_")   # CableDB: D3958
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO6_CH4:,A=FE_LEBT:PM_D4013:A_")   # CableDB: D4013
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO6_CH5:,A=FE_LEBT:PM_D4013:B_")   # CableDB: D4013
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO6_CH6:,A=FE_LEBT:PM_D4013:C_")   # CableDB: D4013
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO6_CH0:,A=FE_MEBT:PM_D3959:A_")   # CableDB: D3958
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO6_CH1:,A=FE_MEBT:PM_D3959:B_")   # CableDB: D3958
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO6_CH2:,A=FE_MEBT:PM_D3959:C_")   # CableDB: D3958
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO6_CH4:,A=FE_LEBT:PM_D4009:A_")   # CableDB: D4013
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO6_CH5:,A=FE_LEBT:PM_D4009:B_")   # CableDB: D4013
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO6_CH6:,A=FE_LEBT:PM_D4009:C_")   # CableDB: D4013
 
 
 ## Start the PICO python helper script

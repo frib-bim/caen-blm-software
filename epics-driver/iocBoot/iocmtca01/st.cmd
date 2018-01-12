@@ -42,10 +42,10 @@ dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO3_CH4:,A=FE_SCS
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO3_CH5:,A=FE_SCS1:EMS_D0739:X_")
 
 # Slot 4
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO4_CH0:,A=FE_LEBT:PM_D0913:Y_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO4_CH1:,A=FE_LEBT:PM_D0913:X_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO4_CH2:,A=FE_LEBT:PM_D0884:Y_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO4_CH4:,A=FE_LEBT:PM_D0884:X_")
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO4_CH0:,A=FE_LEBT:PM_D0912:Y_")
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO4_CH1:,A=FE_LEBT:PM_D0912:X_")
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO4_CH2:,A=FE_LEBT:PM_D0885:Y_")
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO4_CH4:,A=FE_LEBT:PM_D0885:X_")
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO4_CH5:,A=FE_LEBT:PM_D0856:Y_")
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO4_CH6:,A=FE_LEBT:PM_D0856:X_")
 
@@ -61,9 +61,9 @@ dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO5_CH6:,A=FE_SCS
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO6_CH0:,A=FE_LEBT:PM_D0824:A_")
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO6_CH1:,A=FE_LEBT:PM_D0824:B_")
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO6_CH2:,A=FE_LEBT:PM_D0824:C_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO6_CH4:,A=FE_LEBT:PM_D0807:A_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO6_CH5:,A=FE_LEBT:PM_D0807:B_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO6_CH6:,A=FE_LEBT:PM_D0807:C_")
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO6_CH4:,A=FE_LEBT:PM_D0808:A_")
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO6_CH5:,A=FE_LEBT:PM_D0808:B_")
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO6_CH6:,A=FE_LEBT:PM_D0808:C_")
 
 # Slot 7
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO7_CH0:,A=FE_MEBT:PM_D1092:A_")
@@ -74,7 +74,7 @@ dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO7_CH5:,A=FE_LEB
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO7_CH6:,A=FE_LEBT:PM_D0998:C_")
 
 # Slot 8
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH0:,A=FE_LEBT:FC_D0794:")   # CableDB: D0794
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH0:,A=FE_LEBT:FC_D0796:")   # CableDB: D0794
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH1:,A=FE_LEBT:FC_D0814:")   # CableDB: D0811
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH2:,A=FE_LEBT:FC_D0977:")   # CableDB: D0976
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH4:,A=FE_LEBT:FC_D0998:")   # CableDB: D0998
@@ -82,8 +82,8 @@ dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH5:,A=FE_EML
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH6:,A=FE_MEBT:FC_D1102:")   # CableDB: D1123
 
 # Slot 9
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO9_CH0:,A=FE_SCS2:FC_D0718:")   # CableDB: D0718
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO9_CH2:,A=FE_SCS1:FC_D0739:")   # CableDB: D0739
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO9_CH0:,A=FE_SCS2:FC_D0717:")   # CableDB: D0718
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO9_CH2:,A=FE_SCS1:FC_D0738:")   # CableDB: D0739
 
 ## Start the PICO python helper script
 system "python ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA01:PICO3 DIAG_MTCA01:PICO4 DIAG_MTCA01:PICO5 DIAG_MTCA01:PICO6 DIAG_MTCA01:PICO7 DIAG_MTCA01:PICO8 DIAG_MTCA01:PICO9 &"

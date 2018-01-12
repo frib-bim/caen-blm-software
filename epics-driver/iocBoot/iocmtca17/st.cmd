@@ -24,9 +24,9 @@ dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA17,D=PICO4,NAME=PICO4,NELM=
 # (SYS):(D)_CHX:Y_Z -> (A)Y_Z
 
 # Slot 3
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO3_CH0:,A=LS1_D:PM_D1234:A_")   # D-Station, not in cable DB
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO3_CH1:,A=LS1_D:PM_D1234:B_")   # D-Station, not in cable DB
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO3_CH2:,A=LS1_D:PM_D1234:C_")   # D-Station, not in cable DB
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO3_CH0:,A=LS1_D:PM_D1232:A_")   # D-Station, not in cable DB
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO3_CH1:,A=LS1_D:PM_D1232:B_")   # D-Station, not in cable DB
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO3_CH2:,A=LS1_D:PM_D1232:C_")   # D-Station, not in cable DB
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO3_CH4:,A=LS1_D:PM_D1240:A_")   # D-Station, not in cable DB
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO3_CH5:,A=LS1_D:PM_D1240:B_")   # D-Station, not in cable DB
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO3_CH6:,A=LS1_D:PM_D1240:C_")   # D-Station, not in cable DB
