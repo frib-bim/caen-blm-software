@@ -1,4 +1,4 @@
-global { NAME="\$(NAME)", P="\$(P)", SCAN=".5 second" }
+global { NAME="\$(NAME)", P="\$(P)", FPS="\$(FPS)", SCAN=".5 second" }
 
 file "pico8_frib_chan_trip_thres.template" {
 pattern
@@ -19,4 +19,8 @@ file "pico8_frib_trip_ctl_sts.template" {
 pattern
 { NOKMSK,       NOK       }
 { "\$(NOKMSK)", "\$(NOK)" }
+}
+
+file "pico8_frib_chan_trip_long.template" {
+{}
 }

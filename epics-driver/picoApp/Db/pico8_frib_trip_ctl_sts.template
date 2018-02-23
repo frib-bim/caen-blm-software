@@ -1,9 +1,23 @@
+record(calc, "$(P)TRIP_ALLEN_CMD") {
+    field(INPA, "$(P)TRIP_EN_CMD CP")
+    field(INPB, "$(P)TRIP_LAVGLOEN_CMD CP")
+    field(INPC, "$(P)TRIP_LAVGHIEN_CMD CP")
+    field(CALC, "A || B || C")
+}
+
 record(longout, "$(P)TRIP_EN_CMD") {
     field(DTYP, "Pico8 User Reg UInt32")
     field(OUT , "@$(NAME) offset=0x30000+4*$(NOKMSK) mask=0x3FF")
     field(DESC, "Enable")
     field(PINI, "YES")
     info(autosaveFields_pass0, "VAL")
+}
+
+record(calc, "$(P)TRIP_ALL_RSTS") {
+    field(INPA, "$(P)TRIP_RSTS CP")
+    field(INPB, "$(P)TRIP_LAVGLO_RSTS CP")
+    field(INPC, "$(P)TRIP_LAVGHI_RSTS CP")
+    field(CALC, "A || B || C")
 }
 
 record(longin, "$(P)TRIP_RSTS") {

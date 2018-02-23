@@ -1,5 +1,5 @@
 global {
-    NAME="\$(NAME)"
+    NAME="\$(NAME)", FPS="\$(SYS):\$(D)_FPS:"
 }
 
 file "pico8_base.template"
@@ -26,7 +26,7 @@ file "pico8_ram.template"
 
 file "pico8_frib_reg.db"
 {
-{CTRL="\$(SYS):\$(D)_CTRL:", FPS="\$(SYS):\$(D)_FPS:", SLOT="\$(SLOT=0)"}
+{CTRL="\$(SYS):\$(D)_CTRL:", SLOT="\$(SLOT=0)"}
 }
 
 file "pico8_cap_int.template"
