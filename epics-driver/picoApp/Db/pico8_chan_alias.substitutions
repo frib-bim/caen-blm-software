@@ -5,7 +5,7 @@ file "pico8_chan_alias2.template"
 {P="\$(P)", A="\$(A)"}
 }
 
-file "pico8_chan_trip_long_alias.template"
+file "pico8_frib_chan_trip_long_alias.template"
 {
 {P="\$(P)", A="\$(A)"}
 }
