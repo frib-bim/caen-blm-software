@@ -122,14 +122,16 @@ record(dfanout, "$(P)TRIP_LAVGHI_FOUT") {
 }
 
 record(calcout, "$(P)TRIP_LAVGLO_CLR") {
-    field(INPA, "$(FPS)CLR_CSET CP")
-    field(CALC, "0")
+    field(INPA, "$(FPS)FPSSTS_RD CP")
+    field(CALC, "A & 4")
+    field(OOPT, "When Zero")
     field(OUT,  "$(P)TRIP_LAVGLO_RSTS PP")
 }
 
 record(calcout, "$(P)TRIP_LAVGHI_CLR") {
-    field(INPA, "$(FPS)CLR_CSET CP")
-    field(CALC, "0")
+    field(INPA, "$(FPS)FPSSTS_RD CP")
+    field(CALC, "A & 4")
+    field(OOPT, "When Zero")
     field(OUT,  "$(P)TRIP_LAVGHI_RSTS PP")
 }
 
