@@ -996,6 +996,11 @@ long read_regts_si(stringinRecord *prec)
         epicsUInt32 ival[2] = {0,0};
         info->cap->fd_reg.read(&ival, 8, info->offset);
 
+        if (!ival[0] && !ival[1]) {
+            snprintf(prec->val, sizeof(prec->val), "%s", "No time");
+            return 0;
+        }
+
         epicsTimeStamp ts;
         ts.secPastEpoch = ival[0]-POSIX_TIME_AT_EPICS_EPOCH;
         ts.nsec = double(ival[1])/info->step*1e9; // abuse step = ticks/sec of sub-second counter

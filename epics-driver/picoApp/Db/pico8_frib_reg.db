@@ -296,7 +296,7 @@ record(stringin, "$(FPS)TMETRP_RD") {
     field(DESC, "Trip time")
     field(DTYP, "Pico8 User Reg Time64")
     # step= is really sub-sec counter frequency in Hz
-    field(INP , "@$(NAME) offset=0x30060 step=10062500")
+    field(INP , "@$(NAME) offset=0x30060 step=80500000")
     field(SCAN, "1 second")
     field(TSE , "-2")
     field(FLNK, "")
