@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+#     __________  ________ 
+#    / ____/ __ \/  _/ __ )
+#   / /_  / /_/ // // __  |
+#  / __/ / _, _// // /_/ / 
+# /_/   /_/ |_/___/_____/  
 """
 Initiate from console:  python blm_processing_thread.py <picoDevPrefix1> <picoDevPrefix2> ...
 @author: cogan

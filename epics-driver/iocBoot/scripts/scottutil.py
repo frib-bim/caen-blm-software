@@ -1,10 +1,19 @@
 # -*- coding: utf-8 -*-
+#     __________  ________ 
+#    / ____/ __ \/  _/ __ )
+#   / /_  / /_/ // // __  |
+#  / __/ / _, _// // /_/ / 
+# /_/   /_/ |_/___/_____/  
 """
 Import and define common utilities, including matlab plots, math, sleep, and EPICS CA
 @author: cogan
 
 Version History
-Nov 11 2017   Initial checkin
+2017-11-11   Initial checkin
+2017-12-14   Custom inputstr() to automatically flush stdout first. Necessary.
+2017-12-18   Improved figures in GNOME. Better prompt.
+2018-02-08   Improved whos() and added savedat to save dat struct contents to file.
+2018-02-21   Improved savedat.
 """
 
 # Import numpy, fft, pyplot in main namespace.
@@ -18,7 +27,8 @@ from scipy.signal import *         # for lfilter
 from scipy.interpolate import interp1d
 from matplotlib.pyplot import figure as mplfigure
 from matplotlib.pyplot import *
-rcParams['axes.formatter.useoffset'] = False;   # disable by default yaxis plot offsets
+try: rcParams['axes.formatter.useoffset'] = False;   # disable by default yaxis plot offsets
+except: print('NOTE: in scottutil.py, rcParams not found: "axes.formatter.useoffset"');
 import time
 import warnings
 
@@ -85,20 +95,36 @@ def toc():
 def caputw(pv,val):
     caput(pv,val,wait=True);
 def whos(var):
-    typ = type(var);
-    if (type.__str__(typ)=="<class '__main__.struct'>"):
-        pprint(var.__dict__)
-        return
-    nel = var.size;
-    sz = var.shape;
-    if (nel==1):
-        fprintf('Type=%15s  Size = %d ',type(var),nel)
-    elif (var.ndim==1):
-        fprintf('%15s of %15s  Size = %d  (%d x %d)',type(var),type(var[0]),nel,sz[0],1)
-    elif (var.ndim==2):
-        fprintf('%15s of %15s  Size = %d  (%d x %d)',type(var),type(var[0]),nel,sz[0],sz[1])
-    elif (var.ndim==3):
-        fprintf('%15s of %15s  Size = %d  (%d x %d x %d)',type(var),type(var[0]),nel,sz[0],sz[1],sz[2])
+    tl = [];
+    typeStr = type.__str__(type(var));
+    if (typeStr=="<class '__main__.struct'>" or typeStr=="<class 'scottutil.struct'>"):
+        #  get the underlying dictionary object
+        fprintf('Type = %15s:',typeStr);
+        tdic = var.__dict__;
+    else:
+        # create temp dictionary for loop below
+        tdic = {"value":var};
+    for key in tdic:
+        val = tdic.get(key);
+        typeStr = type.__str__(type(val)).replace("'>","").replace("<class '","");
+        if (typeStr.find("ndarray")>=0 or typeStr.find("ca_array")>=0):
+            shape = array(val.shape);
+        elif (typeStr=="str"):
+            shape = array(val.__len__());
+        else:
+            shape = array(size(val));
+        ndim = shape.ndim;
+        if (ndim==1 and size(val)==1): ndim = 0;
+        oftype = "none";
+        if (ndim>0): oftype = type.__str__(type(val[0])).replace("'>","").replace("<class '","");
+        tl.append({"name":key,"type":typeStr,"oftype":oftype,"shape":shape,"ndim":ndim});
+    #  Print type and size information
+    for item in tl:
+        if (item["ndim"]==0):
+            fprintf('%13s: %30s  Size=%10s ',item["name"],item["type"],array2string(item["shape"]))
+        else:
+            fprintf('%13s: %13s of %13s  Size=%10s ',item["name"],item["type"],item["oftype"],array2string(item["shape"]))
+    return
 def dec2hex(dec,width=0):
     if (type(dec) == ndarray):
         str = '';
@@ -114,9 +140,25 @@ def dec2hex(dec,width=0):
 def fread(filepath,dtype=uint8):
     return fromfile(filepath,dtype);
 #  Save dat struct, with column headers
-def savedat(dat,filename):
+def savedatcsv(dat,filename):
     expdat = array( [ dat.I1, dat.Q1, dat.I2, dat.Q2, dat.I3, dat.Q3, dat.I4, dat.Q4 ] ).transpose();
     savetxt(filename+".csv", expdat, delimiter=",",header="I1,Q1,I2,Q2,I3,Q3,I4,Q4")
+#  Save dat struct contents to matlab-compatible script
+def savedat(dat,filename):
+    #  Append to file
+    fid = open(filename,"w")
+    for key in dat.__dict__:
+        val = dat.__dict__.get(key);
+        typeStr = type.__str__(type(val)).replace("'>","").replace("<class '","");
+        #  Print type and size information
+        if (typeStr=="str"):
+            tstr = "dat." + key + " = '" + val + "';\n";
+        else:
+            tstr = "dat." + key + ' = ' + str(array(val).tolist()) + ";\n";
+        fid.write(tstr)
+    fid.close()
+    return
+    
 
 #  Simple struct class MATLAB-like, type is scottutil.struct
 class struct():
