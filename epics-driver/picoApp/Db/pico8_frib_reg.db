@@ -36,7 +36,11 @@ record(longin, "$(CTRL)CYC_EOCM") {  field(DTYP, "Pico8 User Reg UInt32")  field
 record(calc, "$(CTRL)IRQT_MSEC") {  field(INPA, "$(CTRL)IRQT_RD NPP MS")  field(CALC, "A/125.0e3")  field(EGU , "ms") }
 record(calc, "$(CTRL)ISRT_MSEC") {  field(INPA, "$(CTRL)ISRT_RD NPP MS")  field(CALC, "A/125.0e3")  field(EGU , "ms") }
 record(calc, "$(CTRL)ISRMAX_MSEC") {  field(INPA, "$(CTRL)ISRMAX_RD NPP MS")  field(CALC, "A/125.0e3")  field(EGU , "ms") }
-
+record(ai, "$(CTRL)MPSRespTime") {
+    field(DTYP, "Pico8 User Reg Int32")  field(INP , "@$(NAME) offset=0x30068") field(SCAN, ".2 second")
+    field(ASLO, "8.0e-3")  field(EGU , "uSec")
+    field(HIGH, "10.0")    field(HSV , "MAJOR")
+}
 
 
 ##  Original from Davidsaver
