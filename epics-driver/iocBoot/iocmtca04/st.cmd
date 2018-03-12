@@ -12,6 +12,8 @@ asSetFilename("${EPICS_CA_SEC_FILE}")
 dbLoadDatabase("../../dbd/pico.dbd",0,0)
 pico_registerRecordDeviceDriver(pdbbase)
 
+dbLoadRecords("$(TOP)/db/iocAdminSoft.db", "P=DIAG_MTCA04:PICO")
+
 # slot numbers from /sys/bus/pci/slots/*/address
 createPICO8("PICO3", "/dev/amc_pico_0000:08:00.0")
 createPICO8("PICO4", "/dev/amc_pico_0000:06:00.0")
