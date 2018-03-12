@@ -50,10 +50,8 @@ pico_DBD += epicspci.dbd
 pico_LIBS += epicspci
 endif
 
-ifneq ($(RECSYNC),)
-pico_DBD += reccaster.dbd
-pico_LIBS += reccaster
-endif
+pico_DBD += reccaster.dbd devIocStats.dbd caPutLog.dbd
+pico_LIBS += reccaster devIocStats caPutLog
 
 # Add support from base/src/vxWorks if needed
 #pico_OBJS_vxWorks += $(EPICS_BASE_BIN)/vxComLibrary

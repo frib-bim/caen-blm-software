@@ -10,6 +10,7 @@ DB += pico8_chan_alias.db
 # DB += pico8_ram.template
 
 DB_INSTALLS += $(IOCSTATS)/db/iocAdminSoft.db
+DB_INSTALLS += $(RECSYNC)/db/reccaster.db
 
 ifneq ($(AUTOSAVE),)
 DB_INSTALLS += $(firstword $(wildcard $(AUTOSAVE)/asApp/Db/save_restoreStatus.db $(AUTOSAVE)/db/save_restoreStatus.db))

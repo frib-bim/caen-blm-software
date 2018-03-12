@@ -1,6 +1,6 @@
 #!../../bin/linux-x86_64/pico
 
-#< envPaths
+< envPaths
 
 epicsEnvSet("EPICS_CA_MAX_ARRAY_BYTES","10000000")
 
@@ -12,7 +12,8 @@ asSetFilename("${EPICS_CA_SEC_FILE}")
 dbLoadDatabase("../../dbd/pico.dbd",0,0)
 pico_registerRecordDeviceDriver(pdbbase)
 
-dbLoadRecords("$(TOP)/db/iocAdminSoft.db", "P=DIAG_MTCA01:PICO")
+dbLoadRecords("$(TOP)/db/iocAdminSoft.db", "IOC=DIAG_MTCA01:PICO")
+dbLoadRecords("$(TOP)/db/reccaster.db", "P=DIAG_MTCA01:PICO:")
 
 # slot numbers from /sys/bus/pci/slots/*/address
 createPICO8("PICO3", "/dev/amc_pico_0000:08:00.0")
