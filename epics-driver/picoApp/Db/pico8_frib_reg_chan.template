@@ -13,8 +13,8 @@ record(longout, "$(P)TOF_CSET") {
     info(autosaveFields_pass0, "VAL")
 }
 
-record(bo, "$(P)MON_CSET") {
-    field(DESC, "Always Monitor")
+record(bo, "$(P)CWBEAM_CSET") {
+    field(DESC, "CW Beam")
     field(DTYP, "Pico8 User Reg UInt32")
     field(OUT, "@$(NAME) offset=$(CTRL) mask=0x2<<$(BIT)")
     field(RVAL, "1")
