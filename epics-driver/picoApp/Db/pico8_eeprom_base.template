@@ -90,7 +90,7 @@ record(calc, "$(P):EEPROM_RNG0_RD") {
     field(INPF, "$(P)_CH5:RNG0_EEGAIN_RD CP")
     field(INPG, "$(P)_CH6:RNG0_EEGAIN_RD CP")
     field(INPH, "$(P)_CH7:RNG0_EEGAIN_RD CP")
-    field(CALC, "((A+B+C+D+E+F+G+H)/8)*(2**25)")
+    field(CALC, "((A+B+C+D+E+F+G+H)/8)*(2**19)*1E6")
 }
 
 record(calc, "$(P):EEPROM_RNG1_RD") {
@@ -103,6 +103,6 @@ record(calc, "$(P):EEPROM_RNG1_RD") {
     field(INPF, "$(P)_CH5:RNG1_EEGAIN_RD CP")
     field(INPG, "$(P)_CH6:RNG1_EEGAIN_RD CP")
     field(INPH, "$(P)_CH7:RNG1_EEGAIN_RD CP")
-    field(CALC, "((A+B+C+D+E+F+G+H)/8)*(2**25)")
+    field(CALC, "((A+B+C+D+E+F+G+H)/8)*(2**19)*1E6")
 }
 
