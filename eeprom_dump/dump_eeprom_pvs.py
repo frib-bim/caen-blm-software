@@ -23,11 +23,15 @@ chans = range(8)
 ranges = range(2)
 params = ['EEGAIN', 'EEOFST']
 
-with open('eeprom_%s.csv' % datetime.now().strftime("%Y-%m-%d-%H-%M-%S"), 'wb') as f:
+filename = 'eeprom_%s.csv' % datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+
+with open(filename, 'wb') as f:
+    print("Writing results to %s" % filename)
     writer = csv.writer(f)
-    writer.writerow(["PV", "Value", "Raw Value"])
-    for pico, chan, rng, param in product(picos, chans, ranges, params):
-        pv = "%s_CH%d:RNG%d_%s_RD" % (pico, chan, rng, param)
-        val = caget(pv)
-        raw = caget(pv + ".RVAL")
-        writer.writerow([pv, val, raw])
+    writer.writerow(["PV", "Value"])
+    for pico in picos:
+        for chan, rng, param in product(chans, ranges, params):
+            pv = "%s_CH%d:RNG%d_%s_RD" % (pico, chan, rng, param)
+            val = caget(pv)
+            writer.writerow([pv, val])
+        print("%s done" % pico)
