@@ -85,6 +85,7 @@ record(mbbo, "$(P)TRIG_CMD") {
     field(DTYP, "Pico8 Trigger Source")
     field(OUT , "@$(NAME)")
     field(PINI, "YES")
+    field(VAL,  "0")
     field(ZRST, "Software")
     field(ONST, "Channel 0")
     field(TWST, "Channel 1")
@@ -111,7 +112,6 @@ record(mbbo, "$(P)TRIG_CMD") {
     field(TEVL, "10")
     field(ELVL, "11")
     field(TVVL, "12")
-    info(autosaveFields_pass0, "RVAL")
 }
 
 record(ao, "$(P)TRIG_CSET") {
