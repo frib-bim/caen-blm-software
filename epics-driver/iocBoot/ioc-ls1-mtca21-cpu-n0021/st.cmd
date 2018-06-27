@@ -35,7 +35,7 @@ dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA21:PICO3_CH5:,A=LS1_D:
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA21:PICO3_CH6:,A=LS1_D:PM_D1240:C_")   # D-Station, not in cable DB
 
 # Slot 4
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA21:PICO4_CH0:,A=LS1_D:FC_D1244")   # D-Station, not in cable DB
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA21:PICO4_CH0:,A=LS1_D:FC_D1244:")   # D-Station, not in cable DB
 
 ## Start the PICO python helper script
 system "python ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA21:PICO3 DIAG_MTCA21:PICO4 &"
