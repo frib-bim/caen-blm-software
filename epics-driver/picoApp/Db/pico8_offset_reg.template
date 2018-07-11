@@ -23,7 +23,7 @@ record(calcout, "$(P)$(R):RNG0_$(SRC)OFST_CALC") {
 
 record(calcout, "$(P)$(R):RNG1_$(SRC)OFST_CALC") {
     field(INPA, "$(P)$(R):RNG_CMD")
-    field(INPB, "$(P)$(R):RNG1_$(SRC)OFST_RD")
+    field(INPB, "$(P)$(R):RNG1_FPGAOFST_RD")
     field(INPC, "$(P)$(R):AVGS_RD")
     field(CALC, "A==1")
     field(OOPT, "When Non-zero")
