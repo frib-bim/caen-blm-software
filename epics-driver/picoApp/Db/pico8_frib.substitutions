@@ -200,23 +200,14 @@ pattern
 
 file "pico8_offset_reg.template" {
 pattern
-{P,               R,      SRC,    SOURCE   }
-{"\$(SYS):\$(D)", "_CH0", "EE",   "EEPROM" }
-{"\$(SYS):\$(D)", "_CH1", "EE",   "EEPROM" }
-{"\$(SYS):\$(D)", "_CH2", "EE",   "EEPROM" }
-{"\$(SYS):\$(D)", "_CH3", "EE",   "EEPROM" }
-{"\$(SYS):\$(D)", "_CH4", "EE",   "EEPROM" }
-{"\$(SYS):\$(D)", "_CH5", "EE",   "EEPROM" }
-{"\$(SYS):\$(D)", "_CH6", "EE",   "EEPROM" }
-{"\$(SYS):\$(D)", "_CH7", "EE",   "EEPROM" }
-
-{"\$(SYS):\$(D)", "_CH0", "FPGA", "FPGA"   }
-{"\$(SYS):\$(D)", "_CH1", "FPGA", "FPGA"   }
-{"\$(SYS):\$(D)", "_CH2", "FPGA", "FPGA"   }
-{"\$(SYS):\$(D)", "_CH3", "FPGA", "FPGA"   }
-{"\$(SYS):\$(D)", "_CH4", "FPGA", "FPGA"   }
-{"\$(SYS):\$(D)", "_CH5", "FPGA", "FPGA"   }
-{"\$(SYS):\$(D)", "_CH6", "FPGA", "FPGA"   }
-{"\$(SYS):\$(D)", "_CH7", "FPGA", "FPGA"   }
+{P,               R      }
+{"\$(SYS):\$(D)", "_CH0" }
+{"\$(SYS):\$(D)", "_CH1" }
+{"\$(SYS):\$(D)", "_CH2" }
+{"\$(SYS):\$(D)", "_CH3" }
+{"\$(SYS):\$(D)", "_CH4" }
+{"\$(SYS):\$(D)", "_CH5" }
+{"\$(SYS):\$(D)", "_CH6" }
+{"\$(SYS):\$(D)", "_CH7" }
 }
 

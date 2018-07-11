@@ -7,7 +7,7 @@ record(compress, "$(P)$(R):AVGS_RD") {
     field(PREC, "6")
 }
 
-record(calcout, "$(P)$(R):RNG0_$(SRC)OFST_CALC") {
+record(calcout, "$(P)$(R):RNG0_EEOFST_CALC") {
     field(INPA, "$(P)$(R):RNG_CMD")
     field(INPB, "$(P)$(R):RNG0_FPGAOFST_RD")
     field(INPC, "$(P)$(R):AVGS_RD")
@@ -16,12 +16,12 @@ record(calcout, "$(P)$(R):RNG0_$(SRC)OFST_CALC") {
     field(DOPT, "Use OCAL")
     field(OCAL, "B-C")
     field(PREC, "6")
-    field(OUT,  "$(P)$(R):RNG0_$(SRC)OFST_CSET PP")
-    field(SDIS, "$(P):$(SOURCE)_LOCK_CSET")
+    field(OUT,  "$(P)$(R):RNG0_EEOFST_DIFF PP")
+    field(SDIS, "$(P):EEPROM_LOCK_CSET")
     field(DISV, "0")
 }
 
-record(calcout, "$(P)$(R):RNG1_$(SRC)OFST_CALC") {
+record(calcout, "$(P)$(R):RNG1_EEOFST_CALC") {
     field(INPA, "$(P)$(R):RNG_CMD")
     field(INPB, "$(P)$(R):RNG1_FPGAOFST_RD")
     field(INPC, "$(P)$(R):AVGS_RD")
@@ -30,7 +30,57 @@ record(calcout, "$(P)$(R):RNG1_$(SRC)OFST_CALC") {
     field(DOPT, "Use OCAL")
     field(OCAL, "B-C")
     field(PREC, "6")
-    field(OUT,  "$(P)$(R):RNG1_$(SRC)OFST_CSET PP")
-    field(SDIS, "$(P):$(SOURCE)_LOCK_CSET")
+    field(OUT,  "$(P)$(R):RNG1_EEOFST_DIFF PP")
+    field(SDIS, "$(P):EEPROM_LOCK_CSET")
+    field(DISV, "0")
+}
+
+record(ai, "$(P)$(R):RNG0_EEOFST_DIFF") {
+    field(FLNK, "$(P)$(R):RNG0_EEOFST_FOUT")
+}
+
+record(ai, "$(P)$(R):RNG1_EEOFST_DIFF") {
+    field(FLNK, "$(P)$(R):RNG1_EEOFST_FOUT")
+}
+
+record(dfanout, "$(P)$(R):RNG0_EEOFST_FOUT") {
+    field(DOL,  "$(P)$(R):RNG0_EEOFST_DIFF")
+    field(OMSL, "closed_loop")
+    field(OUTA, "$(P)$(R):RNG0_EEOFST_CSET PP")
+    field(OUTB, "$(P)$(R):RNG0_FPGAOFST_CSET PP")
+}
+
+record(dfanout, "$(P)$(R):RNG1_EEOFST_FOUT") {
+    field(DOL,  "$(P)$(R):RNG1_EEOFST_DIFF")
+    field(OMSL, "closed_loop")
+    field(OUTA, "$(P)$(R):RNG1_EEOFST_CSET PP")
+    field(OUTB, "$(P)$(R):RNG1_FPGAOFST_CSET PP")
+}
+
+record(calcout, "$(P)$(R):RNG0_FPGAOFST_CALC") {
+    field(INPA, "$(P)$(R):RNG_CMD")
+    field(INPB, "$(P)$(R):RNG0_FPGAOFST_RD")
+    field(INPC, "$(P)$(R):AVGS_RD")
+    field(CALC, "A==0")
+    field(OOPT, "When Non-zero")
+    field(DOPT, "Use OCAL")
+    field(OCAL, "B-C")
+    field(PREC, "6")
+    field(OUT,  "$(P)$(R):RNG0_FPGAOFST_CSET PP")
+    field(SDIS, "$(P):FPGA_LOCK_CSET")
+    field(DISV, "0")
+}
+
+record(calcout, "$(P)$(R):RNG1_FPGAOFST_CALC") {
+    field(INPA, "$(P)$(R):RNG_CMD")
+    field(INPB, "$(P)$(R):RNG1_FPGAOFST_RD")
+    field(INPC, "$(P)$(R):AVGS_RD")
+    field(CALC, "A==1")
+    field(OOPT, "When Non-zero")
+    field(DOPT, "Use OCAL")
+    field(OCAL, "B-C")
+    field(PREC, "6")
+    field(OUT,  "$(P)$(R):RNG1_FPGAOFST_CSET PP")
+    field(SDIS, "$(P):FPGA_LOCK_CSET")
     field(DISV, "0")
 }
