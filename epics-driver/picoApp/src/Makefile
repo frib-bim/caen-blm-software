@@ -26,12 +26,13 @@ DBD += pico.dbd
 # pico.dbd will be made up from these files:
 pico_DBD += base.dbd
 pico_DBD += system.dbd
+pico_DBD += calc.dbd
 
 # Include dbd files from all support applications:
 pico_DBD += pico8.dbd
 
 # Add all the support libraries needed by this IOC
-#pico_LIBS += xxx
+pico_LIBS += calc
 
 # pico_registerRecordDeviceDriver.cpp derives from pico.dbd
 pico_SRCS += pico_registerRecordDeviceDriver.cpp
