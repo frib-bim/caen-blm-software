@@ -1,10 +1,25 @@
-record(ao, "$(P)TRIP_$(TRIP)_CSET") {
-    field(DTYP, "Pico8 User Reg Float")
-    field(OUT , "@$(NAME) offset=0x30000+4*$(ADDR)")
-    field(PINI, "YES")
-    field(EGU,  "A")
+record(ai, "$(P)TRIP_$(TRIP)_CSET") {
+    field(DTYP, "Soft Channel")
+    field(EGU,  "$(EGU=A)")
     field(PREC, "2")
-    field(ASLO, "$(ASLO=0)")
+    field(FLNK, "$(P)TRIP_$(TRIP)_CALC PP")
+    field(PINI, "YES")
+    field(VAL,  "0")
     info(autosaveFields_pass0, "VAL")
+}
+
+record(calc, "$(P)TRIP_$(TRIP)_CALC") {
+    field(INPA, "$(P)TRIP_$(TRIP)_CSET")
+    field(CALC, "A / $(ASLO)")
+}
+
+record(ao, "$(P)TRIP_$(TRIP)_CSET_") {
+    field(DTYP, "Pico8 User Reg Float")
+    field(DOL,  "$(P)TRIP_$(TRIP)_CALC CP")
+    field(OUT , "@$(NAME) offset=0x30000+4*$(ADDR)")
+    field(OMSL, "closed_loop")
+    field(PINI, "YES")
+    field(EGU,  "$(EGU=A)")
+    field(PREC, "2")
 }
 
