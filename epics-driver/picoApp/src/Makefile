@@ -32,7 +32,7 @@ pico_DBD += calc.dbd
 pico_DBD += pico8.dbd
 
 # Add all the support libraries needed by this IOC
-pico_LIBS += calc
+pico_LIBS += calc seq sscan pv
 
 # pico_registerRecordDeviceDriver.cpp derives from pico.dbd
 pico_SRCS += pico_registerRecordDeviceDriver.cpp
