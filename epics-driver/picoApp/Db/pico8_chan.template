@@ -1,11 +1,11 @@
-record(waveform, "$(P)DESC_RD") {
+record(waveform, "$(P)$(CHAN)DESC_RD") {
     field(DESC, "Label")
     field(FTVL, "CHAR")
     field(NELM, "128")
     info(autosaveFields_pass1, "VAL")
 }
 
-record(mbbo, "$(P)RNG_CMD") {
+record(mbbo, "$(P)$(CHAN)RNG_CMD") {
     field(DESC, "Channel dynamic range")
 	field(DTYP, "Pico8 Channel Range")
         field(OUT , "@$(NAME) chan=$(N)")
@@ -17,7 +17,7 @@ record(mbbo, "$(P)RNG_CMD") {
     info(autosaveFields_pass0, "RVAL")
 }
 
-record(waveform, "$(P)I_RD") {
+record(waveform, "$(P)$(CHAN)I_RD") {
     field(DESC, "Sample data")
 	field(DTYP, "Pico8 Channel Data")
         field(INP , "@$(NAME) chan=$(N)")
@@ -25,15 +25,15 @@ record(waveform, "$(P)I_RD") {
 	field(FTVL, "FLOAT")
 	field(NELM, "$(NELM)")
 	# workaround for NORD not posting monitors in 3.14.12
-	field(FLNK, "$(P)I_RD_LEN")
+	field(FLNK, "$(P)$(CHAN)I_RD_LEN")
 }
 
-record(longin, "$(P)I_RD_LEN") {
+record(longin, "$(P)$(CHAN)I_RD_LEN") {
     field(DESC, "Sample data length")
-    field(INP, "$(P)I_RD.NORD NPP")
+    field(INP, "$(P)$(CHAN)I_RD.NORD NPP")
 }
 
-record(ao, "$(P)SLO_CSET") {
+record(ao, "$(P)$(CHAN)SLO_CSET") {
     field(DESC, "Multiplier from raw")
     field(DTYP, "Pico8 Chan Scale")
     field(OUT , "@$(NAME) chan=$(N)")
@@ -43,7 +43,7 @@ record(ao, "$(P)SLO_CSET") {
     info(autosaveFields_pass0, "VAL")
 }
 
-record(ao, "$(P)OFST_CSET") {
+record(ao, "$(P)$(CHAN)OFST_CSET") {
     field(DESC, "Offset from raw")
     field(DTYP, "Pico8 Chan Offset")
     field(OUT , "@$(NAME) chan=$(N)")
@@ -54,21 +54,21 @@ record(ao, "$(P)OFST_CSET") {
 }
 
 ## Added by Scott
-record(waveform, "$(P)DDRWV_RD") {  field(DTYP, "Soft Channel")  field(FTVL, "FLOAT")  field(NELM, "$(NELM)") }
+record(waveform, "$(P)$(CHAN)DDRWV_RD") {  field(DTYP, "Soft Channel")  field(FTVL, "FLOAT")  field(NELM, "$(NELM)") }
 
 ## Added by Diego - Change range labels in mbbo
-record(scalcout,"$(P)RNG_CMD_LABEL0")
+record(scalcout,"$(P)$(CHAN)RNG_CMD_LABEL0")
 {
-    field(INPA, "$(P)EEPROM_RNG0_RD CP")
-    field(OUT, "$(P)RNG_CMD.ZRST PP")
+    field(INPA, "$(P):EEPROM_RNG0_RD CP")
+    field(OUT, "$(P)$(CHAN)RNG_CMD.ZRST PP")
     field(OOPT, "Every Time")
-    field(CALC, "PRINTF(\"%.0f uA\", A")
-}    
+    field(CALC, "PRINTF(\"%.0f uA\", A)")
+}
 
-record(scalcout,"$(P)RNG_CMD_LABEL1")
+record(scalcout,"$(P)$(CHAN)RNG_CMD_LABEL1")
 {
-    field(INPA, "$(P)EEPROM_RNG1_RD CP")
-    field(OUT, "$(P)RNG_CMD.ONST PP")
+    field(INPA, "$(P):EEPROM_RNG1_RD CP")
+    field(OUT, "$(P)$(CHAN)RNG_CMD.ONST PP")
     field(OOPT, "Every Time")
-    field(CALC, "PRINTF(\"%.0f uA\", A")
+    field(CALC, "PRINTF(\"%.0f uA\", A)")
 }

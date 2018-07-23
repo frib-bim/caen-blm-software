@@ -18,29 +18,29 @@ dbLoadRecords("db/pico8_frib.db","SYS=TST,D=picod,NAME=PICOD,NELM=1048576")
 
 
 # Auto save/restore
-save_restoreDebug(2)
+#save_restoreDebug(2)
 
-set_savefile_path("as","/save")
-set_requestfile_path("as","/req")
+#set_savefile_path("as","/save")
+#set_requestfile_path("as","/req")
 
-set_pass0_restoreFile("pico_settings.sav")
-set_pass1_restoreFile("pico_waveforms.sav")
+#set_pass0_restoreFile("pico_settings.sav")
+#set_pass1_restoreFile("pico_waveforms.sav")
 
-system("install -d as/req")
-system("install -d as/save")
+#system("install -d as/req")
+#system("install -d as/save")
 
 
 ## Start the PICO python helper script
-system "python iocBoot/scripts/blm_processing_thread.py TST:picod &"
+#system "python iocBoot/scripts/blm_processing_thread.py TST:picod &"
 
 
 iocInit()
 
-makeAutosaveFileFromDbInfo("as/req/pico_settings.req", "autosaveFields_pass0")
-makeAutosaveFileFromDbInfo("as/req/pico_waveforms.req", "autosaveFields_pass1")
+#makeAutosaveFileFromDbInfo("as/req/pico_settings.req", "autosaveFields_pass0")
+#makeAutosaveFileFromDbInfo("as/req/pico_waveforms.req", "autosaveFields_pass1")
 
-create_monitor_set("pico_settings.req", 10 , "")
-create_monitor_set("pico_waveforms.req", 30 , "")
+#create_monitor_set("pico_settings.req", 10 , "")
+#create_monitor_set("pico_waveforms.req", 30 , "")
 
 # disable slew time difference between CPU and EVR
 var picoSlewLimit 9e99
