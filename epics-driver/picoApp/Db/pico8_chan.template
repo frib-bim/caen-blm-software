@@ -55,3 +55,20 @@ record(ao, "$(P)OFST_CSET") {
 
 ## Added by Scott
 record(waveform, "$(P)DDRWV_RD") {  field(DTYP, "Soft Channel")  field(FTVL, "FLOAT")  field(NELM, "$(NELM)") }
+
+## Added by Diego - Change range labels in mbbo
+record(scalcout,"$(P)RNG_CMD_LABEL0")
+{
+    field(INPA, "$(P)EEPROM_RNG0_RD CP")
+    field(OUT, "$(P)RNG_CMD.ZRST PP")
+    field(OOPT, "Every Time")
+    field(CALC, "PRINTF(\"%.0f uA\", A")
+}    
+
+record(scalcout,"$(P)RNG_CMD_LABEL1")
+{
+    field(INPA, "$(P)EEPROM_RNG1_RD CP")
+    field(OUT, "$(P)RNG_CMD.ONST PP")
+    field(OOPT, "Every Time")
+    field(CALC, "PRINTF(\"%.0f uA\", A")
+}
