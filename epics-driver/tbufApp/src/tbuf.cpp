@@ -18,11 +18,13 @@
 #include <map>
 #include <string>
 #include <stdexcept>
+#include <complex>
 
 #include <cmath>
 
 #include <dbAccess.h>
 #include <dbScan.h>
+#include <dbStaticLib.h>
 #include <epicsTime.h>
 #include <devSup.h>
 #include <drvSup.h>
@@ -42,19 +44,48 @@
 #include <waveformRecord.h>
 #include <epicsExport.h>
 
-#include "dev.h"
+#ifndef M_PI
+# define M_PI       3.14159265358979323846
+#endif
 
 namespace {
+
+static DBLINK* get_dev_link(dbCommon *prec)
+{
+    DBLINK *ret = NULL;
+    DBENTRY ent;
+
+    dbInitEntry(pdbbase, &ent);
+
+    dbFindRecord(&ent, prec->name);
+    assert(ent.precnode->precord==(void*)prec);
+
+    if(dbFindField(&ent, "INP") && dbFindField(&ent, "OUT")) {
+        fprintf(stderr, "%s: can't find dev link\n", prec->name);
+    } else {
+        ret = (DBLINK*)((char*)prec + ent.pflddes->offset);
+    }
+
+    dbFinishEntry(&ent);
+    return ret;
+}
 
 typedef epicsGuard<epicsMutex> Guard;
 typedef epicsGuardRelease<epicsMutex> UnGuard;
 
 enum reduce_t {
-    First,   // FIFO
+    First,          // FIFO
     Average,
+    Stdev,
     Min,
     Max,
-    Stdev
+    WeightedAvg,
+    WeightedStd,
+    MaskedAvg,
+    MaskedStd,
+    AveragePhase,   // For BPM Phase
+    All,            // All values are != 0
+    Any,            // At least one value is != 0
 };
 
 struct timebuf {
@@ -63,6 +94,7 @@ struct timebuf {
         ,maxsamples(100)
         ,period(1.0)
         ,values(maxsamples)
+        ,weights(maxsamples)
         ,times(maxsamples)
         ,severities(maxsamples)
     {
@@ -107,6 +139,7 @@ struct timebuf {
     double period;
 
     std::vector<double> values;
+    std::vector<double> weights;
     std::vector<epicsTimeStamp> times;
     std::vector<short> severities;
 
@@ -155,11 +188,18 @@ long init_record_tbuf_common(dbCommon *prec, DBLINK *plink)
                 if(a!=fulllink.npos) {
                     std::string reduce(fulllink.substr(a));
 
-                    if     (reduce=="First")   dev->reduce = First;
-                    else if(reduce=="Mean")    dev->reduce = Average;
-                    else if(reduce=="Std")     dev->reduce = Stdev;
-                    else if(reduce=="Max")     dev->reduce = Max;
-                    else if(reduce=="Min")     dev->reduce = Min;
+                    if     (reduce=="First")        dev->reduce = First;
+                    else if(reduce=="Average")      dev->reduce = Average;
+                    else if(reduce=="Stdev")        dev->reduce = Stdev;
+                    else if(reduce=="Min")          dev->reduce = Min;
+                    else if(reduce=="Max")          dev->reduce = Max;
+                    else if(reduce=="WeightedAvg")  dev->reduce = WeightedAvg;
+                    else if(reduce=="WeightedStd")  dev->reduce = WeightedStd;
+                    else if(reduce=="MaskedAvg")    dev->reduce = MaskedAvg;
+                    else if(reduce=="MaskedStd")    dev->reduce = MaskedStd;
+                    else if(reduce=="MeanPhase")    dev->reduce = AveragePhase;
+                    else if(reduce=="All")          dev->reduce = All;
+                    else if(reduce=="Any")          dev->reduce = Any;
                     else throw std::runtime_error("Unknown reduction mode "+reduce);
                 }
             }
@@ -228,6 +268,7 @@ long set_maxsamples(longoutRecord *prec)
         Guard G(tb->lock);
 
         tb->values.resize(newmax);
+        tb->weights.resize(newmax);
         tb->severities.resize(newmax);
         tb->times.resize(newmax);
 
@@ -259,6 +300,17 @@ long new_sample(aoRecord *prec)
         double newval = prec->val;
         epicsTimeStamp newtime;
         epicsEnum16 newsevr;
+        double newweight = 1.0;
+
+        // Abuse SIOL field
+        if (prec->siol.type == CONSTANT)
+            dbLoadLink(&prec->siol, DBR_DOUBLE, &newweight);
+        else if (dbGetLink(&prec->siol, DBR_DOUBLE, &newweight, 0, 0)) {
+            fprintf(stderr, "%s: failed to retrieve sample weight from SIOL field\n",
+                    prec->name);
+            recGblSetSevr(prec, LINK_ALARM, INVALID_ALARM);
+            return 0;
+        }
 
         if(prec->omsl==menuOmslclosed_loop &&
            prec->dol.type!=CONSTANT &&
@@ -280,14 +332,14 @@ long new_sample(aoRecord *prec)
             if(tb->cnt!=0) {
                 double delta = epicsTimeDiffInSeconds(&newtime, &tb->times[tb->last()]);
                 if(delta<=0) {
-                    if(prec->tpro>1)
-                        fprintf(stderr, "%s: non-monotonic time (diff=%f).  Clear buffer.\n",
-                                prec->name, delta);
+                    fprintf(stderr, "%s: non-monotonic time (diff=%f).  Clear buffer.\n",
+                                 prec->name, delta);
                     tb->reset();
                 }
             }
 
             tb->values[tb->pos]     = newval;
+            tb->weights[tb->pos]    = newweight;
             tb->times[tb->pos]      = newtime;
             tb->severities[tb->pos] = newsevr;
 
@@ -315,6 +367,21 @@ long new_sample(aoRecord *prec)
     } CATCH()
 }
 
+void get_severity(timebuf *tb, aiRecord *prec)
+{
+    size_t pos = tb->first();
+    short newsevr = tb->severities[pos];
+
+    pos = (pos+1)%tb->size();
+
+    for(size_t n=tb->cnt-1; n; n--, pos = (pos+1)%tb->size())
+        if(tb->severities[pos]>newsevr)
+            newsevr = tb->severities[pos];
+
+    if(newsevr)
+        (void)recGblSetSevr(prec, READ_ALARM, newsevr);
+}
+
 void get_value_first(timebuf *tb, aiRecord *prec)
 {
     size_t pos = tb->first();
@@ -335,20 +402,37 @@ void get_value_stat(timebuf *tb, aiRecord *prec, reduce_t reduce)
     assert(tb->cnt>0);
 
     // initialize w/ first sample
-    double meanVal;
     double newval = tb->values[pos];
     short newsevr = tb->severities[pos];
+    double totalweight = tb->weights[pos];
+
+    // If all weights are zero, then we *are* interested in the noise during
+    // TIME_ON=0
+    bool allweightszero = true;
+
+    for (size_t i=0; i < tb->cnt; ++i)
+        if (tb->weights[i]) {
+            allweightszero = false;
+            break;
+        }
 
     pos = (pos+1)%tb->size();
 
     for(size_t n=tb->cnt-1; n; n--, pos = (pos+1)%tb->size()) {
-        if(tb->severities[pos]>newsevr)
-            newsevr = tb->severities[pos];
         switch(reduce) {
-        case First: break;
         case Average:
         case Stdev:
             newval += tb->values[pos];
+            break;
+        case WeightedAvg:
+        case WeightedStd:
+            newval += tb->weights[pos]*tb->values[pos];
+            totalweight += tb->weights[pos];
+            break;
+        case MaskedAvg:
+        case MaskedStd:
+            if (tb->weights[pos] || allweightszero)
+                newval += tb->values[pos];
             break;
         case Min:
             if(tb->values[pos]<newval)
@@ -358,39 +442,133 @@ void get_value_stat(timebuf *tb, aiRecord *prec, reduce_t reduce)
             if(tb->values[pos]>newval)
                 newval = tb->values[pos];
             break;
+        case First:
+        case AveragePhase:
+        case Any:
+        case All:
+            break;
         }
     }
 
-    if(reduce == Average)
+    if (reduce == Average || reduce == MaskedAvg)
         newval /= tb->cnt;
+
+    if (reduce == WeightedAvg && totalweight != 0.0)
+        newval /= totalweight;
+
     // For Standard deviation, start with average, then loop data again to calculate variance
-    if(reduce == Stdev) {
-        meanVal = newval / tb->cnt;
-        pos = tb->first();
-        newval = (tb->values[pos] - meanVal)*(tb->values[pos] - meanVal);
-        pos = (pos+1)%tb->size();
-        for(size_t n=tb->cnt-1; n; n--, pos = (pos+1)%tb->size()) {
-            newval += (tb->values[pos] - meanVal)*(tb->values[pos] - meanVal);
+    if(reduce == Stdev || reduce == WeightedStd || reduce == MaskedStd) {
+        double meanval = newval;
+
+        if (reduce == Average || reduce == MaskedAvg)
+            meanval /= tb->cnt;
+        else if (totalweight)
+            meanval /= totalweight;
+
+        newval = 0.0;
+
+        for (size_t p = 0; p < tb->cnt; ++p) {
+            size_t pos = (tb->first() + p) % tb->size();
+            double diff = 0.0;
+
+            if (reduce == WeightedAvg)
+                diff = tb->weights[pos]*tb->values[pos] - meanval;
+            else if (reduce == Average || allweightszero || tb->weights[pos])
+                diff = tb->values[pos] - meanval;
+
+            newval += diff*diff;
         }
+
         // Convert from sum-of squares to std
-        newval = sqrt(newval/tb->cnt);
+        if (reduce == Average || reduce == MaskedAvg)
+            newval = sqrt(newval/tb->cnt);
+        else if (totalweight)
+            newval = sqrt(newval/totalweight);
+    }
+    prec->val = newval;
+}
+
+void get_value_avg_phase(timebuf *tb, aiRecord *prec)
+{
+    /*
+     * How to average angles:
+     *
+     * https://rosettacode.org/wiki/Averages/Mean_angle
+     *
+     * In this case, phase angles are represented as 80.5MHz, even though the
+     * actual phase is calculated at 161, leading to range of +/-90deg instead
+     * of +/-180.
+     *
+     * So the procedure should be:
+     *
+     *    Multiple angles x 2 (this converts back to 161MHz phase)
+     *    Generate polar vector (Real + imaginary) and sum them
+     *    Find angle of summed vector (This is @ 161Mhz)
+     *    Divide by 2 (report phase @ 80.5MHz)
+     *
+     *  Thanks,
+     *  -Scott C
+     */
+    assert(tb->cnt > 0);
+
+    size_t pos = tb->first();
+    std::complex<double> sum(0.0, 0.0);
+
+    // If all weights are zero, then we *are* interested in the noise during
+    // TIME_ON=0
+    bool allweightszero = true;
+
+    for (size_t i=0; i < tb->cnt; ++i)
+        if (tb->weights[i]) {
+            allweightszero = false;
+            break;
+        }
+
+    for (size_t n = tb->cnt; n; n--, pos = (pos + 1) % tb->size()) {
+        double w = allweightszero ? 1.0 : tb->weights[pos];
+        sum += std::polar(w, tb->values[pos] * 2.0 * M_PI / 180.0);
     }
 
-    prec->val = newval;
-    if(newsevr)
-        (void)recGblSetSevr(prec, READ_ALARM, newsevr);
+    prec->val = std::arg(sum) * 180.0 / M_PI / 2.0;
+}
 
-    if(prec->tse==epicsTimeEventDeviceTime) {
-        // always report time of most recent sample
+void get_value_any(timebuf *tb, aiRecord *prec)
+{
+    bool any = false;
+    prec->val = 0.0;
 
-        prec->time = tb->times[tb->last()];
+    for (size_t p = 0; p < tb->cnt; ++p) {
+        size_t pos = (tb->first() + p) % tb->size();
+
+        any |= tb->values[pos] != 0.0;
+
+        if (any) {
+            prec->val = 1.0;
+            break;
+        }
+    }
+}
+
+void get_value_all(timebuf *tb, aiRecord *prec)
+{
+    bool all = true;
+    prec->val = 1.0;
+
+    for (size_t p = 0; p < tb->cnt; ++p) {
+        size_t pos = (tb->first() + p) % tb->size();
+
+        all &= tb->values[pos] != 0.0;
+
+        if (!all) {
+            prec->val = 0.0;
+            break;
+        }
     }
 }
 
 long get_value(aiRecord *prec)
 {
     TRY {
-
         Guard G(tb->lock);
 
         if(tb->cnt == 0) { // no data in buffer
@@ -398,17 +576,39 @@ long get_value(aiRecord *prec)
             (void)recGblSetSevr(prec, UDF_ALARM, INVALID_ALARM);
             return 0;
         } else {
+            get_severity(tb, prec);
+
+            // Report time of most recent sample
+            if (prec->tse == epicsTimeEventDeviceTime)
+                prec->time = tb->times[tb->last()];
+
             switch(tdev->reduce) {
             case First:
-                get_value_first(tb, prec); break;
+                get_value_first(tb, prec);
+                break;
             case Average:
             case Stdev:
             case Min:
             case Max:
-                get_value_stat(tb, prec, tdev->reduce); break;
+            case MaskedAvg:
+            case MaskedStd:
+            case WeightedAvg:
+            case WeightedStd:
+                get_value_stat(tb, prec, tdev->reduce);
+                break;
+            case AveragePhase:
+                get_value_avg_phase(tb, prec);
+                break;
+            case Any:
+                get_value_any(tb, prec);
+                break;
+            case All:
+                get_value_all(tb, prec);
+                break;
             default:
                 std::numeric_limits<double>::quiet_NaN();
             }
+
             prec->udf = !std::isfinite(prec->val);
         }
         return 2;

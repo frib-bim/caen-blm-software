@@ -16,6 +16,7 @@ createPICO8("PICOD", "/dev/amc_pico_0000:06:00.0")
 dbLoadRecords("db/pico8_frib.db","SYS=TST,D=picod,NAME=PICOD,NELM=1048576")
 #dbLoadRecords("db/pico8_frib.db","SYS=TST,D=pico3,NAME=PICO3,NELM=1048576")
 
+#dbLoadRecords("db/pico8_chan_alias.db", "P=TST:picod_CH0:,A=TST_ALIAS:picod_CH0:")
 
 # Auto save/restore
 #save_restoreDebug(2)

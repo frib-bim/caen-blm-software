@@ -1,6 +1,6 @@
 record(ai, "$(P)F_RD") {
-    field(DTYP, "Pico8 Capture Float")
-    field(INP , "@$(NAME) offset=$(ADDR)")
+    field(DTYP, "$(DTYP)")
+    field(INP , "$(INP)")
     field(SCAN, "$(SCAN=I/O Intr)")
     field(LINR, "$(LINR=LINEAR)")
     field(ASLO, "$(ASLO=)")
@@ -10,6 +10,7 @@ record(ai, "$(P)F_RD") {
     field(PREC, "$(PREC=)")
     field(EGU , "$(EGU=)")
     field(TSE , "$(TSEL=-2)")
+    field(MDEL, "$(MDEL=0)")
     field(FLNK, "$(P)PSH_CMD_")
 }
 
@@ -42,7 +43,7 @@ record(ao, "$(P)PRD_CSET") {
 # Aggregate
 record(ai, "$(P)_RD") {
     field(DTYP, "TBUF Get Sample")
-    field(INP , "@$(P) $(Stat=Mean)")
+    field(INP , "@$(P) $(Stat=Average)")
     field(SCAN, "I/O Intr")
     field(LINR, "$(LINR=LINEAR)")
     field(ASLO, "$(ASLO=)")
@@ -51,6 +52,7 @@ record(ai, "$(P)_RD") {
     field(EOFF, "$(EOFF=)")
     field(PREC, "$(PREC=)")
     field(EGU , "$(EGU=)")
+    field(MDEL, "$(MDEL=0)")
     field(TSE , "-2")
     field(FLNK, "$(P)W_RD")
 }

@@ -13,7 +13,6 @@ LIBRARY_IOC = pico8Support
 pico8Support_SRCS += pico.cpp
 pico8Support_SRCS += fdhelper.cpp
 pico8Support_SRCS += dev.cpp
-pico8Support_SRCS += tbuf.cpp
 
 DBD += pico8.dbd
 
@@ -25,11 +24,14 @@ DBD += pico.dbd
 
 # pico.dbd will be made up from these files:
 pico_DBD += base.dbd
+pico_DBD += tbuf.dbd
 pico_DBD += system.dbd
 pico_DBD += calc.dbd
 
 # Include dbd files from all support applications:
 pico_DBD += pico8.dbd
+
+pico_LIBS += tbuf
 
 # Add all the support libraries needed by this IOC
 pico_LIBS += calc seq sscan pv

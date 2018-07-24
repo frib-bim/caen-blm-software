@@ -1,0 +1,157 @@
+# Reports 0.2 s average or 1 s average @ 5 Hz, depending on T_ON (WEIGHT)
+#
+# Parameters:
+#   P:      Prefix
+#   DTYP:   DTYP of the Input PV (fast data source)
+#   INP:    INP  of the Input PV (fast data source)
+#   WEIGHT: PV for Time On
+#   EGU:    EGU of final value
+#   SCALE:  Scale factor for final value
+
+#
+# Fast Data Source @ 100 Hz
+#
+
+record(ai, "$(P)AVGF_RD") {
+    field(DTYP, "$(DTYP)")
+    field(INP , "$(INP)")
+    field(SCAN, "$(SCAN=I/O Intr)")
+    field(LINR, "$(LINR=LINEAR)")
+    field(ASLO, "$(ASLO=)")
+    field(AOFF, "$(AOFF=)")
+    field(ESLO, "$(ESLO=)")
+    field(EOFF, "$(EOFF=)")
+    field(PREC, "$(PREC=)")
+    field(EGU , "$(EGU=)")
+    field(TSE , "$(TSEL=-2)")
+    field(MDEL, "$(MDEL=0)")
+}
+
+
+#
+# Push to FIFOs
+#
+
+# 1 s average
+record(ao, "$(P)AVG1HZ_PSH_CMD_") {
+    field(DTYP, "TBUF Push Sample")
+    field(OMSL, "closed_loop")
+    field(DOL , "$(P)AVGF_RD MS CP")
+    field(OUT , "@$(P)AVG1HZ")
+}
+
+# 0.2 s average
+record(ao, "$(P)AVG5HZ_PSH_CMD_") {
+    field(DTYP, "TBUF Push Sample")
+    field(OMSL, "closed_loop")
+    field(DOL , "$(P)AVGF_RD MS CP")
+    field(OUT , "@$(P)AVG5HZ")
+}
+
+# Decider (1.0 if every bucket has T_ON, 0.0 otherwise)
+record(ao, "$(P)AVGALL_PSH_CMD_") {
+    field(DTYP, "TBUF Push Sample")
+    field(OMSL, "closed_loop")
+    field(DOL , "$(WEIGHT) CP MS")
+    field(OUT , "@$(P)AVGALL")
+}
+
+
+#
+# Settings
+#
+
+# 1 s average (100 samples @ 100Hz)
+record(longout, "$(P)AVG1HZ_NSAMP_CSET") {
+    field(DTYP, "TBUF Set Num Samples")
+    field(OUT , "@$(P)AVG1HZ")
+    field(VAL , "100")
+    field(PINI, "YES")
+}
+
+# 0.2 s average (20 samples @ 100Hz)
+record(longout, "$(P)AVG5HZ_NSAMP_CSET") {
+    field(DTYP, "TBUF Set Num Samples")
+    field(OUT , "@$(P)AVG5HZ")
+    field(VAL , "20")
+    field(PINI, "YES")
+}
+
+# Decider (5 samples @ 5 Hz)
+record(longout, "$(P)AVGALL_NSAMP_CSET") {
+    field(DTYP, "TBUF Set Num Samples")
+    field(OUT , "@$(P)AVGALL")
+    field(VAL , "5")
+    field(PINI, "YES")
+}
+
+# 1 s average (reports @ 5Hz)
+record(ao, "$(P)AVG1HZ_PRD_CSET") {
+    field(DTYP, "TBUF Set Period")
+    field(OUT , "@$(P)AVG1HZ")
+    field(VAL , "0.2")
+    field(PREC, "2")
+    field(PINI, "YES")
+}
+
+# 0.2 s average
+record(ao, "$(P)AVG5HZ_PRD_CSET") {
+    field(DTYP, "TBUF Set Period")
+    field(OUT , "@$(P)AVG5HZ")
+    field(VAL , "0.2")
+    field(PREC, "2")
+    field(PINI, "YES")
+}
+
+# Decider
+record(ao, "$(P)AVGALL_PRD_CSET") {
+    field(DTYP, "TBUF Set Period")
+    field(OUT , "@$(P)AVGALL")
+    field(VAL , "0.2")
+    field(PREC, "2")
+    field(PINI, "YES")
+}
+
+
+#
+# Aggregates
+#
+
+# 1 s average (reports @ 5 Hz)
+record(ai, "$(P)AVG1HZ_RD") {
+    field(DTYP, "TBUF Get Sample")
+    field(INP , "@$(P)AVG1HZ Average")
+    field(SCAN, "I/O Intr")
+    field(PREC, "$(PREC)")
+    field(TSE , "-2")
+}
+
+# 0.2 s average
+record(ai, "$(P)AVG5HZ_RD") {
+    field(DTYP, "TBUF Get Sample")
+    field(INP , "@$(P)AVG5HZ Average")
+    field(SCAN, "I/O Intr")
+    field(PREC, "$(PREC)")
+    field(TSE , "-2")
+}
+
+# Decider (@ 5Hz)
+record(ai, "$(P)AVGALL_RD") {
+    field(DTYP, "TBUF Get Sample")
+    field(INP , "@$(P)AVGALL All")
+    field(SCAN, "I/O Intr")
+    field(PREC, "$(PREC)")
+    field(MDEL, "-1")
+    field(TSE , "-2")
+}
+
+# Final value
+record(calc, "$(P)AVG_RD") {
+    field(INPA, "$(P)AVGALL_RD CP")
+    field(INPB, "$(P)AVG5HZ_RD")
+    field(INPC, "$(P)AVG1HZ_RD")
+    field(INPD, "$(SCALE=1.0)")
+    field(CALC, "D*(A ? B : C)")
+    field(EGU,  "$(EGU=)")
+    field(PREC, "$(PREC)")
+}
