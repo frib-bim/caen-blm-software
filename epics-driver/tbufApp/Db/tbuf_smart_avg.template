@@ -129,7 +129,7 @@ record(ai, "$(P)AVG1HZ_RD") {
 # 0.2 s average
 record(ai, "$(P)AVG5HZ_RD") {
     field(DTYP, "TBUF Get Sample")
-    field(INP , "@$(P)AVG5HZ Average")
+    field(INP , "@$(P)AVG5HZ WeightedAvg")
     field(SCAN, "I/O Intr")
     field(PREC, "$(PREC)")
     field(TSE , "-2")
@@ -155,3 +155,15 @@ record(calc, "$(P)AVG_RD") {
     field(EGU,  "$(EGU=)")
     field(PREC, "$(PREC)")
 }
+
+# Full FIFO
+record(waveform, "$(P)AVGW_RD") {
+    field(DTYP, "TBUF Get Buffer")
+    field(INP , "@$(P)AVG5HZ")
+    field(FTVL, "FLOAT")
+    #field(SCAN, "I/O Intr")
+    field(NELM, "$(NELM=20)")
+    field(TSE , "-2")
+}
+
+
