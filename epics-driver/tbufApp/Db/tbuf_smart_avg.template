@@ -129,7 +129,7 @@ record(ai, "$(P)AVG1HZ_RD") {
 # 0.2 s average
 record(ai, "$(P)AVG5HZ_RD") {
     field(DTYP, "TBUF Get Sample")
-    field(INP , "@$(P)AVG5HZ WeightedAvg")
+    field(INP , "@$(P)AVG5HZ MaskedAvg")
     field(SCAN, "I/O Intr")
     field(PREC, "$(PREC)")
     field(TSE , "-2")
