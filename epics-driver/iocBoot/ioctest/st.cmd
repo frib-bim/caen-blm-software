@@ -50,3 +50,5 @@ dbl > records.dbl
 
 dbpf "TST:picod_FPS:SLT_CSET", "7"    # Initialize PICO to AMC SLOT = 7
 # dbpf "TST:pico3_FPS:SLT_CSET", "3"    # Initialize PICO to AMC SLOT = 3
+
+dbpf TST:picod_CH0:CWBEAM_CSET 0

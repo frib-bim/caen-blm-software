@@ -127,6 +127,11 @@ struct timebuf {
             return pos-1;
     }
 
+    // index of the n'th element
+    size_t idx(size_t n) {
+        return (first() + n) % size();
+    }
+
     // index of next element to be populated
     inline size_t next() const { return pos; }
 
@@ -369,14 +374,10 @@ long new_sample(aoRecord *prec)
 
 void get_severity(timebuf *tb, aiRecord *prec)
 {
-    size_t pos = tb->first();
-    short newsevr = tb->severities[pos];
+    short newsevr = 0;
 
-    pos = (pos+1)%tb->size();
-
-    for(size_t n=tb->cnt-1; n; n--, pos = (pos+1)%tb->size())
-        if(tb->severities[pos]>newsevr)
-            newsevr = tb->severities[pos];
+    for (size_t p = 0; p < tb->cnt; ++p)
+        newsevr = std::max(newsevr, tb->severities[tb->idx(p)]);
 
     if(newsevr)
         (void)recGblSetSevr(prec, READ_ALARM, newsevr);
@@ -390,35 +391,27 @@ void get_value_first(timebuf *tb, aiRecord *prec)
     if(tb->severities[pos])
         recGblSetSevr(prec, READ_ALARM, tb->severities[pos]);
 
-    if(prec->tse==epicsTimeEventDeviceTime) {
+    if(prec->tse==epicsTimeEventDeviceTime)
         prec->time = tb->times[pos];
-    }
 }
 
 void get_value_stat(timebuf *tb, aiRecord *prec, reduce_t reduce)
 {
-    size_t pos = tb->first();
-
     assert(tb->cnt>0);
 
-    // initialize w/ first sample
-    double newval = tb->values[pos];
-    short newsevr = tb->severities[pos];
-    double totalweight = tb->weights[pos];
+    double newval = 0.0;
+    double totalweight = 0.0;
 
     // If all weights are zero, then we *are* interested in the noise during
     // TIME_ON=0
     bool allweightszero = true;
 
-    for (size_t i=0; i < tb->cnt; ++i)
-        if (tb->weights[i]) {
-            allweightszero = false;
-            break;
-        }
+    for (size_t p = 0; p < tb->cnt; ++p)
+        allweightszero &= !tb->weights[tb->idx(p)];
 
-    pos = (pos+1)%tb->size();
+    for (size_t p = 0; p < tb->cnt; ++p) {
+        size_t pos = tb->idx(p);
 
-    for(size_t n=tb->cnt-1; n; n--, pos = (pos+1)%tb->size()) {
         switch(reduce) {
         case Average:
         case Stdev:
@@ -434,18 +427,8 @@ void get_value_stat(timebuf *tb, aiRecord *prec, reduce_t reduce)
             if (tb->weights[pos] || allweightszero)
                 newval += tb->values[pos];
             break;
-        case Min:
-            if(tb->values[pos]<newval)
-                newval = tb->values[pos];
-            break;
-        case Max:
-            if(tb->values[pos]>newval)
-                newval = tb->values[pos];
-            break;
-        case First:
-        case AveragePhase:
-        case Any:
-        case All:
+        default:
+            throw std::runtime_error("invalid reduce");
             break;
         }
     }
@@ -468,7 +451,7 @@ void get_value_stat(timebuf *tb, aiRecord *prec, reduce_t reduce)
         newval = 0.0;
 
         for (size_t p = 0; p < tb->cnt; ++p) {
-            size_t pos = (tb->first() + p) % tb->size();
+            size_t pos = tb->idx(p);
             double diff = 0.0;
 
             if (reduce == WeightedAvg)
@@ -480,12 +463,27 @@ void get_value_stat(timebuf *tb, aiRecord *prec, reduce_t reduce)
         }
 
         // Convert from sum-of squares to std
-        if (reduce == Average || reduce == MaskedAvg)
+        if (reduce == Stdev || reduce == MaskedStd)
             newval = sqrt(newval/tb->cnt);
         else if (totalweight)
             newval = sqrt(newval/totalweight);
     }
+
     prec->val = newval;
+}
+
+void get_value_min_max(timebuf *tb, aiRecord *prec, reduce_t reduce)
+{
+    double newval = tb->values[tb->first()];
+
+    if (reduce == Min)
+        for (size_t p = 1; p < tb->cnt; ++p)
+            newval = std::min(newval, tb->values[tb->idx(p)]);
+    else
+        for (size_t p = 1; p < tb->cnt; ++p)
+            newval = std::max(newval, tb->values[tb->idx(p)]);
+
+   prec->val = newval;
 }
 
 void get_value_avg_phase(timebuf *tb, aiRecord *prec)
@@ -511,20 +509,17 @@ void get_value_avg_phase(timebuf *tb, aiRecord *prec)
      */
     assert(tb->cnt > 0);
 
-    size_t pos = tb->first();
     std::complex<double> sum(0.0, 0.0);
 
     // If all weights are zero, then we *are* interested in the noise during
     // TIME_ON=0
     bool allweightszero = true;
 
-    for (size_t i=0; i < tb->cnt; ++i)
-        if (tb->weights[i]) {
-            allweightszero = false;
-            break;
-        }
+    for (size_t p = 0; p < tb->cnt; ++p)
+        allweightszero &= !tb->weights[tb->idx(p)];
 
-    for (size_t n = tb->cnt; n; n--, pos = (pos + 1) % tb->size()) {
+    for (size_t p = 0; p < tb->cnt; ++p) {
+        size_t pos = tb->idx(p);
         double w = allweightszero ? 1.0 : tb->weights[pos];
         sum += std::polar(w, tb->values[pos] * 2.0 * M_PI / 180.0);
     }
@@ -538,9 +533,7 @@ void get_value_any(timebuf *tb, aiRecord *prec)
     prec->val = 0.0;
 
     for (size_t p = 0; p < tb->cnt; ++p) {
-        size_t pos = (tb->first() + p) % tb->size();
-
-        any |= tb->values[pos] != 0.0;
+        any |= tb->values[tb->idx(p)] != 0.0;
 
         if (any) {
             prec->val = 1.0;
@@ -555,9 +548,7 @@ void get_value_all(timebuf *tb, aiRecord *prec)
     prec->val = 1.0;
 
     for (size_t p = 0; p < tb->cnt; ++p) {
-        size_t pos = (tb->first() + p) % tb->size();
-
-        all &= tb->values[pos] != 0.0;
+        all &= tb->values[tb->idx(p)] != 0.0;
 
         if (!all) {
             prec->val = 0.0;
@@ -586,10 +577,12 @@ long get_value(aiRecord *prec)
             case First:
                 get_value_first(tb, prec);
                 break;
-            case Average:
-            case Stdev:
             case Min:
             case Max:
+                get_value_min_max(tb, prec, tdev->reduce);
+                break;
+            case Average:
+            case Stdev:
             case MaskedAvg:
             case MaskedStd:
             case WeightedAvg:
@@ -639,19 +632,17 @@ long get_buffer(waveformRecord *prec)
         if(nelm > tb->cnt)
             nelm = tb->cnt;
 
-        ssize_t pos = tb->first();
-
         if(prec->tse==epicsTimeEventDeviceTime) {
             // always report time of first sample
 
-            prec->time = tb->times[pos];
+            prec->time = tb->times[tb->first()];
         }
 
         short maxsevr = 0;
-        for(size_t n=nelm; n; n--, pos = (pos+1)%tb->size()) {
+        for (size_t p = 0; p < nelm; ++p) {
+            size_t pos = tb->idx(p);
             *buf++ = tb->values[pos];
-            if(tb->severities[pos] > maxsevr)
-                maxsevr = tb->severities[pos];
+            maxsevr = std::max(maxsevr, tb->severities[pos]);
         }
 
         prec->nord = nelm;
