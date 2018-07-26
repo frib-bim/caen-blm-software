@@ -608,7 +608,7 @@ long get_value(aiRecord *prec)
     } CATCH()
 }
 
-long get_buffer(waveformRecord *prec)
+long get_data(waveformRecord *prec, bool weights = false)
 {
     TRY {
         if(prec->ftvl!=menuFtypeFLOAT) {
@@ -641,7 +641,7 @@ long get_buffer(waveformRecord *prec)
         short maxsevr = 0;
         for (size_t p = 0; p < nelm; ++p) {
             size_t pos = tb->idx(p);
-            *buf++ = tb->values[pos];
+            *buf++ = weights ? tb->weights[pos] : tb->values[pos];
             maxsevr = std::max(maxsevr, tb->severities[pos]);
         }
 
@@ -651,6 +651,16 @@ long get_buffer(waveformRecord *prec)
 
         return 0;
     } CATCH()
+}
+
+long get_buffer(waveformRecord *prec)
+{
+    return get_data(prec, false);
+}
+
+long get_weights(waveformRecord *prec)
+{
+    return get_data(prec, true);
 }
 
 long tbuf_report(int level)
@@ -736,3 +746,4 @@ DSET6(ao, devTBUFAoNewSample, &init_record_tbuf<2>, NULL, new_sample);
 
 DSET6(ai, devTBUFAiOutSample, &init_record_tbuf<0>, &update_scan, get_value);
 DSET6(waveform, devTBUFWFOutBuffer, &init_record_tbuf<0>, &update_scan, get_buffer);
+DSET6(waveform, devTBUFWFOutWeights, &init_record_tbuf<0>, &update_scan, get_weights);
