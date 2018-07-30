@@ -228,13 +228,14 @@ record(waveform, "$(P)AVGALLW_RD") {
 
 # Final value
 record(calc, "$(P)AVG_RD") {
-    field(INPA, "$(P)AVGALL_RD CP")
-    field(INPB, "$(P)AVG5HZ_RD")
+    field(INPA, "$(P)AVGALL_RD")
+    field(INPB, "$(P)AVG5HZ_RD CP")
     field(INPC, "$(P)AVG1HZ_RD")
     field(INPD, "$(SCALE=1.0)")
     field(CALC, "(A ? B : C)")
     field(EGU,  "$(EGU=)")
     field(PREC, "$(PREC)")
+    field(MDEL, "-1")
 }
 
 alias("$(P)AVG5HZW_RD", "$(P)AVGW_RD")
