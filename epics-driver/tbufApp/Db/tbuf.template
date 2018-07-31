@@ -10,7 +10,7 @@ record(ai, "$(P)F_RD") {
     field(PREC, "$(PREC=)")
     field(EGU , "$(EGU=)")
     field(TSE , "$(TSEL=-2)")
-    field(MDEL, "$(MDEL=0)")
+    field(MDEL, "$(MDEL=-1)")
     field(FLNK, "$(P)PSH_CMD_")
 }
 
@@ -52,7 +52,7 @@ record(ai, "$(P)_RD") {
     field(EOFF, "$(EOFF=)")
     field(PREC, "$(PREC=)")
     field(EGU , "$(EGU=)")
-    field(MDEL, "$(MDEL=0)")
+    field(MDEL, "$(MDEL=-1)")
     field(TSE , "-2")
     field(FLNK, "$(P)W_RD")
 }

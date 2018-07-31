@@ -221,3 +221,61 @@ pattern
 { "\$(SYS):\$(D)_CH7:", "0x9c", "\$(CYCTIME=1e2)" }
 }
 
+# Saturation indicators
+
+# "Slow" min/max, based on 5Hz min/max
+global {
+    DTYP="Soft Channel",
+    P="\$(SYS):\$(D)_CH$(N):S$(L)",
+    INP="\$(SYS):\$(D)_CH$(N):$(L)_RD CP",
+    PREC="6",
+    EGU="uA",
+    NELM="5",
+    PERIOD="0.2",
+    SCAN="Passive"
+}
+
+file "tbuf.template" {
+pattern
+{ N,   L,     Stat  }
+{ "0", "MIN", "Min" }
+{ "1", "MIN", "Min" }
+{ "2", "MIN", "Min" }
+{ "3", "MIN", "Min" }
+{ "4", "MIN", "Min" }
+{ "5", "MIN", "Min" }
+{ "6", "MIN", "Min" }
+{ "7", "MIN", "Min" }
+{ "0", "MAX", "Max" }
+{ "1", "MAX", "Max" }
+{ "2", "MAX", "Max" }
+{ "3", "MAX", "Max" }
+{ "4", "MAX", "Max" }
+{ "5", "MAX", "Max" }
+{ "6", "MAX", "Max" }
+{ "7", "MAX", "Max" }
+}
+
+global {
+    RNGSEL="\$(SYS):\$(D)_CH$(N):RNG_CMD",
+    RNG0="\$(SYS):\$(D):EEPROM_RNG0_RD",
+    RNG1="\$(SYS):\$(D):EEPROM_RNG1_RD",
+    P="\$(SYS):\$(D)_CH$(N):",
+    MIN="$(P)SMIN_RD",
+    MAX="$(P)SMAX_RD",
+    THRES="1.5"
+}
+
+file "pico8_frib_saturation.template" {
+pattern
+{ N   }
+{ "0" }
+{ "1" }
+{ "2" }
+{ "3" }
+{ "4" }
+{ "5" }
+{ "6" }
+{ "7" }
+}
+
