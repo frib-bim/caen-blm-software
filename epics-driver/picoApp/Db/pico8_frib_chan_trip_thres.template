@@ -1,6 +1,6 @@
 record(ai, "$(P)TRIP_$(TRIP)_CSET") {
     field(DTYP, "Soft Channel")
-    field(EGU,  "$(EGU=A)")
+    field(EGU,  "$(EGU=)")
     field(PREC, "2")
     field(FLNK, "$(P)TRIP_$(TRIP)_CALC PP")
     field(PINI, "YES")
@@ -19,7 +19,7 @@ record(ao, "$(P)TRIP_$(TRIP)_CSET_") {
     field(OUT , "@$(NAME) offset=0x30000+4*$(ADDR)")
     field(OMSL, "closed_loop")
     field(PINI, "YES")
-    field(EGU,  "$(EGU=A)")
+    field(EGU,  "$(EGU=)")
     field(PREC, "2")
 }
 

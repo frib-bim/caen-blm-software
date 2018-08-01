@@ -52,7 +52,7 @@ record(ai, "$(P)LAVG_RD") {
 }
 
 record(ao, "$(P)TRIP_LAVGLO_CSET") {
-    field(EGU,  "$(EGU=A)")
+    field(EGU,  "$(EGU=)")
     field(PREC, "2")
     field(VAL,  "0")
     field(PINI, "YES")
@@ -60,7 +60,7 @@ record(ao, "$(P)TRIP_LAVGLO_CSET") {
 }
 
 record(ao, "$(P)TRIP_LAVGHI_CSET") {
-    field(EGU,  "$(EGU=A)")
+    field(EGU,  "$(EGU=)")
     field(PREC, "2")
     field(VAL,  "0")
     field(PINI, "YES")
