@@ -16,7 +16,6 @@ createPICO8("PICOD", "/dev/amc_pico_0000:06:00.0")
 dbLoadRecords("db/pico8_frib.db","SYS=TST,D=picod,NAME=PICOD,NELM=1048576")
 #dbLoadRecords("db/pico8_frib.db","SYS=TST,D=pico3,NAME=PICO3,NELM=1048576")
 
-#dbLoadRecords("db/pico8_chan_alias.db", "P=TST:picod_CH0:,A=TST_ALIAS:picod_CH0:")
 
 # Auto save/restore
 #save_restoreDebug(2)
@@ -32,7 +31,7 @@ dbLoadRecords("db/pico8_frib.db","SYS=TST,D=picod,NAME=PICOD,NELM=1048576")
 
 
 ## Start the PICO python helper script
-system "python iocBoot/scripts/blm_processing_thread.py TST:picod &"
+#system "python iocBoot/scripts/blm_processing_thread.py TST:picod &"
 
 
 iocInit()
@@ -50,5 +49,3 @@ dbl > records.dbl
 
 dbpf "TST:picod_FPS:SLT_CSET", "7"    # Initialize PICO to AMC SLOT = 7
 # dbpf "TST:pico3_FPS:SLT_CSET", "3"    # Initialize PICO to AMC SLOT = 3
-
-dbpf TST:picod_CH0:CWBEAM_CSET 0

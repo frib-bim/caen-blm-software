@@ -3,6 +3,5 @@ record(longin, "$(N)") {
     field(INP , "@$(NAME) offset=$(ADDR)")
     field(SCAN, "$(SCAN=I/O Intr)")
     field(TSE , "$(TSEL=-2)")
-    field(MDEL, "$(MDEL=0)")
     field(FLNK, "$(FLNK=)")
 }
