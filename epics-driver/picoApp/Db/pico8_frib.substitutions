@@ -2,13 +2,11 @@ global {
     NAME="\$(NAME)", FPS="\$(SYS):\$(D)_FPS:"
 }
 
-file "pico8_base.template"
-{
+file "pico8_base.template" {
         {P="\$(SYS):\$(D)_CTRL:", NELM="\$(NELM=1024)"}
 }
 
-file "pico8_chan.template"
-{
+file "pico8_chan.template" {
     {N=0, P="\$(SYS):\$(D)",CHAN="_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
     {N=1, P="\$(SYS):\$(D)",CHAN="_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
     {N=2, P="\$(SYS):\$(D)",CHAN="_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
@@ -19,70 +17,22 @@ file "pico8_chan.template"
     {N=7, P="\$(SYS):\$(D)",CHAN="_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
 }
 
-file "pico8_ram.template"
-{
+file "pico8_ram.template" {
 {P="\$(SYS):\$(D)_mem:", NELM="\$(NELM=1024)"}
 }
 
-file "pico8_frib_reg.db"
-{
+file "pico8_frib_reg.db" {
 {CTRL="\$(SYS):\$(D)_CTRL:", SLOT="\$(SLOT=0)"}
 }
 
-file "pico8_cap_int.template"
-{
+file "pico8_cap_int.template" {
 {N="\$(SYS):\$(D)_CAP:SEC_RSTS", ADDR="0x0"}
 {N="\$(SYS):\$(D)_CAP:NS_RSTS",  ADDR="0x4"}
-{N="\$(SYS):\$(D)_CAP:TON_RSTS", ADDR="0x8"}
+{N="\$(SYS):\$(D)_CAP:TON_RSTS", ADDR="0x8", MDEL="-1"}
 {N="\$(SYS):\$(D)_CAP:FLG_RSTS", ADDR="0xc"}
 }
 
-file "pico8_cap_float.template"
-{
-{P="\$(SYS):\$(D)_CH0:AVG", ADDR="0x10", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH0:ASTD",ADDR="0x10", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH0:MIN", ADDR="0x14", Stat="Min",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH0:MAX", ADDR="0x18", Stat="Max",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH0:STD", ADDR="0x1c", Stat="Mean",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH1:AVG", ADDR="0x24", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH1:ASTD",ADDR="0x24", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH1:MIN", ADDR="0x28", Stat="Min",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH1:MAX", ADDR="0x2c", Stat="Max",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH1:STD", ADDR="0x30", Stat="Mean",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH2:AVG", ADDR="0x38", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH2:ASTD",ADDR="0x24", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH2:MIN", ADDR="0x3c", Stat="Min",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH2:MAX", ADDR="0x40", Stat="Max",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH2:STD", ADDR="0x44", Stat="Mean",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH3:AVG", ADDR="0x4c", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH3:ASTD",ADDR="0x4c", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH3:MIN", ADDR="0x50", Stat="Min",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH3:MAX", ADDR="0x54", Stat="Max",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH3:STD", ADDR="0x58", Stat="Mean",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH4:AVG", ADDR="0x60", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH4:ASTD",ADDR="0x60", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH4:MIN", ADDR="0x64", Stat="Min",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH4:MAX", ADDR="0x68", Stat="Max",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH4:STD", ADDR="0x6c", Stat="Mean",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH5:AVG", ADDR="0x74", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH5:ASTD",ADDR="0x74", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH5:MIN", ADDR="0x78", Stat="Min",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH5:MAX", ADDR="0x7c", Stat="Max",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH5:STD", ADDR="0x80", Stat="Mean",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH6:AVG", ADDR="0x88", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH6:ASTD",ADDR="0x88", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH6:MIN", ADDR="0x8c", Stat="Min",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH6:MAX", ADDR="0x90", Stat="Max",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH6:STD", ADDR="0x94", Stat="Mean",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH7:AVG", ADDR="0x9c", Stat="Mean", PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH7:ASTD",ADDR="0x9c", Stat="Std",  PREC="6", EGU="A", ASLO="\$(CYCTIME=1e-4)"}
-{P="\$(SYS):\$(D)_CH7:MIN", ADDR="0xa0", Stat="Min",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH7:MAX", ADDR="0xa4", Stat="Max",  PREC="6", EGU="A"}
-{P="\$(SYS):\$(D)_CH7:STD", ADDR="0xa8", Stat="Mean",  PREC="6", EGU="A"}
-}
-
-file "pico8_frib_reg_chan.template"
-{
+file "pico8_frib_reg_chan.template" {
 {P="\$(SYS):\$(D)_CH0:", CORR="0x300c0", CTRL="0x300e0", BIT="0"}
 {P="\$(SYS):\$(D)_CH1:", CORR="0x300c4", CTRL="0x300e0", BIT="16"}
 {P="\$(SYS):\$(D)_CH2:", CORR="0x300c8", CTRL="0x300e4", BIT="0"}
@@ -209,5 +159,123 @@ pattern
 {"\$(SYS):\$(D)", "_CH5" }
 {"\$(SYS):\$(D)", "_CH6" }
 {"\$(SYS):\$(D)", "_CH7" }
+}
+
+
+# For following tbufs
+global {
+    DTYP="Pico8 Capture Float",
+    INP="@\$(NAME) offset=$(ADDR)",
+    PREC="6",
+    EGU="uA",
+    WEIGHT="\$(SYS):\$(D)_CAP:TON_RSTS"
+}
+
+file "tbuf.template" {
+pattern
+{ P,                       ADDR,   Stat,         ASLO              }
+{ "\$(SYS):\$(D)_CH0:ASTD","0x10", "Stdev",      "\$(CYCTIME=1e2)" }
+{ "\$(SYS):\$(D)_CH0:MIN", "0x14", "Min",        "1e6"             }
+{ "\$(SYS):\$(D)_CH0:MAX", "0x18", "Max",        "1e6"             }
+{ "\$(SYS):\$(D)_CH0:STD", "0x1c", "Average",    "1e6"             }
+{ "\$(SYS):\$(D)_CH1:ASTD","0x24", "Stdev",      "\$(CYCTIME=1e2)" }
+{ "\$(SYS):\$(D)_CH1:MIN", "0x28", "Min",        "1e6"             }
+{ "\$(SYS):\$(D)_CH1:MAX", "0x2c", "Max",        "1e6"             }
+{ "\$(SYS):\$(D)_CH1:STD", "0x30", "Average",    "1e6"             }
+{ "\$(SYS):\$(D)_CH2:ASTD","0x38", "Stdev",      "\$(CYCTIME=1e2)" }
+{ "\$(SYS):\$(D)_CH2:MIN", "0x3c", "Min",        "1e6"             }
+{ "\$(SYS):\$(D)_CH2:MAX", "0x40", "Max",        "1e6"             }
+{ "\$(SYS):\$(D)_CH2:STD", "0x44", "Average",    "1e6"             }
+{ "\$(SYS):\$(D)_CH3:ASTD","0x4c", "Stdev",      "\$(CYCTIME=1e2)" }
+{ "\$(SYS):\$(D)_CH3:MIN", "0x50", "Min",        "1e6"             }
+{ "\$(SYS):\$(D)_CH3:MAX", "0x54", "Max",        "1e6"             }
+{ "\$(SYS):\$(D)_CH3:STD", "0x58", "Average",    "1e6"             }
+{ "\$(SYS):\$(D)_CH4:ASTD","0x60", "Stdev",      "\$(CYCTIME=1e2)" }
+{ "\$(SYS):\$(D)_CH4:MIN", "0x64", "Min",        "1e6"             }
+{ "\$(SYS):\$(D)_CH4:MAX", "0x68", "Max",        "1e6"             }
+{ "\$(SYS):\$(D)_CH4:STD", "0x6c", "Average",    "1e6"             }
+{ "\$(SYS):\$(D)_CH5:ASTD","0x74", "Stdev",      "\$(CYCTIME=1e2)" }
+{ "\$(SYS):\$(D)_CH5:MIN", "0x78", "Min",        "1e6"             }
+{ "\$(SYS):\$(D)_CH5:MAX", "0x7c", "Max",        "1e6"             }
+{ "\$(SYS):\$(D)_CH5:STD", "0x80", "Average",    "1e6"             }
+{ "\$(SYS):\$(D)_CH6:ASTD","0x88", "Stdev",      "\$(CYCTIME=1e2)" }
+{ "\$(SYS):\$(D)_CH6:MIN", "0x8c", "Min",        "1e6"             }
+{ "\$(SYS):\$(D)_CH6:MAX", "0x90", "Max",        "1e6"             }
+{ "\$(SYS):\$(D)_CH6:STD", "0x94", "Average",    "1e6"             }
+{ "\$(SYS):\$(D)_CH7:ASTD","0x9c", "Stdev",      "\$(CYCTIME=1e2)" }
+{ "\$(SYS):\$(D)_CH7:MIN", "0xa0", "Min",        "1e6"             }
+{ "\$(SYS):\$(D)_CH7:MAX", "0xa4", "Max",        "1e6"             }
+{ "\$(SYS):\$(D)_CH7:STD", "0xa8", "Average",    "1e6"             }
+}
+
+file "tbuf_smart_avg.template" {
+pattern
+{ P,                    ADDR,   ASLO              }
+{ "\$(SYS):\$(D)_CH0:", "0x10", "\$(CYCTIME=1e2)" }
+{ "\$(SYS):\$(D)_CH1:", "0x24", "\$(CYCTIME=1e2)" }
+{ "\$(SYS):\$(D)_CH2:", "0x38", "\$(CYCTIME=1e2)" }
+{ "\$(SYS):\$(D)_CH3:", "0x4c", "\$(CYCTIME=1e2)" }
+{ "\$(SYS):\$(D)_CH4:", "0x60", "\$(CYCTIME=1e2)" }
+{ "\$(SYS):\$(D)_CH5:", "0x74", "\$(CYCTIME=1e2)" }
+{ "\$(SYS):\$(D)_CH6:", "0x88", "\$(CYCTIME=1e2)" }
+{ "\$(SYS):\$(D)_CH7:", "0x9c", "\$(CYCTIME=1e2)" }
+}
+
+# Saturation indicators
+
+# "Slow" min/max, based on 5Hz min/max
+global {
+    DTYP="Soft Channel",
+    P="\$(SYS):\$(D)_CH$(N):S$(L)",
+    INP="\$(SYS):\$(D)_CH$(N):$(L)_RD CP",
+    PREC="6",
+    EGU="uA",
+    NELM="5",
+    PERIOD="0.2",
+    SCAN="Passive"
+}
+
+file "tbuf.template" {
+pattern
+{ N,   L,     Stat  }
+{ "0", "MIN", "Min" }
+{ "1", "MIN", "Min" }
+{ "2", "MIN", "Min" }
+{ "3", "MIN", "Min" }
+{ "4", "MIN", "Min" }
+{ "5", "MIN", "Min" }
+{ "6", "MIN", "Min" }
+{ "7", "MIN", "Min" }
+{ "0", "MAX", "Max" }
+{ "1", "MAX", "Max" }
+{ "2", "MAX", "Max" }
+{ "3", "MAX", "Max" }
+{ "4", "MAX", "Max" }
+{ "5", "MAX", "Max" }
+{ "6", "MAX", "Max" }
+{ "7", "MAX", "Max" }
+}
+
+global {
+    RNGSEL="\$(SYS):\$(D)_CH$(N):RNG_CMD",
+    RNG0="\$(SYS):\$(D):EEPROM_RNG0_RD",
+    RNG1="\$(SYS):\$(D):EEPROM_RNG1_RD",
+    P="\$(SYS):\$(D)_CH$(N):",
+    MIN="$(P)SMIN_RD",
+    MAX="$(P)SMAX_RD",
+    THRES="1.5"
+}
+
+file "pico8_frib_saturation.template" {
+pattern
+{ N   }
+{ "0" }
+{ "1" }
+{ "2" }
+{ "3" }
+{ "4" }
+{ "5" }
+{ "6" }
+{ "7" }
 }
 

@@ -1,0 +1,9 @@
+driver(drvtbuf)
+
+device(longout, INST_IO, devTBUFLoSetSamples, "TBUF Set Num Samples")
+device(ao, INST_IO, devTBUFAoSetPeriod, "TBUF Set Period")
+device(ao, INST_IO, devTBUFAoNewSample, "TBUF Push Sample")
+
+device(ai, INST_IO, devTBUFAiOutSample, "TBUF Get Sample")
+device(waveform, INST_IO, devTBUFWFOutBuffer, "TBUF Get Buffer")
+device(waveform, INST_IO, devTBUFWFOutWeights, "TBUF Get Weights")
