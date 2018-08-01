@@ -32,7 +32,7 @@ dbLoadRecords("db/pico8_frib.db","SYS=TST,D=picod,NAME=PICOD,NELM=1048576")
 
 
 ## Start the PICO python helper script
-#system "python iocBoot/scripts/blm_processing_thread.py TST:picod &"
+system "python iocBoot/scripts/blm_processing_thread.py TST:picod &"
 
 
 iocInit()
