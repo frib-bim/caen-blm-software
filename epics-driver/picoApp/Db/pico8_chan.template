@@ -7,25 +7,52 @@ record(waveform, "$(P)$(CHAN)DESC_RD") {
 
 record(mbbo, "$(P)$(CHAN)RNG_CMD") {
     field(DESC, "Channel dynamic range")
-	field(DTYP, "Pico8 Channel Range")
-        field(OUT , "@$(NAME) chan=$(N)")
-	field(PINI, "YES")
-	field(ZRST, "1 ma")
-	field(ONST, "1 ua")
-	field(ZRVL, "0")
-	field(ONVL, "1")
+    field(DTYP, "Pico8 Channel Range")
+    field(OUT , "@$(NAME) chan=$(N)")
+    field(PINI, "YES")
+    field(ZRST, "1 ma")
+    field(ONST, "1 ua")
+    field(ZRVL, "0")
+    field(ONVL, "1")
     info(autosaveFields_pass0, "RVAL")
 }
 
-record(waveform, "$(P)$(CHAN)I_RD") {
+record(waveform, "$(P)$(CHAN)I_RD_") {
     field(DESC, "Sample data")
-	field(DTYP, "Pico8 Channel Data")
-        field(INP , "@$(NAME) chan=$(N)")
-	field(SCAN, "I/O Intr")
-	field(FTVL, "FLOAT")
-	field(NELM, "$(NELM)")
-	# workaround for NORD not posting monitors in 3.14.12
-	field(FLNK, "$(P)$(CHAN)I_RD_LEN")
+    field(DTYP, "Pico8 Channel Data")
+    field(INP , "@$(NAME) chan=$(N)")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "FLOAT")
+    field(NELM, "$(NELM)")
+    #field(FLNK, "$(P)$(CHAN)I_RD_LEN")
+    field(FLNK, "$(P)$(CHAN)I_NUSE_RD_")
+    field(PREC, "6")
+}
+
+record(ao, "$(P)$(CHAN)I_NUSE_RD_") {
+    field(DOL,  "$(P)$(CHAN)I_RD_.NORD")
+    field(OUT,  "$(P)$(CHAN)I_CALC.NUSE")
+    field(OMSL, "closed_loop")
+    field(FLNK, "$(P)$(CHAN)I_CALC")
+}
+
+# Convert to uA
+record(acalcout, "$(P)$(CHAN)I_CALC") {
+    field(INAA, "$(P)$(CHAN)I_RD_")
+    field(CALC, "1e6 * AA")
+    field(OOPT, "Every Time")
+    field(NELM, "$(NELM)")
+    field(OUT,  "$(P)$(CHAN)I_RD PP")
+    field(SIZE, "NUSE")
+    field(PREC, "6")
+}
+
+record(waveform, "$(P)$(CHAN)I_RD") {
+    # workaround for NORD not posting monitors in 3.14.12
+    field(FLNK, "$(P)$(CHAN)I_RD_LEN")
+    field(NELM, "$(NELM)")
+    field(FTVL, "FLOAT")
+    field(PREC, "6")
 }
 
 record(longin, "$(P)$(CHAN)I_RD_LEN") {
