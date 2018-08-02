@@ -12,10 +12,18 @@ pico_registerRecordDeviceDriver(pdbbase)
 
 #system("insmod ../linux-driver/amc_pico.ko")
 
-createPICO8("PICOD", "/dev/amc_pico_0000:06:00.0", "$(PICO_RATE_LIMIT)")
-#createPICO8("PICO3", "/dev/amc_pico_0000:07:00.0", "$(PICO_RATE_LIMIT)")
-dbLoadRecords("db/pico8_frib.db","SYS=TST,D=picod,NAME=PICOD,NELM=1048576")
+#createPICO8("PICOD", "/dev/amc_pico_0000:06:00.0")
+#createPICO8("PICO3", "/dev/amc_pico_0000:07:00.0")
+#dbLoadRecords("db/pico8_frib.db","SYS=TST,D=picod,NAME=PICOD,NELM=1048576")
 #dbLoadRecords("db/pico8_frib.db","SYS=TST,D=pico3,NAME=PICO3,NELM=1048576")
+
+createPICO8("PICO3", "/dev/amc_pico_0000:06:00.0", "$(PICO_RATE_LIMIT)")
+createPICO8("PICO4", "/dev/amc_pico_0000:09:00.0", "$(PICO_RATE_LIMIT)")
+createPICO8("PICO5", "/dev/amc_pico_0000:0a:00.0", "$(PICO_RATE_LIMIT)")
+
+dbLoadRecords("db/pico8_frib.db","SYS=TST,D=pico3,NAME=PICO3,NELM=1048576")
+dbLoadRecords("db/pico8_frib.db","SYS=TST,D=pico4,NAME=PICO4,NELM=1048576")
+dbLoadRecords("db/pico8_frib.db","SYS=TST,D=pico5,NAME=PICO5,NELM=1048576")
 
 #dbLoadRecords("db/pico8_chan_alias.db", "P=TST:picod_CH0:,A=TST_ALIAS:picod_CH0:")
 
@@ -33,7 +41,7 @@ dbLoadRecords("db/pico8_frib.db","SYS=TST,D=picod,NAME=PICOD,NELM=1048576")
 
 
 ## Start the PICO python helper script
-system "python iocBoot/scripts/blm_processing_thread.py TST:picod &"
+#system "python iocBoot/scripts/blm_processing_thread.py TST:picod &"
 
 
 iocInit()
@@ -49,7 +57,7 @@ var picoSlewLimit 9e99
 
 dbl > records.dbl
 
-dbpf "TST:picod_FPS:SLT_CSET", "7"    # Initialize PICO to AMC SLOT = 7
+#dbpf "TST:picod_FPS:SLT_CSET", "7"    # Initialize PICO to AMC SLOT = 7
 # dbpf "TST:pico3_FPS:SLT_CSET", "3"    # Initialize PICO to AMC SLOT = 3
 
-dbpf TST:picod_CH0:CWBEAM_CSET 0
+#dbpf TST:picod_CH0:CWBEAM_CSET 0
