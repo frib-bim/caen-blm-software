@@ -8,7 +8,8 @@ record(ao, "$(P)CORR_CSET") {
 record(longout, "$(P)TOF_CSET") {
     field(DESC, "Time of flight calib")
     field(DTYP, "Pico8 User Reg UInt32")
-    field(OUT, "@$(NAME) offset=$(CTRL) mask=0x1f00<<$(BIT)")
+    field(OUT,  "@$(NAME) offset=$(CTRL) mask=0x1f00<<$(BIT)")
+    field(VAL,  "0")
     field(PINI, "YES")
     info(autosaveFields_pass0, "VAL")
 }
