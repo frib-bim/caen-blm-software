@@ -3,8 +3,8 @@
 < envPaths
 
 epicsEnvSet("EPICS_CA_MAX_ARRAY_BYTES","10000000")
-
 epicsEnvSet("AUTOSAVE", "/mnt/iocdata/autosave/mtca15-pico8")
+epicsEnvSet("PICO_RATE_LIMIT", "10.0")
 
 ## Channel Access Security config
 asSetFilename("${EPICS_CA_SEC_FILE}")
@@ -16,10 +16,10 @@ dbLoadRecords("$(TOP)/db/iocAdminSoft.db", "IOC=DIAG_MTCA15:PICO")
 dbLoadRecords("$(TOP)/db/reccaster.db", "P=DIAG_MTCA15:PICO:")
 
 # slot numbers from /sys/bus/pci/slots/*/address
-createPICO8("PICO3", "/dev/amc_pico_0000:08:00.0")
-createPICO8("PICO4", "/dev/amc_pico_0000:06:00.0")
-createPICO8("PICO5", "/dev/amc_pico_0000:09:00.0")
-createPICO8("PICO6", "/dev/amc_pico_0000:0b:00.0")
+createPICO8("PICO3", "/dev/amc_pico_0000:08:00.0", "$(PICO_RATE_LIMIT)")
+createPICO8("PICO4", "/dev/amc_pico_0000:06:00.0", "$(PICO_RATE_LIMIT)")
+createPICO8("PICO5", "/dev/amc_pico_0000:09:00.0", "$(PICO_RATE_LIMIT)")
+createPICO8("PICO6", "/dev/amc_pico_0000:0b:00.0", "$(PICO_RATE_LIMIT)")
 
 # (SYS):(D)_CHX:Y_Z
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA15,D=PICO3,NAME=PICO3,NELM=1000000")

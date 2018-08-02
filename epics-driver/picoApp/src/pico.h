@@ -88,7 +88,7 @@ struct PicoDevice : public epicsThreadRunable {
         NCHANS = 8
     };
 
-    PicoDevice(const std::string& fname);
+    PicoDevice(const std::string& fname, double ratelim);
     virtual ~PicoDevice() {}
 
     void open();
@@ -138,6 +138,8 @@ struct PicoDevice : public epicsThreadRunable {
     epicsTimeStamp updatetime;
 
     std::string lasterror;
+
+    double minupdatetime;
 };
 
 #ifdef BUILD_FRIB

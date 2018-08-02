@@ -17,7 +17,7 @@
 
 #include "pico.h"
 
-PicoDevice::PicoDevice(const std::string &fname)
+PicoDevice::PicoDevice(const std::string &fname, double ratelim)
     :devname(fname)
     ,readerT(*this, "Reader",
              epicsThreadGetStackSize(epicsThreadStackSmall),
@@ -32,6 +32,7 @@ PicoDevice::PicoDevice(const std::string &fname)
     ,trig_level(0.0)
     ,nsamp(100)
     ,ndecim(1)
+    ,minupdatetime(ratelim ? 1 / ratelim : 0.0)
 {
     trig.nr_samp = 1;
     trig.ch_sel = 0;
@@ -67,7 +68,7 @@ PicoDevice::run()
 
     PicoDevice::data_t dbuf;
     PicoDevice::data_t prep[NCHANS];
-    epicsTimeStamp now;
+    epicsTimeStamp now, prev;
 
     while(running) {
     try {
@@ -167,7 +168,13 @@ PicoDevice::run()
             for(unsigned i=0; i<NCHANS; i++) {
                 data[i].swap(prep[i]);
             }
+
             updatetime = now;
+
+            if (minupdatetime && epicsTimeDiffInSeconds(&now, &prev) < minupdatetime)
+                continue;
+
+            prev = now;
             scanIoRequest(dataupdate);
         }
     } catch(system_error& e) {
