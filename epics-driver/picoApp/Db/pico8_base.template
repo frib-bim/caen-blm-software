@@ -55,7 +55,7 @@ record(mbbo, "$(P)MODE_CMD") {
     field(ONST, "Normal")
     field(ZRVL, "0")
     field(ONVL, "1")
-    info(autosaveFields_pass0, "RVAL")
+    field(VAL,  "0")
 }
 
 record(mbbo, "$(P)CLK_CMD") {
