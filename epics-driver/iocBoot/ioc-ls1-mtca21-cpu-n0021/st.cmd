@@ -4,7 +4,7 @@
 
 epicsEnvSet("EPICS_CA_MAX_ARRAY_BYTES","10000000")
 
-epicsEnvSet("AUTOSAVE", "/mnt/iocdata/autosave/mtc211-pico8")
+epicsEnvSet("AUTOSAVE", "/mnt/iocdata/autosave/mtca21-pico8")
 
 ## Channel Access Security config
 asSetFilename("${EPICS_CA_SEC_FILE}")
@@ -56,6 +56,7 @@ set_pass1_restoreFile("pico_waveforms.sav")
 iocInit()
 iocLogInit()
 
+system "test -d ${AUTOSAVE} || mkdir ${AUTOSAVE}"
 makeAutosaveFileFromDbInfo("${AUTOSAVE}/pico_settings.req", "autosaveFields_pass0")
 makeAutosaveFileFromDbInfo("${AUTOSAVE}/pico_waveforms.req", "autosaveFields_pass1")
 

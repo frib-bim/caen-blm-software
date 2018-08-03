@@ -107,6 +107,7 @@ set_pass1_restoreFile("pico_waveforms.sav")
 iocInit()
 iocLogInit()
 
+system "test -d ${AUTOSAVE} || mkdir ${AUTOSAVE}"
 makeAutosaveFileFromDbInfo("${AUTOSAVE}/pico_settings.req", "autosaveFields_pass0")
 makeAutosaveFileFromDbInfo("${AUTOSAVE}/pico_waveforms.req", "autosaveFields_pass1")
 
