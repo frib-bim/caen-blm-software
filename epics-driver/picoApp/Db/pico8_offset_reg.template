@@ -5,6 +5,7 @@ record(compress, "$(P)$(R):AVGS_RD") {
     field(N,    "50")
     field(NSAM, "1")
     field(PREC, "6")
+    field(EGU,  "uA")
 }
 
 record(calcout, "$(P)$(R):RNG0_EEOFST_CALC") {

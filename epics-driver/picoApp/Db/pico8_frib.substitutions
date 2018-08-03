@@ -62,46 +62,46 @@ file "pico8_eeprom_base.template" {
 
 file "pico8_eeprom_reg.template" {
 pattern
-{P,               R,                  EEPROM, OFFSET  }
+{P,               R,                  EEPROM, OFFSET, EGU, ASLO    }
 # Ch 0-3, Range 0
-{"\$(SYS):\$(D)", "_CH0:RNG0_EEGAIN", "1",    "0xD5"  }
-{"\$(SYS):\$(D)", "_CH0:RNG0_EEOFST", "1",    "0xD9"  }
-{"\$(SYS):\$(D)", "_CH1:RNG0_EEGAIN", "1",    "0xDD"  }
-{"\$(SYS):\$(D)", "_CH1:RNG0_EEOFST", "1",    "0xE1"  }
-{"\$(SYS):\$(D)", "_CH2:RNG0_EEGAIN", "1",    "0xE5"  }
-{"\$(SYS):\$(D)", "_CH2:RNG0_EEOFST", "1",    "0xE9"  }
-{"\$(SYS):\$(D)", "_CH3:RNG0_EEGAIN", "1",    "0xED"  }
-{"\$(SYS):\$(D)", "_CH3:RNG0_EEOFST", "1",    "0xF1"  }
+{"\$(SYS):\$(D)", "_CH0:RNG0_EEGAIN", "1",    "0xD5", "",   ""     }
+{"\$(SYS):\$(D)", "_CH1:RNG0_EEGAIN", "1",    "0xDD", "",   ""     }
+{"\$(SYS):\$(D)", "_CH2:RNG0_EEGAIN", "1",    "0xE5", "",   ""     }
+{"\$(SYS):\$(D)", "_CH3:RNG0_EEGAIN", "1",    "0xED", "",   ""     }
+{"\$(SYS):\$(D)", "_CH0:RNG0_EEOFST", "1",    "0xD9", "uA", "1e6"  }
+{"\$(SYS):\$(D)", "_CH1:RNG0_EEOFST", "1",    "0xE1", "uA", "1e6"  }
+{"\$(SYS):\$(D)", "_CH2:RNG0_EEOFST", "1",    "0xE9", "uA", "1e6"  }
+{"\$(SYS):\$(D)", "_CH3:RNG0_EEOFST", "1",    "0xF1", "uA", "1e6"  }
 
 # Ch 0-3, Range 1
-{"\$(SYS):\$(D)", "_CH0:RNG1_EEGAIN", "1",    "0xF5"  }
-{"\$(SYS):\$(D)", "_CH0:RNG1_EEOFST", "1",    "0xF9"  }
-{"\$(SYS):\$(D)", "_CH1:RNG1_EEGAIN", "1",    "0xFD"  }
-{"\$(SYS):\$(D)", "_CH1:RNG1_EEOFST", "1",    "0x101" }
-{"\$(SYS):\$(D)", "_CH2:RNG1_EEGAIN", "1",    "0x105" }
-{"\$(SYS):\$(D)", "_CH2:RNG1_EEOFST", "1",    "0x109" }
-{"\$(SYS):\$(D)", "_CH3:RNG1_EEGAIN", "1",    "0x10D" }
-{"\$(SYS):\$(D)", "_CH3:RNG1_EEOFST", "1",    "0x111" }
+{"\$(SYS):\$(D)", "_CH0:RNG1_EEGAIN", "1",    "0xF5",  "",   ""    }
+{"\$(SYS):\$(D)", "_CH1:RNG1_EEGAIN", "1",    "0xFD",  "",   ""    }
+{"\$(SYS):\$(D)", "_CH2:RNG1_EEGAIN", "1",    "0x105", "",   ""    }
+{"\$(SYS):\$(D)", "_CH3:RNG1_EEGAIN", "1",    "0x10D", "",   ""    }
+{"\$(SYS):\$(D)", "_CH0:RNG1_EEOFST", "1",    "0xF9",  "uA", "1e6" }
+{"\$(SYS):\$(D)", "_CH1:RNG1_EEOFST", "1",    "0x101", "uA", "1e6" }
+{"\$(SYS):\$(D)", "_CH2:RNG1_EEOFST", "1",    "0x109", "uA", "1e6" }
+{"\$(SYS):\$(D)", "_CH3:RNG1_EEOFST", "1",    "0x111", "uA", "1e6" }
 
 # Ch 4-7, Range 0
-{"\$(SYS):\$(D)", "_CH4:RNG0_EEGAIN", "0",    "0xD5"  }
-{"\$(SYS):\$(D)", "_CH4:RNG0_EEOFST", "0",    "0xD9"  }
-{"\$(SYS):\$(D)", "_CH5:RNG0_EEGAIN", "0",    "0xDD"  }
-{"\$(SYS):\$(D)", "_CH5:RNG0_EEOFST", "0",    "0xE1"  }
-{"\$(SYS):\$(D)", "_CH6:RNG0_EEGAIN", "0",    "0xE5"  }
-{"\$(SYS):\$(D)", "_CH6:RNG0_EEOFST", "0",    "0xE9"  }
-{"\$(SYS):\$(D)", "_CH7:RNG0_EEGAIN", "0",    "0xED"  }
-{"\$(SYS):\$(D)", "_CH7:RNG0_EEOFST", "0",    "0xF1"  }
+{"\$(SYS):\$(D)", "_CH4:RNG0_EEGAIN", "0",    "0xD5", "",   ""     }
+{"\$(SYS):\$(D)", "_CH5:RNG0_EEGAIN", "0",    "0xDD", "",   ""     }
+{"\$(SYS):\$(D)", "_CH6:RNG0_EEGAIN", "0",    "0xE5", "",   ""     }
+{"\$(SYS):\$(D)", "_CH7:RNG0_EEGAIN", "0",    "0xED", "",   ""     }
+{"\$(SYS):\$(D)", "_CH4:RNG0_EEOFST", "0",    "0xD9", "uA", "1e6"  }
+{"\$(SYS):\$(D)", "_CH5:RNG0_EEOFST", "0",    "0xE1", "uA", "1e6"  }
+{"\$(SYS):\$(D)", "_CH6:RNG0_EEOFST", "0",    "0xE9", "uA", "1e6"  }
+{"\$(SYS):\$(D)", "_CH7:RNG0_EEOFST", "0",    "0xF1", "uA", "1e6"  }
 
 # Ch 4-7, Range 1
-{"\$(SYS):\$(D)", "_CH4:RNG1_EEGAIN", "0",    "0xF5"  }
-{"\$(SYS):\$(D)", "_CH4:RNG1_EEOFST", "0",    "0xF9"  }
-{"\$(SYS):\$(D)", "_CH5:RNG1_EEGAIN", "0",    "0xFD"  }
-{"\$(SYS):\$(D)", "_CH5:RNG1_EEOFST", "0",    "0x101" }
-{"\$(SYS):\$(D)", "_CH6:RNG1_EEGAIN", "0",    "0x105" }
-{"\$(SYS):\$(D)", "_CH6:RNG1_EEOFST", "0",    "0x109" }
-{"\$(SYS):\$(D)", "_CH7:RNG1_EEGAIN", "0",    "0x10D" }
-{"\$(SYS):\$(D)", "_CH7:RNG1_EEOFST", "0",    "0x111" }
+{"\$(SYS):\$(D)", "_CH4:RNG1_EEGAIN", "0",    "0xF5",  "",   ""    }
+{"\$(SYS):\$(D)", "_CH5:RNG1_EEGAIN", "0",    "0xFD",  "",   ""    }
+{"\$(SYS):\$(D)", "_CH6:RNG1_EEGAIN", "0",    "0x105", "",   ""    }
+{"\$(SYS):\$(D)", "_CH7:RNG1_EEGAIN", "0",    "0x10D", "",   ""    }
+{"\$(SYS):\$(D)", "_CH4:RNG1_EEOFST", "0",    "0xF9",  "uA", "1e6" }
+{"\$(SYS):\$(D)", "_CH5:RNG1_EEOFST", "0",    "0x101", "uA", "1e6" }
+{"\$(SYS):\$(D)", "_CH6:RNG1_EEOFST", "0",    "0x109", "uA", "1e6" }
+{"\$(SYS):\$(D)", "_CH7:RNG1_EEOFST", "0",    "0x111", "uA", "1e6" }
 }
 
 file "pico8_fpga_base.template" {
@@ -110,42 +110,42 @@ file "pico8_fpga_base.template" {
 
 file "pico8_fpga_reg.template" {
 pattern
-{P,               R,                    OFFSET  }
-{"\$(SYS):\$(D)", "_CH0:RNG0_FPGAGAIN", "0x00"  }
-{"\$(SYS):\$(D)", "_CH1:RNG0_FPGAGAIN", "0x04"  }
-{"\$(SYS):\$(D)", "_CH2:RNG0_FPGAGAIN", "0x08"  }
-{"\$(SYS):\$(D)", "_CH3:RNG0_FPGAGAIN", "0x0C"  }
-{"\$(SYS):\$(D)", "_CH4:RNG0_FPGAGAIN", "0x10"  }
-{"\$(SYS):\$(D)", "_CH5:RNG0_FPGAGAIN", "0x14"  }
-{"\$(SYS):\$(D)", "_CH6:RNG0_FPGAGAIN", "0x18"  }
-{"\$(SYS):\$(D)", "_CH7:RNG0_FPGAGAIN", "0x1C"  }
+{P,               R,                    OFFSET, EGU,  ASLO   }
+{"\$(SYS):\$(D)", "_CH0:RNG0_FPGAGAIN", "0x00", "",   ""     }
+{"\$(SYS):\$(D)", "_CH1:RNG0_FPGAGAIN", "0x04", "",   ""     }
+{"\$(SYS):\$(D)", "_CH2:RNG0_FPGAGAIN", "0x08", "",   ""     }
+{"\$(SYS):\$(D)", "_CH3:RNG0_FPGAGAIN", "0x0C", "",   ""     }
+{"\$(SYS):\$(D)", "_CH4:RNG0_FPGAGAIN", "0x10", "",   ""     }
+{"\$(SYS):\$(D)", "_CH5:RNG0_FPGAGAIN", "0x14", "",   ""     }
+{"\$(SYS):\$(D)", "_CH6:RNG0_FPGAGAIN", "0x18", "",   ""     }
+{"\$(SYS):\$(D)", "_CH7:RNG0_FPGAGAIN", "0x1C", "",   ""     }
 
-{"\$(SYS):\$(D)", "_CH0:RNG0_FPGAOFST", "0x20"  }
-{"\$(SYS):\$(D)", "_CH1:RNG0_FPGAOFST", "0x24"  }
-{"\$(SYS):\$(D)", "_CH2:RNG0_FPGAOFST", "0x28"  }
-{"\$(SYS):\$(D)", "_CH3:RNG0_FPGAOFST", "0x2C"  }
-{"\$(SYS):\$(D)", "_CH4:RNG0_FPGAOFST", "0x30"  }
-{"\$(SYS):\$(D)", "_CH5:RNG0_FPGAOFST", "0x34"  }
-{"\$(SYS):\$(D)", "_CH6:RNG0_FPGAOFST", "0x38"  }
-{"\$(SYS):\$(D)", "_CH7:RNG0_FPGAOFST", "0x3C"  }
+{"\$(SYS):\$(D)", "_CH0:RNG0_FPGAOFST", "0x20", "uA", "1e6"  }
+{"\$(SYS):\$(D)", "_CH1:RNG0_FPGAOFST", "0x24", "uA", "1e6"  }
+{"\$(SYS):\$(D)", "_CH2:RNG0_FPGAOFST", "0x28", "uA", "1e6"  }
+{"\$(SYS):\$(D)", "_CH3:RNG0_FPGAOFST", "0x2C", "uA", "1e6"  }
+{"\$(SYS):\$(D)", "_CH4:RNG0_FPGAOFST", "0x30", "uA", "1e6"  }
+{"\$(SYS):\$(D)", "_CH5:RNG0_FPGAOFST", "0x34", "uA", "1e6"  }
+{"\$(SYS):\$(D)", "_CH6:RNG0_FPGAOFST", "0x38", "uA", "1e6"  }
+{"\$(SYS):\$(D)", "_CH7:RNG0_FPGAOFST", "0x3C", "uA", "1e6"  }
 
-{"\$(SYS):\$(D)", "_CH0:RNG1_FPGAGAIN", "0x40"  }
-{"\$(SYS):\$(D)", "_CH1:RNG1_FPGAGAIN", "0x44"  }
-{"\$(SYS):\$(D)", "_CH2:RNG1_FPGAGAIN", "0x48"  }
-{"\$(SYS):\$(D)", "_CH3:RNG1_FPGAGAIN", "0x4C"  }
-{"\$(SYS):\$(D)", "_CH4:RNG1_FPGAGAIN", "0x50"  }
-{"\$(SYS):\$(D)", "_CH5:RNG1_FPGAGAIN", "0x54"  }
-{"\$(SYS):\$(D)", "_CH6:RNG1_FPGAGAIN", "0x58"  }
-{"\$(SYS):\$(D)", "_CH7:RNG1_FPGAGAIN", "0x5C"  }
+{"\$(SYS):\$(D)", "_CH0:RNG1_FPGAGAIN", "0x40", "",   ""     }
+{"\$(SYS):\$(D)", "_CH1:RNG1_FPGAGAIN", "0x44", "",   ""     }
+{"\$(SYS):\$(D)", "_CH2:RNG1_FPGAGAIN", "0x48", "",   ""     }
+{"\$(SYS):\$(D)", "_CH3:RNG1_FPGAGAIN", "0x4C", "",   ""     }
+{"\$(SYS):\$(D)", "_CH4:RNG1_FPGAGAIN", "0x50", "",   ""     }
+{"\$(SYS):\$(D)", "_CH5:RNG1_FPGAGAIN", "0x54", "",   ""     }
+{"\$(SYS):\$(D)", "_CH6:RNG1_FPGAGAIN", "0x58", "",   ""     }
+{"\$(SYS):\$(D)", "_CH7:RNG1_FPGAGAIN", "0x5C", "",   ""     }
 
-{"\$(SYS):\$(D)", "_CH0:RNG1_FPGAOFST", "0x60"  }
-{"\$(SYS):\$(D)", "_CH1:RNG1_FPGAOFST", "0x64"  }
-{"\$(SYS):\$(D)", "_CH2:RNG1_FPGAOFST", "0x68"  }
-{"\$(SYS):\$(D)", "_CH3:RNG1_FPGAOFST", "0x6C"  }
-{"\$(SYS):\$(D)", "_CH4:RNG1_FPGAOFST", "0x70"  }
-{"\$(SYS):\$(D)", "_CH5:RNG1_FPGAOFST", "0x74"  }
-{"\$(SYS):\$(D)", "_CH6:RNG1_FPGAOFST", "0x78"  }
-{"\$(SYS):\$(D)", "_CH7:RNG1_FPGAOFST", "0x7C"  }
+{"\$(SYS):\$(D)", "_CH0:RNG1_FPGAOFST", "0x60", "uA", "1e6"  }
+{"\$(SYS):\$(D)", "_CH1:RNG1_FPGAOFST", "0x64", "uA", "1e6"  }
+{"\$(SYS):\$(D)", "_CH2:RNG1_FPGAOFST", "0x68", "uA", "1e6"  }
+{"\$(SYS):\$(D)", "_CH3:RNG1_FPGAOFST", "0x6C", "uA", "1e6"  }
+{"\$(SYS):\$(D)", "_CH4:RNG1_FPGAOFST", "0x70", "uA", "1e6"  }
+{"\$(SYS):\$(D)", "_CH5:RNG1_FPGAOFST", "0x74", "uA", "1e6"  }
+{"\$(SYS):\$(D)", "_CH6:RNG1_FPGAOFST", "0x78", "uA", "1e6"  }
+{"\$(SYS):\$(D)", "_CH7:RNG1_FPGAOFST", "0x7C", "uA", "1e6"  }
 }
 
 file "pico8_offset_reg.template" {

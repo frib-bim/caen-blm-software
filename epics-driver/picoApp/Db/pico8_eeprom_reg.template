@@ -2,6 +2,8 @@ record(ai, "$(P)$(R)_RD") {
     field(DTYP, "Pico8 EEPROM Reg Float")
     field(INP,  "@$(NAME) offset=$(OFFSET) eeprom=$(EEPROM)")
     field(PREC, "8")
+    field(EGU,  "$(EGU=)")
+    field(ASLO, "$(ASLO=)")
 }
 
 record(ao, "$(P)$(R)_CSET") {
@@ -11,4 +13,6 @@ record(ao, "$(P)$(R)_CSET") {
     field(FLNK, "$(P)$(R)_RD")
     field(SDIS, "$(P):EEPROM_LOCK_CSET")
     field(DISV, "0")
+    field(EGU,  "$(EGU=)")
+    field(ASLO, "$(ASLO=)")
 }
