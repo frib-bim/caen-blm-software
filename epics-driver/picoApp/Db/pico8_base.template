@@ -55,6 +55,7 @@ record(mbbo, "$(P)MODE_CMD") {
     field(ONST, "Normal")
     field(ZRVL, "0")
     field(ONVL, "1")
+    field(ONSV, "MAJOR")
     field(VAL,  "0")
 }
 
