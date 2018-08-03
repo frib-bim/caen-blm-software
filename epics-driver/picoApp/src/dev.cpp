@@ -137,13 +137,13 @@ void shutdownCapture(void *raw)
 }
 #endif // BUILD_FRIB
 
-void createPICO(const std::string& name, const std::string& devname, double ratelim)
+void createPICO(const std::string& name, const std::string& devname)
 {
     try{
         if(dev_map.find(name)!=dev_map.end())
             throw std::invalid_argument("Name already in use");
 
-        PicoDevice *dev = new PicoDevice(devname, ratelim);
+        PicoDevice *dev = new PicoDevice(devname);
 
         epicsAtExit(&shutdownPICO, dev);
 
@@ -1240,16 +1240,14 @@ static drvet drvpico8 = {
 
 const iocshArg createPICOArg0 = {"name", iocshArgString};
 const iocshArg createPICOArg1 = {"/dev/...", iocshArgString};
-const iocshArg createPICOArg2 = {"ratelimit(Hz)", iocshArgDouble};
-const iocshArg * const createPICOArgs[] =
-    {&createPICOArg0, &createPICOArg1, &createPICOArg2};
+const iocshArg * const createPICOArgs[] = {&createPICOArg0, &createPICOArg1};
 const iocshFuncDef createPICOFuncDef = {
     "createPICO8", NELEMENTS(createPICOArgs), createPICOArgs
 };
 
 void createPICOCall(const iocshArgBuf *args)
 {
-    createPICO(args[0].sval, args[1].sval, args[2].dval);
+    createPICO(args[0].sval, args[1].sval);
 }
 
 const iocshArg debugPICOArg0 = {"name", iocshArgString};

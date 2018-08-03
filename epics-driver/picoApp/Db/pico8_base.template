@@ -145,8 +145,8 @@ record(longout, "$(P)NSMP_CSET") {
 	field(DTYP, "Pico8 Num Samples")
 	field(OUT , "@$(NAME)")
 	field(PINI, "YES")
-	field(VAL , "1000")
-	field(DRVL, "1000")
+	field(VAL , "200")
+	field(DRVL, "1")
 	field(DRVH, "$(NELM)")
     info(autosaveFields_pass0, "VAL")
 }
