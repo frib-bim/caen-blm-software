@@ -58,27 +58,28 @@ record(fanout, "$(P):FPGA_FOUT6") {
     field(LNK2, "$(P)_CH7:RNG1_FPGAOFST_RD")
 }
 
-record(bi, "$(P):FPGA_LOCK_CSET") {
-    field(ZNAM, "Read Only")
-    field(ONAM, "Read/Write")
-    field(FLNK, "$(P):FPGA_LOCK_TIMEOUT")
-}
+# The following are now aliases in pico8_eeprom_base.template
+#record(bi, "$(P):FPGA_LOCK_CSET") {
+#    field(ZNAM, "Read Only")
+#    field(ONAM, "Read/Write")
+#    field(FLNK, "$(P):FPGA_LOCK_TIMEOUT")
+#}
 
-record(ao, "$(P):FPGA_LOCK_TIMEOUT") {
-    field(DOL,  "10")
-    field(OUT,  "$(P):FPGA_LOCK_CALC PP")
-    field(SDIS, "$(P):FPGA_LOCK_CSET")
-    field(DISV, "0")
-}
+#record(ao, "$(P):FPGA_LOCK_TIMEOUT") {
+#    field(DOL,  "10")
+#    field(OUT,  "$(P):FPGA_LOCK_CALC PP")
+#    field(SDIS, "$(P):FPGA_LOCK_CSET")
+#    field(DISV, "0")
+#}
 
-record(calcout, "$(P):FPGA_LOCK_CALC") {
-    field(OUT,  "$(P):FPGA_LOCK_CSET PP")
-    field(SCAN, "1 second")
-    field(CALC, "VAL ? VAL-1 : 0")
-    field(OOPT, "Transition To Zero")
-    field(SDIS, "$(P):FPGA_LOCK_CSET")
-    field(DISV, "0")
-}
+#record(calcout, "$(P):FPGA_LOCK_CALC") {
+#    field(OUT,  "$(P):FPGA_LOCK_CSET PP")
+#    field(SCAN, "1 second")
+#    field(CALC, "VAL ? VAL-1 : 0")
+#    field(OOPT, "Transition To Zero")
+#    field(SDIS, "$(P):FPGA_LOCK_CSET")
+#    field(DISV, "0")
+#}
 
 
 

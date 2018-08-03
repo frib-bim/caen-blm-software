@@ -62,6 +62,7 @@ record(bi, "$(P):EEPROM_LOCK_CSET") {
     field(ZNAM, "Read Only")
     field(ONAM, "Read/Write")
     field(FLNK, "$(P):EEPROM_LOCK_TIMEOUT")
+    alias("$(P):FPGA_LOCK_CSET")
 }
 
 record(ao, "$(P):EEPROM_LOCK_TIMEOUT") {
@@ -69,6 +70,7 @@ record(ao, "$(P):EEPROM_LOCK_TIMEOUT") {
     field(OUT,  "$(P):EEPROM_LOCK_CALC PP")
     field(SDIS, "$(P):EEPROM_LOCK_CSET")
     field(DISV, "0")
+    alias("$(P):FPGA_LOCK_TIMEOUT")
 }
 
 record(calcout, "$(P):EEPROM_LOCK_CALC") {
@@ -78,6 +80,7 @@ record(calcout, "$(P):EEPROM_LOCK_CALC") {
     field(OOPT, "Transition To Zero")
     field(SDIS, "$(P):EEPROM_LOCK_CSET")
     field(DISV, "0")
+    alias("$(P):FPGA_LOCK_CALC")
 }
 
 record(calc, "$(P):EEPROM_RNG0_RD") {
