@@ -9,6 +9,7 @@ record(longout, "$(P)TRIP_EN_CMD") {
     field(DTYP, "Pico8 User Reg UInt32")
     field(OUT , "@$(NAME) offset=0x30000+4*$(NOKMSK) mask=0x3FF")
     field(DESC, "Enable")
+    field(VAL,  "0")
     field(PINI, "YES")
     info(autosaveFields_pass0, "VAL")
 }
