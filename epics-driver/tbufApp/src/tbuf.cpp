@@ -336,10 +336,11 @@ long new_sample(aoRecord *prec)
 
             if(tb->cnt!=0) {
                 double delta = epicsTimeDiffInSeconds(&newtime, &tb->times[tb->last()]);
-                if(delta<0) {
+                if(delta<=0) {
                     fprintf(stderr, "%s: non-monotonic time (diff=%f).  Clear buffer.\n",
                                  prec->name, delta);
-                    tb->reset();
+                    if(delta<0)
+                        tb->reset();
                 }
             }
 
