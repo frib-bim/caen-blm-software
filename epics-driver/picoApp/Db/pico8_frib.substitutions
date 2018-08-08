@@ -7,14 +7,16 @@ file "pico8_base.template" {
 }
 
 file "pico8_chan.template" {
-    {N=0, P="\$(SYS):\$(D)",CHAN="_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
-    {N=1, P="\$(SYS):\$(D)",CHAN="_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
-    {N=2, P="\$(SYS):\$(D)",CHAN="_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
-    {N=3, P="\$(SYS):\$(D)",CHAN="_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
-    {N=4, P="\$(SYS):\$(D)",CHAN="_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
-    {N=5, P="\$(SYS):\$(D)",CHAN="_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
-    {N=6, P="\$(SYS):\$(D)",CHAN="_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
-    {N=7, P="\$(SYS):\$(D)",CHAN="_CH$(N):", NAME="\$(NAME)", NELM="\$(NELM=1024)"}
+pattern
+{ N, P,               CHAN,       NAME,       NELM,            ASLO  }
+{ 0, "\$(SYS):\$(D)", "_CH$(N):", "\$(NAME)", "\$(NELM=1024)", "1e6" }
+{ 1, "\$(SYS):\$(D)", "_CH$(N):", "\$(NAME)", "\$(NELM=1024)", "1e6" }
+{ 2, "\$(SYS):\$(D)", "_CH$(N):", "\$(NAME)", "\$(NELM=1024)", "1e6" }
+{ 3, "\$(SYS):\$(D)", "_CH$(N):", "\$(NAME)", "\$(NELM=1024)", "1e6" }
+{ 4, "\$(SYS):\$(D)", "_CH$(N):", "\$(NAME)", "\$(NELM=1024)", "1e6" }
+{ 5, "\$(SYS):\$(D)", "_CH$(N):", "\$(NAME)", "\$(NELM=1024)", "1e6" }
+{ 6, "\$(SYS):\$(D)", "_CH$(N):", "\$(NAME)", "\$(NELM=1024)", "1e6" }
+{ 7, "\$(SYS):\$(D)", "_CH$(N):", "\$(NAME)", "\$(NELM=1024)", "1e6" }
 }
 
 file "pico8_ram.template" {

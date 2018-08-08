@@ -17,41 +17,14 @@ record(mbbo, "$(P)$(CHAN)RNG_CMD") {
     info(autosaveFields_pass0, "RVAL")
 }
 
-record(waveform, "$(P)$(CHAN)I_RD_") {
+record(waveform, "$(P)$(CHAN)I_RD") {
     field(DESC, "Sample data")
     field(DTYP, "Pico8 Channel Data")
     field(INP , "@$(NAME) chan=$(N)")
     field(SCAN, "I/O Intr")
     field(FTVL, "FLOAT")
     field(NELM, "$(NELM)")
-    #field(FLNK, "$(P)$(CHAN)I_RD_LEN")
-    field(FLNK, "$(P)$(CHAN)I_NUSE_RD_")
-    field(PREC, "6")
-}
-
-record(ao, "$(P)$(CHAN)I_NUSE_RD_") {
-    field(DOL,  "$(P)$(CHAN)I_RD_.NORD")
-    field(OUT,  "$(P)$(CHAN)I_CALC.NUSE")
-    field(OMSL, "closed_loop")
-    field(FLNK, "$(P)$(CHAN)I_CALC")
-}
-
-# Convert to uA
-record(acalcout, "$(P)$(CHAN)I_CALC") {
-    field(INAA, "$(P)$(CHAN)I_RD_")
-    field(CALC, "1e6 * AA")
-    field(OOPT, "Every Time")
-    field(NELM, "$(NELM)")
-    field(OUT,  "$(P)$(CHAN)I_RD PP")
-    field(SIZE, "NUSE")
-    field(PREC, "6")
-}
-
-record(waveform, "$(P)$(CHAN)I_RD") {
-    # workaround for NORD not posting monitors in 3.14.12
     field(FLNK, "$(P)$(CHAN)I_RD_LEN")
-    field(NELM, "$(NELM)")
-    field(FTVL, "FLOAT")
     field(PREC, "6")
 }
 
