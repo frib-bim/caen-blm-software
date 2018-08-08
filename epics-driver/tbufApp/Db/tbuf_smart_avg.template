@@ -202,7 +202,7 @@ record(waveform, "$(P)AVG1HZW_RD") {
 # 0.2 s average Full FIFO
 record(waveform, "$(P)AVG5HZW_RD") {
     field(DTYP, "TBUF Get Buffer")
-    field(INP , "@$(P)AVG1HZ")
+    field(INP , "@$(P)AVG5HZ")
     field(FTVL, "FLOAT")
     field(NELM, "20")
     field(TSE , "-2")
