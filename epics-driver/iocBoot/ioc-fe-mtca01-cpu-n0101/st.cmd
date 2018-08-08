@@ -114,7 +114,7 @@ makeAutosaveFileFromDbInfo("${AUTOSAVE}/pico_waveforms.req", "autosaveFields_pas
 create_monitor_set("pico_settings.req", 10 , "")
 create_monitor_set("pico_waveforms.req", 30 , "")
 
-caPutLogInit("${EPICS_IOC_LOG_INET}:${EPICS_IOC_LOG_PORT}", 1)
+caPutLogInit("${EPICS_PUT_LOG_INET}:${EPICS_PUT_LOG_PORT}", 1)
 
 ## Set PICO card AMC slot numbers on startup for each card.
 dbpf "DIAG_MTCA01:PICO3_FPS:SLT_CSET", "3"

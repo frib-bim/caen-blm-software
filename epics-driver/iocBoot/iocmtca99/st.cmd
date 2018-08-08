@@ -58,4 +58,4 @@ makeAutosaveFileFromDbInfo("/usr/local/lib/iocapps/pico8/epics-driver/iocBoot/io
 create_monitor_set("pico_settings.req", 10 , "")
 create_monitor_set("pico_waveforms.req", 30 , "")
 
-caPutLogInit("${EPICS_IOC_LOG_INET}:${EPICS_IOC_LOG_PORT}", 1)
+caPutLogInit("${EPICS_PUT_LOG_INET}:${EPICS_PUT_LOG_PORT}", 1)
