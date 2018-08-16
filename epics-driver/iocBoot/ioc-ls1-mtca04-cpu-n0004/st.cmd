@@ -38,8 +38,7 @@ dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA04:PICO3_CH6:,A=LS3_CD
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA04:PICO4_CH0:,A=LS1_WA01:HMR_D1156:")
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA04:PICO4_CH1:,A=LS1_WA02:HMR_D1190:")
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA04:PICO4_CH2:,A=LS1_WA03:HMR_D1224:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA04:PICO4_CH4:,A=LS1_D:HMR_D1240:")
-#dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA04:PICO4_CH4:,A=LS1_WB01:HMR_D1287:")
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA04:PICO4_CH4:,A=LS1_WB01:HMR_D1287:")
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA04:PICO4_CH5:,A=LS1_WB02:HMR_D1351:")
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA04:PICO4_CH6:,A=LS1_WB03:HMR_D1415:")
 
@@ -50,8 +49,8 @@ system "python ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA04:PICO3 
 # Auto save/restore
 save_restoreDebug(2)
 
-dbLoadRecords("../../db/save_restoreStatus.db", "P=DIAG_MTCA04:CPU_N0101:")
-save_restoreSet_status_prefix("DIAG_MTCA04:CPU_N0101:")
+dbLoadRecords("../../db/save_restoreStatus.db", "P=DIAG_MTCA04:CPU_N0004:")
+save_restoreSet_status_prefix("DIAG_MTCA04:CPU_N0004:")
 
 set_savefile_path("${AUTOSAVE}")
 set_requestfile_path("${AUTOSAVE}")

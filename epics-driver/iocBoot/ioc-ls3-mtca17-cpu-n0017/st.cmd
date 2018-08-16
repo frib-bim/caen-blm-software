@@ -16,29 +16,43 @@ dbLoadRecords("$(TOP)/db/iocAdminSoft.db", "IOC=DIAG_MTCA17:PICO")
 dbLoadRecords("$(TOP)/db/reccaster.db", "P=DIAG_MTCA17:PICO:")
 
 # slot numbers from /sys/bus/pci/slots/*/address
-createPICO8("PICO3", "/dev/amc_pico_0000:08:00.0")
-createPICO8("PICO4", "/dev/amc_pico_0000:06:00.0")
+createPICO8("PICO7", "/dev/amc_pico_0000:0f:00.0")
+createPICO8("PICO8", "/dev/amc_pico_0000:0d:00.0")
+createPICO8("PICO9", "/dev/amc_pico_0000:07:00.0")
 
 # (SYS):(D)_CHX:Y_Z
-dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA17,D=PICO3,NAME=PICO3,NELM=1000000")
-dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA17,D=PICO4,NAME=PICO4,NELM=1000000")
+dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA17,D=PICO7,NAME=PICO7,NELM=1000000")
+dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA17,D=PICO8,NAME=PICO8,NELM=1000000")
+dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA17,D=PICO9,NAME=PICO9,NELM=1000000")
 
 # record name aliases
 # (SYS):(D)_CHX:Y_Z -> (A)Y_Z
 
-# Slot 3
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO3_CH0:,A=LS1_D:PM_D1232:A_")   # D-Station, not in cable DB
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO3_CH1:,A=LS1_D:PM_D1232:B_")   # D-Station, not in cable DB
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO3_CH2:,A=LS1_D:PM_D1232:C_")   # D-Station, not in cable DB
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO3_CH4:,A=LS1_D:PM_D1240:A_")   # D-Station, not in cable DB
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO3_CH5:,A=LS1_D:PM_D1240:B_")   # D-Station, not in cable DB
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO3_CH6:,A=LS1_D:PM_D1240:C_")   # D-Station, not in cable DB
+# Slot 7
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO7_CH0:,A=LS3_BTS:PM_D4769:A_")
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO7_CH1:,A=LS3_BTS:PM_D4769:B_")
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO7_CH2:,A=LS3_BTS:PM_D4769:C_")
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO7_CH4:,A=LS3_BTS:PM_D4794:A_")
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO7_CH5:,A=LS3_BTS:PM_D4794:B_")
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO7_CH6:,A=LS3_BTS:PM_D4794:C_")
 
-# Slot 4
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO4_CH0:,A=LS1_D:FC_D1244")   # D-Station, not in cable DB
+# Slot 8
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH0:,A=LS3_BTS:PM_D4824:A_")
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH1:,A=LS3_BTS:PM_D4824:B_")
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH2:,A=LS3_BTS:PM_D4824:C_")
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH4:,A=LS3_BTS:PM_D4862:A_")
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH5:,A=LS3_BTS:PM_D4862:B_")
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO8_CH6:,A=LS3_BTS:PM_D4862:C_")
+
+# Slot 9
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO9_CH0:,A=LS3_BTS:IC_D4799:")
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO9_CH1:,A=LS3_BTS:IC_D4895:")
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO9_CH2:,A=LS3_BTS:IC_D5001:")
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA01:PICO9_CH3:,A=LS3_BTS:IC_D5105:")
+
 
 ## Start the PICO python helper script
-system "python ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA17:PICO3 DIAG_MTCA17:PICO4 &"
+system "python ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA17:PICO7 DIAG_MTCA17:PICO8 DIAG_MTCA17:PICO9 &"
 
 
 # Auto save/restore
@@ -66,5 +80,6 @@ create_monitor_set("pico_waveforms.req", 30 , "")
 caPutLogInit("${EPICS_PUT_LOG_INET}:${EPICS_PUT_LOG_PORT}", 1)
 
 ## Set PICO card AMC slot numbers on startup for each card.
-dbpf "DIAG_MTCA17:PICO3_FPS:SLT_CSET", "3"
-dbpf "DIAG_MTCA17:PICO4_FPS:SLT_CSET", "4"
+dbpf "DIAG_MTCA17:PICO7_FPS:SLT_CSET", "7"
+dbpf "DIAG_MTCA17:PICO8_FPS:SLT_CSET", "8"
+dbpf "DIAG_MTCA17:PICO9_FPS:SLT_CSET", "9"
