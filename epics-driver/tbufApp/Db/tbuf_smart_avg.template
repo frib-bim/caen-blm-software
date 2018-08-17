@@ -16,6 +16,7 @@ record(ai, "$(P)AVGF_RD") {
     field(DTYP, "$(DTYP)")
     field(INP , "$(INP)")
     field(SCAN, "$(SCAN=I/O Intr)")
+    field(EVNT, "$(EVNT=)")
     field(LINR, "$(LINR=LINEAR)")
     field(ASLO, "$(ASLO=)")
     field(AOFF, "$(AOFF=)")
