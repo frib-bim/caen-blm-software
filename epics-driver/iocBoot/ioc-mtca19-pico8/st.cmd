@@ -4,11 +4,6 @@
 
 epicsEnvSet("EPICS_CA_MAX_ARRAY_BYTES","10000000")
 
-epicsEnvSet("AUTOSAVE", "/mnt/iocdata/autosave/mtca19-pico8")
-
-## Channel Access Security config
-asSetFilename("${EPICS_CA_SEC_FILE}")
-
 dbLoadDatabase("../../dbd/pico.dbd",0,0)
 pico_registerRecordDeviceDriver(pdbbase)
 
@@ -87,30 +82,7 @@ dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA19:PICO8_CH5:,A=BDS_FF
 ## Start the PICO python helper script
 system "python ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA19:PICO3 DIAG_MTCA19:PICO4 DIAG_MTCA19:PICO5 DIAG_MTCA19:PICO6 DIAG_MTCA19:PICO7 DIAG_MTCA19:PICO8  &"
 
-
-# Auto save/restore
-save_restoreDebug(2)
-
-dbLoadRecords("../../db/save_restoreStatus.db", "P=DIAG_MTCA19:CPU_N0019:")
-save_restoreSet_status_prefix("DIAG_MTCA19:CPU_N0019:")
-
-set_savefile_path("${AUTOSAVE}")
-set_requestfile_path("${AUTOSAVE}")
-
-set_pass0_restoreFile("pico_settings.sav")
-set_pass1_restoreFile("pico_waveforms.sav")
-
 iocInit()
-iocLogInit()
-
-system "test -d ${AUTOSAVE} || mkdir ${AUTOSAVE}"
-makeAutosaveFileFromDbInfo("${AUTOSAVE}/pico_settings.req", "autosaveFields_pass0")
-makeAutosaveFileFromDbInfo("${AUTOSAVE}/pico_waveforms.req", "autosaveFields_pass1")
-
-create_monitor_set("pico_settings.req", 10 , "")
-create_monitor_set("pico_waveforms.req", 30 , "")
-
-caPutLogInit("${EPICS_PUT_LOG_INET}:${EPICS_PUT_LOG_PORT}", 1)
 
 ## Set PICO card AMC slot numbers on startup for each card.
 dbpf "DIAG_MTCA19:PICO3_FPS:SLT_CSET", "3"
