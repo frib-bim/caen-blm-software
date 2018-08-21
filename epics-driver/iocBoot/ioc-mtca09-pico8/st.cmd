@@ -13,7 +13,7 @@ createPICO8("PICO4", "/dev/amc_pico_0000:06:00.0")
 createPICO8("PICO5", "/dev/amc_pico_0000:09:00.0")
 createPICO8("PICO6", "/dev/amc_pico_0000:0b:00.0")
 createPICO8("PICO7", "/dev/amc_pico_0000:0f:00.0")
-createPICO8("PICO8", "/dev/amc_pico_0000:0d:00.0")
+createPICO8("PICO9", "/dev/amc_pico_0000:07:00.0")
 
 #debugPICO("PICO", 5)
 
@@ -23,7 +23,7 @@ dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA09,D=PICO4,NAME=PICO4,NELM=
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA09,D=PICO5,NAME=PICO5,NELM=1000000")
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA09,D=PICO6,NAME=PICO6,NELM=1000000")
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA09,D=PICO7,NAME=PICO7,NELM=1000000")
-dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA09,D=PICO8,NAME=PICO8,NELM=1000000")
+dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA09,D=PICO9,NAME=PICO9,NELM=1000000")
 
 # record name aliases
 # (SYS):(D)_CHX:Y_Z -> (A)Y_Z
@@ -67,12 +67,12 @@ dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA09:PICO7_CH5:,A=FS1_ST
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA09:PICO7_CH6:,A=FS1_STRL:IC_D2253:")
 dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA09:PICO7_CH7:,A=FS1_STRL:IC_D2254:")
 
-# Slot 8: Halo Ring Monitor (BLM)
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA09:PICO8_CH0:,A=LS1_WB10:HMR_D1861:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA09:PICO8_CH1:,A=LS1_WB11:HMR_D1924:")
+# Slot 9: Halo Ring Monitor (BLM)
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA09:PICO9_CH0:,A=LS1_WB10:HMR_D1861:")
+dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA09:PICO9_CH1:,A=LS1_WB11:HMR_D1924:")
 
 ## Start the PICO python helper script
-system "python ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA09:PICO3 DIAG_MTCA09:PICO4 DIAG_MTCA09:PICO5 DIAG_MTCA09:PICO6 DIAG_MTCA09:PICO7 DIAG_MTCA09:PICO8 &"
+system "python ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA09:PICO3 DIAG_MTCA09:PICO4 DIAG_MTCA09:PICO5 DIAG_MTCA09:PICO6 DIAG_MTCA09:PICO7 DIAG_MTCA09:PICO9 &"
 
 iocInit()
 
@@ -82,4 +82,4 @@ dbpf "DIAG_MTCA09:PICO4_FPS:SLT_CSET", "4"
 dbpf "DIAG_MTCA09:PICO5_FPS:SLT_CSET", "5"
 dbpf "DIAG_MTCA09:PICO6_FPS:SLT_CSET", "6"
 dbpf "DIAG_MTCA09:PICO7_FPS:SLT_CSET", "7"
-dbpf "DIAG_MTCA09:PICO8_FPS:SLT_CSET", "8"
+dbpf "DIAG_MTCA09:PICO9_FPS:SLT_CSET", "9"
