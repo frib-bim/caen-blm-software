@@ -8,9 +8,9 @@ dbLoadDatabase("../../dbd/pico.dbd",0,0)
 pico_registerRecordDeviceDriver(pdbbase)
 
 # slot numbers from /sys/bus/pci/slots/*/address
-createPICO8("PICO8", "/dev/amc_pico_0000:0f:00.0")
-createPICO8("PICO9", "/dev/amc_pico_0000:0d:00.0")
-createPICO8("PICO10", "/dev/amc_pico_0000:07:00.0")
+createPICO8("PICO8", "/dev/amc_pico_0000:0d:00.0")
+createPICO8("PICO9", "/dev/amc_pico_0000:07:00.0")
+createPICO8("PICO10", "/dev/amc_pico_0000:05:00.0")
 
 #debugPICO("PICO", 5)
 
