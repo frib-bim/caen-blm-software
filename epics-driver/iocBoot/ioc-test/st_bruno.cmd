@@ -17,13 +17,13 @@ pico_registerRecordDeviceDriver(pdbbase)
 #dbLoadRecords("db/pico8_frib.db","SYS=TST,D=picod,NAME=PICOD,NELM=1048576")
 #dbLoadRecords("db/pico8_frib.db","SYS=TST,D=pico3,NAME=PICO3,NELM=1048576")
 
-createPICO8("PICO3", "/dev/amc_pico_0000:06:00.0", "$(PICO_RATE_LIMIT)")
-createPICO8("PICO4", "/dev/amc_pico_0000:09:00.0", "$(PICO_RATE_LIMIT)")
-createPICO8("PICO5", "/dev/amc_pico_0000:0a:00.0", "$(PICO_RATE_LIMIT)")
+createPICO8("PICO3", "/dev/amc_pico_0000:06:00.0")
+createPICO8("PICO4", "/dev/amc_pico_0000:09:00.0")
+createPICO8("PICO5", "/dev/amc_pico_0000:0a:00.0")
 
-dbLoadRecords("db/pico8_frib.db","SYS=TST,D=pico3,NAME=PICO3,NELM=1048576")
-dbLoadRecords("db/pico8_frib.db","SYS=TST,D=pico4,NAME=PICO4,NELM=1048576")
-dbLoadRecords("db/pico8_frib.db","SYS=TST,D=pico5,NAME=PICO5,NELM=1048576")
+dbLoadRecords("db/pico8_frib.db","SYS=DIAG_MTCA01,D=PICO3,NAME=PICO3,NELM=1048576")
+dbLoadRecords("db/pico8_frib.db","SYS=DIAG_MTCA01,D=PICO4,NAME=PICO4,NELM=1048576")
+dbLoadRecords("db/pico8_frib.db","SYS=DIAG_MTCA01,D=PICO5,NAME=PICO5,NELM=1048576")
 
 #dbLoadRecords("db/pico8_chan_alias.db", "P=TST:picod_CH0:,A=TST_ALIAS:picod_CH0:")
 
