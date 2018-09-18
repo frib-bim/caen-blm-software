@@ -1,8 +1,8 @@
-record(waveform, "$(P)$(CHAN)DESC_RD") {
+record(stringin, "$(P)$(CHAN)DESC_RD") {
     field(DESC, "Label")
-    field(FTVL, "CHAR")
-    field(NELM, "128")
-    info(autosaveFields_pass1, "VAL")
+    field(VAL,  "")
+    field(PINI, "YES")
+    # VAL is overriden when loading pico8_chan_alias.db in the startup script
 }
 
 record(mbbo, "$(P)$(CHAN)RNG_CMD") {

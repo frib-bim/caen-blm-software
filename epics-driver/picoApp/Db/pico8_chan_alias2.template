@@ -1,3 +1,7 @@
+record(stringin, "$(P)DESC_RD") {
+    field(VAL,  "$(A)")
+}
+
 alias("$(P)DESC_RD", "$(A)DESC_RD")
 alias("$(P)RNG_CMD", "$(A)RNG_CMD")
 alias("$(P)I_RD", "$(A)I_RD")
