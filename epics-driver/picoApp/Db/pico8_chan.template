@@ -40,7 +40,6 @@ record(ao, "$(P)$(CHAN)SLO_CSET") {
     field(PINI, "YES")
     field(PREC, "3")
     field(VAL , "$(ASLO=1)")
-    info(autosaveFields_pass0, "VAL")
 }
 
 record(ao, "$(P)$(CHAN)OFST_CSET") {
@@ -50,7 +49,6 @@ record(ao, "$(P)$(CHAN)OFST_CSET") {
     field(PINI, "YES")
     field(PREC, "3")
     field(VAL , "$(AOFF=0)")
-    info(autosaveFields_pass0, "VAL")
 }
 
 ## Added by Scott
