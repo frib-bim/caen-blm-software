@@ -32,9 +32,6 @@ record(longin, "$(CTRL)CYC_TSEC") {  field(DTYP, "Pico8 User Reg UInt32")  field
 record(longin, "$(CTRL)CYC_TSUB") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30104") field(SCAN, ".1 second") }
 record(longin, "$(CTRL)CYC_TON")  {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x30108") field(SCAN, ".1 second") }
 record(longin, "$(CTRL)CYC_EOCM") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x3010C") field(SCAN, ".1 second") }
-record(calc, "$(CTRL)IRQT_MSEC") {  field(INPA, "$(CTRL)IRQT_RD NPP MS")  field(CALC, "A/125.0e3")  field(EGU , "ms") }
-record(calc, "$(CTRL)ISRT_MSEC") {  field(INPA, "$(CTRL)ISRT_RD NPP MS")  field(CALC, "A/125.0e3")  field(EGU , "ms") }
-record(calc, "$(CTRL)ISRMAX_MSEC") {  field(INPA, "$(CTRL)ISRMAX_RD NPP MS")  field(CALC, "A/125.0e3")  field(EGU , "ms") }
 record(longin, "$(CTRL)MPSRespTime_") {
     field(DTYP, "Pico8 User Reg UInt32")
     field(INP , "@$(NAME) offset=0x30068")
@@ -95,28 +92,61 @@ record(longin, "$(CTRL)FFWVER_RD") {
     field(PINI, "YES")
 }
 
-record(longin, "$(CTRL)IRQT_RD") {
+record(longin, "$(CTRL)IRQTRAW_RD") {
     field(DESC, "Time between IRQs")
     field(DTYP, "Pico8 User Reg UInt32")
     field(INP , "@$(NAME) offset=0x30028")
     field(SCAN, ".1 second")
-    field(FLNK, "$(CTRL)IRQT_MSEC")
 }
 
-record(longin, "$(CTRL)ISRT_RD") {
+record(longin, "$(CTRL)ISRTRAW_RD") {
     field(DESC, "ISR time")
     field(DTYP, "Pico8 User Reg UInt32")
     field(INP , "@$(NAME) offset=0x3002c")
     field(SCAN, ".1 second")
-    field(FLNK, "$(CTRL)ISRT_MSEC")
 }
 
-record(longin, "$(CTRL)ISRMAX_RD") {
+record(longin, "$(CTRL)ISRMAXRAW_RD") {
     field(DESC, "ISR time")
     field(DTYP, "Pico8 User Reg UInt32")
     field(INP , "@$(NAME) offset=0x30030")
     field(SCAN, ".1 second")
-    field(FLNK, "$(CTRL)ISRMAX_MSEC")
+}
+
+record(ai, "$(CTRL)IRQT_RD") {
+    field(DESC, "Time between IRQs")
+    field(DTYP, "Raw Soft Channel")
+    field(INP , "$(CTRL)IRQTRAW_RD CP MS")
+    field(SCAN, ".1 second")
+    field(ASLO, "8e-6")
+    field(EGU,  "ms")
+    field(PREC, "3")
+    field(LOW,  "9.990")
+    field(LOLO, "9.950")
+    field(HIGH, "10.010")
+    field(HIHI, "10.050")
+}
+
+record(ai, "$(CTRL)ISRT_RD") {
+    field(DESC, "ISR time")
+    field(DTYP, "Raw Soft Channel")
+    field(INP , "$(CTRL)ISRTRAW_RD CP MS")
+    field(SCAN, ".1 second")
+    field(ASLO, "8e-6")
+    field(EGU,  "ms")
+    field(PREC, "3")
+}
+
+record(ai, "$(CTRL)ISRMAX_RD") {
+    field(DESC, "ISR time")
+    field(DTYP, "Raw Soft Channel")
+    field(INP , "$(CTRL)ISRMAXRAW_RD CP MS")
+    field(SCAN, ".1 second")
+    field(ASLO, "8e-6")
+    field(EGU,  "ms")
+    field(PREC, "3")
+    field(HIGH, "5.0")
+    field(HIHI, "7.0")
 }
 
 record(longout, "$(CTRL)ISRMAXCLR_CMD") {
