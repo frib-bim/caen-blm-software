@@ -47,8 +47,6 @@ record(ai, "$(P)_RD") {
     field(INP , "@$(P) $(Stat=Average)")
     field(SCAN, "I/O Intr")
     field(LINR, "$(LINR=LINEAR)")
-    field(ASLO, "$(ASLO=)")
-    field(AOFF, "$(AOFF=)")
     field(ESLO, "$(ESLO=)")
     field(EOFF, "$(EOFF=)")
     field(PREC, "$(PREC=)")

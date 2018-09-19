@@ -446,7 +446,7 @@ void get_value_stat(timebuf *tb, aiRecord *prec, reduce_t reduce)
     if(reduce == Stdev || reduce == WeightedStd || reduce == MaskedStd) {
         double meanval = newval;
 
-        if (reduce == Average || reduce == MaskedAvg)
+        if (reduce == Stdev || reduce == MaskedStd)
             meanval /= tb->cnt;
         else if (totalweight)
             meanval /= totalweight;
@@ -457,9 +457,9 @@ void get_value_stat(timebuf *tb, aiRecord *prec, reduce_t reduce)
             size_t pos = tb->idx(p);
             double diff = 0.0;
 
-            if (reduce == WeightedAvg)
+            if (reduce == WeightedStd)
                 diff = tb->weights[pos]*tb->values[pos] - meanval;
-            else if (reduce == Average || allweightszero || tb->weights[pos])
+            else if (reduce == Stdev || allweightszero || tb->weights[pos])
                 diff = tb->values[pos] - meanval;
 
             newval += diff*diff;
