@@ -43,19 +43,10 @@ pico_SRCS += pico_registerRecordDeviceDriver.cpp
 pico_SRCS_DEFAULT += picoMain.cpp
 pico_SRCS_vxWorks += -nil-
 
-pico_DBD += asSupport.dbd
-pico_LIBS += autosave
-
 ifneq ($(DEVLIB2),)
 pico_DBD += epicspci.dbd
 pico_LIBS += epicspci
 endif
-
-pico_DBD += reccaster.dbd devIocStats.dbd caPutLog.dbd
-pico_LIBS += reccaster devIocStats caPutLog
-
-pico_DBD += fribdiagstd.dbd
-pico_LIBS += fribdiagstd
 
 # Add support from base/src/vxWorks if needed
 #pico_OBJS_vxWorks += $(EPICS_BASE_BIN)/vxComLibrary
@@ -72,6 +63,7 @@ picocli_SRCS += cli.cpp
 
 #===========================
 
+include $(DIAGSTD)/configure/fribdiagstdMakefile
 include $(TOP)/configure/RULES
 #----------------------------------------
 #  ADD RULES AFTER THIS LINE
