@@ -19,13 +19,13 @@ dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA12,D=PICO5,NAME=PICO5,NELM=
 # (SYS):(D)_CHX:Y_Z -> (A)Y_Z
 
 # Slot 5
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA12:PICO5_CH0:,A=LS2_CC08:ND_D2987:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA12:PICO5_CH1:,A=LS2_CC10:ND_D3075:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA12:PICO5_CH2:,A=LS2_CC12:ND_D3155:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA12:PICO5_CH3:,A=LS2_CD02:ND_D3252:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA12:PICO5_CH4:,A=LS2_CD04:ND_D3376:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA12:PICO5_CH5:,A=LS2_CD06:ND_D3500:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA12:PICO5_CH6:,A=LS2_CD08:ND_D3624:")
+reAddAlias "DIAG_MTCA12:PICO5_CH0:(.*)" "LS2_CC08:ND_D2987:$1"
+reAddAlias "DIAG_MTCA12:PICO5_CH1:(.*)" "LS2_CC10:ND_D3075:$1"
+reAddAlias "DIAG_MTCA12:PICO5_CH2:(.*)" "LS2_CC12:ND_D3155:$1"
+reAddAlias "DIAG_MTCA12:PICO5_CH3:(.*)" "LS2_CD02:ND_D3252:$1"
+reAddAlias "DIAG_MTCA12:PICO5_CH4:(.*)" "LS2_CD04:ND_D3376:$1"
+reAddAlias "DIAG_MTCA12:PICO5_CH5:(.*)" "LS2_CD06:ND_D3500:$1"
+reAddAlias "DIAG_MTCA12:PICO5_CH6:(.*)" "LS2_CD08:ND_D3624:$1"
 
 
 ## Start the PICO python helper script

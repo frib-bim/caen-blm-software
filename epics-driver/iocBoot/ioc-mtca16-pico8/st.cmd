@@ -19,8 +19,8 @@ dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA16,D=PICO7,NAME=PICO7,NELM=
 # (SYS):(D)_CHX:Y_Z -> (A)Y_Z
 
 # Slot 7
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA16:PICO7_CH0:,A=LS3_CD05:IC_D4602:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA16:PICO7_CH1:,A=LS3_BTS:IC_D4701:")
+reAddAlias "DIAG_MTCA16:PICO7_CH0:(.*)" "LS3_CD05:IC_D4602:$1"
+reAddAlias "DIAG_MTCA16:PICO7_CH1:(.*)" "LS3_BTS:IC_D4701:$1"
 
 
 ## Start the PICO python helper script

@@ -19,13 +19,13 @@ dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA03,D=PICO3,NAME=PICO3,NELM=
 # (SYS):(D)_CHX:Y_Z -> (A)Y_Z
 
 # Slot 3
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA03:PICO3_CH0:,A=FS2_BMS:IC_D4141:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA03:PICO3_CH1:,A=FS2_BMS:IC_D4180:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA03:PICO3_CH2:,A=FS2_BMS:IC_D4221:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA03:PICO3_CH3:,A=FS2_BMS:IC_D4277:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA03:PICO3_CH4:,A=FS2_BMS:IC_D4305:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA03:PICO3_CH5:,A=LS3_CD01:IC_D4385:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA03:PICO3_CH6:,A=LS3_CD03:IC_D4503:")
+reAddAlias "DIAG_MTCA03:PICO3_CH0:(.*)" "FS2_BMS:IC_D4141:$1"
+reAddAlias "DIAG_MTCA03:PICO3_CH1:(.*)" "FS2_BMS:IC_D4180:$1"
+reAddAlias "DIAG_MTCA03:PICO3_CH2:(.*)" "FS2_BMS:IC_D4221:$1"
+reAddAlias "DIAG_MTCA03:PICO3_CH3:(.*)" "FS2_BMS:IC_D4277:$1"
+reAddAlias "DIAG_MTCA03:PICO3_CH4:(.*)" "FS2_BMS:IC_D4305:$1"
+reAddAlias "DIAG_MTCA03:PICO3_CH5:(.*)" "LS3_CD01:IC_D4385:$1"
+reAddAlias "DIAG_MTCA03:PICO3_CH6:(.*)" "LS3_CD03:IC_D4503:$1"
 
 
 ## Start the PICO python helper script

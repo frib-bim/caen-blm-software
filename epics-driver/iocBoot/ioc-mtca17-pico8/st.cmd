@@ -23,26 +23,26 @@ dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA17,D=PICO9,NAME=PICO9,NELM=
 # (SYS):(D)_CHX:Y_Z -> (A)Y_Z
 
 # Slot 7
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO7_CH0:,A=LS3_BTS:PM_D4771:A_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO7_CH1:,A=LS3_BTS:PM_D4771:B_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO7_CH2:,A=LS3_BTS:PM_D4771:C_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO7_CH4:,A=LS3_BTS:PM_D4797:A_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO7_CH5:,A=LS3_BTS:PM_D4797:B_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO7_CH6:,A=LS3_BTS:PM_D4797:C_")
+reAddAlias "DIAG_MTCA17:PICO7_CH0:(.*)" "LS3_BTS:PM_D4771:A_$1"
+reAddAlias "DIAG_MTCA17:PICO7_CH1:(.*)" "LS3_BTS:PM_D4771:B_$1"
+reAddAlias "DIAG_MTCA17:PICO7_CH2:(.*)" "LS3_BTS:PM_D4771:C_$1"
+reAddAlias "DIAG_MTCA17:PICO7_CH4:(.*)" "LS3_BTS:PM_D4797:A_$1"
+reAddAlias "DIAG_MTCA17:PICO7_CH5:(.*)" "LS3_BTS:PM_D4797:B_$1"
+reAddAlias "DIAG_MTCA17:PICO7_CH6:(.*)" "LS3_BTS:PM_D4797:C_$1"
 
 # Slot 8
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO8_CH0:,A=LS3_BTS:PM_D4827:A_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO8_CH1:,A=LS3_BTS:PM_D4827:B_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO8_CH2:,A=LS3_BTS:PM_D4827:C_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO8_CH4:,A=LS3_BTS:PM_D4862:A_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO8_CH5:,A=LS3_BTS:PM_D4862:B_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO8_CH6:,A=LS3_BTS:PM_D4862:C_")
+reAddAlias "DIAG_MTCA17:PICO8_CH0:(.*)" "LS3_BTS:PM_D4827:A_$1"
+reAddAlias "DIAG_MTCA17:PICO8_CH1:(.*)" "LS3_BTS:PM_D4827:B_$1"
+reAddAlias "DIAG_MTCA17:PICO8_CH2:(.*)" "LS3_BTS:PM_D4827:C_$1"
+reAddAlias "DIAG_MTCA17:PICO8_CH4:(.*)" "LS3_BTS:PM_D4862:A_$1"
+reAddAlias "DIAG_MTCA17:PICO8_CH5:(.*)" "LS3_BTS:PM_D4862:B_$1"
+reAddAlias "DIAG_MTCA17:PICO8_CH6:(.*)" "LS3_BTS:PM_D4862:C_$1"
 
 # Slot 9
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO9_CH0:,A=LS3_BTS:IC_D4799:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO9_CH1:,A=LS3_BTS:IC_D4895:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO9_CH2:,A=LS3_BTS:IC_D5001:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA17:PICO9_CH3:,A=LS3_BTS:IC_D5105:")
+reAddAlias "DIAG_MTCA17:PICO9_CH0:(.*)" "LS3_BTS:IC_D4799:$1"
+reAddAlias "DIAG_MTCA17:PICO9_CH1:(.*)" "LS3_BTS:IC_D4895:$1"
+reAddAlias "DIAG_MTCA17:PICO9_CH2:(.*)" "LS3_BTS:IC_D5001:$1"
+reAddAlias "DIAG_MTCA17:PICO9_CH3:(.*)" "LS3_BTS:IC_D5105:$1"
 
 
 ## Start the PICO python helper script

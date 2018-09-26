@@ -19,11 +19,11 @@ dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA07,D=PICO8,NAME=PICO8,NELM=
 # (SYS):(D)_CHX:Y_Z -> (A)Y_Z
 
 # Slot 8
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA07:PICO8_CH0:,A=LS1_CB05:ND_D1505:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA07:PICO8_CH1:,A=LS1_CB07:ND_D1633:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA07:PICO8_CH2:,A=LS1_CB09:ND_D1760:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA07:PICO8_CH3:,A=LS1_CB11:ND_D1908:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA07:PICO8_CH4:,A=LS1_BTS:ND_D2076:")
+reAddAlias "DIAG_MTCA07:PICO8_CH0:(.*)" "LS1_CB05:ND_D1505:$1"
+reAddAlias "DIAG_MTCA07:PICO8_CH1:(.*)" "LS1_CB07:ND_D1633:$1"
+reAddAlias "DIAG_MTCA07:PICO8_CH2:(.*)" "LS1_CB09:ND_D1760:$1"
+reAddAlias "DIAG_MTCA07:PICO8_CH3:(.*)" "LS1_CB11:ND_D1908:$1"
+reAddAlias "DIAG_MTCA07:PICO8_CH4:(.*)" "LS1_BTS:ND_D2076:$1"
 
 
 ## Start the PICO python helper script

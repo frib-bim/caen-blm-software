@@ -29,47 +29,47 @@ dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA15,D=PICO8,NAME=PICO8,NELM=
 # (SYS):(D)_CHX:Y_Z -> (A)Y_Z
 
 # Slot 3
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO3_CH0:,A=FE_LEBT:PM_D0945:A_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO3_CH1:,A=FE_LEBT:PM_D0945:B_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO3_CH2:,A=FE_LEBT:PM_D0945:C_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO3_CH4:,A=FE_LEBT:PM_D0961:A_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO3_CH5:,A=FE_LEBT:PM_D0961:B_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO3_CH6:,A=FE_LEBT:PM_D0961:C_")
+reAddAlias "DIAG_MTCA15:PICO3_CH0:(.*)" "FE_LEBT:PM_D0945:A_$1"
+reAddAlias "DIAG_MTCA15:PICO3_CH1:(.*)" "FE_LEBT:PM_D0945:B_$1"
+reAddAlias "DIAG_MTCA15:PICO3_CH2:(.*)" "FE_LEBT:PM_D0945:C_$1"
+reAddAlias "DIAG_MTCA15:PICO3_CH4:(.*)" "FE_LEBT:PM_D0961:A_$1"
+reAddAlias "DIAG_MTCA15:PICO3_CH5:(.*)" "FE_LEBT:PM_D0961:B_$1"
+reAddAlias "DIAG_MTCA15:PICO3_CH6:(.*)" "FE_LEBT:PM_D0961:C_$1"
 
 # Slot 4
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO4_CH0:,A=FE_LEBT:PM_D0972:A_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO4_CH1:,A=FE_LEBT:PM_D0972:B_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO4_CH2:,A=FE_LEBT:PM_D0972:C_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO4_CH4:,A=FE_LEBT:PM_D0986:A_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO4_CH5:,A=FE_LEBT:PM_D0986:B_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO4_CH6:,A=FE_LEBT:PM_D0986:C_")
+reAddAlias "DIAG_MTCA15:PICO4_CH0:(.*)" "FE_LEBT:PM_D0972:A_$1"
+reAddAlias "DIAG_MTCA15:PICO4_CH1:(.*)" "FE_LEBT:PM_D0972:B_$1"
+reAddAlias "DIAG_MTCA15:PICO4_CH2:(.*)" "FE_LEBT:PM_D0972:C_$1"
+reAddAlias "DIAG_MTCA15:PICO4_CH4:(.*)" "FE_LEBT:PM_D0986:A_$1"
+reAddAlias "DIAG_MTCA15:PICO4_CH5:(.*)" "FE_LEBT:PM_D0986:B_$1"
+reAddAlias "DIAG_MTCA15:PICO4_CH6:(.*)" "FE_LEBT:PM_D0986:C_$1"
 
 # Slot 5
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO5_CH0:,A=FS2_BBS:PM_D4051:A_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO5_CH1:,A=FS2_BBS:PM_D4051:B_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO5_CH2:,A=FS2_BBS:PM_D4051:C_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO5_CH4:,A=FS2_BMS:PM_D4144:A_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO5_CH5:,A=FS2_BMS:PM_D4144:B_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO5_CH6:,A=FS2_BMS:PM_D4144:C_")
+reAddAlias "DIAG_MTCA15:PICO5_CH0:(.*)" "FS2_BBS:PM_D4051:A_$1"
+reAddAlias "DIAG_MTCA15:PICO5_CH1:(.*)" "FS2_BBS:PM_D4051:B_$1"
+reAddAlias "DIAG_MTCA15:PICO5_CH2:(.*)" "FS2_BBS:PM_D4051:C_$1"
+reAddAlias "DIAG_MTCA15:PICO5_CH4:(.*)" "FS2_BMS:PM_D4144:A_$1"
+reAddAlias "DIAG_MTCA15:PICO5_CH5:(.*)" "FS2_BMS:PM_D4144:B_$1"
+reAddAlias "DIAG_MTCA15:PICO5_CH6:(.*)" "FS2_BMS:PM_D4144:C_$1"
 
 # Slot 6
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO6_CH0:,A=FS2_BTS:PM_D3959:A_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO6_CH1:,A=FS2_BTS:PM_D3959:B_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO6_CH2:,A=FS2_BTS:PM_D3959:C_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO6_CH4:,A=FS2_BTS:PM_D4009:A_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO6_CH5:,A=FS2_BTS:PM_D4009:B_")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO6_CH6:,A=FS2_BTS:PM_D4009:C_")
+reAddAlias "DIAG_MTCA15:PICO6_CH0:(.*)" "FS2_BTS:PM_D3959:A_$1"
+reAddAlias "DIAG_MTCA15:PICO6_CH1:(.*)" "FS2_BTS:PM_D3959:B_$1"
+reAddAlias "DIAG_MTCA15:PICO6_CH2:(.*)" "FS2_BTS:PM_D3959:C_$1"
+reAddAlias "DIAG_MTCA15:PICO6_CH4:(.*)" "FS2_BTS:PM_D4009:A_$1"
+reAddAlias "DIAG_MTCA15:PICO6_CH5:(.*)" "FS2_BTS:PM_D4009:B_$1"
+reAddAlias "DIAG_MTCA15:PICO6_CH6:(.*)" "FS2_BTS:PM_D4009:C_$1"
 
 # Slot 7
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO7_CH0:,A=FS2_BBS:IC_D4055:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO7_CH1:,A=FS2_BBS:IC_D4018:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO7_CH2:,A=FS2_BBS:IC_D3979:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO7_CH4:,A=FS2_BTS:IC_D4018:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO7_CH5:,A=FS2_BTS:IC_D3940:")
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO7_CH6:,A=FS2_BBS:IC_D4102:")
+reAddAlias "DIAG_MTCA15:PICO7_CH0:(.*)" "FS2_BBS:IC_D4055:$1"
+reAddAlias "DIAG_MTCA15:PICO7_CH1:(.*)" "FS2_BBS:IC_D4018:$1"
+reAddAlias "DIAG_MTCA15:PICO7_CH2:(.*)" "FS2_BBS:IC_D3979:$1"
+reAddAlias "DIAG_MTCA15:PICO7_CH4:(.*)" "FS2_BTS:IC_D4018:$1"
+reAddAlias "DIAG_MTCA15:PICO7_CH5:(.*)" "FS2_BTS:IC_D3940:$1"
+reAddAlias "DIAG_MTCA15:PICO7_CH6:(.*)" "FS2_BBS:IC_D4102:$1"
 
 # Slot 8
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA15:PICO8_CH2:,A=FS2_BTS:IC_D4019:")
+reAddAlias "DIAG_MTCA15:PICO8_CH2:(.*)" "FS2_BTS:IC_D4019:$1"
 
 
 ## Start the PICO python helper script
