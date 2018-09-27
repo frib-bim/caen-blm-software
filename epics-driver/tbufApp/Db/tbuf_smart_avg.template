@@ -227,12 +227,28 @@ record(waveform, "$(P)AVGALLW_RD") {
     field(TSE , "-2")
 }
 
+# Force 1Hz
+record(bi, "$(P)AVG1HZFRC_CMD") {
+    field(DESC, "Force 1Hz Avg")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+    field(VAL,  "0")
+    field(PINI, "YES")
+}
+
+# Use 1Hz instead of 5Hz?
+record(calc, "$(P)AVG1HZSEL_RD") {
+    field(DESC, "Is 1Hz Avg selected?")
+    field(INPA, "$(P)AVGALL_RD CP")
+    field(INPB, "$(P)AVG1HZFRC_CMD CP")
+    field(CALC, "!A || B")
+}
+
 # Final value
 record(calc, "$(P)AVG_RD") {
-    field(INPA, "$(P)AVGALL_RD")
-    field(INPB, "$(P)AVG5HZ_RD CP")
-    field(INPC, "$(P)AVG1HZ_RD")
-    field(INPD, "$(SCALE=1.0)")
+    field(INPA, "$(P)AVG1HZSEL_RD")
+    field(INPB, "$(P)AVG1HZ_RD")
+    field(INPC, "$(P)AVG5HZ_RD CP")
     field(CALC, "(A ? B : C)")
     field(EGU,  "$(EGU=)")
     field(PREC, "$(PREC)")
