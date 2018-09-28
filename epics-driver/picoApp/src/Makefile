@@ -37,7 +37,6 @@ pico_LIBS += tbuf
 # Add all the support libraries needed by this IOC
 pico_LIBS += calc seq sscan pv
 pico_LIBS += retools
-pico_SYS_LIBS += pcre2-8
 
 # pico_registerRecordDeviceDriver.cpp derives from pico.dbd
 pico_SRCS += pico_registerRecordDeviceDriver.cpp
