@@ -19,14 +19,18 @@ createPICO8("PICO{{ card_num }}", "/dev/amc_pico_0000:{{ card_data.addr }}:00.0"
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA{{ mtca_num }},D=PICO{{ card_num }},NAME=PICO{{ card_num }},NELM=1000000")
 {%- endfor %}
 
+< $(TOP)/iocBoot/archiver_tags.cmd
+
 # record name aliases
 # (SYS):(D)_CHX:Y_Z -> (A)Y_Z
 {% for card_num, card_data in mtca_data.cards|dictsort %}
 # Slot {{ card_num }}
   {%- for chan_num, chan_data in card_data.chans|dictsort %}
-dbLoadRecords("../../db/pico8_chan_alias.db", "P=DIAG_MTCA{{ mtca_num }}:PICO{{ card_num }}_CH{{ chan_num }}:,A={{ chan_data.dev }}")
+reAddAlias "DIAG_MTCA{{ mtca_num }}:PICO{{ card_num }}_CH{{ chan_num }}:(.*)" "{{ chan_data.dev }}$1"
   {%- endfor %}
 {% endfor %}
+
+< $(TOP)/iocBoot/archiver_chan_tags.cmd
 
 ## Start the PICO python helper script
 system "python ../../iocBoot/scripts/blm_processing_thread.py {% for card_num, d in mtca_data.cards|dictsort %}DIAG_MTCA{{ mtca_num }}:PICO{{ card_num }} {% endfor -%} &"

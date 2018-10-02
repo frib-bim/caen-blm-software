@@ -25,6 +25,8 @@ dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA19,D=PICO6,NAME=PICO6,NELM=
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA19,D=PICO7,NAME=PICO7,NELM=1000000")
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA19,D=PICO8,NAME=PICO8,NELM=1000000")
 
+< $(TOP)/iocBoot/archiver_tags.cmd
+
 # record name aliases
 # (SYS):(D)_CHX:Y_Z -> (A)Y_Z
 
@@ -75,6 +77,8 @@ reAddAlias "DIAG_MTCA19:PICO8_CH3:(.*)" "BDS_FFS:IC_D5765:$1"
 reAddAlias "DIAG_MTCA19:PICO8_CH4:(.*)" "BDS_FFS:IC_D5800:$1"
 reAddAlias "DIAG_MTCA19:PICO8_CH5:(.*)" "BDS_FFS:IC_D5822:$1"
 
+
+< $(TOP)/iocBoot/archiver_chan_tags.cmd
 
 ## Start the PICO python helper script
 system "python ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA19:PICO3 DIAG_MTCA19:PICO4 DIAG_MTCA19:PICO5 DIAG_MTCA19:PICO6 DIAG_MTCA19:PICO7 DIAG_MTCA19:PICO8 &"
