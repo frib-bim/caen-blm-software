@@ -5,6 +5,7 @@
 < envPaths
 
 epicsEnvSet("EPICS_CA_MAX_ARRAY_BYTES","10000000")
+epicsEnvSet("ENGINEER", "diag")
 
 dbLoadDatabase("../../dbd/pico.dbd",0,0)
 pico_registerRecordDeviceDriver(pdbbase)
