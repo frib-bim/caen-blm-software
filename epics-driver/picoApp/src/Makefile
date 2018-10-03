@@ -59,9 +59,8 @@ pico_LIBS += $(EPICS_BASE_IOC_LIBS)
 
 endif # SKIP_TEST
 
-PROD_IOC += picocli
-
-picocli_SRCS += cli.cpp
+#PROD_IOC += picocli
+#picocli_SRCS += cli.cpp
 
 #===========================
 
