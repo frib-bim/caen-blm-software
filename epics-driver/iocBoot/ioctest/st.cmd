@@ -10,7 +10,7 @@ epicsEnvSet("PICO_RATE_LIMIT", "10.0")
 dbLoadDatabase("dbd/pico.dbd",0,0)
 pico_registerRecordDeviceDriver(pdbbase) 
 
-#system("insmod ../linux-driver/amc_pico.ko")
+system("insmod ../linux-driver/amc_pico.ko")
 
 createPICO8("PICOD", "/dev/amc_pico_0000:06:00.0", "$(PICO_RATE_LIMIT)")
 #createPICO8("PICO3", "/dev/amc_pico_0000:07:00.0", "$(PICO_RATE_LIMIT)")

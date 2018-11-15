@@ -25,3 +25,15 @@ record(bo, "$(P)CWBEAM_CSET") {
     # MASK is automagially set from mask=
     info(autosaveFields_pass0, "RVAL")
 }
+
+record(bo, "$(P)AUTOOFFS_CSET") {
+    field(DESC, "CW Beam")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT, "@$(NAME) offset=$(CTRL) mask=0x1<<$(BIT)")
+    field(RVAL, "0")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+    field(PINI, "RUNNING")
+    # MASK is automagially set from mask=
+    info(autosaveFields_pass0, "RVAL")
+}

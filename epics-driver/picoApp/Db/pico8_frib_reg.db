@@ -18,6 +18,7 @@ record(longin, "$(CTRL)DDR_LAST_ADDR")  {  field(DTYP, "Pico8 User Reg UInt32") 
 record(longout,"$(CTRL)DDR_CTRL")       {  field(DTYP, "Pico8 User Reg UInt32")  field(OUT , "@$(NAME) offset=0x30008")  field(PINI, "YES")  info(autosaveFields_pass0, "VAL") }
 record(longout,"$(CTRL)DDR_PATTERN")    {  field(DTYP, "Pico8 User Reg UInt32")  field(OUT , "@$(NAME) offset=0x3000C")  field(PINI, "YES")  info(autosaveFields_pass0, "VAL") }
 
+record(longout,"$(CTRL)RegEventTrigger")  {  field(DTYP, "Pico8 User Reg UInt32")  field(OUT , "@$(NAME) offset=0x3006C")  field(VAL,"258")  field(PINI, "YES")  info(autosaveFields_pass0, "VAL") }
 
 ## Python DDR readback interface
 record(longout, "$(CTRL)acqDDRwave") { field(DTYP, "Soft Channel") field(VAL,"0")  field(PINI, "YES") }
@@ -46,8 +47,6 @@ record(ai, "$(CTRL)MPSRespTime") {
     field(HIGH, "10.0")
     field(HSV , "MAJOR")
 }
-
-
 
 ##  Original from Davidsaver
 ## ==================================================
