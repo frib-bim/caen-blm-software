@@ -204,27 +204,27 @@ pattern
 
 file "tbuf_smart_avg.template" {
 pattern
-{ P,                        ADDR,   ASLO,  FLNK                                      }
+{ P,                        ADDR,   ASLO,  FLNK                         }
 
 # Averages
-{ "\$(SYS):\$(D)_CH0:AVG",  "0x10", "1e2", ""                                        }
-{ "\$(SYS):\$(D)_CH1:AVG",  "0x24", "1e2", ""                                        }
-{ "\$(SYS):\$(D)_CH2:AVG",  "0x38", "1e2", ""                                        }
-{ "\$(SYS):\$(D)_CH3:AVG",  "0x4c", "1e2", ""                                        }
-{ "\$(SYS):\$(D)_CH4:AVG",  "0x60", "1e2", ""                                        }
-{ "\$(SYS):\$(D)_CH5:AVG",  "0x74", "1e2", ""                                        }
-{ "\$(SYS):\$(D)_CH6:AVG",  "0x88", "1e2", ""                                        }
-{ "\$(SYS):\$(D)_CH7:AVG",  "0x9c", "1e2", ""                                        }
+{ "\$(SYS):\$(D)_CH0:AVG",  "0x10", "1e2", ""                           }
+{ "\$(SYS):\$(D)_CH1:AVG",  "0x24", "1e2", ""                           }
+{ "\$(SYS):\$(D)_CH2:AVG",  "0x38", "1e2", ""                           }
+{ "\$(SYS):\$(D)_CH3:AVG",  "0x4c", "1e2", ""                           }
+{ "\$(SYS):\$(D)_CH4:AVG",  "0x60", "1e2", ""                           }
+{ "\$(SYS):\$(D)_CH5:AVG",  "0x74", "1e2", ""                           }
+{ "\$(SYS):\$(D)_CH6:AVG",  "0x88", "1e2", ""                           }
+{ "\$(SYS):\$(D)_CH7:AVG",  "0x9c", "1e2", ""                           }
 
 # Sum of squares
-{ "\$(SYS):\$(D)_CH0:SSQR", "0x1c", "1e8", "I/O Intr",  "\$(SYS):\$(D)_CH0:STD_RD"   }
-{ "\$(SYS):\$(D)_CH1:SSQR", "0x30", "1e8", "I/O Intr",  "\$(SYS):\$(D)_CH1:STD_RD"   }
-{ "\$(SYS):\$(D)_CH2:SSQR", "0x44", "1e8", "I/O Intr",  "\$(SYS):\$(D)_CH2:STD_RD"   }
-{ "\$(SYS):\$(D)_CH3:SSQR", "0x58", "1e8", "I/O Intr",  "\$(SYS):\$(D)_CH3:STD_RD"   }
-{ "\$(SYS):\$(D)_CH4:SSQR", "0x6c", "1e8", "I/O Intr",  "\$(SYS):\$(D)_CH4:STD_RD"   }
-{ "\$(SYS):\$(D)_CH5:SSQR", "0x80", "1e8", "I/O Intr",  "\$(SYS):\$(D)_CH5:STD_RD"   }
-{ "\$(SYS):\$(D)_CH6:SSQR", "0x94", "1e8", "I/O Intr",  "\$(SYS):\$(D)_CH6:STD_RD"   }
-{ "\$(SYS):\$(D)_CH7:SSQR", "0xa8", "1e8", "I/O Intr",  "\$(SYS):\$(D)_CH7:STD_RD"   }
+{ "\$(SYS):\$(D)_CH0:SSQR", "0x1c", "1e8", "\$(SYS):\$(D)_CH0:STD_RD"   }
+{ "\$(SYS):\$(D)_CH1:SSQR", "0x30", "1e8", "\$(SYS):\$(D)_CH1:STD_RD"   }
+{ "\$(SYS):\$(D)_CH2:SSQR", "0x44", "1e8", "\$(SYS):\$(D)_CH2:STD_RD"   }
+{ "\$(SYS):\$(D)_CH3:SSQR", "0x58", "1e8", "\$(SYS):\$(D)_CH3:STD_RD"   }
+{ "\$(SYS):\$(D)_CH4:SSQR", "0x6c", "1e8", "\$(SYS):\$(D)_CH4:STD_RD"   }
+{ "\$(SYS):\$(D)_CH5:SSQR", "0x80", "1e8", "\$(SYS):\$(D)_CH5:STD_RD"   }
+{ "\$(SYS):\$(D)_CH6:SSQR", "0x94", "1e8", "\$(SYS):\$(D)_CH6:STD_RD"   }
+{ "\$(SYS):\$(D)_CH7:SSQR", "0xa8", "1e8", "\$(SYS):\$(D)_CH7:STD_RD"   }
 }
 
 file "pico8_frib_std.template" {
