@@ -179,48 +179,65 @@ pattern
 { "\$(SYS):\$(D)_CH0:ASTD","0x10", "Stdev",      "\$(CYCTIME=1e2)" }
 { "\$(SYS):\$(D)_CH0:MIN", "0x14", "Min",        "1e6"             }
 { "\$(SYS):\$(D)_CH0:MAX", "0x18", "Max",        "1e6"             }
-{ "\$(SYS):\$(D)_CH0:STD", "0x1c", "Average",    "1e6"             }
 { "\$(SYS):\$(D)_CH1:ASTD","0x24", "Stdev",      "\$(CYCTIME=1e2)" }
 { "\$(SYS):\$(D)_CH1:MIN", "0x28", "Min",        "1e6"             }
 { "\$(SYS):\$(D)_CH1:MAX", "0x2c", "Max",        "1e6"             }
-{ "\$(SYS):\$(D)_CH1:STD", "0x30", "Average",    "1e6"             }
 { "\$(SYS):\$(D)_CH2:ASTD","0x38", "Stdev",      "\$(CYCTIME=1e2)" }
 { "\$(SYS):\$(D)_CH2:MIN", "0x3c", "Min",        "1e6"             }
 { "\$(SYS):\$(D)_CH2:MAX", "0x40", "Max",        "1e6"             }
-{ "\$(SYS):\$(D)_CH2:STD", "0x44", "Average",    "1e6"             }
 { "\$(SYS):\$(D)_CH3:ASTD","0x4c", "Stdev",      "\$(CYCTIME=1e2)" }
 { "\$(SYS):\$(D)_CH3:MIN", "0x50", "Min",        "1e6"             }
 { "\$(SYS):\$(D)_CH3:MAX", "0x54", "Max",        "1e6"             }
-{ "\$(SYS):\$(D)_CH3:STD", "0x58", "Average",    "1e6"             }
 { "\$(SYS):\$(D)_CH4:ASTD","0x60", "Stdev",      "\$(CYCTIME=1e2)" }
 { "\$(SYS):\$(D)_CH4:MIN", "0x64", "Min",        "1e6"             }
 { "\$(SYS):\$(D)_CH4:MAX", "0x68", "Max",        "1e6"             }
-{ "\$(SYS):\$(D)_CH4:STD", "0x6c", "Average",    "1e6"             }
 { "\$(SYS):\$(D)_CH5:ASTD","0x74", "Stdev",      "\$(CYCTIME=1e2)" }
 { "\$(SYS):\$(D)_CH5:MIN", "0x78", "Min",        "1e6"             }
 { "\$(SYS):\$(D)_CH5:MAX", "0x7c", "Max",        "1e6"             }
-{ "\$(SYS):\$(D)_CH5:STD", "0x80", "Average",    "1e6"             }
 { "\$(SYS):\$(D)_CH6:ASTD","0x88", "Stdev",      "\$(CYCTIME=1e2)" }
 { "\$(SYS):\$(D)_CH6:MIN", "0x8c", "Min",        "1e6"             }
 { "\$(SYS):\$(D)_CH6:MAX", "0x90", "Max",        "1e6"             }
-{ "\$(SYS):\$(D)_CH6:STD", "0x94", "Average",    "1e6"             }
 { "\$(SYS):\$(D)_CH7:ASTD","0x9c", "Stdev",      "\$(CYCTIME=1e2)" }
 { "\$(SYS):\$(D)_CH7:MIN", "0xa0", "Min",        "1e6"             }
 { "\$(SYS):\$(D)_CH7:MAX", "0xa4", "Max",        "1e6"             }
-{ "\$(SYS):\$(D)_CH7:STD", "0xa8", "Average",    "1e6"             }
 }
 
 file "tbuf_smart_avg.template" {
 pattern
-{ P,                    ADDR,   ASLO              }
-{ "\$(SYS):\$(D)_CH0:", "0x10", "\$(CYCTIME=1e2)" }
-{ "\$(SYS):\$(D)_CH1:", "0x24", "\$(CYCTIME=1e2)" }
-{ "\$(SYS):\$(D)_CH2:", "0x38", "\$(CYCTIME=1e2)" }
-{ "\$(SYS):\$(D)_CH3:", "0x4c", "\$(CYCTIME=1e2)" }
-{ "\$(SYS):\$(D)_CH4:", "0x60", "\$(CYCTIME=1e2)" }
-{ "\$(SYS):\$(D)_CH5:", "0x74", "\$(CYCTIME=1e2)" }
-{ "\$(SYS):\$(D)_CH6:", "0x88", "\$(CYCTIME=1e2)" }
-{ "\$(SYS):\$(D)_CH7:", "0x9c", "\$(CYCTIME=1e2)" }
+{ P,                        ADDR,   ASLO,  FLNK                                      }
+
+# Averages
+{ "\$(SYS):\$(D)_CH0:AVG",  "0x10", "1e2", ""                                        }
+{ "\$(SYS):\$(D)_CH1:AVG",  "0x24", "1e2", ""                                        }
+{ "\$(SYS):\$(D)_CH2:AVG",  "0x38", "1e2", ""                                        }
+{ "\$(SYS):\$(D)_CH3:AVG",  "0x4c", "1e2", ""                                        }
+{ "\$(SYS):\$(D)_CH4:AVG",  "0x60", "1e2", ""                                        }
+{ "\$(SYS):\$(D)_CH5:AVG",  "0x74", "1e2", ""                                        }
+{ "\$(SYS):\$(D)_CH6:AVG",  "0x88", "1e2", ""                                        }
+{ "\$(SYS):\$(D)_CH7:AVG",  "0x9c", "1e2", ""                                        }
+
+# Sum of squares
+{ "\$(SYS):\$(D)_CH0:SSQR", "0x1c", "1e8", "I/O Intr",  "\$(SYS):\$(D)_CH0:STD_RD"   }
+{ "\$(SYS):\$(D)_CH1:SSQR", "0x30", "1e8", "I/O Intr",  "\$(SYS):\$(D)_CH1:STD_RD"   }
+{ "\$(SYS):\$(D)_CH2:SSQR", "0x44", "1e8", "I/O Intr",  "\$(SYS):\$(D)_CH2:STD_RD"   }
+{ "\$(SYS):\$(D)_CH3:SSQR", "0x58", "1e8", "I/O Intr",  "\$(SYS):\$(D)_CH3:STD_RD"   }
+{ "\$(SYS):\$(D)_CH4:SSQR", "0x6c", "1e8", "I/O Intr",  "\$(SYS):\$(D)_CH4:STD_RD"   }
+{ "\$(SYS):\$(D)_CH5:SSQR", "0x80", "1e8", "I/O Intr",  "\$(SYS):\$(D)_CH5:STD_RD"   }
+{ "\$(SYS):\$(D)_CH6:SSQR", "0x94", "1e8", "I/O Intr",  "\$(SYS):\$(D)_CH6:STD_RD"   }
+{ "\$(SYS):\$(D)_CH7:SSQR", "0xa8", "1e8", "I/O Intr",  "\$(SYS):\$(D)_CH7:STD_RD"   }
+}
+
+file "pico8_frib_std.template" {
+pattern
+{ P,                    R        }
+{ "\$(SYS):\$(D)_CH0:", "STD_RD" }
+{ "\$(SYS):\$(D)_CH1:", "STD_RD" }
+{ "\$(SYS):\$(D)_CH2:", "STD_RD" }
+{ "\$(SYS):\$(D)_CH3:", "STD_RD" }
+{ "\$(SYS):\$(D)_CH4:", "STD_RD" }
+{ "\$(SYS):\$(D)_CH5:", "STD_RD" }
+{ "\$(SYS):\$(D)_CH6:", "STD_RD" }
+{ "\$(SYS):\$(D)_CH7:", "STD_RD" }
 }
 
 # Saturation indicators
