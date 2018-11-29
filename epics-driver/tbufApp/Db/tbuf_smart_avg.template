@@ -4,6 +4,8 @@
 #   P:      Prefix
 #   DTYP:   DTYP of the Input PV (fast data source)
 #   INP:    INP  of the Input PV (fast data source)
+#   IGN_WGH:PV to enable ignoring the weights (CW Beam, for instance),
+            default=0 (don't ignore)
 #   WEIGHT: PV for Time On
 #   EGU:    EGU of final value
 #   SCALE:  Scale factor for final value
@@ -54,6 +56,13 @@ record(ao, "$(P)5HZ_PSH_CMD_") {
     field(OUT , "@$(P)5HZ")
     # Abuse SIOL field
     field(SIOL, "$(WEIGHT)")
+    field(FLNK, "$(P)WGH_PSH_SRC_")
+}
+
+record(calc, "$(P)WGH_PSH_SRC_") {
+    field(INPA, "$(IGN_WGH=0)")
+    field(INPB, "$(WEIGHT) MS")
+    field(CALC, "A ? 1 : B")
     field(FLNK, "$(P)WGH_PSH_CMD_")
 }
 
@@ -61,7 +70,7 @@ record(ao, "$(P)5HZ_PSH_CMD_") {
 record(ao, "$(P)WGH_PSH_CMD_") {
     field(DTYP, "TBUF Push Sample")
     field(OMSL, "closed_loop")
-    field(DOL , "$(WEIGHT) MS")
+    field(DOL , "$(P)WGH_PSH_SRC_ MS")
     field(OUT , "@$(P)WGH")
 }
 
