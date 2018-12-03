@@ -5,7 +5,7 @@
 #   DTYP:   DTYP of the Input PV (fast data source)
 #   INP:    INP  of the Input PV (fast data source)
 #   IGN_WGH:PV to enable ignoring the weights (CW Beam, for instance),
-            default=0 (don't ignore)
+#           default=0 (don't ignore)
 #   WEIGHT: PV for Time On
 #   EGU:    EGU of final value
 #   SCALE:  Scale factor for final value
