@@ -1,0 +1,14 @@
+record(calc, "$(P)_$(CH):AVGPK_RD") {
+    field(INPA, "$(P)_$(CH):AVG_RD")
+    field(INPB, "$(P)_CAP:TON_RSTS")
+    field(CALC, "A*10000*80.5/B")
+    field(EGU,  "uA")
+    field(FLNK, "$(P)_$(CH):STD2_RD")
+}
+
+record(calc, "$(P)_$(CH):STD2_RD") {
+    field(INPA, "$(P)_$(CH):SSQR_RD")
+    field(INPB, "$(P)_CAP:TON_RSTS")
+    field(INPC, "$(P)_$(CH):AVGPK_RD")
+    field(CALC, "SQRT(A*(B/(B-21*80.5)) - C*C)")
+}

@@ -1,5 +1,0 @@
-record(calc, "$(P)STD_RD") {
-    field(INPA, "$(P)SSQR_RD")
-    field(INPB, "$(P)AVG_RD")
-    field(CALC, "SQRT(A - B*B)")
-}

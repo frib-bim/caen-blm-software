@@ -227,28 +227,29 @@ pattern
 { "$(DEV)_CH7:AVG",  "0x9c", "1e2", "$(DEV)_CH7:CWBEAM_CSET", ""                  }
 
 # Sum of squares
-#{ "$(DEV)_CH0:SSQR", "0x1c", "1e8", "$(DEV)_CH0:CWBEAM_CSET", "$(DEV)_CH0:STD_RD" }
-#{ "$(DEV)_CH1:SSQR", "0x30", "1e8", "$(DEV)_CH1:CWBEAM_CSET", "$(DEV)_CH1:STD_RD" }
-#{ "$(DEV)_CH2:SSQR", "0x44", "1e8", "$(DEV)_CH2:CWBEAM_CSET", "$(DEV)_CH2:STD_RD" }
-#{ "$(DEV)_CH3:SSQR", "0x58", "1e8", "$(DEV)_CH3:CWBEAM_CSET", "$(DEV)_CH3:STD_RD" }
-#{ "$(DEV)_CH4:SSQR", "0x6c", "1e8", "$(DEV)_CH4:CWBEAM_CSET", "$(DEV)_CH4:STD_RD" }
-#{ "$(DEV)_CH5:SSQR", "0x80", "1e8", "$(DEV)_CH5:CWBEAM_CSET", "$(DEV)_CH5:STD_RD" }
-#{ "$(DEV)_CH6:SSQR", "0x94", "1e8", "$(DEV)_CH6:CWBEAM_CSET", "$(DEV)_CH6:STD_RD" }
-#{ "$(DEV)_CH7:SSQR", "0xa8", "1e8", "$(DEV)_CH7:CWBEAM_CSET", "$(DEV)_CH7:STD_RD" }
+{ "$(DEV)_CH0:SSQR", "0x1c", "1e8", "$(DEV)_CH0:CWBEAM_CSET", "$(DEV)_CH0:AVGPK_RD" }
+{ "$(DEV)_CH1:SSQR", "0x30", "1e8", "$(DEV)_CH1:CWBEAM_CSET", "$(DEV)_CH1:AVGPK_RD" }
+{ "$(DEV)_CH2:SSQR", "0x44", "1e8", "$(DEV)_CH2:CWBEAM_CSET", "$(DEV)_CH2:AVGPK_RD" }
+{ "$(DEV)_CH3:SSQR", "0x58", "1e8", "$(DEV)_CH3:CWBEAM_CSET", "$(DEV)_CH3:AVGPK_RD" }
+{ "$(DEV)_CH4:SSQR", "0x6c", "1e8", "$(DEV)_CH4:CWBEAM_CSET", "$(DEV)_CH4:AVGPK_RD" }
+{ "$(DEV)_CH5:SSQR", "0x80", "1e8", "$(DEV)_CH5:CWBEAM_CSET", "$(DEV)_CH5:AVGPK_RD" }
+{ "$(DEV)_CH6:SSQR", "0x94", "1e8", "$(DEV)_CH6:CWBEAM_CSET", "$(DEV)_CH6:AVGPK_RD" }
+{ "$(DEV)_CH7:SSQR", "0xa8", "1e8", "$(DEV)_CH7:CWBEAM_CSET", "$(DEV)_CH7:AVGPK_RD" }
 }
 
-#file "pico8_frib_std.template" {
-#pattern
-#{ P,                    R        }
-#{ "\$(SYS):\$(D)_CH0:", "STD_RD" }
-#{ "\$(SYS):\$(D)_CH1:", "STD_RD" }
-#{ "\$(SYS):\$(D)_CH2:", "STD_RD" }
-#{ "\$(SYS):\$(D)_CH3:", "STD_RD" }
-#{ "\$(SYS):\$(D)_CH4:", "STD_RD" }
-#{ "\$(SYS):\$(D)_CH5:", "STD_RD" }
-#{ "\$(SYS):\$(D)_CH6:", "STD_RD" }
-#{ "\$(SYS):\$(D)_CH7:", "STD_RD" }
-#}
+# Records for STD and AVGPK
+file "pico8_frib_std_avgpk.template" {
+pattern
+{ P,               CH    }
+{ "\$(SYS):\$(D)", "CH0" }
+{ "\$(SYS):\$(D)", "CH1" }
+{ "\$(SYS):\$(D)", "CH2" }
+{ "\$(SYS):\$(D)", "CH3" }
+{ "\$(SYS):\$(D)", "CH4" }
+{ "\$(SYS):\$(D)", "CH5" }
+{ "\$(SYS):\$(D)", "CH6" }
+{ "\$(SYS):\$(D)", "CH7" }
+}
 
 # Saturation indicators
 
