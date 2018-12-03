@@ -5,4 +5,5 @@ record(longin, "$(N)") {
     field(TSE , "$(TSEL=-2)")
     field(MDEL, "$(MDEL=0)")
     field(FLNK, "$(FLNK=)")
+    field(PHAS, "$(PHAS=0)")
 }

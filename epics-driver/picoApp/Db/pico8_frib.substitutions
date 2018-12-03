@@ -28,10 +28,10 @@ file "pico8_frib_reg.db" {
 }
 
 file "pico8_cap_int.template" {
-{N="\$(SYS):\$(D)_CAP:SEC_RSTS", ADDR="0x0"}
-{N="\$(SYS):\$(D)_CAP:NS_RSTS",  ADDR="0x4"}
-{N="\$(SYS):\$(D)_CAP:TON_RSTS", ADDR="0x8", MDEL="-1"}
-{N="\$(SYS):\$(D)_CAP:FLG_RSTS", ADDR="0xc"}
+{N="\$(SYS):\$(D)_CAP:SEC_RSTS", ADDR="0x0", PHAS="-1"}
+{N="\$(SYS):\$(D)_CAP:NS_RSTS",  ADDR="0x4", PHAS="-1"}
+{N="\$(SYS):\$(D)_CAP:TON_RSTS", ADDR="0x8", PHAS="-1", MDEL="-1"}
+{N="\$(SYS):\$(D)_CAP:FLG_RSTS", ADDR="0xc", PHAS="-1"}
 }
 
 file "pico8_frib_reg_chan.template" {
