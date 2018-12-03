@@ -30,12 +30,19 @@ record(ai, "$(P)F_RD") {
     field(EGU , "$(EGU=)")
     field(TSE , "$(TSEL=-2)")
     field(MDEL, "$(MDEL=-1)")
-    field(FLNK, "$(P)1HZ_PSH_CMD_")
+    field(FLNK, "$(P)WGH_RD_")
 }
 
 #
 # Push to FIFOs
 #
+record(calc, "$(P)WGH_RD_") {
+    field(INPA, "$(IGN_WGH=0)")
+    field(INPB, "$(WEIGHT) MS")
+    field(CALC, "A ? 1 : B")
+    field(FLNK, "$(P)1HZ_PSH_CMD_")
+}
+
 
 # 1 s average
 record(ao, "$(P)1HZ_PSH_CMD_") {
@@ -44,7 +51,7 @@ record(ao, "$(P)1HZ_PSH_CMD_") {
     field(DOL , "$(P)F_RD MS")
     field(OUT , "@$(P)1HZ")
     # Abuse SIOL field
-    field(SIOL, "$(WEIGHT)")
+    field(SIOL, "$(P)WGH_RD_")
     field(FLNK, "$(P)5HZ_PSH_CMD_")
 }
 
@@ -55,22 +62,15 @@ record(ao, "$(P)5HZ_PSH_CMD_") {
     field(DOL , "$(P)F_RD MS")
     field(OUT , "@$(P)5HZ")
     # Abuse SIOL field
-    field(SIOL, "$(WEIGHT)")
-    field(FLNK, "$(P)WGH_PSH_SRC_")
-}
-
-record(calc, "$(P)WGH_PSH_SRC_") {
-    field(INPA, "$(IGN_WGH=0)")
-    field(INPB, "$(WEIGHT) MS")
-    field(CALC, "A ? 1 : B")
+    field(SIOL, "$(P)WGH_RD_")
     field(FLNK, "$(P)WGH_PSH_CMD_")
 }
 
 # 0.2 s weights
 record(ao, "$(P)WGH_PSH_CMD_") {
-    field(DTYP, "TBUF Push Sample")
+    field(DTYP, "TBUF Push Sample")W
     field(OMSL, "closed_loop")
-    field(DOL , "$(P)WGH_PSH_SRC_ MS")
+    field(DOL , "$(P)WGH_RD_ MS")
     field(OUT , "@$(P)WGH")
 }
 
