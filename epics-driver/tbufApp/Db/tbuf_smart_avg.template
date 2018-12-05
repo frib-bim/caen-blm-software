@@ -187,6 +187,8 @@ record(ai, "$(P)WGH_RD") {
     field(SCAN, "I/O Intr")
     field(PREC, "$(PREC)")
     field(TSE , "-2")
+    # If this races with other PVs, process this first
+    field(PHAS, "-1")
     field(FLNK, "$(P)WGHW_RD")
     field(MDEL, "-1")
 }
