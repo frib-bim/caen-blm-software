@@ -1,14 +1,14 @@
-record(stringin, "$(P)$(CHAN)DESC_RD") {
+record(stringin, "$(P)_CH$(CH):DESC_RD") {
     field(DESC, "Label")
     field(VAL,  "")
     field(PINI, "YES")
     # VAL is overriden when loading pico8_chan_alias.db in the startup script
 }
 
-record(mbbo, "$(P)$(CHAN)RNG_CMD") {
+record(mbbo, "$(P)_CH$(CH):RNG_CMD") {
     field(DESC, "Channel dynamic range")
     field(DTYP, "Pico8 Channel Range")
-    field(OUT , "@$(NAME) chan=$(N)")
+    field(OUT , "@$(NAME) chan=$(CH)")
     field(PINI, "YES")
     field(ZRST, "1 ma")
     field(ONST, "1 ua")
@@ -17,56 +17,56 @@ record(mbbo, "$(P)$(CHAN)RNG_CMD") {
     info(autosaveFields_pass0, "RVAL")
 }
 
-record(waveform, "$(P)$(CHAN)I_RD") {
+record(waveform, "$(P)_CH$(CH):I_RD") {
     field(DESC, "Sample data")
     field(DTYP, "Pico8 Channel Data")
-    field(INP , "@$(NAME) chan=$(N)")
+    field(INP , "@$(NAME) chan=$(CH)")
     field(SCAN, "I/O Intr")
     field(FTVL, "FLOAT")
     field(NELM, "$(NELM)")
-    field(FLNK, "$(P)$(CHAN)I_RD_LEN")
+    field(FLNK, "$(P)_CH$(CH):I_RD_LEN")
     field(PREC, "6")
 }
 
-record(longin, "$(P)$(CHAN)I_RD_LEN") {
+record(longin, "$(P)_CH$(CH):I_RD_LEN") {
     field(DESC, "Sample data length")
-    field(INP, "$(P)$(CHAN)I_RD.NORD NPP")
+    field(INP, "$(P)_CH$(CH):I_RD.NORD NPP")
 }
 
-record(ao, "$(P)$(CHAN)SLO_CSET") {
+record(ao, "$(P)_CH$(CH):SLO_CSET") {
     field(DESC, "Multiplier from raw")
     field(DTYP, "Pico8 Chan Scale")
-    field(OUT , "@$(NAME) chan=$(N)")
+    field(OUT , "@$(NAME) chan=$(CH)")
     field(PINI, "YES")
     field(PREC, "3")
     field(VAL , "$(ASLO=1)")
 }
 
-record(ao, "$(P)$(CHAN)OFST_CSET") {
+record(ao, "$(P)_CH$(CH):OFST_CSET") {
     field(DESC, "Offset from raw")
     field(DTYP, "Pico8 Chan Offset")
-    field(OUT , "@$(NAME) chan=$(N)")
+    field(OUT , "@$(NAME) chan=$(CH)")
     field(PINI, "YES")
     field(PREC, "3")
     field(VAL , "$(AOFF=0)")
 }
 
 ## Added by Scott
-record(waveform, "$(P)$(CHAN)DDRWV_RD") {  field(DTYP, "Soft Channel")  field(FTVL, "FLOAT")  field(NELM, "$(NELM)") }
+record(waveform, "$(P)_CH$(CH):DDRWV_RD") {  field(DTYP, "Soft Channel")  field(FTVL, "FLOAT")  field(NELM, "$(NELM)") }
 
 ## Added by Diego - Change range labels in mbbo
-record(scalcout,"$(P)$(CHAN)RNG_CMD_LABEL0")
+record(scalcout,"$(P)_CH$(CH):RNG_CMD_LABEL0")
 {
     field(INPA, "$(P):EEPROM_RNG0_RD CP")
-    field(OUT, "$(P)$(CHAN)RNG_CMD.ZRST PP")
+    field(OUT, "$(P)_CH$(CH):RNG_CMD.ZRST PP")
     field(OOPT, "Every Time")
     field(CALC, "PRINTF(\"%.0f uA\", A)")
 }
 
-record(scalcout,"$(P)$(CHAN)RNG_CMD_LABEL1")
+record(scalcout,"$(P)_CH$(CH):RNG_CMD_LABEL1")
 {
     field(INPA, "$(P):EEPROM_RNG1_RD CP")
-    field(OUT, "$(P)$(CHAN)RNG_CMD.ONST PP")
+    field(OUT, "$(P)_CH$(CH):RNG_CMD.ONST PP")
     field(OOPT, "Every Time")
     field(CALC, "PRINTF(\"%.0f uA\", A)")
 }

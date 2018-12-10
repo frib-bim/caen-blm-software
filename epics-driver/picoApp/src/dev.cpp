@@ -150,7 +150,8 @@ void createPICO(const std::string& name, const std::string& devname)
         dev_map[name] = dev;
 
 #ifdef BUILD_FRIB
-        PicoFRIBCapture *cap = new PicoFRIBCapture(devname.c_str());
+        PicoFRIBCapture *cap = new PicoFRIBCapture(devname.c_str(),
+                name + "_100HZ");
 
         epicsAtExit(&shutdownCapture, cap);
 

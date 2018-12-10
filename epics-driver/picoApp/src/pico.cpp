@@ -191,7 +191,7 @@ double picoStepDiff = 0.01; // sec
 // maximum difference from expected difference between consecuative capture timestamps
 double picoStepLimit = 0.004; // sec
 
-PicoFRIBCapture::PicoFRIBCapture(const char *fname)
+PicoFRIBCapture::PicoFRIBCapture(const char *fname, std::string const & evt)
     :readerT(*this, "capture",
              epicsThreadGetStackSize(epicsThreadStackSmall),
              epicsThreadPriorityHigh)
@@ -202,6 +202,7 @@ PicoFRIBCapture::PicoFRIBCapture(const char *fname)
     ,ddr_start(0u)
     ,ddr_count(0u)
     ,ddr_busy(0)
+    ,eventName(evt)
 {
     scanIoInit(&update);
     scanIoInit(&msgupdate);
@@ -333,7 +334,7 @@ void PicoFRIBCapture::run()
                     fprintf(stderr, "\n");
             }
 
-            /* if HW time isn't availble, use host time so that INVALID
+            /* if HW time isn't available, use host time so that INVALID
              * updates can be archived.
              */
             if(valid)
@@ -346,6 +347,8 @@ void PicoFRIBCapture::run()
             nextmsg<<"except \""<<e.what()<<"\", ";
             valid = false;
         }
+
+        postEvent(eventNameToHandle(eventName.c_str()));
 
         scanIoRequest(update);
 

@@ -2,56 +2,28 @@
 #
 # Parameters:
 #   P:      Prefix
-#   DTYP:   DTYP of the Input PV (fast data source)
-#   INP:    INP  of the Input PV (fast data source)
+#   SRC:    PV for fast data source
+#   WEIGHT: PV for fast Time On source
 #   IGN_WGH:PV to enable ignoring the weights (CW Beam, for instance),
 #           default=0 (don't ignore)
-#   WEIGHT: PV for Time On
 #   EGU:    EGU of final value
 #   SCALE:  Scale factor for final value
-#   SCAN:   When to scan the data source, default='I/O Intr'
-#   FLNK:   Forward link after processing, default='empty'
-
-#
-# Fast Data Source @ 100 Hz
-#
-
-record(ai, "$(P)F_RD") {
-    field(DTYP, "$(DTYP)")
-    field(INP , "$(INP)")
-    field(SCAN, "$(SCAN=I/O Intr)")
-    field(EVNT, "$(EVNT=)")
-    field(LINR, "$(LINR=LINEAR)")
-    field(ASLO, "$(ASLO=)")
-    field(AOFF, "$(AOFF=)")
-    field(ESLO, "$(ESLO=)")
-    field(EOFF, "$(EOFF=)")
-    field(PREC, "$(PREC=)")
-    field(EGU , "$(EGU=)")
-    field(TSE , "$(TSEL=-2)")
-    field(MDEL, "$(MDEL=-1)")
-    field(FLNK, "$(P)WGH_RD_")
-}
+#   SCAN:   When to scan the data source, default='Event'
+#   EVNT:   Event to be used when SCAN=Event, default='$(NAME)_100HZ'
+#   FLNK:   Forward link after processing, default=(empty)
 
 #
 # Push to FIFOs
 #
-record(calc, "$(P)WGH_RD_") {
+record(calc, "$(P)WGHF_RD_") {
+    field(TSEL, "$(WEIGHT).TIME")
+    field(SCAN, "$(SCAN=Event)")
+    field(PHAS, "$(PHAS=0)")
+    field(EVNT, "$(EVNT=$(NAME)_100HZ)")
     field(INPA, "$(IGN_WGH=0)")
     field(INPB, "$(WEIGHT) MS")
     field(CALC, "A ? 1 : B")
-    field(FLNK, "$(P)1HZ_PSH_CMD_")
-}
-
-
-# 1 s average
-record(ao, "$(P)1HZ_PSH_CMD_") {
-    field(DTYP, "TBUF Push Sample")
-    field(OMSL, "closed_loop")
-    field(DOL , "$(P)F_RD MS")
-    field(OUT , "@$(P)1HZ")
-    # Abuse SIOL field
-    field(SIOL, "$(P)WGH_RD_")
+    field(MDEL, "-1")
     field(FLNK, "$(P)5HZ_PSH_CMD_")
 }
 
@@ -59,10 +31,21 @@ record(ao, "$(P)1HZ_PSH_CMD_") {
 record(ao, "$(P)5HZ_PSH_CMD_") {
     field(DTYP, "TBUF Push Sample")
     field(OMSL, "closed_loop")
-    field(DOL , "$(P)F_RD MS")
+    field(DOL , "$(SRC) MS")
     field(OUT , "@$(P)5HZ")
-    # Abuse SIOL field
-    field(SIOL, "$(P)WGH_RD_")
+    field(SIOL, "$(P)WGHF_RD_")      # Abuse SIOL field
+    field(MDEL, "-1")
+    field(FLNK, "$(P)1HZ_PSH_CMD_")
+}
+
+# 1 s average
+record(ao, "$(P)1HZ_PSH_CMD_") {
+    field(DTYP, "TBUF Push Sample")
+    field(OMSL, "closed_loop")
+    field(DOL , "$(SRC) MS")
+    field(OUT , "@$(P)1HZ")
+    field(SIOL, "$(P)WGHF_RD_")     # Abuse SIOL field
+    field(MDEL, "-1")
     field(FLNK, "$(P)WGH_PSH_CMD_")
 }
 
@@ -70,36 +53,28 @@ record(ao, "$(P)5HZ_PSH_CMD_") {
 record(ao, "$(P)WGH_PSH_CMD_") {
     field(DTYP, "TBUF Push Sample")
     field(OMSL, "closed_loop")
-    field(DOL , "$(P)WGH_RD_ MS")
+    field(DOL , "$(P)WGHF_RD_ MS")
+    field(MDEL, "-1")
     field(OUT , "@$(P)WGH")
 }
-
-# Decider (1.0 if every bucket has T_ON, 0.0 otherwise)
-record(ao, "$(P)ALL_PSH_CMD_") {
-    field(DTYP, "TBUF Push Sample")
-    field(OMSL, "closed_loop")
-    field(DOL , "$(P)WGH_RD CP MS")
-    field(OUT , "@$(P)ALL")
-}
-
 
 #
 # Settings
 #
-
-# 1 s average (100 samples @ 100Hz)
-record(longout, "$(P)1HZ_NSAMP_CSET") {
-    field(DTYP, "TBUF Set Num Samples")
-    field(OUT , "@$(P)1HZ")
-    field(VAL , "100")
-    field(PINI, "YES")
-}
 
 # 0.2 s average (20 samples @ 100Hz)
 record(longout, "$(P)5HZ_NSAMP_CSET") {
     field(DTYP, "TBUF Set Num Samples")
     field(OUT , "@$(P)5HZ")
     field(VAL , "20")
+    field(PINI, "YES")
+}
+
+# 1 s average (100 samples @ 100Hz)
+record(longout, "$(P)1HZ_NSAMP_CSET") {
+    field(DTYP, "TBUF Set Num Samples")
+    field(OUT , "@$(P)1HZ")
+    field(VAL , "100")
     field(PINI, "YES")
 }
 
@@ -111,11 +86,12 @@ record(longout, "$(P)WGH_NSAMP_CSET") {
     field(PINI, "YES")
 }
 
-# Decider (5 samples @ 5 Hz)
-record(longout, "$(P)ALL_NSAMP_CSET") {
-    field(DTYP, "TBUF Set Num Samples")
-    field(OUT , "@$(P)ALL")
-    field(VAL , "5")
+# 0.2 s average
+record(ao, "$(P)5HZ_PRD_CSET") {
+    field(DTYP, "TBUF Set Period")
+    field(OUT , "@$(P)5HZ")
+    field(VAL , "0.2")
+    field(PREC, "2")
     field(PINI, "YES")
 }
 
@@ -123,15 +99,6 @@ record(longout, "$(P)ALL_NSAMP_CSET") {
 record(ao, "$(P)1HZ_PRD_CSET") {
     field(DTYP, "TBUF Set Period")
     field(OUT , "@$(P)1HZ")
-    field(VAL , "0.2")
-    field(PREC, "2")
-    field(PINI, "YES")
-}
-
-# 0.2 s average
-record(ao, "$(P)5HZ_PRD_CSET") {
-    field(DTYP, "TBUF Set Period")
-    field(OUT , "@$(P)5HZ")
     field(VAL , "0.2")
     field(PREC, "2")
     field(PINI, "YES")
@@ -146,60 +113,40 @@ record(ao, "$(P)WGH_PRD_CSET") {
     field(PINI, "YES")
 }
 
-# Decider
-record(ao, "$(P)ALL_PRD_CSET") {
-    field(DTYP, "TBUF Set Period")
-    field(OUT , "@$(P)ALL")
-    field(VAL , "0.2")
-    field(PREC, "2")
-    field(PINI, "YES")
-}
-
-
 #
 # Aggregates
 #
 
-# 1 s average (reports @ 5 Hz)
-record(ai, "$(P)1HZ_RD") {
-    field(DTYP, "TBUF Get Sample")
-    field(INP , "@$(P)1HZ MaskedAvg")
-    field(SCAN, "I/O Intr")
-    field(PREC, "$(PREC)")
-    field(TSE , "-2")
-    field(FLNK, "$(P)1HZW_RD")
-}
+# The first aggregate at 5 Hz starts the chain of 5Hz updates:
+# 5HZ -> 1HZ -> WGH -> 5HZW -> 1HZW -> WGHW -> ALL_PSH_CMD_
 
-# 0.2 s average
+# 0.2 s average, drives the following ones
 record(ai, "$(P)5HZ_RD") {
     field(DTYP, "TBUF Get Sample")
     field(INP , "@$(P)5HZ MaskedAvg")
     field(SCAN, "I/O Intr")
     field(PREC, "$(PREC)")
     field(TSE , "-2")
-    field(FLNK, "$(P)5HZW_RD")
+    field(FLNK, "$(P)1HZ_RD")
+}
+
+# 1 s average (reports @ 5 Hz)
+record(ai, "$(P)1HZ_RD") {
+    field(DTYP, "TBUF Get Sample")
+    field(INP , "@$(P)1HZ MaskedAvg")
+    field(PREC, "$(PREC)")
+    field(TSE , "-2")
+    field(FLNK, "$(P)WGH_RD")
 }
 
 # 0.2 s average
 record(ai, "$(P)WGH_RD") {
     field(DTYP, "TBUF Get Sample")
     field(INP , "@$(P)WGH Average")
-    field(SCAN, "I/O Intr")
     field(PREC, "$(PREC)")
     field(TSE , "-2")
-    field(FLNK, "$(P)WGHW_RD")
+    field(FLNK, "$(P)1HZW_RD")
     field(MDEL, "-1")
-}
-
-# Decider (@ 5Hz)
-record(ai, "$(P)ALL_RD") {
-    field(DTYP, "TBUF Get Sample")
-    field(INP , "@$(P)ALL All")
-    field(SCAN, "I/O Intr")
-    field(PREC, "$(PREC)")
-    field(MDEL, "-1")
-    field(TSE , "-2")
-    field(FLNK, "$(P)ALLW_RD")
 }
 
 # 1 s average Full FIFO
@@ -209,6 +156,7 @@ record(waveform, "$(P)1HZW_RD") {
     field(FTVL, "FLOAT")
     field(NELM, "100")
     field(TSE , "-2")
+    field(FLNK, "$(P)5HZW_RD")
 }
 
 # 0.2 s average Full FIFO
@@ -218,6 +166,7 @@ record(waveform, "$(P)5HZW_RD") {
     field(FTVL, "FLOAT")
     field(NELM, "20")
     field(TSE , "-2")
+    field(FLNK, "$(P)WGHW_RD")
 }
 
 # 0.2 s weights Full FIFO
@@ -227,6 +176,44 @@ record(waveform, "$(P)WGHW_RD") {
     field(FTVL, "FLOAT")
     field(NELM, "20")
     field(TSE , "-2")
+    field(FLNK, "$(P)ALL_PSH_CMD_")
+}
+
+# Decider (5 samples @ 5 Hz)
+record(longout, "$(P)ALL_NSAMP_CSET") {
+    field(DTYP, "TBUF Set Num Samples")
+    field(OUT , "@$(P)ALL")
+    field(VAL , "5")
+    field(PINI, "YES")
+}
+
+# Decider
+record(ao, "$(P)ALL_PRD_CSET") {
+    field(DTYP, "TBUF Set Period")
+    field(OUT , "@$(P)ALL")
+    field(VAL , "0")
+    field(PREC, "2")
+    field(PINI, "YES")
+}
+
+# Decider (1.0 if every bucket has T_ON, 0.0 otherwise)
+record(ao, "$(P)ALL_PSH_CMD_") {
+    field(DTYP, "TBUF Push Sample")
+    field(OMSL, "closed_loop")
+    field(DOL , "$(P)WGH_RD MS")
+    field(OUT , "@$(P)ALL")
+    field(MDEL, "-1")
+}
+
+# Decider (@ 5Hz), should trigger on every sample
+record(ai, "$(P)ALL_RD") {
+    field(DTYP, "TBUF Get Sample")
+    field(INP , "@$(P)ALL All")
+    field(SCAN, "I/O Intr")
+    field(PREC, "$(PREC)")
+    field(MDEL, "-1")
+    field(TSE , "-2")
+    field(FLNK, "$(P)ALLW_RD PP")
 }
 
 # Decider Full FIFO
@@ -236,6 +223,7 @@ record(waveform, "$(P)ALLW_RD") {
     field(FTVL, "FLOAT")
     field(NELM, "5")
     field(TSE , "-2")
+    field(FLNK, "$(P)1HZSEL_RD PP")
 }
 
 # Force 1Hz
@@ -250,16 +238,18 @@ record(bi, "$(P)1HZFRC_CMD") {
 # Use 1Hz instead of 5Hz?
 record(calc, "$(P)1HZSEL_RD") {
     field(DESC, "Is 1Hz Avg selected?")
-    field(INPA, "$(P)ALL_RD CP")
-    field(INPB, "$(P)1HZFRC_CMD CP")
+    field(INPA, "$(P)ALL_RD")
+    field(INPB, "$(P)1HZFRC_CMD")
     field(CALC, "!A || B")
+    field(FLNK, "$(P)_RD PP")
 }
 
 # Final value
 record(calc, "$(P)_RD") {
+    field(TSEL, "$(P)1HZ_RD.TIME")
     field(INPA, "$(P)1HZSEL_RD")
     field(INPB, "$(P)1HZ_RD")
-    field(INPC, "$(P)5HZ_RD CP")
+    field(INPC, "$(P)5HZ_RD")
     field(CALC, "(A ? B : C)")
     field(EGU,  "$(EGU=)")
     field(PREC, "$(PREC)")

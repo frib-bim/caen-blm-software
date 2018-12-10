@@ -233,7 +233,7 @@ public:
 
 struct PicoFRIBCapture : public epicsThreadRunable
 {
-    PicoFRIBCapture(const char *fname);
+    PicoFRIBCapture(const char *fname, std::string const & evt);
     virtual ~PicoFRIBCapture() {}
 
     virtual void run();
@@ -266,6 +266,8 @@ struct PicoFRIBCapture : public epicsThreadRunable
                 ddr_count;
     dbCommon *ddr_busy; // effectively a flag to ensure that ddr_cb isn't re-used while queued
     CALLBACK ddr_cb;
+
+    std::string eventName;
 };
 
 #endif // BUILD_FRIB

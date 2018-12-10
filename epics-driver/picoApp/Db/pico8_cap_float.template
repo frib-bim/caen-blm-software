@@ -1,0 +1,19 @@
+record(ai, "$(N)") {
+    field(DTYP, "Pico8 Capture Float")
+    field(INP , "@$(NAME) offset=$(ADDR)")
+    field(SCAN, "$(SCAN=Event)")
+    field(EVNT, "$(EVNT=$(NAME)_100HZ)")
+    field(EGU , "$(EGU=)")
+    field(TSE , "$(TSEL=-2)")
+    field(MDEL, "$(MDEL=-1)")
+    field(PHAS, "$(PHAS=)")
+    field(FLNK, "$(FLNK=)")
+
+    field(LINR, "$(LINR=LINEAR)")
+    field(ASLO, "$(ASLO=)")
+    field(AOFF, "$(AOFF=)")
+    field(ESLO, "$(ESLO=)")
+    field(EOFF, "$(EOFF=)")
+    field(PREC, "$(PREC=)")
+}
+
