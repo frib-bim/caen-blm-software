@@ -38,6 +38,9 @@ file "pico8_frib_reg.db" {
 global {
     N="$(DEV)_CAP:$(R)_RSTS"
     PHAS="-5",
+
+    # -2: GTS timestamp, 0: CPU timestamp
+    TSEL="-2"
 }
 
 file "pico8_cap_int.template" {
