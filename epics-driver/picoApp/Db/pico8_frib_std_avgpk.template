@@ -1,16 +1,7 @@
-record(calc, "$(P)_$(CH):AVGPK_RD") {
-    field(INPA, "$(P)_$(CH):AVG_RD")
-    field(INPB, "$(P)_CAP:TON_RSTS")
-    field(CALC, "A*10000*80.5/B")
-    field(EGU,  "uA")
-    field(FLNK, "$(P)_$(CH):STD2_RD")
-}
-
 record(calc, "$(P)_$(CH):STD2_RD") {
-    field(INPA, "$(P)_$(CH):SSQR_RD")
-    field(INPB, "$(P)_$(CH):AVGWGH_RD")   # 5 Hz average of TON:  field(INPB, "$(P)_CAP:TON_RSTS")
-    field(INPC, "$(P)_$(CH):AVGPK_RD")
+    field(INPA, "$(P)_$(CH):SSQRF_RD CP")
+    field(INPB, "$(P)_$(CH):AVGPKF_RD")
     field(EGU,  "uA")
     field(PREC, "6")
-    field(CALC, "SQRT(A*10000*80.5/(B-21*80.5) - C*C)")
+    field(CALC, "SQRT(A - B*B)")
 }
