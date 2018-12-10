@@ -126,6 +126,7 @@ record(ai, "$(P)5HZ_RD") {
     field(INP , "@$(P)5HZ MaskedAvg")
     field(SCAN, "I/O Intr")
     field(PREC, "$(PREC)")
+    field(EGU,  "$(EGU=)")
     field(TSE , "-2")
     field(FLNK, "$(P)1HZ_RD")
 }
@@ -135,6 +136,7 @@ record(ai, "$(P)1HZ_RD") {
     field(DTYP, "TBUF Get Sample")
     field(INP , "@$(P)1HZ MaskedAvg")
     field(PREC, "$(PREC)")
+    field(EGU,  "$(EGU=)")
     field(TSE , "-2")
     field(FLNK, "$(P)WGH_RD")
 }

@@ -1,5 +1,5 @@
 global {
-    NAME="\$(NAME)", 
+    NAME="\$(NAME)",
     DEV="\$(SYS):\$(D)",
     FPS="$(DEV)_FPS:"
     DEVCH="$(DEV)_CH$(CH):"
@@ -110,7 +110,7 @@ pattern
 
 file "pico8_frib_reg_chan.template" {
 pattern
-{ CH, P,           CORR,      CTRL,      BIT  }
+{ CH, P,           CORR,      CTRL,     BIT  }
 { 0,  "$(DEVCH)", "0x300c0", "0x300e0", "0"  }
 { 1,  "$(DEVCH)", "0x300c4", "0x300e0", "16" }
 { 2,  "$(DEVCH)", "0x300c8", "0x300e4", "0"  }
@@ -255,68 +255,68 @@ global {
 
 file "tbuf.template" {
 pattern
-{ CH, R,      Stat,     ASLO  }
-{ 0,  "ASTD", "Stdev",  "1e2" }
-{ 1,  "ASTD", "Stdev",  "1e2" }
-{ 2,  "ASTD", "Stdev",  "1e2" }
-{ 3,  "ASTD", "Stdev",  "1e2" }
-{ 4,  "ASTD", "Stdev",  "1e2" }
-{ 5,  "ASTD", "Stdev",  "1e2" }
-{ 6,  "ASTD", "Stdev",  "1e2" }
-{ 7,  "ASTD", "Stdev",  "1e2" }
+{ CH, R,      Stat,   }
+{ 0,  "ASTD", "Stdev" }
+{ 1,  "ASTD", "Stdev" }
+{ 2,  "ASTD", "Stdev" }
+{ 3,  "ASTD", "Stdev" }
+{ 4,  "ASTD", "Stdev" }
+{ 5,  "ASTD", "Stdev" }
+{ 6,  "ASTD", "Stdev" }
+{ 7,  "ASTD", "Stdev" }
 
-{ 0,  "MIN",  "Min",    "1e6" }
-{ 1,  "MIN",  "Min",    "1e6" }
-{ 2,  "MIN",  "Min",    "1e6" }
-{ 3,  "MIN",  "Min",    "1e6" }
-{ 4,  "MIN",  "Min",    "1e6" }
-{ 5,  "MIN",  "Min",    "1e6" }
-{ 6,  "MIN",  "Min",    "1e6" }
-{ 7,  "MIN",  "Min",    "1e6" }
+{ 0,  "MIN",  "Min"   }
+{ 1,  "MIN",  "Min"   }
+{ 2,  "MIN",  "Min"   }
+{ 3,  "MIN",  "Min"   }
+{ 4,  "MIN",  "Min"   }
+{ 5,  "MIN",  "Min"   }
+{ 6,  "MIN",  "Min"   }
+{ 7,  "MIN",  "Min"   }
 
-{ 0,  "MAX",  "Max",    "1e6" }
-{ 1,  "MAX",  "Max",    "1e6" }
-{ 2,  "MAX",  "Max",    "1e6" }
-{ 3,  "MAX",  "Max",    "1e6" }
-{ 4,  "MAX",  "Max",    "1e6" }
-{ 5,  "MAX",  "Max",    "1e6" }
-{ 6,  "MAX",  "Max",    "1e6" }
-{ 7,  "MAX",  "Max",    "1e6" }
+{ 0,  "MAX",  "Max"   }
+{ 1,  "MAX",  "Max"   }
+{ 2,  "MAX",  "Max"   }
+{ 3,  "MAX",  "Max"   }
+{ 4,  "MAX",  "Max"   }
+{ 5,  "MAX",  "Max"   }
+{ 6,  "MAX",  "Max"   }
+{ 7,  "MAX",  "Max"   }
 
 # Old STD calculation (from firmware)
-{ 0,  "STD", "Average", "1e6" }
-{ 1,  "STD", "Average", "1e6" }
-{ 2,  "STD", "Average", "1e6" }
-{ 3,  "STD", "Average", "1e6" }
-{ 4,  "STD", "Average", "1e6" }
-{ 5,  "STD", "Average", "1e6" }
-{ 6,  "STD", "Average", "1e6" }
-{ 7,  "STD", "Average", "1e6" }
+{ 0,  "STD", "Average" }
+{ 1,  "STD", "Average" }
+{ 2,  "STD", "Average" }
+{ 3,  "STD", "Average" }
+{ 4,  "STD", "Average" }
+{ 5,  "STD", "Average" }
+{ 6,  "STD", "Average" }
+{ 7,  "STD", "Average" }
 }
 
 file "tbuf_smart_avg.template" {
 pattern
-{ CH, R,      ASLO,  FLNK       }
+{ CH, R,      FLNK               }
 
 # Averages
-{ 0,  "AVG",  "1e2", ""                  }
-{ 1,  "AVG",  "1e2", ""                  }
-{ 2,  "AVG",  "1e2", ""                  }
-{ 3,  "AVG",  "1e2", ""                  }
-{ 4,  "AVG",  "1e2", ""                  }
-{ 5,  "AVG",  "1e2", ""                  }
-{ 6,  "AVG",  "1e2", ""                  }
-{ 7,  "AVG",  "1e2", ""                  }
+{ 0,  "AVG",  ""                 }
+{ 1,  "AVG",  ""                 }
+{ 2,  "AVG",  ""                 }
+{ 3,  "AVG",  ""                 }
+{ 4,  "AVG",  ""                 }
+{ 5,  "AVG",  ""                 }
+{ 6,  "AVG",  ""                 }
+{ 7,  "AVG",  ""                 }
 
 # Sum of squares
-{ 0,  "SSQR", "1e8", "$(DEVCH)AVGPK_RD" }
-{ 1,  "SSQR", "1e8", "$(DEVCH)AVGPK_RD" }
-{ 2,  "SSQR", "1e8", "$(DEVCH)AVGPK_RD" }
-{ 3,  "SSQR", "1e8", "$(DEVCH)AVGPK_RD" }
-{ 4,  "SSQR", "1e8", "$(DEVCH)AVGPK_RD" }
-{ 5,  "SSQR", "1e8", "$(DEVCH)AVGPK_RD" }
-{ 6,  "SSQR", "1e8", "$(DEVCH)AVGPK_RD" }
-{ 7,  "SSQR", "1e8", "$(DEVCH)AVGPK_RD" }
+{ 0,  "SSQR", "$(DEVCH)AVGPK_RD" }
+{ 1,  "SSQR", "$(DEVCH)AVGPK_RD" }
+{ 2,  "SSQR", "$(DEVCH)AVGPK_RD" }
+{ 3,  "SSQR", "$(DEVCH)AVGPK_RD" }
+{ 4,  "SSQR", "$(DEVCH)AVGPK_RD" }
+{ 5,  "SSQR", "$(DEVCH)AVGPK_RD" }
+{ 6,  "SSQR", "$(DEVCH)AVGPK_RD" }
+{ 7,  "SSQR", "$(DEVCH)AVGPK_RD" }
 }
 
 # Records for STD and AVGPK
