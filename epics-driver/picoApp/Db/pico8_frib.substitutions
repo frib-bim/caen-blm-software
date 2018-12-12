@@ -90,16 +90,6 @@ pattern
 { 6,  "MAX",  "0x90", "1e6" }
 { 7,  "MAX",  "0xa4", "1e6" }
 
-# Old STD calculation (from firmware)
-{ 0,  "STD",  "0x1c", "1e6" }
-{ 1,  "STD",  "0x30", "1e6" }
-{ 2,  "STD",  "0x44", "1e6" }
-{ 3,  "STD",  "0x58", "1e6" }
-{ 4,  "STD",  "0x6c", "1e6" }
-{ 5,  "STD",  "0x80", "1e6" }
-{ 6,  "STD",  "0x94", "1e6" }
-{ 7,  "STD",  "0xa8", "1e6" }
-
 # New: Use AVEPK and SSQR to generate STD = SQRT( SSQR - AVEPK*AVEPK )
 # AVEPK already averaged during 10ms.  1e6 for A -> uA
 { 0,  "AVGPK", "0x1c", "1e6" }
@@ -297,15 +287,14 @@ pattern
 { 6,  "MAX",  "Max"   }
 { 7,  "MAX",  "Max"   }
 
-# Old STD calculation (from firmware)
-{ 0,  "STD", "Average" }
-{ 1,  "STD", "Average" }
-{ 2,  "STD", "Average" }
-{ 3,  "STD", "Average" }
-{ 4,  "STD", "Average" }
-{ 5,  "STD", "Average" }
-{ 6,  "STD", "Average" }
-{ 7,  "STD", "Average" }
+{ 0,  "STD", "MaskedAvg" }
+{ 1,  "STD", "MaskedAvg" }
+{ 2,  "STD", "MaskedAvg" }
+{ 3,  "STD", "MaskedAvg" }
+{ 4,  "STD", "MaskedAvg" }
+{ 5,  "STD", "MaskedAvg" }
+{ 6,  "STD", "MaskedAvg" }
+{ 7,  "STD", "MaskedAvg" }
 }
 
 file "tbuf_smart_avg.template" {

@@ -1,5 +1,8 @@
-record(calc, "$(P)_$(CH):STD2_RD") {
-    field(INPA, "$(P)_$(CH):SSQRF_RD CP")
+record(calc, "$(P)_$(CH):STDF_RD") {
+    field(SCAN, "Event")
+    field(EVNT, "$(NAME)_100HZ")
+    field(PHAS, "-2")
+    field(INPA, "$(P)_$(CH):SSQRF_RD")
     field(INPB, "$(P)_$(CH):AVGPKF_RD")
     field(EGU,  "uA")
     field(PREC, "6")
