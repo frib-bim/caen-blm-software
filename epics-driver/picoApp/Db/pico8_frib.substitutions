@@ -308,7 +308,7 @@ pattern
 # Stddev
 file "tbuf_smart_avg.template" {
 pattern
-{ CH, R.     Stat        }
+{ CH, R,     Stat        }
 { 0,  "STD", "MaskedAvg" }
 { 1,  "STD", "MaskedAvg" }
 { 2,  "STD", "MaskedAvg" }
