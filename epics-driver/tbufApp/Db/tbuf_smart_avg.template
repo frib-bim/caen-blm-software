@@ -233,7 +233,7 @@ record(bi, "$(P)1HZFRC_CMD") {
     field(DESC, "Force 1Hz Avg")
     field(ZNAM, "No")
     field(ONAM, "Yes")
-    field(VAL,  "0")
+    field(VAL,  "$(FRC1HZ=0)")
     field(PINI, "YES")
 }
 

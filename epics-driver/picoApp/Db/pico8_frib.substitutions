@@ -281,15 +281,15 @@ pattern
 
 file "tbuf_smart_avg.template" {
 pattern
-{ CH, R,      SRC,               Stat,       }
-{ 0,  "ASTD", "$(DEVCH)AVGF_RD", "MaskedStd" }
-{ 1,  "ASTD", "$(DEVCH)AVGF_RD", "MaskedStd" }
-{ 2,  "ASTD", "$(DEVCH)AVGF_RD", "MaskedStd" }
-{ 3,  "ASTD", "$(DEVCH)AVGF_RD", "MaskedStd" }
-{ 4,  "ASTD", "$(DEVCH)AVGF_RD", "MaskedStd" }
-{ 5,  "ASTD", "$(DEVCH)AVGF_RD", "MaskedStd" }
-{ 6,  "ASTD", "$(DEVCH)AVGF_RD", "MaskedStd" }
-{ 7,  "ASTD", "$(DEVCH)AVGF_RD", "MaskedStd" }
+{ CH, R,      SRC,               Stat,        FRC1HZ }
+{ 0,  "ASTD", "$(DEVCH)AVGF_RD", "MaskedStd", "1"    }
+{ 1,  "ASTD", "$(DEVCH)AVGF_RD", "MaskedStd", "1"    }
+{ 2,  "ASTD", "$(DEVCH)AVGF_RD", "MaskedStd", "1"    }
+{ 3,  "ASTD", "$(DEVCH)AVGF_RD", "MaskedStd", "1"    }
+{ 4,  "ASTD", "$(DEVCH)AVGF_RD", "MaskedStd", "1"    }
+{ 5,  "ASTD", "$(DEVCH)AVGF_RD", "MaskedStd", "1"    }
+{ 6,  "ASTD", "$(DEVCH)AVGF_RD", "MaskedStd", "1"    }
+{ 7,  "ASTD", "$(DEVCH)AVGF_RD", "MaskedStd", "1"    }
 }
 
 file "tbuf_smart_avg.template" {
