@@ -82,6 +82,7 @@ enum reduce_t {
     WeightedAvg,
     WeightedStd,
     SpecialAvg,
+    MaskedAvg,
     MaskedStd,
     AveragePhase,   // For BPM Phase
     All,            // All values are != 0
@@ -201,6 +202,7 @@ long init_record_tbuf_common(dbCommon *prec, DBLINK *plink)
                     else if(reduce=="WeightedAvg")  dev->reduce = WeightedAvg;
                     else if(reduce=="WeightedStd")  dev->reduce = WeightedStd;
                     else if(reduce=="SpecialAvg")   dev->reduce = SpecialAvg;
+                    else if(reduce=="MaskedAvg")    dev->reduce = MaskedAvg;
                     else if(reduce=="MaskedStd")    dev->reduce = MaskedStd;
                     else if(reduce=="MeanPhase")    dev->reduce = AveragePhase;
                     else if(reduce=="All")          dev->reduce = All;
@@ -407,10 +409,12 @@ void get_value_stat(timebuf *tb, aiRecord *prec, reduce_t reduce)
 
     // If all weights are zero, then we *are* interested in the noise during
     // TIME_ON=0
-    bool allweightszero = true;
+    size_t nonzeroweights = 0;
 
     for (size_t p = 0; p < tb->cnt; ++p)
-        allweightszero &= !tb->weights[tb->idx(p)];
+        nonzeroweights += !!tb->weights[tb->idx(p)];
+
+    bool allweightszero = !nonzeroweights;
 
     for (size_t p = 0; p < tb->cnt; ++p) {
         size_t pos = tb->idx(p);
@@ -426,6 +430,7 @@ void get_value_stat(timebuf *tb, aiRecord *prec, reduce_t reduce)
             totalweight += tb->weights[pos];
             break;
         case SpecialAvg:
+        case MaskedAvg:
         case MaskedStd:
             if (tb->weights[pos] || allweightszero)
                 newval += tb->values[pos];
@@ -439,6 +444,9 @@ void get_value_stat(timebuf *tb, aiRecord *prec, reduce_t reduce)
     if (reduce == Average || reduce == SpecialAvg)
         newval /= tb->cnt;
 
+    if (reduce == MaskedAvg)
+        newval /= allweightszero ? tb->cnt : nonzeroweights;
+
     if (reduce == WeightedAvg && totalweight != 0.0)
         newval /= totalweight;
 
@@ -446,8 +454,10 @@ void get_value_stat(timebuf *tb, aiRecord *prec, reduce_t reduce)
     if(reduce == Stdev || reduce == WeightedStd || reduce == MaskedStd) {
         double meanval = newval;
 
-        if (reduce == Stdev || reduce == MaskedStd)
+        if (reduce == Stdev)
             meanval /= tb->cnt;
+        else if(reduce == MaskedStd)
+            meanval /= allweightszero ? tb->cnt : nonzeroweights;
         else if (totalweight)
             meanval /= totalweight;
 

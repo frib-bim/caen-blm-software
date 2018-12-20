@@ -123,7 +123,7 @@ record(ao, "$(P)WGH_PRD_CSET") {
 # 0.2 s average, drives the following ones
 record(ai, "$(P)5HZ_RD") {
     field(DTYP, "TBUF Get Sample")
-    field(INP , "@$(P)5HZ SpecialAvg")
+    field(INP , "@$(P)5HZ $(Stat=SpecialAvg)")
     field(SCAN, "I/O Intr")
     field(PREC, "$(PREC)")
     field(EGU,  "$(EGU=)")
@@ -134,7 +134,7 @@ record(ai, "$(P)5HZ_RD") {
 # 1 s average (reports @ 5 Hz)
 record(ai, "$(P)1HZ_RD") {
     field(DTYP, "TBUF Get Sample")
-    field(INP , "@$(P)1HZ SpecialAvg")
+    field(INP , "@$(P)1HZ $(Stat=SpecialAvg)")
     field(PREC, "$(PREC)")
     field(EGU,  "$(EGU=)")
     #field(TSE , "-2")
