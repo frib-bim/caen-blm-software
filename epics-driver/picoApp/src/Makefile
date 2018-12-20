@@ -27,7 +27,6 @@ pico_DBD += base.dbd
 pico_DBD += tbuf.dbd
 pico_DBD += system.dbd
 pico_DBD += calc.dbd
-pico_DBD += retools.dbd
 
 # Include dbd files from all support applications:
 pico_DBD += pico8.dbd
@@ -36,7 +35,6 @@ pico_LIBS += tbuf
 
 # Add all the support libraries needed by this IOC
 pico_LIBS += calc seq sscan pv
-pico_LIBS += retools
 
 # pico_registerRecordDeviceDriver.cpp derives from pico.dbd
 pico_SRCS += pico_registerRecordDeviceDriver.cpp
