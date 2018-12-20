@@ -412,7 +412,7 @@ void get_value_stat(timebuf *tb, aiRecord *prec, reduce_t reduce)
     size_t nonzeroweights = 0;
 
     for (size_t p = 0; p < tb->cnt; ++p)
-        nonzeroweights += !!tb->weights[tb->idx(p)];
+        nonzeroweights += tb->weights[tb->idx(p)] != 0;
 
     bool allweightszero = !nonzeroweights;
 
@@ -476,8 +476,10 @@ void get_value_stat(timebuf *tb, aiRecord *prec, reduce_t reduce)
         }
 
         // Convert from sum-of squares to std
-        if (reduce == Stdev || reduce == MaskedStd)
+        if (reduce == Stdev)
             newval = sqrt(newval/tb->cnt);
+        else if (reduce == MaskedStd)
+            newval = sqrt(newval / (allweightszero ? tb->cnt : nonzeroweights));
         else if (totalweight)
             newval = sqrt(newval/totalweight);
     }
@@ -597,6 +599,7 @@ long get_value(aiRecord *prec)
             case Average:
             case Stdev:
             case SpecialAvg:
+            case MaskedAvg:
             case MaskedStd:
             case WeightedAvg:
             case WeightedStd:
