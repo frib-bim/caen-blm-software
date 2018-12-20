@@ -260,6 +260,15 @@ global {
 file "tbuf.template" {
 pattern
 { CH, R,      Stat,   }
+{ 0,  "ASTD", "Stdev" }
+{ 1,  "ASTD", "Stdev" }
+{ 2,  "ASTD", "Stdev" }
+{ 3,  "ASTD", "Stdev" }
+{ 4,  "ASTD", "Stdev" }
+{ 5,  "ASTD", "Stdev" }
+{ 6,  "ASTD", "Stdev" }
+{ 7,  "ASTD", "Stdev" }
+
 { 0,  "MIN",  "Min"   }
 { 1,  "MIN",  "Min"   }
 { 2,  "MIN",  "Min"   }
@@ -288,11 +297,11 @@ pattern
 { 7,  "STD", "MaskedAvg" }
 }
 
-# Averages
 file "tbuf_smart_avg.template" {
 pattern
 { CH, R,      FLNK               }
 
+# Averages
 { 0,  "AVG",  ""                 }
 { 1,  "AVG",  ""                 }
 { 2,  "AVG",  ""                 }
@@ -302,20 +311,6 @@ pattern
 { 6,  "AVG",  ""                 }
 { 7,  "AVG",  ""                 }
 }
-
-# Standard deviation of averages
-file "tbuf_smart_avg.template" {
-pattern
-{ CH, R,      SRC               }
-
-{ 0,  "ASTD", "$(DEVCH)AVGF_RD" }
-{ 1,  "ASTD", "$(DEVCH)AVGF_RD" }
-{ 2,  "ASTD", "$(DEVCH)AVGF_RD" }
-{ 3,  "ASTD", "$(DEVCH)AVGF_RD" }
-{ 4,  "ASTD", "$(DEVCH)AVGF_RD" }
-{ 5,  "ASTD", "$(DEVCH)AVGF_RD" }
-{ 6,  "ASTD", "$(DEVCH)AVGF_RD" }
-{ 7,  "ASTD", "$(DEVCH)AVGF_RD" }
 
 # Records for STD and AVGPK
 file "pico8_frib_std_avgpk.template" {
