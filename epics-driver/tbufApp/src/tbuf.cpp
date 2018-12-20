@@ -81,7 +81,7 @@ enum reduce_t {
     Max,
     WeightedAvg,
     WeightedStd,
-    MaskedAvg,
+    SpecialAvg,
     MaskedStd,
     AveragePhase,   // For BPM Phase
     All,            // All values are != 0
@@ -200,7 +200,7 @@ long init_record_tbuf_common(dbCommon *prec, DBLINK *plink)
                     else if(reduce=="Max")          dev->reduce = Max;
                     else if(reduce=="WeightedAvg")  dev->reduce = WeightedAvg;
                     else if(reduce=="WeightedStd")  dev->reduce = WeightedStd;
-                    else if(reduce=="MaskedAvg")    dev->reduce = MaskedAvg;
+                    else if(reduce=="SpecialAvg")   dev->reduce = SpecialAvg;
                     else if(reduce=="MaskedStd")    dev->reduce = MaskedStd;
                     else if(reduce=="MeanPhase")    dev->reduce = AveragePhase;
                     else if(reduce=="All")          dev->reduce = All;
@@ -425,7 +425,7 @@ void get_value_stat(timebuf *tb, aiRecord *prec, reduce_t reduce)
             newval += tb->weights[pos]*tb->values[pos];
             totalweight += tb->weights[pos];
             break;
-        case MaskedAvg:
+        case SpecialAvg:
         case MaskedStd:
             if (tb->weights[pos] || allweightszero)
                 newval += tb->values[pos];
@@ -436,7 +436,7 @@ void get_value_stat(timebuf *tb, aiRecord *prec, reduce_t reduce)
         }
     }
 
-    if (reduce == Average || reduce == MaskedAvg)
+    if (reduce == Average || reduce == SpecialAvg)
         newval /= tb->cnt;
 
     if (reduce == WeightedAvg && totalweight != 0.0)
@@ -586,7 +586,7 @@ long get_value(aiRecord *prec)
                 break;
             case Average:
             case Stdev:
-            case MaskedAvg:
+            case SpecialAvg:
             case MaskedStd:
             case WeightedAvg:
             case WeightedStd:
