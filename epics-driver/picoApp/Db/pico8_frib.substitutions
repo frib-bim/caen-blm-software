@@ -281,40 +281,42 @@ pattern
 
 file "tbuf.template" {
 pattern
-{ CH, R,      SRC,               Stat,   }
-{ 0,  "ASTD", "$(DEVCH)AVGF_RD", "Stdev" }
-{ 1,  "ASTD", "$(DEVCH)AVGF_RD", "Stdev" }
-{ 2,  "ASTD", "$(DEVCH)AVGF_RD", "Stdev" }
-{ 3,  "ASTD", "$(DEVCH)AVGF_RD", "Stdev" }
-{ 4,  "ASTD", "$(DEVCH)AVGF_RD", "Stdev" }
-{ 5,  "ASTD", "$(DEVCH)AVGF_RD", "Stdev" }
-{ 6,  "ASTD", "$(DEVCH)AVGF_RD", "Stdev" }
-{ 7,  "ASTD", "$(DEVCH)AVGF_RD", "Stdev" }
+{ CH, R,      SRC,               Stat,       }
+{ 0,  "ASTD", "$(DEVCH)AVGF_RD", "MaskedStd" }
+{ 1,  "ASTD", "$(DEVCH)AVGF_RD", "MaskedStd" }
+{ 2,  "ASTD", "$(DEVCH)AVGF_RD", "MaskedStd" }
+{ 3,  "ASTD", "$(DEVCH)AVGF_RD", "MaskedStd" }
+{ 4,  "ASTD", "$(DEVCH)AVGF_RD", "MaskedStd" }
+{ 5,  "ASTD", "$(DEVCH)AVGF_RD", "MaskedStd" }
+{ 6,  "ASTD", "$(DEVCH)AVGF_RD", "MaskedStd" }
+{ 7,  "ASTD", "$(DEVCH)AVGF_RD", "MaskedStd" }
 }
 
+# Averages
 file "tbuf_smart_avg.template" {
 pattern
-{ CH, R     }
-
-# Averages
-{ 0,  "AVG" }
-{ 1,  "AVG" }
-{ 2,  "AVG" }
-{ 3,  "AVG" }
-{ 4,  "AVG" }
-{ 5,  "AVG" }
-{ 6,  "AVG" }
-{ 7,  "AVG" }
+{ CH, R,     Stat         }
+{ 0,  "AVG", "SpecialAvg" }
+{ 1,  "AVG", "SpecialAvg" }
+{ 2,  "AVG", "SpecialAvg" }
+{ 3,  "AVG", "SpecialAvg" }
+{ 4,  "AVG", "SpecialAvg" }
+{ 5,  "AVG", "SpecialAvg" }
+{ 6,  "AVG", "SpecialAvg" }
+{ 7,  "AVG", "SpecialAvg" }
 
 # Stddev
-{ 0,  "STD" }
-{ 1,  "STD" }
-{ 2,  "STD" }
-{ 3,  "STD" }
-{ 4,  "STD" }
-{ 5,  "STD" }
-{ 6,  "STD" }
-{ 7,  "STD" }
+file "tbuf_smart_avg.template" {
+pattern
+{ CH, R.     Stat        }
+{ 0,  "STD", "MaskedAvg" }
+{ 1,  "STD", "MaskedAvg" }
+{ 2,  "STD", "MaskedAvg" }
+{ 3,  "STD", "MaskedAvg" }
+{ 4,  "STD", "MaskedAvg" }
+{ 5,  "STD", "MaskedAvg" }
+{ 6,  "STD", "MaskedAvg" }
+{ 7,  "STD", "MaskedAvg" }
 }
 
 # Records for STD and AVGPK
