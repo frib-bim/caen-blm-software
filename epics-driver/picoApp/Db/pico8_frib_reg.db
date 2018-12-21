@@ -2,7 +2,7 @@
 ## ==================================================
 record(stringin, "$(CTRL)ioc_version") {
   field(PINI, "YES")
-  field(VAL, "vBC02 (2018-Aug)")
+  field(VAL, "vBC03 (2018-Dec)")
 }
 
 record(longin, "$(FPS)FPSSTS_RD") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x3005c")  field(SCAN, ".5 second") field(FLNK, "$(FPS)FPSSTS_Fout_")}
