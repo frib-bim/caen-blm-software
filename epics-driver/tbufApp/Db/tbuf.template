@@ -38,7 +38,7 @@ record(ai, "$(P)_RD") {
     field(PREC, "$(PREC=)")
     field(EGU , "$(EGU=)")
     field(MDEL, "$(MDEL=-1)")
-    #field(TSE , "-2")
+    field(TSE , "-2")
     field(FLNK, "$(P)W_RD")
 }
 
@@ -49,5 +49,5 @@ record(waveform, "$(P)W_RD") {
     field(FTVL, "FLOAT")
     #field(SCAN, "I/O Intr")
     field(NELM, "$(NELM=20)")
-    #field(TSE , "-2")
+    field(TSE , "-2")
 }

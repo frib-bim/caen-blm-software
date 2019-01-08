@@ -16,7 +16,7 @@
 # Push to FIFOs
 #
 record(calc, "$(P)WGHF_RD_") {
-    #field(TSEL, "$(WEIGHT).TIME")
+    field(TSEL, "$(WEIGHT).TIME")
     field(SCAN, "$(SCAN=Event)")
     field(PHAS, "$(PHAS=0)")
     field(EVNT, "$(EVNT=$(NAME)_100HZ)")
@@ -127,7 +127,7 @@ record(ai, "$(P)5HZ_RD") {
     field(SCAN, "I/O Intr")
     field(PREC, "$(PREC)")
     field(EGU,  "$(EGU=)")
-    #field(TSE , "-2")
+    field(TSE , "-2")
     field(FLNK, "$(P)1HZ_RD")
 }
 
@@ -137,7 +137,7 @@ record(ai, "$(P)1HZ_RD") {
     field(INP , "@$(P)1HZ $(Stat=SpecialAvg)")
     field(PREC, "$(PREC)")
     field(EGU,  "$(EGU=)")
-    #field(TSE , "-2")
+    field(TSE , "-2")
     field(FLNK, "$(P)WGH_RD")
 }
 
@@ -146,7 +146,7 @@ record(ai, "$(P)WGH_RD") {
     field(DTYP, "TBUF Get Sample")
     field(INP , "@$(P)WGH Average")
     field(PREC, "$(PREC)")
-    #field(TSE , "-2")
+    field(TSE , "-2")
     field(FLNK, "$(P)1HZW_RD")
     field(MDEL, "-1")
 }
@@ -157,7 +157,7 @@ record(waveform, "$(P)1HZW_RD") {
     field(INP , "@$(P)1HZ")
     field(FTVL, "FLOAT")
     field(NELM, "100")
-    #field(TSE , "-2")
+    field(TSE , "-2")
     field(FLNK, "$(P)5HZW_RD")
 }
 
@@ -167,7 +167,7 @@ record(waveform, "$(P)5HZW_RD") {
     field(INP , "@$(P)5HZ")
     field(FTVL, "FLOAT")
     field(NELM, "20")
-    #field(TSE , "-2")
+    field(TSE , "-2")
     field(FLNK, "$(P)WGHW_RD")
 }
 
@@ -177,7 +177,7 @@ record(waveform, "$(P)WGHW_RD") {
     field(INP , "@$(P)WGH")
     field(FTVL, "FLOAT")
     field(NELM, "20")
-    #field(TSE , "-2")
+    field(TSE , "-2")
     field(FLNK, "$(P)ALL_PSH_CMD_")
 }
 
@@ -214,7 +214,7 @@ record(ai, "$(P)ALL_RD") {
     field(SCAN, "I/O Intr")
     field(PREC, "$(PREC)")
     field(MDEL, "-1")
-    #field(TSE , "-2")
+    field(TSE , "-2")
     field(FLNK, "$(P)ALLW_RD PP")
 }
 
@@ -224,7 +224,7 @@ record(waveform, "$(P)ALLW_RD") {
     field(INP , "@$(P)ALL")
     field(FTVL, "FLOAT")
     field(NELM, "5")
-    #field(TSE , "-2")
+    field(TSE , "-2")
     field(FLNK, "$(P)1HZSEL_RD PP")
 }
 
