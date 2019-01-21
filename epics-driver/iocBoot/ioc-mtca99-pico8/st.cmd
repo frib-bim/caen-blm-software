@@ -1,11 +1,8 @@
 #!../../bin/linux-x86_64-debug/pico
 
-#< envPaths
+< envPaths
 
 epicsEnvSet("EPICS_CA_MAX_ARRAY_BYTES","10000000")
-
-## Channel Access Security config
-asSetFilename("${EPICS_CA_SEC_FILE}")
 
 dbLoadDatabase("../../dbd/pico.dbd",0,0)
 pico_registerRecordDeviceDriver(pdbbase)
@@ -30,32 +27,4 @@ dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA,D=PICO7,NAME=PICO7,NELM=10
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA,D=PICO8,NAME=PICO8,NELM=1000000")
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA,D=PICO9,NAME=PICO9,NELM=1000000")
 
-# record name aliases
-# (SYS):(D)_CHX:Y_Z -> (A)Y_Z
-
-
-# Auto save/restore
-save_restoreDebug(2)
-
-#dbLoadRecords("db/save_restoreStatus.db", "P=DIAG_MTCA:CPU_R0404:")
-#save_restoreSet_status_prefix("DIAG_MTCA:CPU_R0404:")
-
-set_savefile_path("/usr/local/lib/iocapps/pico8/epics-driver/iocBoot/iocmtcacpu04/as","/save")
-set_requestfile_path("/usr/local/lib/iocapps/pico8/epics-driver/iocBoot/iocmtcacpu04/as","/req")
-
-set_pass0_restoreFile("pico_settings.sav")
-set_pass1_restoreFile("pico_waveforms.sav")
-
-system("install -d /usr/local/lib/iocapps/pico8/epics-driver/iocBoot/iocmtcacpu04/as/req")
-system("install -d /usr/local/lib/iocapps/pico8/epics-driver/iocBoot/iocmtcacpu04/as/save")
-
 iocInit()
-iocLogInit()
-
-makeAutosaveFileFromDbInfo("/usr/local/lib/iocapps/pico8/epics-driver/iocBoot/iocmtcacpu04/as/req/pico_settings.req", "autosaveFields_pass0")
-makeAutosaveFileFromDbInfo("/usr/local/lib/iocapps/pico8/epics-driver/iocBoot/iocmtcacpu04/as/req/pico_waveforms.req", "autosaveFields_pass1")
-
-create_monitor_set("pico_settings.req", 10 , "")
-create_monitor_set("pico_waveforms.req", 30 , "")
-
-caPutLogInit("${EPICS_PUT_LOG_INET}:${EPICS_PUT_LOG_PORT}", 1)
