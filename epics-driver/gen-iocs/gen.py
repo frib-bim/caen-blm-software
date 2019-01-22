@@ -22,7 +22,7 @@ class Pico:
         self.addr = {
             2: '0e', 3: '08', 4: '06', 5: '09',
             6: '0b', 7: '0f', 8: '0d', 9: '07',
-            10: '05' }[slot]
+            10: '05', 11: '0a' }[slot]
 
     def __repr__(self):
         return self.chans.__repr__()
