@@ -27,4 +27,6 @@ dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA99,D=PICO7,NAME=PICO7,NELM=
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA99,D=PICO8,NAME=PICO8,NELM=1000000")
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA99,D=PICO9,NAME=PICO9,NELM=1000000")
 
+var picoSlewLimit 9e99
+
 iocInit()
