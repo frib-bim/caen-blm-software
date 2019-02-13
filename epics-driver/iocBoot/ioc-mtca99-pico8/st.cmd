@@ -27,6 +27,15 @@ dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA99,D=PICO3,NAME=PICO3,NELM=
 #dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA99,D=PICO8,NAME=PICO8,NELM=1000000")
 #dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA99,D=PICO9,NAME=PICO9,NELM=1000000")
 
+# Add some aliases
+
+# Neutron detector
+reAddAlias "DIAG_MTCA99:PICO3_CH0:(.*)" "FE_RFQ:ND_D1025:$1"
+
+# Ion chamber
+reAddAlias "DIAG_MTCA99:PICO3_CH1:(.*)" "FS1_STRL:IC_D2233:$1"
+
 var picoSlewLimit 9e99
 
 iocInit()
+
