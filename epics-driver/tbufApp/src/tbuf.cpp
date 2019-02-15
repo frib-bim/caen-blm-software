@@ -113,7 +113,7 @@ struct timebuf {
     inline bool empty() const { return cnt==0; }
 
     // index of first populated element (assumes empty()==false)
-    size_t first() const {
+    inline size_t first() const {
         if(pos>=cnt)
             return pos-cnt;
         else
@@ -121,7 +121,7 @@ struct timebuf {
     }
 
     // index of last populated element (assumes empty()==false)
-    size_t last() const {
+    inline size_t last() const {
         if(pos==0)
             return values.size()-1;
         else
@@ -129,7 +129,7 @@ struct timebuf {
     }
 
     // index of the n'th element
-    size_t idx(size_t n) {
+    inline size_t idx(size_t n) {
         return (first() + n) % size();
     }
 
