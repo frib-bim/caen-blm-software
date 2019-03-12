@@ -1,7 +1,7 @@
 global {
     NAME="\$(NAME)",
     DEV="\$(SYS):\$(D)",
-    FPS="$(DEV)_FPS:"
+    FPS="$(DEV)_FPS:",
     DEVCH="$(DEV)_CH$(CH):"
 }
 
@@ -36,7 +36,7 @@ file "pico8_frib_reg.db" {
 
 # For following capture data
 global {
-    N="$(DEV)_CAP:$(R)_RSTS"
+    N="$(DEV)_CAP:$(R)_RSTS",
     PHAS="-5",
 
     # -2: GTS timestamp, 0: CPU timestamp
@@ -54,7 +54,7 @@ pattern
 
 # For following capture data
 global {
-    N="$(DEVCH)$(R)F_RD"
+    N="$(DEVCH)$(R)F_RD",
     PREC="6",
     EGU="uA",
     PHAS="-3",
@@ -90,7 +90,7 @@ pattern
 { 6,  "MAX",  "0x90", "1e6" }
 { 7,  "MAX",  "0xa4", "1e6" }
 
-# New: Use AVEPK and SSQR to generate STD = SQRT( SSQR - AVEPK*AVEPK )
+# Use AVEPK and SSQR to generate STD = SQRT( SSQR - AVEPK*AVEPK )
 # AVEPK already averaged during 10ms.  1e6 for A -> uA
 { 0,  "AVGPK", "0x1c", "1e6" }
 { 1,  "AVGPK", "0x30", "1e6" }
@@ -112,6 +112,30 @@ pattern
 { 7,  "SSQR", "0xac", "1e12" }
 }
 
+# For following fast peak average
+global {
+    N="$(DEVCH)PKAVGF_RD",
+    AVGSRC="$(DEVCH)AVGF_RD",
+    TONSRC="$(DEV)_CAP:TON_RSTS",
+    PREC="6",
+    EGU="uA",
+    PHAS="-2",
+}
+
+# Fast peak average
+file "pico8_frib_peak_avg_chan.template" {
+pattern
+{ CH }
+{ 0  }
+{ 1  }
+{ 2  }
+{ 3  }
+{ 4  }
+{ 5  }
+{ 6  }
+{ 7  }
+}
+
 file "pico8_frib_reg_chan.template" {
 pattern
 { CH, P,           CORR,      CTRL,     BIT  }
@@ -127,7 +151,7 @@ pattern
 
 file "pico8_frib_chan_trip.db" {
 pattern
-{ CH, P,          LO1,  HI1,  LO2,  HI2,  LO3,  HI3,  LO4,  HI4,  SPK1, SPK2, NOKMSK, NOK  }
+{ CH, P,         LO1,  HI1,  LO2,  HI2,  LO3,  HI3,  LO4,  HI4,  SPK1, SPK2, NOKMSK, NOK  }
 { 0, "$(DEVCH)", 0xB0, 0xB1, 0xB2, 0xB3, 0xB4, 0xB5, 0xB6, 0xB7, 0xF0, 0xF1, 0xA0,   0xA8 }
 { 1, "$(DEVCH)", 0xB8, 0xB9, 0xBA, 0xBB, 0xBC, 0xBD, 0xBE, 0xBF, 0xF2, 0xF3, 0xA1,   0xA9 }
 { 2, "$(DEVCH)", 0xC0, 0xC1, 0xC2, 0xC3, 0xC4, 0xC5, 0xC6, 0xC7, 0xF4, 0xF5, 0xA2,   0xAA }
@@ -316,6 +340,15 @@ pattern
 { 6,  "STD", "MaskedAvg" }
 { 7,  "STD", "MaskedAvg" }
 
+# Peak Averages
+{ 0,  "PKAVG", "MaskedAvg" }
+{ 1,  "PKAVG", "MaskedAvg" }
+{ 2,  "PKAVG", "MaskedAvg" }
+{ 3,  "PKAVG", "MaskedAvg" }
+{ 4,  "PKAVG", "MaskedAvg" }
+{ 5,  "PKAVG", "MaskedAvg" }
+{ 6,  "PKAVG", "MaskedAvg" }
+{ 7,  "PKAVG", "MaskedAvg" }
 
 }
 
