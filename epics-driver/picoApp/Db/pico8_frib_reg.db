@@ -205,6 +205,7 @@ record(bo, "$(FPS)CLR_CSET") {
     field(ZNAM, "Idle")
     field(ONAM, "Clear")
     field(HIGH, "0.1")
+    field(ASG,  "DIAG_OPS")
     info(autosaveFields_pass0, "RVAL")
 }
 
@@ -227,6 +228,7 @@ record(bo, "$(FPS)THW_CSET") {
     field(ZNAM, "Idle")
     field(ONAM, "Thaw")
     field(HIGH, "0.1")
+    field(ASG,  "DIAG_OPS")
     info(autosaveFields_pass0, "RVAL")
 }
 
