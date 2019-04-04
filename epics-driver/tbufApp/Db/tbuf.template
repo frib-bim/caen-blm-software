@@ -40,6 +40,7 @@ record(ai, "$(P)_RD") {
     field(MDEL, "$(MDEL=-1)")
     field(TSE , "-2")
     field(FLNK, "$(P)W_RD")
+    field(ASG,  "DIAG_OPS")
 }
 
 # Full FIFO

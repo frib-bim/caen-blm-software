@@ -22,6 +22,7 @@ record(bo, "$(P)CWBEAM_CSET") {
     field(ZNAM, "OFF")
     field(ONAM, "ON")
     field(PINI, "RUNNING")
+    field(ASG,  "DIAG_OPS")
     # MASK is automagially set from mask=
     info(autosaveFields_pass0, "RVAL")
 }

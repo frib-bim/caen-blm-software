@@ -73,6 +73,7 @@ record(mbbo, "$(P)MODE_CMD") {
     field(ZRVL, "0")
     field(ONVL, "8")
     field(VAL,  "0")
+    field(ASG,  "DIAG_OPS")
 }
 
 record(mbbo, "$(P)CLK_CMD") {
@@ -165,6 +166,7 @@ record(longout, "$(P)NSMP_CSET") {
 	field(VAL , "2000")
 	field(DRVL, "2000")
 	field(DRVH, "$(NELM)")
+    field(ASG,  "DIAG_OPS")
     info(autosaveFields_pass0, "VAL")
 }
 

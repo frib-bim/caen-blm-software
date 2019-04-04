@@ -257,6 +257,7 @@ record(calc, "$(P)_RD") {
     field(PREC, "$(PREC)")
     field(MDEL, "-1")
     field(FLNK, "$(FLNK=)")
+    field(ASG,  "DIAG_OPS")
 }
 
 alias("$(P)5HZW_RD", "$(P)W_RD")
