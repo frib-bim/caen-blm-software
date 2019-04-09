@@ -117,6 +117,7 @@ global {
     N="$(DEVCH)PKAVGF_RD",
     AVGSRC="$(DEVCH)AVGF_RD",
     TONSRC="$(DEV)_CAP:TON_RSTS",
+    CWSRC="$(DEVCH)CWBEAM_CSET",
     PREC="6",
     EGU="uA",
     PHAS="-2",

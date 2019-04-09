@@ -1,13 +1,14 @@
 record(calc, "$(N)") {
     field(INPA, "$(AVGSRC)")
     field(INPB, "$(TONSRC)")
+    field(INPC, "$(CWSRC)")
     field(SCAN, "$(SCAN=Event)")
     field(EVNT, "$(EVNT=$(NAME)_100HZ)")
     field(EGU , "$(EGU=)")
     field(MDEL, "$(MDEL=-1)")
     field(PHAS, "$(PHAS=)")
     field(FLNK, "$(FLNK=)")
-    field(CALC, "B ? A*10000*80.5/B : 0")
+    field(CALC, "C ? A : (B ? A*10000*80.5/B : 0)")
 }
 
 
