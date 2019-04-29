@@ -15,7 +15,7 @@ diag_build([
       'python-numpy',
       'python-scipy'
     ],
-    iocs: [
+    instances: [
       'ioc-mtca01-pico8',
       'ioc-mtca02-pico8',
       'ioc-mtca03-pico8',
