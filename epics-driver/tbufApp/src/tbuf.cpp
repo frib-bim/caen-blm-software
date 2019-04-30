@@ -98,6 +98,8 @@ struct timebuf {
         ,weights(maxsamples)
         ,times(maxsamples)
         ,severities(maxsamples)
+        ,repeat_ts_err_cnt(0)
+	,nonmonot_ts_err_cnt(0)
     {
         scanIoInit(&scan);
         reset();
@@ -150,6 +152,12 @@ struct timebuf {
     std::vector<short> severities;
 
     IOSCANPVT scan;
+
+    size_t repeat_ts_err_cnt,
+	   nonmonot_ts_err_cnt;
+
+    epicsTimeStamp repeat_ts_err_last,
+		   nonmonot_ts_err_last;
 
     size_t pos, // next sample to be written
            cnt; // number of valid samples stored
@@ -339,11 +347,26 @@ long new_sample(aoRecord *prec)
             if(tb->cnt!=0) {
                 double delta = epicsTimeDiffInSeconds(&newtime, &tb->times[tb->last()]);
                 if (delta == 0.0) {
-                    fprintf(stderr, "%s: repeated sample (diff=%f).\n",
-                                 prec->name, delta);
+		    ++tb->repeat_ts_err_cnt;
+		    epicsTimeStamp now;
+		    epicsTimeGetCurrent(&now);
+		    if (epicsTimeDiffInSeconds(&now, &tb->repeat_ts_err_last) > 10.0) {
+                        fprintf(stderr, "%s: repeated sample (diff=%f) [%lu times]\n",
+                                 prec->name, delta, tb->repeat_ts_err_cnt);
+			tb->repeat_ts_err_last = now;
+			tb->repeat_ts_err_cnt = 0;
+		    }
                 } else if (delta < 0) {
-                    fprintf(stderr, "%s: non-monotonic time (diff=%f).  Clear buffer.\n",
-                                 prec->name, delta);
+		    ++tb->nonmonot_ts_err_cnt;
+		    epicsTimeStamp now;
+		    epicsTimeGetCurrent(&now);
+		    if (epicsTimeDiffInSeconds(&now, &tb->nonmonot_ts_err_last) > 10.0) {
+                        fprintf(stderr, "%s: non-monotonic time (diff=%f) [%lu times]  Clear buffer.\n",
+                                 prec->name, delta, tb->nonmonot_ts_err_cnt);
+			tb->nonmonot_ts_err_last = now;
+			tb->nonmonot_ts_err_cnt = 0;
+		    }
+
                     tb->reset();
                 }
             }
