@@ -76,7 +76,7 @@ def get_mtca_map():
                 c = m.cards[slot] = Pico(slot)
 
             if ch in c.chans:
-                print "Duplicate channel", c.chans[ch]
+                print("Duplicate channel", c.chans[ch])
 
             if dev_type in ('PM', 'EMS'):
                 dev = '%s:%s_' % (loc, dev_func.split(' Signal')[0])
@@ -97,5 +97,5 @@ for mtca_num, mtca_data in mtca_map.items():
     with open(target, 'w') as f:
         f.write(template.render({'mtca_num': mtca_num,
                                  'mtca_data': mtca_data}))
-    print target
+    print(target)
 

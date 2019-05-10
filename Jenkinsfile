@@ -10,10 +10,10 @@ diag_build([
       'epics-sscan-dev',
       'pico8-dev',
       'pico8-dkms',
-      'python-cothread',
-      'python-matplotlib',
-      'python-numpy',
-      'python-scipy'
+      'python3-cothread',
+      'python3-matplotlib',
+      'python3-numpy',
+      'python3-scipy'
     ],
     instances: [
       'ioc-mtca01-pico8',

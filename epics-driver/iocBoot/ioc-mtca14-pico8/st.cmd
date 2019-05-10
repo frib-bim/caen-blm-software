@@ -30,7 +30,7 @@ reAddAlias "DIAG_MTCA14:PICO8_CH1:(.*)" "LS2_CD12:ND_D3872:$1"
 < $(TOP)/iocBoot/archiver_chan_tags.cmd
 
 ## Start the PICO python helper script
-system "python ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA14:PICO8 &"
+system "python3 ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA14:PICO8 &"
 
 iocInit()
 

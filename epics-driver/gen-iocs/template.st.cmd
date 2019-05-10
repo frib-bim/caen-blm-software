@@ -35,7 +35,7 @@ reAddAlias "DIAG_MTCA{{ mtca_num }}:PICO{{ card_num }}_CH{{ chan_num }}:(.*)" "{
 < $(TOP)/iocBoot/archiver_chan_tags.cmd
 
 ## Start the PICO python helper script
-system "python ../../iocBoot/scripts/blm_processing_thread.py {% for card_num, d in mtca_data.cards|dictsort %}DIAG_MTCA{{ mtca_num }}:PICO{{ card_num }} {% endfor -%} &"
+system "python3 ../../iocBoot/scripts/blm_processing_thread.py {% for card_num, d in mtca_data.cards|dictsort %}DIAG_MTCA{{ mtca_num }}:PICO{{ card_num }} {% endfor -%} &"
 
 iocInit()
 
