@@ -12,15 +12,23 @@ dbLoadDatabase("../../dbd/pico.dbd",0,0)
 pico_registerRecordDeviceDriver(pdbbase)
 
 # slot numbers from /sys/bus/pci/slots/*/address
+createPICO8("PICO3", "/dev/amc_pico_0000:08:00.0")
 createPICO8("PICO5", "/dev/amc_pico_0000:09:00.0")
 
 # (SYS):(D)_CHX:Y_Z
+dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA12,D=PICO3,NAME=PICO3,NELM=1000000")
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA12,D=PICO5,NAME=PICO5,NELM=1000000")
 
 < $(TOP)/iocBoot/archiver_tags.cmd
 
 # record name aliases
 # (SYS):(D)_CHX:Y_Z -> (A)Y_Z
+
+# Slot 3
+reAddAlias "DIAG_MTCA12:PICO3_CH0:(.*)" "LS2_WC09:BLM_D3062:$1"
+reAddAlias "DIAG_MTCA12:PICO3_CH1:(.*)" "LS2_WC12:BLM_D3181:$1"
+reAddAlias "DIAG_MTCA12:PICO3_CH4:(.*)" "LS2_WD03:BLM_D3367:$1"
+reAddAlias "DIAG_MTCA12:PICO3_CH5:(.*)" "LS2_WD06:BLM_D3553:$1"
 
 # Slot 5
 reAddAlias "DIAG_MTCA12:PICO5_CH0:(.*)" "LS2_CC08:ND_D2987:$1"
@@ -35,10 +43,11 @@ reAddAlias "DIAG_MTCA12:PICO5_CH6:(.*)" "LS2_CD08:ND_D3624:$1"
 < $(TOP)/iocBoot/archiver_chan_tags.cmd
 
 ## Start the PICO python helper script
-system "python3 ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA12:PICO5 &"
+system "python3 ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA12:PICO3 DIAG_MTCA12:PICO5 &"
 
 iocInit()
 
 ## Set PICO card AMC slot numbers on startup for each card.
+dbpf "DIAG_MTCA12:PICO3_FPS:SLT_CSET", "3"
 dbpf "DIAG_MTCA12:PICO5_FPS:SLT_CSET", "5"
 

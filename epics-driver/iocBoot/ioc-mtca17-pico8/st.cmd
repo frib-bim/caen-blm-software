@@ -15,11 +15,13 @@ pico_registerRecordDeviceDriver(pdbbase)
 createPICO8("PICO7", "/dev/amc_pico_0000:0f:00.0")
 createPICO8("PICO8", "/dev/amc_pico_0000:0d:00.0")
 createPICO8("PICO9", "/dev/amc_pico_0000:07:00.0")
+createPICO8("PICO10", "/dev/amc_pico_0000:05:00.0")
 
 # (SYS):(D)_CHX:Y_Z
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA17,D=PICO7,NAME=PICO7,NELM=1000000")
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA17,D=PICO8,NAME=PICO8,NELM=1000000")
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA17,D=PICO9,NAME=PICO9,NELM=1000000")
+dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA17,D=PICO10,NAME=PICO10,NELM=1000000")
 
 < $(TOP)/iocBoot/archiver_tags.cmd
 
@@ -48,11 +50,14 @@ reAddAlias "DIAG_MTCA17:PICO9_CH1:(.*)" "LS3_BTS:IC_D4895:$1"
 reAddAlias "DIAG_MTCA17:PICO9_CH2:(.*)" "LS3_BTS:IC_D5001:$1"
 reAddAlias "DIAG_MTCA17:PICO9_CH3:(.*)" "LS3_BTS:IC_D5105:$1"
 
+# Slot 10
+reAddAlias "DIAG_MTCA17:PICO10_CH0:(.*)" "LS3_WD06:BLM_D4700:$1"
+
 
 < $(TOP)/iocBoot/archiver_chan_tags.cmd
 
 ## Start the PICO python helper script
-system "python3 ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA17:PICO7 DIAG_MTCA17:PICO8 DIAG_MTCA17:PICO9 &"
+system "python3 ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA17:PICO7 DIAG_MTCA17:PICO8 DIAG_MTCA17:PICO9 DIAG_MTCA17:PICO10 &"
 
 iocInit()
 
@@ -60,4 +65,5 @@ iocInit()
 dbpf "DIAG_MTCA17:PICO7_FPS:SLT_CSET", "7"
 dbpf "DIAG_MTCA17:PICO8_FPS:SLT_CSET", "8"
 dbpf "DIAG_MTCA17:PICO9_FPS:SLT_CSET", "9"
+dbpf "DIAG_MTCA17:PICO10_FPS:SLT_CSET", "10"
 
