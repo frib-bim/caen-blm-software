@@ -25,8 +25,8 @@ dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA14,D=PICO8,NAME=PICO8,NELM=
 # (SYS):(D)_CHX:Y_Z -> (A)Y_Z
 
 # Slot 7
-reAddAlias "DIAG_MTCA14:PICO7_CH0:(.*)" "LS2_WD09:BLM_D3739:$1"
-reAddAlias "DIAG_MTCA14:PICO7_CH1:(.*)" "LS2_WD12:BLM_D3925:$1"
+reAddAlias "DIAG_MTCA14:PICO7_CH0:(.*)" "LS2_WD09:HMR_D3739:$1"
+reAddAlias "DIAG_MTCA14:PICO7_CH1:(.*)" "LS2_WD12:HMR_D3925:$1"
 
 # Slot 8
 reAddAlias "DIAG_MTCA14:PICO8_CH0:(.*)" "LS2_CD10:ND_D3748:$1"

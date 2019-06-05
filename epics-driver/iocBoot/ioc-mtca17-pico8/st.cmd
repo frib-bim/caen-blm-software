@@ -51,7 +51,7 @@ reAddAlias "DIAG_MTCA17:PICO9_CH2:(.*)" "LS3_BTS:IC_D5001:$1"
 reAddAlias "DIAG_MTCA17:PICO9_CH3:(.*)" "LS3_BTS:IC_D5105:$1"
 
 # Slot 10
-reAddAlias "DIAG_MTCA17:PICO10_CH0:(.*)" "LS3_WD06:BLM_D4700:$1"
+reAddAlias "DIAG_MTCA17:PICO10_CH0:(.*)" "LS3_WD06:HMR_D4700:$1"
 
 
 < $(TOP)/iocBoot/archiver_chan_tags.cmd

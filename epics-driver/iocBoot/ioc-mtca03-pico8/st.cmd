@@ -35,8 +35,8 @@ reAddAlias "DIAG_MTCA03:PICO3_CH6:(.*)" "LS3_CD03:IC_D4503:$1"
 
 # Slot 4
 reAddAlias "DIAG_MTCA03:PICO4_CH0:(.*)" "LS1_WA03:BD_D1224:$1"
-reAddAlias "DIAG_MTCA03:PICO4_CH4:(.*)" "FS2_BMS:BLM_D4328:$1"
-reAddAlias "DIAG_MTCA03:PICO4_CH5:(.*)" "LS3_WD04:BLM_D4576:$1"
+reAddAlias "DIAG_MTCA03:PICO4_CH4:(.*)" "FS2_BMS:HMR_D4328:$1"
+reAddAlias "DIAG_MTCA03:PICO4_CH5:(.*)" "LS3_WD04:HMR_D4576:$1"
 
 
 < $(TOP)/iocBoot/archiver_chan_tags.cmd
