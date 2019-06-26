@@ -2,21 +2,16 @@ from itertools import product
 from epics import caget
 import csv
 from datetime import datetime
+import requests
+import json
+
+CHANNELFINDER='https://controls.ftc/channelfinder/resources/channels?'
+
+url = '%s~name=DIAG_MTCA*:PICO*_CH0:RNG0_EEGAIN_RD&pvStatus=Active' % CHANNELFINDER
 
 picos = [
-  'DIAG_MTCA01:PICO3',
-  'DIAG_MTCA01:PICO4',
-  'DIAG_MTCA01:PICO5',
-  'DIAG_MTCA01:PICO6',
-  'DIAG_MTCA01:PICO7',
-  'DIAG_MTCA01:PICO8',
-  'DIAG_MTCA01:PICO9',
-  'DIAG_MTCA04:PICO3',
-  'DIAG_MTCA04:PICO4',
-  'DIAG_MTCA15:PICO3',
-  'DIAG_MTCA15:PICO4',
-  'DIAG_MTCA17:PICO3',
-  'DIAG_MTCA17:PICO4'
+    c['name'].split('_CH0')[0] 
+    for c in json.loads(requests.get(url).content)
 ]
 
 chans = range(8)
