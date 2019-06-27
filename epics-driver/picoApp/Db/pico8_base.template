@@ -137,6 +137,7 @@ record(ao, "$(P)TRIG_CSET") {
 	field(DTYP, "Pico8 Trigger Level")
 	field(OUT , "@$(NAME)")
 	field(PREC, "3")
+    field(EGU,  "uA")
 	field(PINI, "YES")
     info(autosaveFields_pass0, "VAL")
 }

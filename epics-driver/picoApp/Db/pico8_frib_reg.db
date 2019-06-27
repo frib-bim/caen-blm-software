@@ -2,7 +2,7 @@
 ## ==================================================
 record(stringin, "$(CTRL)ioc_version") {
   field(PINI, "YES")
-  field(VAL, "vBC03 (2019-Mar)")
+  field(VAL, "vBC04 (2019-Jun)")
 }
 
 record(longin, "$(FPS)FPSSTS_RD") {  field(DTYP, "Pico8 User Reg UInt32")  field(INP , "@$(NAME) offset=0x3005c")  field(SCAN, ".5 second") field(FLNK, "$(FPS)FPSSTS_Fout_")}
@@ -156,34 +156,30 @@ record(longout, "$(CTRL)ISRMAXCLR_CMD") {
     field(VAL , "0")
 }
 
-record(ao, "$(FPS)FRZDLY_CSET") {
-    field(DESC, "Length of post trigger samples")
-    field(DTYP, "Raw Soft Channel")
-    field(OUT,  "$(FPS)CBUFPOST_CSET")
-    field(EGU,  "ms")
-    field(PINI, "YES")
-    field(ASLO, "0.254")
-    field(AOFF, "0")
-    field(VAL,  "25")
-    field(FLNK, "$(FPS)CBUFPOST_CSET")
-    info(autosaveFields_pass0, "VAL")
-}
-
-record(longout, "$(FPS)CBUFPOST_CSET") {
-    field(DESC, "# of post trigger samples")
+record(longout, "$(FPS)FRZDLY_CSET") {
+    field(DESC, "Time post MPS fault until Circle Buffer freeze, msec.")
     field(DTYP, "Pico8 User Reg UInt32")
-    field(DOL,  "$(FPS)FRZDLY_CSET.RVAL")
     field(OUT , "@$(NAME) offset=0x30044 mask=0xff000000")
     field(PINI, "YES")
+    field(VAL,  "30")
+    field(EGU,  "ms")
     info(autosaveFields_pass0, "VAL")
 }
 
 record(longout, "$(FPS)SLT_CSET") {
-    field(DESC, "FPS Slot #")
+    field(DESC, "AMC Slot #")
     field(DTYP, "Pico8 User Reg UInt32")
     field(OUT , "@$(NAME) offset=0x30044 mask=0x000f0000")
     field(PINI, "YES")
     field(VAL , "$(SLOT=0)")
+}
+record(longout, "$(FPS)LONGINT_CSET") {
+    field(DESC, "FPS Slot #")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x30044 mask=0x00100000")
+    field(PINI, "YES")
+    field(VAL , "0")
+    info(autosaveFields_pass0, "VAL")
 }
 
 record(bo, "$(FPS)FRCTRP_CSET") {
