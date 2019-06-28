@@ -1,4 +1,4 @@
-record(longin, "$(N)") {
+record(longin, "$(SYS)_$(SSYS):$(DEV)_CAP:$(SIG)_RSTS") {
     field(DTYP, "Pico8 Capture UInt32")
     field(INP , "@$(NAME) offset=$(ADDR)")
     field(SCAN, "$(SCAN=Event)")

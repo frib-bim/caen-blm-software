@@ -1,111 +1,111 @@
-record(fanout, "$(P):EEPROM_FOUT") {
+record(fanout, "$(SYS)_$(SSYS):$(DEV):EEPROM_FOUT") {
     field(PINI, "YES")
-    field(LNK1, "$(P):EEPROM_FOUT1")
-    field(LNK2, "$(P):EEPROM_FOUT2")
-    field(LNK3, "$(P):EEPROM_FOUT3")
-    field(LNK4, "$(P):EEPROM_FOUT4")
-    field(LNK5, "$(P):EEPROM_FOUT5")
-    field(LNK6, "$(P):EEPROM_FOUT6")
+    field(LNK1, "$(SYS)_$(SSYS):$(DEV):EEPROM_FOUT1")
+    field(LNK2, "$(SYS)_$(SSYS):$(DEV):EEPROM_FOUT2")
+    field(LNK3, "$(SYS)_$(SSYS):$(DEV):EEPROM_FOUT3")
+    field(LNK4, "$(SYS)_$(SSYS):$(DEV):EEPROM_FOUT4")
+    field(LNK5, "$(SYS)_$(SSYS):$(DEV):EEPROM_FOUT5")
+    field(LNK6, "$(SYS)_$(SSYS):$(DEV):EEPROM_FOUT6")
 }
 
-record(fanout, "$(P):EEPROM_FOUT1") {
-    field(LNK1, "$(P)_CH0:RNG0_EEGAIN_RD")
-    field(LNK2, "$(P)_CH0:RNG0_EEOFST_RD")
-    field(LNK3, "$(P)_CH1:RNG0_EEGAIN_RD")
-    field(LNK4, "$(P)_CH1:RNG0_EEOFST_RD")
-    field(LNK5, "$(P)_CH2:RNG0_EEGAIN_RD")
-    field(LNK6, "$(P)_CH2:RNG0_EEOFST_RD")
+record(fanout, "$(SYS)_$(SSYS):$(DEV):EEPROM_FOUT1") {
+    field(LNK1, "$(SYS)_$(SSYS):$(DEV)_CH0:RNG0_EEGAIN_RD")
+    field(LNK2, "$(SYS)_$(SSYS):$(DEV)_CH0:RNG0_EEOFST_RD")
+    field(LNK3, "$(SYS)_$(SSYS):$(DEV)_CH1:RNG0_EEGAIN_RD")
+    field(LNK4, "$(SYS)_$(SSYS):$(DEV)_CH1:RNG0_EEOFST_RD")
+    field(LNK5, "$(SYS)_$(SSYS):$(DEV)_CH2:RNG0_EEGAIN_RD")
+    field(LNK6, "$(SYS)_$(SSYS):$(DEV)_CH2:RNG0_EEOFST_RD")
 }
 
-record(fanout, "$(P):EEPROM_FOUT2") {
-    field(LNK1, "$(P)_CH3:RNG0_EEGAIN_RD")
-    field(LNK2, "$(P)_CH3:RNG0_EEOFST_RD")
-    field(LNK3, "$(P)_CH4:RNG0_EEGAIN_RD")
-    field(LNK4, "$(P)_CH4:RNG0_EEOFST_RD")
-    field(LNK5, "$(P)_CH5:RNG0_EEGAIN_RD")
-    field(LNK6, "$(P)_CH5:RNG0_EEOFST_RD")
+record(fanout, "$(SYS)_$(SSYS):$(DEV):EEPROM_FOUT2") {
+    field(LNK1, "$(SYS)_$(SSYS):$(DEV)_CH3:RNG0_EEGAIN_RD")
+    field(LNK2, "$(SYS)_$(SSYS):$(DEV)_CH3:RNG0_EEOFST_RD")
+    field(LNK3, "$(SYS)_$(SSYS):$(DEV)_CH4:RNG0_EEGAIN_RD")
+    field(LNK4, "$(SYS)_$(SSYS):$(DEV)_CH4:RNG0_EEOFST_RD")
+    field(LNK5, "$(SYS)_$(SSYS):$(DEV)_CH5:RNG0_EEGAIN_RD")
+    field(LNK6, "$(SYS)_$(SSYS):$(DEV)_CH5:RNG0_EEOFST_RD")
 }
 
-record(fanout, "$(P):EEPROM_FOUT3") {
-    field(LNK1, "$(P)_CH6:RNG0_EEGAIN_RD")
-    field(LNK2, "$(P)_CH6:RNG0_EEOFST_RD")
-    field(LNK3, "$(P)_CH7:RNG0_EEGAIN_RD")
-    field(LNK4, "$(P)_CH7:RNG0_EEOFST_RD")
-    field(LNK5, "$(P)_CH0:RNG1_EEGAIN_RD")
-    field(LNK6, "$(P)_CH0:RNG1_EEOFST_RD")
+record(fanout, "$(SYS)_$(SSYS):$(DEV):EEPROM_FOUT3") {
+    field(LNK1, "$(SYS)_$(SSYS):$(DEV)_CH6:RNG0_EEGAIN_RD")
+    field(LNK2, "$(SYS)_$(SSYS):$(DEV)_CH6:RNG0_EEOFST_RD")
+    field(LNK3, "$(SYS)_$(SSYS):$(DEV)_CH7:RNG0_EEGAIN_RD")
+    field(LNK4, "$(SYS)_$(SSYS):$(DEV)_CH7:RNG0_EEOFST_RD")
+    field(LNK5, "$(SYS)_$(SSYS):$(DEV)_CH0:RNG1_EEGAIN_RD")
+    field(LNK6, "$(SYS)_$(SSYS):$(DEV)_CH0:RNG1_EEOFST_RD")
 }
 
-record(fanout, "$(P):EEPROM_FOUT4") {
-    field(LNK1, "$(P)_CH1:RNG1_EEGAIN_RD")
-    field(LNK2, "$(P)_CH1:RNG1_EEOFST_RD")
-    field(LNK3, "$(P)_CH2:RNG1_EEGAIN_RD")
-    field(LNK4, "$(P)_CH2:RNG1_EEOFST_RD")
-    field(LNK5, "$(P)_CH3:RNG1_EEGAIN_RD")
-    field(LNK6, "$(P)_CH3:RNG1_EEOFST_RD")
+record(fanout, "$(SYS)_$(SSYS):$(DEV):EEPROM_FOUT4") {
+    field(LNK1, "$(SYS)_$(SSYS):$(DEV)_CH1:RNG1_EEGAIN_RD")
+    field(LNK2, "$(SYS)_$(SSYS):$(DEV)_CH1:RNG1_EEOFST_RD")
+    field(LNK3, "$(SYS)_$(SSYS):$(DEV)_CH2:RNG1_EEGAIN_RD")
+    field(LNK4, "$(SYS)_$(SSYS):$(DEV)_CH2:RNG1_EEOFST_RD")
+    field(LNK5, "$(SYS)_$(SSYS):$(DEV)_CH3:RNG1_EEGAIN_RD")
+    field(LNK6, "$(SYS)_$(SSYS):$(DEV)_CH3:RNG1_EEOFST_RD")
 }
 
-record(fanout, "$(P):EEPROM_FOUT5") {
-    field(LNK1, "$(P)_CH4:RNG1_EEGAIN_RD")
-    field(LNK2, "$(P)_CH4:RNG1_EEOFST_RD")
-    field(LNK3, "$(P)_CH5:RNG1_EEGAIN_RD")
-    field(LNK4, "$(P)_CH5:RNG1_EEOFST_RD")
-    field(LNK5, "$(P)_CH6:RNG1_EEGAIN_RD")
-    field(LNK6, "$(P)_CH6:RNG1_EEOFST_RD")
+record(fanout, "$(SYS)_$(SSYS):$(DEV):EEPROM_FOUT5") {
+    field(LNK1, "$(SYS)_$(SSYS):$(DEV)_CH4:RNG1_EEGAIN_RD")
+    field(LNK2, "$(SYS)_$(SSYS):$(DEV)_CH4:RNG1_EEOFST_RD")
+    field(LNK3, "$(SYS)_$(SSYS):$(DEV)_CH5:RNG1_EEGAIN_RD")
+    field(LNK4, "$(SYS)_$(SSYS):$(DEV)_CH5:RNG1_EEOFST_RD")
+    field(LNK5, "$(SYS)_$(SSYS):$(DEV)_CH6:RNG1_EEGAIN_RD")
+    field(LNK6, "$(SYS)_$(SSYS):$(DEV)_CH6:RNG1_EEOFST_RD")
 }
 
-record(fanout, "$(P):EEPROM_FOUT6") {
-    field(LNK1, "$(P)_CH7:RNG1_EEGAIN_RD")
-    field(LNK2, "$(P)_CH7:RNG1_EEOFST_RD")
+record(fanout, "$(SYS)_$(SSYS):$(DEV):EEPROM_FOUT6") {
+    field(LNK1, "$(SYS)_$(SSYS):$(DEV)_CH7:RNG1_EEGAIN_RD")
+    field(LNK2, "$(SYS)_$(SSYS):$(DEV)_CH7:RNG1_EEOFST_RD")
 }
 
-record(bi, "$(P):EEPROM_LOCK_CSET") {
+record(bi, "$(SYS)_$(SSYS):$(DEV):EEPROM_LOCK_CSET") {
     field(ZNAM, "Read Only")
     field(ONAM, "Read/Write")
-    field(FLNK, "$(P):EEPROM_LOCK_TIMEOUT")
-    alias("$(P):FPGA_LOCK_CSET")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV):EEPROM_LOCK_TIMEOUT")
+    alias("$(SYS)_$(SSYS):$(DEV):FPGA_LOCK_CSET")
 }
 
-record(ao, "$(P):EEPROM_LOCK_TIMEOUT") {
+record(ao, "$(SYS)_$(SSYS):$(DEV):EEPROM_LOCK_TIMEOUT") {
     field(DOL,  "10")
-    field(OUT,  "$(P):EEPROM_LOCK_CALC PP")
-    field(SDIS, "$(P):EEPROM_LOCK_CSET")
+    field(OUT,  "$(SYS)_$(SSYS):$(DEV):EEPROM_LOCK_CALC PP")
+    field(SDIS, "$(SYS)_$(SSYS):$(DEV):EEPROM_LOCK_CSET")
     field(DISV, "0")
-    alias("$(P):FPGA_LOCK_TIMEOUT")
+    alias("$(SYS)_$(SSYS):$(DEV):FPGA_LOCK_TIMEOUT")
 }
 
-record(calcout, "$(P):EEPROM_LOCK_CALC") {
-    field(OUT,  "$(P):EEPROM_LOCK_CSET PP")
+record(calcout, "$(SYS)_$(SSYS):$(DEV):EEPROM_LOCK_CALC") {
+    field(OUT,  "$(SYS)_$(SSYS):$(DEV):EEPROM_LOCK_CSET PP")
     field(SCAN, "1 second")
     field(CALC, "VAL ? VAL-1 : 0")
     field(OOPT, "Transition To Zero")
-    field(SDIS, "$(P):EEPROM_LOCK_CSET")
+    field(SDIS, "$(SYS)_$(SSYS):$(DEV):EEPROM_LOCK_CSET")
     field(DISV, "0")
-    alias("$(P):FPGA_LOCK_CALC")
+    alias("$(SYS)_$(SSYS):$(DEV):FPGA_LOCK_CALC")
 }
 
-record(calc, "$(P):EEPROM_RNG0_RD") {
+record(calc, "$(SYS)_$(SSYS):$(DEV):EEPROM_RNG0_RD") {
     field(EGU,  "uA")
-    field(INPA, "$(P)_CH0:RNG0_EEGAIN_RD CP")
-    field(INPB, "$(P)_CH1:RNG0_EEGAIN_RD CP")
-    field(INPC, "$(P)_CH2:RNG0_EEGAIN_RD CP")
-    field(INPD, "$(P)_CH3:RNG0_EEGAIN_RD CP")
-    field(INPE, "$(P)_CH4:RNG0_EEGAIN_RD CP")
-    field(INPF, "$(P)_CH5:RNG0_EEGAIN_RD CP")
-    field(INPG, "$(P)_CH6:RNG0_EEGAIN_RD CP")
-    field(INPH, "$(P)_CH7:RNG0_EEGAIN_RD CP")
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_CH0:RNG0_EEGAIN_RD CP")
+    field(INPB, "$(SYS)_$(SSYS):$(DEV)_CH1:RNG0_EEGAIN_RD CP")
+    field(INPC, "$(SYS)_$(SSYS):$(DEV)_CH2:RNG0_EEGAIN_RD CP")
+    field(INPD, "$(SYS)_$(SSYS):$(DEV)_CH3:RNG0_EEGAIN_RD CP")
+    field(INPE, "$(SYS)_$(SSYS):$(DEV)_CH4:RNG0_EEGAIN_RD CP")
+    field(INPF, "$(SYS)_$(SSYS):$(DEV)_CH5:RNG0_EEGAIN_RD CP")
+    field(INPG, "$(SYS)_$(SSYS):$(DEV)_CH6:RNG0_EEGAIN_RD CP")
+    field(INPH, "$(SYS)_$(SSYS):$(DEV)_CH7:RNG0_EEGAIN_RD CP")
     field(CALC, "((A+B+C+D+E+F+G+H)/8)*(2**19)*1E6")
 }
 
-record(calc, "$(P):EEPROM_RNG1_RD") {
+record(calc, "$(SYS)_$(SSYS):$(DEV):EEPROM_RNG1_RD") {
     field(EGU,  "uA")
-    field(INPA, "$(P)_CH0:RNG1_EEGAIN_RD CP")
-    field(INPB, "$(P)_CH1:RNG1_EEGAIN_RD CP")
-    field(INPC, "$(P)_CH2:RNG1_EEGAIN_RD CP")
-    field(INPD, "$(P)_CH3:RNG1_EEGAIN_RD CP")
-    field(INPE, "$(P)_CH4:RNG1_EEGAIN_RD CP")
-    field(INPF, "$(P)_CH5:RNG1_EEGAIN_RD CP")
-    field(INPG, "$(P)_CH6:RNG1_EEGAIN_RD CP")
-    field(INPH, "$(P)_CH7:RNG1_EEGAIN_RD CP")
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_CH0:RNG1_EEGAIN_RD CP")
+    field(INPB, "$(SYS)_$(SSYS):$(DEV)_CH1:RNG1_EEGAIN_RD CP")
+    field(INPC, "$(SYS)_$(SSYS):$(DEV)_CH2:RNG1_EEGAIN_RD CP")
+    field(INPD, "$(SYS)_$(SSYS):$(DEV)_CH3:RNG1_EEGAIN_RD CP")
+    field(INPE, "$(SYS)_$(SSYS):$(DEV)_CH4:RNG1_EEGAIN_RD CP")
+    field(INPF, "$(SYS)_$(SSYS):$(DEV)_CH5:RNG1_EEGAIN_RD CP")
+    field(INPG, "$(SYS)_$(SSYS):$(DEV)_CH6:RNG1_EEGAIN_RD CP")
+    field(INPH, "$(SYS)_$(SSYS):$(DEV)_CH7:RNG1_EEGAIN_RD CP")
     field(CALC, "((A+B+C+D+E+F+G+H)/8)*(2**19)*1E6")
 }
 

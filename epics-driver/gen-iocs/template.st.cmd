@@ -18,7 +18,7 @@ createPICO8("PICO{{ card_num }}", "/dev/amc_pico_0000:{{ card_data.addr }}:00.0"
 
 # (SYS):(D)_CHX:Y_Z
 {%- for card_num, card_data in mtca_data.cards|dictsort %}
-dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA{{ mtca_num }},D=PICO{{ card_num }},NAME=PICO{{ card_num }},NELM=1000000")
+dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA{{ mtca_num }},NAME=PICO{{ card_num }}")
 {%- endfor %}
 
 < $(TOP)/iocBoot/archiver_tags.cmd

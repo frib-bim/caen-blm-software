@@ -15,7 +15,7 @@ pico_registerRecordDeviceDriver(pdbbase)
 createPICO8("PICO8", "/dev/amc_pico_0000:0d:00.0")
 
 # (SYS):(D)_CHX:Y_Z
-dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA07,D=PICO8,NAME=PICO8,NELM=1000000")
+dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA07,NAME=PICO8")
 
 < $(TOP)/iocBoot/archiver_tags.cmd
 

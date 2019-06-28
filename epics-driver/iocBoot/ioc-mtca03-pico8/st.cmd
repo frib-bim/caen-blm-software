@@ -16,8 +16,8 @@ createPICO8("PICO3", "/dev/amc_pico_0000:08:00.0")
 createPICO8("PICO4", "/dev/amc_pico_0000:06:00.0")
 
 # (SYS):(D)_CHX:Y_Z
-dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA03,D=PICO3,NAME=PICO3,NELM=1000000")
-dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA03,D=PICO4,NAME=PICO4,NELM=1000000")
+dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA03,NAME=PICO3")
+dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA03,NAME=PICO4")
 
 < $(TOP)/iocBoot/archiver_tags.cmd
 

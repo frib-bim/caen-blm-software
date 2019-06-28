@@ -1,54 +1,63 @@
+# Per-card PVs
 
-record(waveform, "$(P)DESC_RD") {
+#
+# Base PVs
+#
+record(stringin, "$(SYS)_$(SSYS):$(DEV)_CTRL:ioc_version") {
+    field(PINI, "YES")
+    field(VAL, "vBC04 (2019-Jun)")
+}
+
+record(waveform, "$(SYS)_$(SSYS):$(DEV)_CTRL:DESC_RD") {
     field(DESC, "Label")
     field(FTVL, "CHAR")
     field(NELM, "128")
     info(autosaveFields_pass1, "VAL")
 }
 
-record(waveform, "$(P)MSG_RD") {
+record(waveform, "$(SYS)_$(SSYS):$(DEV)_CTRL:MSG_RD") {
     field(DESC, "Last Error")
-	field(DTYP, "Pico8 Last Message")
-	field(INP , "@$(NAME)")
-	field(SCAN, "I/O Intr")
-	field(DESC, "Last Error")
-	field(FTVL, "CHAR")
-	field(NELM, "128")
+    field(DTYP, "Pico8 Last Message")
+    field(INP , "@$(NAME)")
+    field(SCAN, "I/O Intr")
+    field(DESC, "Last Error")
+    field(FTVL, "CHAR")
+    field(NELM, "128")
 }
 
-record(mbbi, "$(P)MODE_RSTS") {
+record(mbbi, "$(SYS)_$(SSYS):$(DEV)_CTRL:MODE_RSTS") {
     field(DESC, "Run Status")
-	field(DTYP, "Pico8 Run Status")
-	field(INP , "@$(NAME)")
-	field(SCAN, "I/O Intr")
-	field(ZRST, "Idle")
-	field(ONST, "Armed")
-	field(TWST, "Error")
-	field(ZRVL, "0")
-	field(ONVL, "1")
-	field(TWVL, "2")
-	field(TWSV, "MAJOR")
+    field(DTYP, "Pico8 Run Status")
+    field(INP , "@$(NAME)")
+    field(SCAN, "I/O Intr")
+    field(ZRST, "Idle")
+    field(ONST, "Armed")
+    field(TWST, "Error")
+    field(ZRVL, "0")
+    field(ONVL, "1")
+    field(TWVL, "2")
+    field(TWSV, "MAJOR")
 }
 
-record(longout, "$(P)PSCL_CSET") {
+record(longout, "$(SYS)_$(SSYS):$(DEV)_CTRL:PSCL_CSET") {
     field(DESC, "Sample clk freq")
-	field(DTYP, "Pico8 Clock Div")
-	field(OUT , "@$(NAME)")
-	field(PINI, "YES")
-        field(VAL , "1000000")
-	field(FLNK, "$(P)PSCL_RSET")
+    field(DTYP, "Pico8 Clock Div")
+    field(OUT , "@$(NAME)")
+    field(PINI, "YES")
+    field(VAL , "1000000")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_CTRL:PSCL_RSET")
     info(autosaveFields_pass0, "VAL")
 }
 
-record(longin, "$(P)PSCL_RSET") {
+record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:PSCL_RSET") {
     field(DESC, "Sample clk")
-	field(DTYP, "Pico8 Clock Div")
-	field(INP , "@$(NAME)")
+    field(DTYP, "Pico8 Clock Div")
+    field(INP , "@$(NAME)")
 }
 
 # Original mode: actual single/continuous. This should always be set to 0,
 # unless you know what you're doing
-record(mbbo, "$(P)MODE_CMD_") {
+record(mbbo, "$(SYS)_$(SSYS):$(DEV)_CTRL:MODE_CMD_") {
     field(DESC, "Trigger re-arm mode")
     field(DTYP, "Pico8 Run Mode")
     field(OUT , "@$(NAME)")
@@ -63,10 +72,10 @@ record(mbbo, "$(P)MODE_CMD_") {
 
 # Fake mode: just change the SCAN rate of the MODE_CMD_ PV between
 # "Passive" (0) and ".2 second" (8)
-record(mbbo, "$(P)MODE_CMD") {
+record(mbbo, "$(SYS)_$(SSYS):$(DEV)_CTRL:MODE_CMD") {
     field(DESC, "Trigger re-arm mode")
     field(DTYP, "Raw Soft Channel")
-    field(OUT , "$(P)MODE_CMD_.SCAN PP")
+    field(OUT , "$(SYS)_$(SSYS):$(DEV)_CTRL:MODE_CMD_.SCAN PP")
     field(PINI, "YES")
     field(ZRST, "Single")
     field(ONST, "Normal")
@@ -76,29 +85,29 @@ record(mbbo, "$(P)MODE_CMD") {
     field(ASG,  "DIAG_OPS")
 }
 
-record(mbbo, "$(P)CLK_CMD") {
+record(mbbo, "$(SYS)_$(SSYS):$(DEV)_CTRL:CLK_CMD") {
     field(DESC, "Sample clk source")
-	field(DTYP, "Pico8 Clock Source")
-	field(OUT , "@$(NAME)")
-	field(PINI, "YES")
-	field(ZRST, "Internal")
-	field(ONST, "TCLKA")
-	field(TWST, "TCLKB")
-	field(THST, "Port 17")
-	field(FRST, "Port 18")
-	field(FVST, "Port 19")
-	field(SXST, "Port 20")
-	field(ZRVL, "0")
-	field(ONVL, "1")
-	field(TWVL, "2")
-	field(THVL, "4")
-	field(FRVL, "5")
-	field(FVVL, "6")
-	field(SXVL, "7")
+    field(DTYP, "Pico8 Clock Source")
+    field(OUT , "@$(NAME)")
+    field(PINI, "YES")
+    field(ZRST, "Internal")
+    field(ONST, "TCLKA")
+    field(TWST, "TCLKB")
+    field(THST, "Port 17")
+    field(FRST, "Port 18")
+    field(FVST, "Port 19")
+    field(SXST, "Port 20")
+    field(ZRVL, "0")
+    field(ONVL, "1")
+    field(TWVL, "2")
+    field(THVL, "4")
+    field(FRVL, "5")
+    field(FVVL, "6")
+    field(SXVL, "7")
     info(autosaveFields_pass0, "RVAL")
 }
 
-record(mbbo, "$(P)TRIG_CMD") {
+record(mbbo, "$(SYS)_$(SSYS):$(DEV)_CTRL:TRIG_CMD") {
     field(DESC, "Trigger source")
     field(DTYP, "Pico8 Trigger Source")
     field(OUT , "@$(NAME)")
@@ -132,46 +141,46 @@ record(mbbo, "$(P)TRIG_CMD") {
     field(TVVL, "12")
 }
 
-record(ao, "$(P)TRIG_CSET") {
+record(ao, "$(SYS)_$(SSYS):$(DEV)_CTRL:TRIG_CSET") {
     field(DESC, "Ext. trig threshold")
-	field(DTYP, "Pico8 Trigger Level")
-	field(OUT , "@$(NAME)")
-	field(PREC, "3")
+    field(DTYP, "Pico8 Trigger Level")
+    field(OUT , "@$(NAME)")
+    field(PREC, "3")
     field(EGU,  "uA")
-	field(PINI, "YES")
+    field(PINI, "YES")
     info(autosaveFields_pass0, "VAL")
 }
 
-record(mbbo, "$(P)TMOD_CMD") {
+record(mbbo, "$(SYS)_$(SSYS):$(DEV)_CTRL:TMOD_CMD") {
     field(DESC, "Ext. trig edge")
-	field(DTYP, "Pico8 Trigger Mode")
-	field(OUT , "@$(NAME)")
-	field(PINI, "YES")
-	field(ZRST, "Disable")
-	field(ONST, "Rising")
-	field(TWST, "Falling")
-	field(THST, "Both")
-	field(ZRVL, "0")
-	field(ONVL, "1")
-	field(TWVL, "2")
-	field(THVL, "3")
-	field(RVAL, "1")
+    field(DTYP, "Pico8 Trigger Mode")
+    field(OUT , "@$(NAME)")
+    field(PINI, "YES")
+    field(ZRST, "Disable")
+    field(ONST, "Rising")
+    field(TWST, "Falling")
+    field(THST, "Both")
+    field(ZRVL, "0")
+    field(ONVL, "1")
+    field(TWVL, "2")
+    field(THVL, "3")
+    field(RVAL, "1")
     info(autosaveFields_pass0, "RVAL")
 }
 
-record(longout, "$(P)NSMP_CSET") {
+record(longout, "$(SYS)_$(SSYS):$(DEV)_CTRL:NSMP_CSET") {
     field(DESC, "Num. samples to acquire")
-	field(DTYP, "Pico8 Num Samples")
-	field(OUT , "@$(NAME)")
-	field(PINI, "YES")
-	field(VAL , "2000")
-	field(DRVL, "2000")
-	field(DRVH, "$(NELM)")
+    field(DTYP, "Pico8 Num Samples")
+    field(OUT , "@$(NAME)")
+    field(PINI, "YES")
+    field(VAL , "2000")
+    field(DRVL, "2000")
+    field(DRVH, "$(NELM)")
     field(ASG,  "DIAG_OPS")
     info(autosaveFields_pass0, "VAL")
 }
 
-record(longout, "$(P)NDEC_CSET") {
+record(longout, "$(SYS)_$(SSYS):$(DEV)_CTRL:NDEC_CSET") {
     field(DESC, "SW decimation factor")
     field(DTYP, "Pico8 Decimate")
     field(OUT , "@$(NAME)")
@@ -182,28 +191,508 @@ record(longout, "$(P)NDEC_CSET") {
     info(autosaveFields_pass0, "VAL")
 }
 
-record(longout, "$(P)PTRG_CSET") {
+record(longout, "$(SYS)_$(SSYS):$(DEV)_CTRL:PTRG_CSET") {
     field(DESC, "Num. samples before trig point")
-	field(DTYP, "Pico8 Pre-trig Samples")
-	field(OUT , "@$(NAME)")
-	field(VAL , "0")
-	field(PINI, "YES")
+    field(DTYP, "Pico8 Pre-trig Samples")
+    field(OUT , "@$(NAME)")
+    field(VAL , "0")
+    field(PINI, "YES")
     info(autosaveFields_pass0, "VAL")
 }
 
-record(longin, "$(P)NTRG_RD") {
+record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:NTRG_RD") {
     field(DESC, "# of acquisitions")
     field(DTYP, "Pico8 Run Count")
     field(INP , "@$(NAME)")
     field(SCAN, "I/O Intr")
 }
 
-record(calc, "$(P)RTRG_RD") {
+record(calc, "$(SYS)_$(SSYS):$(DEV)_CTRL:RTRG_RD") {
     field(DESC, "Trigger rate")
     field(SCAN, "10 second")
-    field(INPA, "$(P)NTRG_RD")
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_CTRL:NTRG_RD")
     field(CALC, "C:=A-B;B:=A;C/10")
     field(EGU , "Hz")
     field(PREC, "1")
     info(autosaveFields_pass0, "HOPR LOPR HSV HHSV LSV LLSV HIHI HIGH LOW LOLO")
 }
+
+#
+# Extra registers
+#
+
+record(longin, "$(SYS)_$(SSYS):$(DEV)_FPS:FPSSTS_RD") {
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x3005c")
+    field(SCAN, ".5 second")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_FPS:FPSSTS_Fout_")
+}
+
+record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:CYCCNT_RD") {
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x30058 mask=0x0000ffff")
+    field(SCAN, ".5 second")
+}
+
+record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:PLSCNT_RD") {
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x30058 mask=0xffff0000")
+    field(SCAN, ".5 second")
+}
+
+
+
+#
+# RAM
+#
+
+record(longout, "$(SYS)_$(SSYS):$(DEV)_mem:Off-SP") {
+    field(DTYP, "Pico8 RAM Offset")
+    field(OUT , "@$(NAME)")
+}
+
+record(longout, "$(SYS)_$(SSYS):$(DEV)_mem:Cnt-SP") {
+    field(DTYP, "Pico8 RAM Count")
+    field(OUT , "@$(NAME)")
+}
+
+record(waveform, "$(SYS)_$(SSYS):$(DEV)_mem:Data-I") {
+    field(DTYP, "Pico8 RAM")
+    field(FTVL, "$(FTVL=ULONG)")
+    field(NELM, "$(NELM)")
+    field(INP , "@$(NAME)")
+    # Hack: reading ram can take a long time (seconds)
+    #       don't use LOW to avoid interfering with
+    #       100Hz buffer processing
+    # TODO: use dedicated worker thread?
+    field(PRIO, "MEDIUM")
+}
+
+
+#
+# DDR Interface
+#
+
+record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:DDR_STS_RD") {
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x30004")
+    field(SCAN, ".2 second")
+}
+
+record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:DDR_STS2_RD") {
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x30004 mask=0xffff0000")
+    field(SCAN, ".2 second")
+}
+
+record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:DDR_CTRL_RD")    {
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x30008")
+    field(SCAN, ".2 second")
+}
+
+record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:DDR_PATTERN_RD") {
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x3000C")
+    field(SCAN, ".2 second")
+}
+
+record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:DDR_LAST_ADDR")  {
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x30010")
+    field(SCAN, ".2 second")
+}
+
+record(longout,"$(SYS)_$(SSYS):$(DEV)_CTRL:DDR_CTRL") {
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x30008")
+    field(PINI, "YES")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(longout,"$(SYS)_$(SSYS):$(DEV)_CTRL:DDR_PATTERN") {
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x3000C")
+    field(PINI, "YES")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(longout,"$(SYS)_$(SSYS):$(DEV)_CTRL:RegEventTrigger") {
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x3006C")
+    field(VAL,"258")
+    field(PINI, "YES")
+    info(autosaveFields_pass0, "VAL")
+}
+
+## Python DDR readback interface
+record(longout, "$(SYS)_$(SSYS):$(DEV)_CTRL:acqDDRwave") {
+    field(DTYP, "Soft Channel")
+    field(VAL,"0")
+    field(PINI, "YES")
+}
+
+record(longout, "$(SYS)_$(SSYS):$(DEV)_CTRL:acqDDRnpts") {
+    field(DTYP, "Soft Channel")
+    field(VAL,"20000")
+    field(PINI, "YES")
+}
+
+record(ao, "$(SYS)_$(SSYS):$(DEV)_CTRL:DDR_TIME_RD") {
+    field(DTYP, "Soft Channel")
+    field(VAL,"0")
+    field(PINI, "YES")
+}
+
+record(waveform, "$(SYS)_$(SSYS):$(DEV)_CTRL:DDR_NOKW_RD") {
+    field(DTYP, "Soft Channel")
+    field(FTVL, "SHORT")
+    field(NELM, "1048576")
+}
+
+record(waveform, "$(SYS)_$(SSYS):$(DEV)_CTRL:DDR_BEAMSTATW_RD") {
+    field(DTYP, "Soft Channel")
+    field(FTVL, "SHORT")
+    field(NELM, "1048576")
+}
+
+
+## CYCLE debug (should probably comment out to not interfere?)
+# record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:CYC_TSEC") {
+#     field(DTYP, "Pico8 User Reg UInt32")
+#     field(INP , "@$(NAME) offset=0x30100")
+#     field(SCAN, ".1 second")
+# }
+#
+# record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:CYC_TSUB") {
+#     field(DTYP, "Pico8 User Reg UInt32")
+#     field(INP , "@$(NAME) offset=0x30104")
+#     field(SCAN, ".1 second")
+# }
+#
+# record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:CYC_TON")  {
+#     field(DTYP, "Pico8 User Reg UInt32")
+#     field(INP , "@$(NAME) offset=0x30108")
+#     field(SCAN, ".1 second")
+# }
+#
+# record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:CYC_EOCM") {
+#     field(DTYP, "Pico8 User Reg UInt32")
+#     field(INP , "@$(NAME) offset=0x3010C")
+#     field(SCAN, ".1 second")
+# }
+
+record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:MPSRespTime_") {
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x30068")
+    field(SCAN, ".2 second")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_CTRL:MPSRespTime")
+}
+record(ai, "$(SYS)_$(SSYS):$(DEV)_CTRL:MPSRespTime") {
+    field(DTYP, "Raw Soft Channel")
+    field(INP,  "$(SYS)_$(SSYS):$(DEV)_CTRL:MPSRespTime_")
+    field(ASLO, "8.0e-3")
+    field(EGU , "uSec")
+    field(HIGH, "10.0")
+    field(HSV , "MAJOR")
+}
+
+##  Original from Davidsaver
+## ==================================================
+
+record(bi, "$(SYS)_$(SSYS):$(DEV)_CTRL:CAPVLD_RSTS") {
+    field(DTYP, "Pico8 Capture Valid")
+    field(INP , "@$(NAME)")
+    field(SCAN, "I/O Intr")
+    field(ZNAM, "INVALID")
+    field(ONAM, "OK")
+    field(ZSV , "MAJOR")
+}
+
+record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:CAPCNT_RD") {
+    field(DTYP, "Pico8 Capture Updates")
+    field(INP , "@$(NAME)")
+    field(SCAN, "I/O Intr")
+}
+
+record(waveform, "$(SYS)_$(SSYS):$(DEV)_CTRL:CAPMSG_RD") {
+    field(DTYP, "Pico8 Capture Message")
+    field(INP , "@$(NAME)")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "CHAR")
+    field(NELM, "256")
+    field(PINI, "YES")
+}
+
+record(waveform, "$(SYS)_$(SSYS):$(DEV)_CTRL:CAPMSGLOG_RD") {
+    field(DTYP, "Pico8 Capture Message Log")
+    field(INP , "@$(NAME)")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "CHAR")
+    field(NELM, "4096")
+    field(PINI, "YES")
+}
+
+record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:FFWVER_RD") {
+    field(DESC, "FRIB firmware version")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x30040")
+    field(PINI, "YES")
+}
+
+record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:IRQTRAW_RD") {
+    field(DESC, "Time between IRQs")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x30028")
+    field(SCAN, ".1 second")
+}
+
+record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:ISRTRAW_RD") {
+    field(DESC, "ISR time")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x3002c")
+    field(SCAN, ".1 second")
+}
+
+record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:ISRMAXRAW_RD") {
+    field(DESC, "ISR time")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x30030")
+    field(SCAN, ".1 second")
+}
+
+record(ai, "$(SYS)_$(SSYS):$(DEV)_CTRL:IRQT_RD") {
+    field(DESC, "Time between IRQs")
+    field(DTYP, "Raw Soft Channel")
+    field(INP , "$(SYS)_$(SSYS):$(DEV)_CTRL:IRQTRAW_RD CP MS")
+    field(SCAN, ".1 second")
+    field(ASLO, "8e-6")
+    field(EGU,  "ms")
+    field(PREC, "3")
+    field(LOW,  "9.990")
+    field(LOLO, "9.950")
+    field(HIGH, "10.010")
+    field(HIHI, "10.050")
+}
+
+record(ai, "$(SYS)_$(SSYS):$(DEV)_CTRL:ISRT_RD") {
+    field(DESC, "ISR time")
+    field(DTYP, "Raw Soft Channel")
+    field(INP , "$(SYS)_$(SSYS):$(DEV)_CTRL:ISRTRAW_RD CP MS")
+    field(SCAN, ".1 second")
+    field(ASLO, "8e-6")
+    field(EGU,  "ms")
+    field(PREC, "3")
+}
+
+record(ai, "$(SYS)_$(SSYS):$(DEV)_CTRL:ISRMAX_RD") {
+    field(DESC, "ISR time")
+    field(DTYP, "Raw Soft Channel")
+    field(INP , "$(SYS)_$(SSYS):$(DEV)_CTRL:ISRMAXRAW_RD CP MS")
+    field(SCAN, ".1 second")
+    field(ASLO, "8e-6")
+    field(EGU,  "ms")
+    field(PREC, "3")
+    field(HIGH, "5.0")
+    field(HIHI, "7.0")
+}
+
+record(longout, "$(SYS)_$(SSYS):$(DEV)_CTRL:ISRMAXCLR_CMD") {
+    field(DESC, "ISR time")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x30030")
+    field(PINI, "YES")
+    field(VAL , "0")
+}
+
+record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:COMM_SUC") {
+    field(DESC, "# of EVR comm ok")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x3004c mask=0xffff0000")
+    field(SCAN, "1 second")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_CTRL:COMM_ATT")
+}
+
+record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:COMM_ATT") {
+    field(DESC, "# of EVR comm attempts")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x3004c mask=0x0000ffff")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_CTRL:EVRCOMM_RSTS")
+}
+
+record(calc, "$(SYS)_$(SSYS):$(DEV)_CTRL:EVRCOMM_RSTS") {
+    field(INPA , "$(SYS)_$(SSYS):$(DEV)_CTRL:COMM_ATT")
+    field(INPB , "$(SYS)_$(SSYS):$(DEV)_CTRL:COMM_SUC")
+    field(CALC , "(A==B)")
+}
+
+record(stringin, "$(SYS)_$(SSYS):$(DEV)_CTRL:TMECUR_RD") {
+    field(DESC, "Current time from EVR")
+    field(DTYP, "Pico8 User Reg Time64")
+    # step= is really sub-sec counter frequency in Hz
+    field(INP , "@$(NAME) offset=0x30050 step=80500000")
+    field(SCAN, "1 second")
+    field(TSE , "-2")
+}
+
+
+#
+# FPS
+#
+
+record(longout, "$(SYS)_$(SSYS):$(DEV)_FPS:FRZDLY_CSET") {
+    field(DESC, "Time post MPS fault until CBuf frz")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x30044 mask=0xff000000")
+    field(PINI, "YES")
+    field(VAL,  "30")
+    field(EGU,  "ms")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(longout, "$(SYS)_$(SSYS):$(DEV)_FPS:SLT_CSET") {
+    field(DESC, "AMC Slot #")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x30044 mask=0x000f0000")
+    field(PINI, "YES")
+    field(VAL , "$(SLOT=0)")
+}
+record(longout, "$(SYS)_$(SSYS):$(DEV)_FPS:LONGINT_CSET") {
+    field(DESC, "FPS Slot #")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x30044 mask=0x00100000")
+    field(PINI, "YES")
+    field(VAL , "0")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(bo, "$(SYS)_$(SSYS):$(DEV)_FPS:FRCTRP_CSET") {
+    field(DESC, "Force FPS trip/NOK")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x30044")
+    field(MASK, "0x8000")
+    field(ZNAM, "Idle")
+    field(ONAM, "Trip")
+    field(HIGH, "0.1")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(bo, "$(SYS)_$(SSYS):$(DEV)_FPS:CLR_CSET") {
+    field(DESC, "Clear Trip/NOK")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x30044")
+    field(MASK, "0x4000")
+    field(ZNAM, "Idle")
+    field(ONAM, "Clear")
+    field(HIGH, "0.1")
+    field(ASG,  "DIAG_OPS")
+    info(autosaveFields_pass0, "RVAL")
+}
+
+record(bo, "$(SYS)_$(SSYS):$(DEV)_FPS:FRZ_CSET") {
+    field(DESC, "Force buffer freeze")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x30044")
+    field(MASK, "0x2000")
+    field(ZNAM, "Idle")
+    field(ONAM, "Freeze")
+    field(HIGH, "0.1")
+    info(autosaveFields_pass0, "RVAL")
+}
+
+record(bo, "$(SYS)_$(SSYS):$(DEV)_FPS:THW_CSET") {
+    field(DESC, "Unfreeze buffer")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x30044")
+    field(MASK, "0x1000")
+    field(ZNAM, "Idle")
+    field(ONAM, "Thaw")
+    field(HIGH, "0.1")
+    field(ASG,  "DIAG_OPS")
+    info(autosaveFields_pass0, "RVAL")
+}
+
+record(bo, "$(SYS)_$(SSYS):$(DEV)_FPS:RST_CSET") {
+    field(DESC, "Reset FRIB logic")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x30044")
+    field(MASK, "0x0800")
+    field(ZNAM, "Idle")
+    field(ONAM, "Reset")
+    field(HIGH, "0.1")
+    info(autosaveFields_pass0, "RVAL")
+}
+
+record(longout, "$(SYS)_$(SSYS):$(DEV)_FPS:DTASEL_CSET") {
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x30048")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(fanout, "$(SYS)_$(SSYS):$(DEV)_FPS:FPSSTS_Fout_") {
+    field(LNK1, "$(SYS)_$(SSYS):$(DEV)_FPS:FRZ_RSTS")
+    field(LNK2, "$(SYS)_$(SSYS):$(DEV)_FPS:NOKLTH_RSTS")
+    field(LNK3, "$(SYS)_$(SSYS):$(DEV)_FPS:NOK_RSTS")
+    field(LNK4, "$(SYS)_$(SSYS):$(DEV)_FPS:PMT_RSTS")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_FPS:TMETRP_RD")
+}
+
+record(bi, "$(SYS)_$(SSYS):$(DEV)_FPS:FRZ_RSTS") {
+    field(DESC, "Circ buffer run")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x3005c")
+    field(MASK, "0x8")
+    field(ZNAM, "Run")
+    field(ONAM, "Frozen")
+}
+
+record(bi, "$(SYS)_$(SSYS):$(DEV)_FPS:NOKLTH_RSTS") {
+    field(DESC, "FPS NOK Latch")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x3005c")
+    field(MASK, "0x4")
+    field(ZNAM, "OK")
+    field(ONAM, "Trip")
+}
+
+record(bi, "$(SYS)_$(SSYS):$(DEV)_FPS:NOK_RSTS") {
+    field(DESC, "FPS NOK Current")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x3005c")
+    field(MASK, "0x2")
+    field(ZNAM, "OK")
+    field(ONAM, "Trip")
+}
+
+record(bi, "$(SYS)_$(SSYS):$(DEV)_FPS:PMT_RSTS") {
+    field(DESC, "FPS Permit")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x3005c")
+    field(MASK, "0x8")
+    field(ZNAM, "Run")
+    field(ONAM, "Frozen")
+}
+
+record(stringin, "$(SYS)_$(SSYS):$(DEV)_FPS:TMETRP_RD") {
+    field(DESC, "Trip time")
+    field(DTYP, "Pico8 User Reg Time64")
+    # step= is really sub-sec counter frequency in Hz
+    field(INP , "@$(NAME) offset=0x30060 step=80500000")
+    field(SCAN, "1 second")
+    field(TSE , "-2")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_FPS:NOK_TSTAMP_SEC")
+}
+
+record(longin, "$(SYS)_$(SSYS):$(DEV)_FPS:NOK_TSTAMP_SEC") {
+    field(DESC, "NOK Timestamp (seconds)")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x30060")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_FPS:NOK_TSTAMP_SUB")
+}
+
+record(longin, "$(SYS)_$(SSYS):$(DEV)_FPS:NOK_TSTAMP_SUB") {
+    field(DESC, "NOK Timestamp (sub-second 80.5MHz tics)")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x30064")
+}
+

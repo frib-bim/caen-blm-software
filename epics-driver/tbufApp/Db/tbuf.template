@@ -1,36 +1,36 @@
 # Push to FIFO
-record(ao, "$(P)PSH_CMD_") {
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)PSH_CMD_") {
     field(DTYP, "TBUF Push Sample")
     field(SCAN, "$(SCAN=Event)")
     field(EVNT, "$(EVNT=$(NAME)_100HZ)")
     field(PHAS, "$(PHAS=0)")
     field(OMSL, "closed_loop")
     field(DOL , "$(SRC) MS NPP")
-    field(OUT , "@$(P)")
+    field(OUT , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)")
     field(FLNK, "$(FLNK=)")
 }
 
 
 # Settings
-record(longout, "$(P)NSAMP_CSET") {
+record(longout, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)NSAMP_CSET") {
     field(DTYP, "TBUF Set Num Samples")
-    field(OUT , "@$(P)")
+    field(OUT , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)")
     field(VAL , "$(NELM=20)")
     field(PINI, "YES")
 }
 
-record(ao, "$(P)PRD_CSET") {
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)PRD_CSET") {
     field(DTYP, "TBUF Set Period")
-    field(OUT , "@$(P)")
+    field(OUT , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)")
     field(VAL , "$(PERIOD=0.2)")
     field(PREC, "2")
     field(PINI, "YES")
 }
 
 # Aggregate
-record(ai, "$(P)_RD") {
+record(ai, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)_RD") {
     field(DTYP, "TBUF Get Sample")
-    field(INP , "@$(P) $(Stat=Average)")
+    field(INP , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG) $(Stat=Average)")
     field(SCAN, "I/O Intr")
     field(LINR, "$(LINR=LINEAR)")
     field(ESLO, "$(ESLO=)")
@@ -39,14 +39,14 @@ record(ai, "$(P)_RD") {
     field(EGU , "$(EGU=)")
     field(MDEL, "$(MDEL=-1)")
     field(TSE , "-2")
-    field(FLNK, "$(P)W_RD")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)W_RD")
     field(ASG,  "DIAG_OPS")
 }
 
 # Full FIFO
-record(waveform, "$(P)W_RD") {
+record(waveform, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)W_RD") {
     field(DTYP, "TBUF Get Buffer")
-    field(INP , "@$(P)")
+    field(INP , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)")
     field(FTVL, "FLOAT")
     #field(SCAN, "I/O Intr")
     field(NELM, "$(NELM=20)")

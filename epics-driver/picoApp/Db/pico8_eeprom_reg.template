@@ -1,4 +1,4 @@
-record(ai, "$(P)$(R)_RD") {
+record(ai, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):$(SIG)_RD") {
     field(DTYP, "Pico8 EEPROM Reg Float")
     field(INP,  "@$(NAME) offset=$(OFFSET) eeprom=$(EEPROM)")
     field(PREC, "8")
@@ -6,12 +6,12 @@ record(ai, "$(P)$(R)_RD") {
     field(ASLO, "$(ASLO=)")
 }
 
-record(ao, "$(P)$(R)_CSET") {
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):$(SIG)_CSET") {
     field(DTYP, "Pico8 EEPROM Reg Float")
     field(OUT,  "@$(NAME) offset=$(OFFSET) eeprom=$(EEPROM)")
     field(PREC, "8")
-    field(FLNK, "$(P)$(R)_RD")
-    field(SDIS, "$(P):EEPROM_LOCK_CSET")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):$(SIG)_RD")
+    field(SDIS, "$(SYS)_$(SSYS):$(DEV):EEPROM_LOCK_CSET")
     field(DISV, "0")
     field(EGU,  "$(EGU=)")
     field(ASLO, "$(ASLO=)")

@@ -1,0 +1,451 @@
+#
+# Trip Thresholds for $(SDEVCH)
+#
+
+record(ai, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_15ULO_CSET") {
+    field(DTYP, "Soft Channel")
+    field(EGU,  "$(EGU=uA)")
+    field(PREC, "2")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_15ULO_CALC PP")
+    field(PINI, "YES")
+    field(VAL,  "0")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_15ULO_CALC") {
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_15ULO_CSET")
+    field(CALC, "A / $(ASLO)")
+}
+
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_15ULO_CSET_") {
+    field(DTYP, "Pico8 User Reg Float")
+    field(DOL,  "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_15ULO_CALC CP")
+    field(OUT , "@$(NAME) offset=0x30000+4*$(LO1)")
+    field(OMSL, "closed_loop")
+    field(PINI, "YES")
+    field(EGU,  "$(EGU=uA)")
+    field(PREC, "2")
+}
+
+record(ai, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_15UHI_CSET") {
+    field(DTYP, "Soft Channel")
+    field(EGU,  "$(EGU=uA)")
+    field(PREC, "2")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_15UHI_CALC PP")
+    field(PINI, "YES")
+    field(VAL,  "0")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_15UHI_CALC") {
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_15UHI_CSET")
+    field(CALC, "A / $(ASLO)")
+}
+
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_15UHI_CSET_") {
+    field(DTYP, "Pico8 User Reg Float")
+    field(DOL,  "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_15UHI_CALC CP")
+    field(OUT , "@$(NAME) offset=0x30000+4*$(HI1)")
+    field(OMSL, "closed_loop")
+    field(PINI, "YES")
+    field(EGU,  "$(EGU=uA)")
+    field(PREC, "2")
+}
+
+record(ai, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_150ULO_CSET") {
+    field(DTYP, "Soft Channel")
+    field(EGU,  "$(EGU=uA)")
+    field(PREC, "2")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_150ULO_CALC PP")
+    field(PINI, "YES")
+    field(VAL,  "0")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_150ULO_CALC") {
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_150ULO_CSET")
+    field(CALC, "A / $(ASLO)")
+}
+
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_150ULO_CSET_") {
+    field(DTYP, "Pico8 User Reg Float")
+    field(DOL,  "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_150ULO_CALC CP")
+    field(OUT , "@$(NAME) offset=0x30000+4*$(LO2)")
+    field(OMSL, "closed_loop")
+    field(PINI, "YES")
+    field(EGU,  "$(EGU=uA)")
+    field(PREC, "2")
+}
+
+record(ai, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_150UHI_CSET") {
+    field(DTYP, "Soft Channel")
+    field(EGU,  "$(EGU=uA)")
+    field(PREC, "2")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_150UHI_CALC PP")
+    field(PINI, "YES")
+    field(VAL,  "0")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_150UHI_CALC") {
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_150UHI_CSET")
+    field(CALC, "A / $(ASLO)")
+}
+
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_150UHI_CSET_") {
+    field(DTYP, "Pico8 User Reg Float")
+    field(DOL,  "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_150UHI_CALC CP")
+    field(OUT , "@$(NAME) offset=0x30000+4*$(HI2)")
+    field(OMSL, "closed_loop")
+    field(PINI, "YES")
+    field(EGU,  "$(EGU=uA)")
+    field(PREC, "2")
+}
+
+record(ai, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_1500ULO_CSET") {
+    field(DTYP, "Soft Channel")
+    field(EGU,  "$(EGU=uA)")
+    field(PREC, "2")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_1500ULO_CALC PP")
+    field(PINI, "YES")
+    field(VAL,  "0")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_1500ULO_CALC") {
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_1500ULO_CSET")
+    field(CALC, "A / $(ASLO)")
+}
+
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_1500ULO_CSET_") {
+    field(DTYP, "Pico8 User Reg Float")
+    field(DOL,  "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_1500ULO_CALC CP")
+    field(OUT , "@$(NAME) offset=0x30000+4*$(LO3)")
+    field(OMSL, "closed_loop")
+    field(PINI, "YES")
+    field(EGU,  "$(EGU=uA)")
+    field(PREC, "2")
+}
+
+record(ai, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_1500UHI_CSET") {
+    field(DTYP, "Soft Channel")
+    field(EGU,  "$(EGU=uA)")
+    field(PREC, "2")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_1500UHI_CALC PP")
+    field(PINI, "YES")
+    field(VAL,  "0")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_1500UHI_CALC") {
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_1500UHI_CSET")
+    field(CALC, "A / $(ASLO)")
+}
+
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_1500UHI_CSET_") {
+    field(DTYP, "Pico8 User Reg Float")
+    field(DOL,  "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_1500UHI_CALC CP")
+    field(OUT , "@$(NAME) offset=0x30000+4*$(HI3)")
+    field(OMSL, "closed_loop")
+    field(PINI, "YES")
+    field(EGU,  "$(EGU=uA)")
+    field(PREC, "2")
+}
+
+record(ai, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_10MLO_CSET") {
+    field(DTYP, "Soft Channel")
+    field(EGU,  "$(EGU=uA)")
+    field(PREC, "2")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_10MLO_CALC PP")
+    field(PINI, "YES")
+    field(VAL,  "0")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_10MLO_CALC") {
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_10MLO_CSET")
+    field(CALC, "A / $(CYCTIME)")
+}
+
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_10MLO_CSET_") {
+    field(DTYP, "Pico8 User Reg Float")
+    field(DOL,  "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_10MLO_CALC CP")
+    field(OUT , "@$(NAME) offset=0x30000+4*$(LO4)")
+    field(OMSL, "closed_loop")
+    field(PINI, "YES")
+    field(EGU,  "$(EGU=uA)")
+    field(PREC, "2")
+}
+
+record(ai, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_10MHI_CSET") {
+    field(DTYP, "Soft Channel")
+    field(EGU,  "$(EGU=uA)")
+    field(PREC, "2")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_10MHI_CALC PP")
+    field(PINI, "YES")
+    field(VAL,  "0")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_10MHI_CALC") {
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_10MHI_CSET")
+    field(CALC, "A / $(CYCTIME)")
+}
+
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_10MHI_CSET_") {
+    field(DTYP, "Pico8 User Reg Float")
+    field(DOL,  "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_10MHI_CALC CP")
+    field(OUT , "@$(NAME) offset=0x30000+4*$(HI4)")
+    field(OMSL, "closed_loop")
+    field(PINI, "YES")
+    field(EGU,  "$(EGU=uA)")
+    field(PREC, "2")
+}
+
+record(ai, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_SPK1_CSET") {
+    field(DTYP, "Soft Channel")
+    field(EGU,  "$(EGU=uA)")
+    field(PREC, "2")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_SPK1_CALC PP")
+    field(PINI, "YES")
+    field(VAL,  "0")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_SPK1_CALC") {
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_SPK1_CSET")
+    field(CALC, "A / $(ASLO)")
+}
+
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_SPK1_CSET_") {
+    field(DTYP, "Pico8 User Reg Float")
+    field(DOL,  "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_SPK1_CALC CP")
+    field(OUT , "@$(NAME) offset=0x30000+4*$(SPK1)")
+    field(OMSL, "closed_loop")
+    field(PINI, "YES")
+    field(EGU,  "$(EGU=uA)")
+    field(PREC, "2")
+}
+
+record(ai, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_SPK2_CSET") {
+    field(DTYP, "Soft Channel")
+    field(EGU,  "$(EGU=uA)")
+    field(PREC, "2")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_SPK2_CALC PP")
+    field(PINI, "YES")
+    field(VAL,  "0")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_SPK2_CALC") {
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_SPK2_CSET")
+    field(CALC, "A / $(ASLO)")
+}
+
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_SPK2_CSET_") {
+    field(DTYP, "Pico8 User Reg Float")
+    field(DOL,  "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_SPK2_CALC CP")
+    field(OUT , "@$(NAME) offset=0x30000+4*$(SPK2)")
+    field(OMSL, "closed_loop")
+    field(PINI, "YES")
+    field(EGU,  "$(EGU=uA)")
+    field(PREC, "2")
+}
+
+
+
+#
+# Trip control and status
+#
+
+record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_ALLEN_CMD") {
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_EN_CMD CP")
+    field(INPB, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGLOEN_CMD CP")
+    field(INPC, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGHIEN_CMD CP")
+    field(CALC, "A || B || C")
+}
+
+record(longout, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_EN_CMD") {
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT , "@$(NAME) offset=0x30000+4*$(NOKMSK) mask=0x3FF")
+    field(DESC, "Enable")
+    field(VAL,  "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_ALL_RSTS") {
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_RSTS CP")
+    field(INPB, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGLO_RSTS CP")
+    field(INPC, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGHI_RSTS CP")
+    field(CALC, "A || B || C")
+}
+
+record(longin, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_RSTS") {
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x30000+4*$(NOK) mask=0x3FF")
+    field(DESC, "Tripped")
+    field(SCAN, ".5 second")
+}
+
+record(longin, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_PRE_RSTS") {
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(INP , "@$(NAME) offset=0x30000+4*$(NOK) mask=0x3FF<<16")
+    field(DESC, "Tripped (Preliminary)")
+    field(SCAN, ".5 second")
+}
+
+
+
+#
+# Trip Long Average
+#
+
+# Push to FIFO
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):LAVGPSH_CMD_") {
+    field(DTYP, "TBUF Push Sample")
+    field(OMSL, "closed_loop")
+    field(DOL , "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):AVGF_RD MS CP")
+    field(OUT , "@$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):LAVG")
+}
+
+# Settings
+
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGTIME_CSET") {
+    field(DTYP, "Raw Soft Channel")
+    field(OUT,  "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):LAVGNSAMP_CSET")
+    field(ESLO, "0.01")
+    field(LINR, "LINEAR")
+    field(EGU,  "s")
+    field(PREC, "2")
+    field(DRVL, "0.01")
+    field(DRVH, "10")
+    field(PINI, "YES")
+    field(VAL,  "1")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):LAVGNSAMP_CSET")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(longout, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):LAVGNSAMP_CSET") {
+    field(DTYP, "TBUF Set Num Samples")
+    field(OUT , "@$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):LAVG")
+}
+
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):LAVGPRD_CSET") {
+    field(DTYP, "TBUF Set Period")
+    field(OUT , "@$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):LAVG")
+    field(VAL , "0.2")
+    field(PREC, "2")
+    field(PINI, "YES")
+}
+
+# Aggregate
+record(ai, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):LAVG_RD") {
+    field(DTYP, "TBUF Get Sample")
+    field(INP , "@$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):LAVG Average")
+    field(SCAN, "I/O Intr")
+    field(LINR, "LINEAR")
+    field(ASLO, "")
+    field(AOFF, "")
+    field(ESLO, "")
+    field(EOFF, "")
+    field(PREC, "")
+    field(EGU , "uA")
+    field(TSE , "-2")
+}
+
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGLO_CSET") {
+    field(EGU,  "$(EGU=uA)")
+    field(PREC, "2")
+    field(VAL,  "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGHI_CSET") {
+    field(EGU,  "$(EGU=uA)")
+    field(PREC, "2")
+    field(VAL,  "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(bo, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGLOEN_CMD") {
+    field(VAL,  "0")
+    field(PINI, "YES")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGLO_CALC")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(bo, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGHIEN_CMD") {
+    field(VAL,  "0")
+    field(PINI, "YES")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGHI_CALC")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGLOPRE_RSTS") {
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):LAVG_RD CP")
+    field(INPB, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGLO_CSET CP")
+    field(CALC, "A < B")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGLO_CALC")
+}
+
+record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGHIPRE_RSTS") {
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):LAVG_RD CP")
+    field(INPB, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGHI_CSET CP")
+    field(CALC, "A > B")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGHI_CALC")
+}
+
+record(calcout, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGLO_CALC") {
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGLOPRE_RSTS")
+    field(INPB, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGLOEN_CMD")
+    field(CALC, "A && B")
+    field(OUT,  "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGLO_FOUT PP")
+    field(OOPT, "When Non-zero")
+}
+
+record(calcout, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGHI_CALC") {
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGHIPRE_RSTS")
+    field(INPB, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGHIEN_CMD")
+    field(CALC, "A && B")
+    field(OUT,  "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGHI_FOUT PP")
+    field(OOPT, "When Non-zero")
+}
+
+record(dfanout, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGLO_FOUT") {
+    field(OUTA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGLO_RSTS PP")
+    field(OUTB, "$(SYS)_$(SSYS):$(DEV)_FPS:FRCTRP_CSET PP")
+}
+
+record(dfanout, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGHI_FOUT") {
+    field(OUTA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGHI_RSTS PP")
+    field(OUTB, "$(SYS)_$(SSYS):$(DEV)_FPS:FRCTRP_CSET PP")
+}
+
+record(calcout, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGLO_CLR") {
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_FPS:FPSSTS_RD CP")
+    field(CALC, "A & 4")
+    field(OOPT, "When Zero")
+    field(OUT,  "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGLO_RSTS PP")
+}
+
+record(calcout, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGHI_CLR") {
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_FPS:FPSSTS_RD CP")
+    field(CALC, "A & 4")
+    field(OOPT, "When Zero")
+    field(OUT,  "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGHI_RSTS PP")
+}
+
+record(bi, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGLO_RSTS") {
+    field(VAL,  "0")
+    field(PINI, "YES")
+}
+
+record(bi, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGHI_RSTS") {
+    field(VAL,  "0")
+    field(PINI, "YES")
+}
+
+

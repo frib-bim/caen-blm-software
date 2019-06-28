@@ -1,4 +1,4 @@
-record(ai, "$(N)") {
+record(ai, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):$(SIG)F_RD") {
     field(DTYP, "Pico8 Capture Float")
     field(INP , "@$(NAME) offset=$(ADDR)")
     field(SCAN, "$(SCAN=Event)")
@@ -14,6 +14,6 @@ record(ai, "$(N)") {
     field(AOFF, "$(AOFF=)")
     field(ESLO, "$(ESLO=)")
     field(EOFF, "$(EOFF=)")
-    field(PREC, "$(PREC=)")
+    field(PREC, "$(PREC=6)")
 }
 

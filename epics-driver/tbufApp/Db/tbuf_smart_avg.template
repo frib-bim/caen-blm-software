@@ -15,7 +15,7 @@
 #
 # Push to FIFOs
 #
-record(calc, "$(P)WGHF_RD_") {
+record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)WGHF_RD_") {
     field(TSEL, "$(WEIGHT).TIME")
     field(SCAN, "$(SCAN=Event)")
     field(PHAS, "$(PHAS=0)")
@@ -24,38 +24,38 @@ record(calc, "$(P)WGHF_RD_") {
     field(INPB, "$(WEIGHT) MS")
     field(CALC, "A ? 1 : B")
     field(MDEL, "-1")
-    field(FLNK, "$(P)5HZ_PSH_CMD_")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)5HZ_PSH_CMD_")
 }
 
 # 0.2 s average
-record(ao, "$(P)5HZ_PSH_CMD_") {
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)5HZ_PSH_CMD_") {
     field(DTYP, "TBUF Push Sample")
     field(OMSL, "closed_loop")
     field(DOL , "$(SRC) MS")
-    field(OUT , "@$(P)5HZ")
-    field(SIOL, "$(P)WGHF_RD_")      # Abuse SIOL field
+    field(OUT , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)5HZ")
+    field(SIOL, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)WGHF_RD_")      # Abuse SIOL field
     field(MDEL, "-1")
-    field(FLNK, "$(P)1HZ_PSH_CMD_")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)1HZ_PSH_CMD_")
 }
 
 # 1 s average
-record(ao, "$(P)1HZ_PSH_CMD_") {
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)1HZ_PSH_CMD_") {
     field(DTYP, "TBUF Push Sample")
     field(OMSL, "closed_loop")
     field(DOL , "$(SRC) MS")
-    field(OUT , "@$(P)1HZ")
-    field(SIOL, "$(P)WGHF_RD_")     # Abuse SIOL field
+    field(OUT , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)1HZ")
+    field(SIOL, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)WGHF_RD_")     # Abuse SIOL field
     field(MDEL, "-1")
-    field(FLNK, "$(P)WGH_PSH_CMD_")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)WGH_PSH_CMD_")
 }
 
 # 0.2 s weights
-record(ao, "$(P)WGH_PSH_CMD_") {
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)WGH_PSH_CMD_") {
     field(DTYP, "TBUF Push Sample")
     field(OMSL, "closed_loop")
-    field(DOL , "$(P)WGHF_RD_ MS")
+    field(DOL , "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)WGHF_RD_ MS")
     field(MDEL, "-1")
-    field(OUT , "@$(P)WGH")
+    field(OUT , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)WGH")
 }
 
 #
@@ -63,51 +63,51 @@ record(ao, "$(P)WGH_PSH_CMD_") {
 #
 
 # 0.2 s average (20 samples @ 100Hz)
-record(longout, "$(P)5HZ_NSAMP_CSET") {
+record(longout, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)5HZ_NSAMP_CSET") {
     field(DTYP, "TBUF Set Num Samples")
-    field(OUT , "@$(P)5HZ")
+    field(OUT , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)5HZ")
     field(VAL , "20")
     field(PINI, "YES")
 }
 
 # 1 s average (100 samples @ 100Hz)
-record(longout, "$(P)1HZ_NSAMP_CSET") {
+record(longout, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)1HZ_NSAMP_CSET") {
     field(DTYP, "TBUF Set Num Samples")
-    field(OUT , "@$(P)1HZ")
+    field(OUT , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)1HZ")
     field(VAL , "100")
     field(PINI, "YES")
 }
 
 # 0.2 s weights (20 samples @ 100Hz)
-record(longout, "$(P)WGH_NSAMP_CSET") {
+record(longout, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)WGH_NSAMP_CSET") {
     field(DTYP, "TBUF Set Num Samples")
-    field(OUT , "@$(P)WGH")
+    field(OUT , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)WGH")
     field(VAL , "20")
     field(PINI, "YES")
 }
 
 # 0.2 s average
-record(ao, "$(P)5HZ_PRD_CSET") {
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)5HZ_PRD_CSET") {
     field(DTYP, "TBUF Set Period")
-    field(OUT , "@$(P)5HZ")
+    field(OUT , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)5HZ")
     field(VAL , "0.2")
     field(PREC, "2")
     field(PINI, "YES")
 }
 
 # 1 s average (reports @ 5Hz)
-record(ao, "$(P)1HZ_PRD_CSET") {
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)1HZ_PRD_CSET") {
     field(DTYP, "TBUF Set Period")
-    field(OUT , "@$(P)1HZ")
+    field(OUT , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)1HZ")
     field(VAL , "0.2")
     field(PREC, "2")
     field(PINI, "YES")
 }
 
 # 0.2 s weights
-record(ao, "$(P)WGH_PRD_CSET") {
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)WGH_PRD_CSET") {
     field(DTYP, "TBUF Set Period")
-    field(OUT , "@$(P)WGH")
+    field(OUT , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)WGH")
     field(VAL , "0.2")
     field(PREC, "2")
     field(PINI, "YES")
@@ -121,115 +121,115 @@ record(ao, "$(P)WGH_PRD_CSET") {
 # 5HZ -> 1HZ -> WGH -> 5HZW -> 1HZW -> WGHW -> ALL_PSH_CMD_
 
 # 0.2 s average, drives the following ones
-record(ai, "$(P)5HZ_RD") {
+record(ai, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)5HZ_RD") {
     field(DTYP, "TBUF Get Sample")
-    field(INP , "@$(P)5HZ $(Stat=SpecialAvg)")
+    field(INP , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)5HZ $(Stat=SpecialAvg)")
     field(SCAN, "I/O Intr")
     field(PREC, "$(PREC)")
     field(EGU,  "$(EGU=)")
     field(TSE , "-2")
-    field(FLNK, "$(P)1HZ_RD")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)1HZ_RD")
 }
 
 # 1 s average (reports @ 5 Hz)
-record(ai, "$(P)1HZ_RD") {
+record(ai, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)1HZ_RD") {
     field(DTYP, "TBUF Get Sample")
-    field(INP , "@$(P)1HZ $(Stat=SpecialAvg)")
+    field(INP , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)1HZ $(Stat=SpecialAvg)")
     field(PREC, "$(PREC)")
     field(EGU,  "$(EGU=)")
     field(TSE , "-2")
-    field(FLNK, "$(P)WGH_RD")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)WGH_RD")
 }
 
 # 0.2 s average
-record(ai, "$(P)WGH_RD") {
+record(ai, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)WGH_RD") {
     field(DTYP, "TBUF Get Sample")
-    field(INP , "@$(P)WGH Average")
+    field(INP , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)WGH Average")
     field(PREC, "$(PREC)")
     field(TSE , "-2")
-    field(FLNK, "$(P)1HZW_RD")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)1HZW_RD")
     field(MDEL, "-1")
 }
 
 # 1 s average Full FIFO
-record(waveform, "$(P)1HZW_RD") {
+record(waveform, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)1HZW_RD") {
     field(DTYP, "TBUF Get Buffer")
-    field(INP , "@$(P)1HZ")
+    field(INP , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)1HZ")
     field(FTVL, "FLOAT")
     field(NELM, "100")
     field(TSE , "-2")
-    field(FLNK, "$(P)5HZW_RD")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)5HZW_RD")
 }
 
 # 0.2 s average Full FIFO
-record(waveform, "$(P)5HZW_RD") {
+record(waveform, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)5HZW_RD") {
     field(DTYP, "TBUF Get Buffer")
-    field(INP , "@$(P)5HZ")
+    field(INP , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)5HZ")
     field(FTVL, "FLOAT")
     field(NELM, "20")
     field(TSE , "-2")
-    field(FLNK, "$(P)WGHW_RD")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)WGHW_RD")
 }
 
 # 0.2 s weights Full FIFO
-record(waveform, "$(P)WGHW_RD") {
+record(waveform, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)WGHW_RD") {
     field(DTYP, "TBUF Get Buffer")
-    field(INP , "@$(P)WGH")
+    field(INP , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)WGH")
     field(FTVL, "FLOAT")
     field(NELM, "20")
     field(TSE , "-2")
-    field(FLNK, "$(P)ALL_PSH_CMD_")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)ALL_PSH_CMD_")
 }
 
 # Decider (5 samples @ 5 Hz)
-record(longout, "$(P)ALL_NSAMP_CSET") {
+record(longout, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)ALL_NSAMP_CSET") {
     field(DTYP, "TBUF Set Num Samples")
-    field(OUT , "@$(P)ALL")
+    field(OUT , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)ALL")
     field(VAL , "5")
     field(PINI, "YES")
 }
 
 # Decider
-record(ao, "$(P)ALL_PRD_CSET") {
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)ALL_PRD_CSET") {
     field(DTYP, "TBUF Set Period")
-    field(OUT , "@$(P)ALL")
+    field(OUT , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)ALL")
     field(VAL , "0")
     field(PREC, "2")
     field(PINI, "YES")
 }
 
 # Decider (1.0 if every bucket has T_ON, 0.0 otherwise)
-record(ao, "$(P)ALL_PSH_CMD_") {
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)ALL_PSH_CMD_") {
     field(DTYP, "TBUF Push Sample")
     field(OMSL, "closed_loop")
-    field(DOL , "$(P)WGH_RD MS")
-    field(OUT , "@$(P)ALL")
+    field(DOL , "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)WGH_RD MS")
+    field(OUT , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)ALL")
     field(MDEL, "-1")
 }
 
 # Decider (@ 5Hz), should trigger on every sample
-record(ai, "$(P)ALL_RD") {
+record(ai, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)ALL_RD") {
     field(DTYP, "TBUF Get Sample")
-    field(INP , "@$(P)ALL All")
+    field(INP , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)ALL All")
     field(SCAN, "I/O Intr")
     field(PREC, "$(PREC)")
     field(MDEL, "-1")
     field(TSE , "-2")
-    field(FLNK, "$(P)ALLW_RD PP")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)ALLW_RD PP")
 }
 
 # Decider Full FIFO
-record(waveform, "$(P)ALLW_RD") {
+record(waveform, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)ALLW_RD") {
     field(DTYP, "TBUF Get Buffer")
-    field(INP , "@$(P)ALL")
+    field(INP , "@$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)ALL")
     field(FTVL, "FLOAT")
     field(NELM, "5")
     field(TSE , "-2")
-    field(FLNK, "$(P)1HZSEL_RD PP")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)1HZSEL_RD PP")
 }
 
 # Force 1Hz
-record(bi, "$(P)1HZFRC_CMD") {
+record(bi, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)1HZFRC_CMD") {
     field(DESC, "Force 1Hz Avg")
     field(ZNAM, "No")
     field(ONAM, "Yes")
@@ -238,20 +238,20 @@ record(bi, "$(P)1HZFRC_CMD") {
 }
 
 # Use 1Hz instead of 5Hz?
-record(calc, "$(P)1HZSEL_RD") {
+record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)1HZSEL_RD") {
     field(DESC, "Is 1Hz Avg selected?")
-    field(INPA, "$(P)ALL_RD")
-    field(INPB, "$(P)1HZFRC_CMD")
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)ALL_RD")
+    field(INPB, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)1HZFRC_CMD")
     field(CALC, "!A || B")
-    field(FLNK, "$(P)_RD PP")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)_RD PP")
 }
 
 # Final value
-record(calc, "$(P)_RD") {
-    field(TSEL, "$(P)1HZ_RD.TIME")
-    field(INPA, "$(P)1HZSEL_RD")
-    field(INPB, "$(P)1HZ_RD")
-    field(INPC, "$(P)5HZ_RD")
+record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)_RD") {
+    field(TSEL, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)1HZ_RD.TIME")
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)1HZSEL_RD")
+    field(INPB, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)1HZ_RD")
+    field(INPC, "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)5HZ_RD")
     field(CALC, "(A ? B : C)")
     field(EGU,  "$(EGU=)")
     field(PREC, "$(PREC)")
@@ -260,4 +260,4 @@ record(calc, "$(P)_RD") {
     field(ASG,  "DIAG_OPS")
 }
 
-alias("$(P)5HZW_RD", "$(P)W_RD")
+alias("$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)5HZW_RD", "$(SYS)_$(SSYS):$(DEV)_$(SDEV):$(SIG)W_RD")

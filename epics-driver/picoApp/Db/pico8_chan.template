@@ -1,11 +1,11 @@
-record(stringin, "$(P)_CH$(CH):DESC_RD") {
+record(stringin, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):DESC_RD") {
     field(DESC, "Label")
     field(VAL,  "")
     field(PINI, "YES")
     # VAL is overriden when loading pico8_chan_alias.db in the startup script
 }
 
-record(mbbo, "$(P)_CH$(CH):RNG_CMD") {
+record(mbbo, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):RNG_CMD") {
     field(DESC, "Channel dynamic range")
     field(DTYP, "Pico8 Channel Range")
     field(OUT , "@$(NAME) chan=$(CH)")
@@ -18,32 +18,32 @@ record(mbbo, "$(P)_CH$(CH):RNG_CMD") {
     info(autosaveFields_pass0, "RVAL")
 }
 
-record(waveform, "$(P)_CH$(CH):I_RD") {
+record(waveform, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):I_RD") {
     field(DESC, "Sample data")
     field(DTYP, "Pico8 Channel Data")
     field(INP , "@$(NAME) chan=$(CH)")
     field(SCAN, "I/O Intr")
     field(FTVL, "FLOAT")
     field(NELM, "$(NELM)")
-    field(FLNK, "$(P)_CH$(CH):I_RD_LEN")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):I_RD_LEN")
     field(PREC, "6")
 }
 
-record(longin, "$(P)_CH$(CH):I_RD_LEN") {
+record(longin, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):I_RD_LEN") {
     field(DESC, "Sample data length")
-    field(INP, "$(P)_CH$(CH):I_RD.NORD NPP")
+    field(INP, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):I_RD.NORD NPP")
 }
 
-record(ao, "$(P)_CH$(CH):SLO_CSET") {
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):SLO_CSET") {
     field(DESC, "Multiplier from raw")
     field(DTYP, "Pico8 Chan Scale")
     field(OUT , "@$(NAME) chan=$(CH)")
     field(PINI, "YES")
     field(PREC, "3")
-    field(VAL , "$(ASLO=1)")
+    field(VAL , "$(ASLO)")
 }
 
-record(ao, "$(P)_CH$(CH):OFST_CSET") {
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):OFST_CSET") {
     field(DESC, "Offset from raw")
     field(DTYP, "Pico8 Chan Offset")
     field(OUT , "@$(NAME) chan=$(CH)")
@@ -53,21 +53,68 @@ record(ao, "$(P)_CH$(CH):OFST_CSET") {
 }
 
 ## Added by Scott
-record(waveform, "$(P)_CH$(CH):DDRWV_RD") {  field(DTYP, "Soft Channel")  field(FTVL, "FLOAT")  field(NELM, "$(NELM)") }
+record(waveform, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):DDRWV_RD") {
+    field(DTYP, "Soft Channel")
+    field(FTVL, "FLOAT")
+    field(NELM, "$(NELM)")
+}
 
 ## Added by Diego - Change range labels in mbbo
-record(scalcout,"$(P)_CH$(CH):RNG_CMD_LABEL0")
+record(scalcout,"$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):RNG_CMD_LABEL0")
 {
-    field(INPA, "$(P):EEPROM_RNG0_RD CP")
-    field(OUT, "$(P)_CH$(CH):RNG_CMD.ZRST PP")
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH)::EEPROM_RNG0_RD CP")
+    field(OUT, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):RNG_CMD.ZRST PP")
     field(OOPT, "Every Time")
     field(CALC, "PRINTF(\"%.0f uA\", A)")
 }
 
-record(scalcout,"$(P)_CH$(CH):RNG_CMD_LABEL1")
+record(scalcout,"$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):RNG_CMD_LABEL1")
 {
-    field(INPA, "$(P):EEPROM_RNG1_RD CP")
-    field(OUT, "$(P)_CH$(CH):RNG_CMD.ONST PP")
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH)::EEPROM_RNG1_RD CP")
+    field(OUT, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):RNG_CMD.ONST PP")
     field(OOPT, "Every Time")
     field(CALC, "PRINTF(\"%.0f uA\", A)")
+}
+
+# Extra registers
+
+record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):CORR_CSET") {
+    field(DTYP, "Pico8 User Reg Float")
+    field(OUT , "@$(NAME) offset=$(CORR)")
+    field(PINI, "YES")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(longout, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TOF_CSET") {
+    field(DESC, "Time of flight calib")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT,  "@$(NAME) offset=$(CTRL) mask=0x1f00<<$(BIT)")
+    field(VAL,  "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(bo, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):CWBEAM_CSET") {
+    field(DESC, "CW Beam")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT, "@$(NAME) offset=$(CTRL) mask=0x2<<$(BIT)")
+    field(RVAL, "1")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+    field(PINI, "RUNNING")
+    field(ASG,  "DIAG_OPS")
+    # MASK is automagially set from mask=
+    info(autosaveFields_pass0, "RVAL")
+}
+
+record(bo, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):AUTOOFFS_CSET") {
+    field(DESC, "CW Beam")
+    field(DTYP, "Pico8 User Reg UInt32")
+    field(OUT, "@$(NAME) offset=$(CTRL) mask=0x1<<$(BIT)")
+    field(RVAL, "0")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+    field(PINI, "RUNNING")
+    # MASK is automagially set from mask=
+    info(autosaveFields_pass0, "RVAL")
 }

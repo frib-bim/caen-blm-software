@@ -1,4 +1,4 @@
-record(calc, "$(P)SAT0MIN_CALC") {
+record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):SAT0MIN_CALC") {
     field(INPA, "$(MIN)")
     field(INPB, "$(RNG0)")
     field(INPC, "$(THRES)")
@@ -6,7 +6,7 @@ record(calc, "$(P)SAT0MIN_CALC") {
     field(SCAN, ".5 second")
 }
 
-record(calc, "$(P)SAT0MAX_CALC") {
+record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):SAT0MAX_CALC") {
     field(INPA, "$(MAX)")
     field(INPB, "$(RNG0)")
     field(INPC, "$(THRES)")
@@ -14,7 +14,7 @@ record(calc, "$(P)SAT0MAX_CALC") {
     field(SCAN, ".5 second")
 }
 
-record(calc, "$(P)SAT1MIN_CALC") {
+record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):SAT1MIN_CALC") {
     field(INPA, "$(MIN)")
     field(INPB, "$(RNG1)")
     field(INPC, "$(THRES)")
@@ -22,7 +22,7 @@ record(calc, "$(P)SAT1MIN_CALC") {
     field(SCAN, ".5 second")
 }
 
-record(calc, "$(P)SAT1MAX_CALC") {
+record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):SAT1MAX_CALC") {
     field(INPA, "$(MAX)")
     field(INPB, "$(RNG1)")
     field(INPC, "$(THRES)")
@@ -30,17 +30,17 @@ record(calc, "$(P)SAT1MAX_CALC") {
     field(SCAN, ".5 second")
 }
 
-record(calcout, "$(P)SAT_CALC") {
+record(calcout, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):SAT_CALC") {
     field(INPA, "$(RNGSEL)")
-    field(INPB, "$(P)SAT0MIN_CALC")
-    field(INPC, "$(P)SAT0MAX_CALC")
-    field(INPD, "$(P)SAT1MIN_CALC")
-    field(INPE, "$(P)SAT1MAX_CALC")
+    field(INPB, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):SAT0MIN_CALC")
+    field(INPC, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):SAT0MAX_CALC")
+    field(INPD, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):SAT1MIN_CALC")
+    field(INPE, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):SAT1MAX_CALC")
     field(CALC, "A ? (D || E) : (B || C)")
     field(SCAN, ".5 second")
-    field(OUT,  "$(P)SAT_RSTS PP")
+    field(OUT,  "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):SAT_RSTS PP")
 }
 
-record(bi, "$(P)SAT_RSTS") {
+record(bi, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):SAT_RSTS") {
     field(ONAM, "Saturated")
 }

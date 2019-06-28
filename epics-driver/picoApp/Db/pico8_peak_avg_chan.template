@@ -1,7 +1,7 @@
-record(calc, "$(N)") {
-    field(INPA, "$(AVGSRC)")
-    field(INPB, "$(TONSRC)")
-    field(INPC, "$(CWSRC)")
+record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):PKAVGF_RD") {
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):AVGF_RD")
+    field(INPB, "$(SYS)_$(SSYS):$(DEV)_CAP:TON_RSTS")
+    field(INPC, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):CWBEAM_CSET")
     field(SCAN, "$(SCAN=Event)")
     field(EVNT, "$(EVNT=$(NAME)_100HZ)")
     field(EGU , "$(EGU=)")

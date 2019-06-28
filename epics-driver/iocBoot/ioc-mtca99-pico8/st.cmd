@@ -2,6 +2,8 @@
 
 < envPaths
 
+var reToolsVerbose 0
+
 epicsEnvSet("EPICS_CA_MAX_ARRAY_BYTES","10000000")
 
 dbLoadDatabase("../../dbd/pico.dbd",0,0)
@@ -19,13 +21,13 @@ createPICO8("PICO6", "/dev/amc_pico_0000:0b:00.0")
 #debugPICO("PICO", 5)
 
 # (SYS):(D)_CHX:Y_Z
-dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA99,D=PICO3,NAME=PICO3,NELM=1000000")
-#dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA99,D=PICO4,NAME=PICO4,NELM=1000000")
-#dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA99,D=PICO5,NAME=PICO5,NELM=1000000")
-dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA99,D=PICO6,NAME=PICO6,NELM=1000000")
-#dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA99,D=PICO7,NAME=PICO7,NELM=1000000")
-#dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA99,D=PICO8,NAME=PICO8,NELM=1000000")
-#dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG_MTCA99,D=PICO9,NAME=PICO9,NELM=1000000")
+dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA99,NAME=PICO3")
+#dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA99,NAME=PICO4")
+#dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA99,NAME=PICO5")
+dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA99,NAME=PICO6")
+#dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA99,NAME=PICO7")
+#dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA99,NAME=PICO8")
+#dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA99,NAME=PICO9")
 
 # Add some aliases
 
