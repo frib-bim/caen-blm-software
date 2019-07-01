@@ -21,7 +21,8 @@ createPICO8("PICO6", "/dev/amc_pico_0000:0b:00.0")
 #debugPICO("PICO", 5)
 
 # (SYS):(D)_CHX:Y_Z
-dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA99,NAME=PICO3")
+# PICO3 CH0 has 1:8 current divider
+dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA99,NAME=PICO3,ASLO0=8e6,ASLOSQ0=64e12,CYCTIME0=8e2")
 #dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA99,NAME=PICO4")
 #dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA99,NAME=PICO5")
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA99,NAME=PICO6")
