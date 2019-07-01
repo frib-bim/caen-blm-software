@@ -2,12 +2,12 @@
 
 < envPaths
 
-var reToolsVerbose 0
-
 epicsEnvSet("EPICS_CA_MAX_ARRAY_BYTES","10000000")
 
 dbLoadDatabase("../../dbd/pico.dbd",0,0)
 pico_registerRecordDeviceDriver(pdbbase)
+
+var reToolsVerbose 0
 
 # slot numbers from /sys/bus/pci/slots/*/address
 createPICO8("PICO3", "/dev/amc_pico_0000:08:00.0")
