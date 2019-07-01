@@ -5,7 +5,7 @@
 # SSYS                 Subsystem from the naming standard (for instance, MTCA01)
 # DEV         $(NAME)  Device name from the naming standard (for instace, PICO3)
 # SDEV                 Sub-device name from the naming standard. Examples: CTRL, CH1, etc...
-# NELM        1e6      Number of elements in waveforms
+# NELM        1000000  Number of elements in waveforms
 # ASLO0..7    1e6      ASLO for channels 0..7
 # ASLOSQ0..7  1e12     ASLO squared for channels 0..7
 # CYCTIME0..7 1e2      CYCTIME for channels 0..7
@@ -14,7 +14,7 @@ global {
     NAME="\$(NAME)",
     SYS="\$(SYS=DIAG)", SSYS="\$(SSYS)",
     DEV="\$(DEV=$(NAME))", SDEV="\$(SDEV)",
-    NELM="\$(NELM=1e6)", EGU="uA", SDEVCH="CH$(CH)",
+    NELM="\$(NELM=1000000)", EGU="uA", SDEVCH="CH$(CH)",
 
     # ASLO for each individual channel
     ASLO0="\$(ASLO0=1e6)", ASLO1="\$(ASLO1=1e6)",
