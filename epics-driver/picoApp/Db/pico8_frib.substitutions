@@ -282,7 +282,7 @@ global {
     PREC="6",
     WEIGHT="$(SYS)_$(SSYS):$(DEV)_CAP:TON_RSTS",
     IGN_WGH="$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):CWBEAM_CSET",
-    PHAS="1"
+    PHAS="1", NELM="20"
 }
 
 file "tbuf.template" {
