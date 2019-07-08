@@ -13,7 +13,7 @@ record(ai, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):$(SIG)F_RD") {
     field(ASLO, "$(ASLO=)")
     field(AOFF, "$(AOFF=)")
     field(ESLO, "$(ESLO=)")
-    field(EOFF, "$(EOFF=)")
+    field(EOFF, "$(EOFF=0)")
     field(PREC, "$(PREC=6)")
 }
 

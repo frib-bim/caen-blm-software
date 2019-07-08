@@ -7,8 +7,6 @@
 # SDEV                 Sub-device name from the naming standard. Examples: CTRL, CH1, etc...
 # NELM        1000000  Number of elements in waveforms
 # ASLO0..7    1e6      ASLO for channels 0..7
-# ASLOSQ0..7  1e12     ASLO squared for channels 0..7
-# CYCTIME0..7 1e2      CYCTIME for channels 0..7
 
 global {
     NAME="\$(NAME)",
@@ -16,23 +14,11 @@ global {
     DEV="\$(DEV=$(NAME))", SDEV="\$(SDEV)",
     NELM="\$(NELM=1000000)", EGU="uA", SDEVCH="CH$(CH)",
 
-    # ASLO for each individual channel
+    # Default ASLO for each individual channel
     ASLO0="\$(ASLO0=1e6)", ASLO1="\$(ASLO1=1e6)",
     ASLO2="\$(ASLO2=1e6)", ASLO3="\$(ASLO3=1e6)",
     ASLO4="\$(ASLO4=1e6)", ASLO5="\$(ASLO5=1e6)",
     ASLO6="\$(ASLO6=1e6)", ASLO7="\$(ASLO7=1e6)",
-
-    # ASLO squared for each individual channel
-    ASLOSQ0="\$(ASLOSQ0=1e12)", ASLOSQ1="\$(ASLOSQ1=1e12)",
-    ASLOSQ2="\$(ASLOSQ2=1e12)", ASLOSQ3="\$(ASLOSQ3=1e12)",
-    ASLOSQ4="\$(ASLOSQ4=1e12)", ASLOSQ5="\$(ASLOSQ5=1e12)",
-    ASLOSQ6="\$(ASLOSQ6=1e12)", ASLOSQ7="\$(ASLOSQ7=1e12)",
-
-    # CYCTIME for each individual channel (integration time)
-    CYCTIME0="\$(CYCTIME0=1e2)", CYCTIME1="\$(CYCTIME1=1e2)",
-    CYCTIME2="\$(CYCTIME2=1e2)", CYCTIME3="\$(CYCTIME3=1e2)",
-    CYCTIME4="\$(CYCTIME4=1e2)", CYCTIME5="\$(CYCTIME5=1e2)",
-    CYCTIME6="\$(CYCTIME6=1e2)", CYCTIME7="\$(CYCTIME7=1e2)",
 }
 
 # Per card records
@@ -57,15 +43,15 @@ pattern
 # Per channel trip records
 file "pico8_trip_chan.template" {
 pattern
-{ CH, ASLO,     CYCTIME,     LO1,  HI1,  LO2,  HI2,  LO3,  HI3,  LO4,  HI4,  SPK1, SPK2, NOKMSK, NOK  }
-{ 0,  $(ASLO0), $(CYCTIME0), 0xB0, 0xB1, 0xB2, 0xB3, 0xB4, 0xB5, 0xB6, 0xB7, 0xF0, 0xF1, 0xA0,   0xA8 }
-{ 1,  $(ASLO1), $(CYCTIME1), 0xB8, 0xB9, 0xBA, 0xBB, 0xBC, 0xBD, 0xBE, 0xBF, 0xF2, 0xF3, 0xA1,   0xA9 }
-{ 2,  $(ASLO2), $(CYCTIME2), 0xC0, 0xC1, 0xC2, 0xC3, 0xC4, 0xC5, 0xC6, 0xC7, 0xF4, 0xF5, 0xA2,   0xAA }
-{ 3,  $(ASLO3), $(CYCTIME3), 0xC8, 0xC9, 0xCA, 0xCB, 0xCC, 0xCD, 0xCE, 0xCF, 0xF6, 0xF7, 0xA3,   0xAB }
-{ 4,  $(ASLO4), $(CYCTIME4), 0xD0, 0xD1, 0xD2, 0xD3, 0xD4, 0xD5, 0xD6, 0xD7, 0xF8, 0xF9, 0xA4,   0xAC }
-{ 5,  $(ASLO5), $(CYCTIME5), 0xD8, 0xD9, 0xDA, 0xDB, 0xDC, 0xDD, 0xDE, 0xDF, 0xFA, 0xFB, 0xA5,   0xAD }
-{ 6,  $(ASLO6), $(CYCTIME6), 0xE0, 0xE1, 0xE2, 0xE3, 0xE4, 0xE5, 0xE6, 0xE7, 0xFC, 0xFD, 0xA6,   0xAE }
-{ 7,  $(ASLO7), $(CYCTIME7), 0xE8, 0xE9, 0xEA, 0xEB, 0xEC, 0xED, 0xEE, 0xEF, 0xFE, 0xFF, 0xA7,   0xAF }
+{ CH, ASLO,     LO1,  HI1,  LO2,  HI2,  LO3,  HI3,  LO4,  HI4,  SPK1, SPK2, NOKMSK, NOK  }
+{ 0,  $(ASLO0), 0xB0, 0xB1, 0xB2, 0xB3, 0xB4, 0xB5, 0xB6, 0xB7, 0xF0, 0xF1, 0xA0,   0xA8 }
+{ 1,  $(ASLO1), 0xB8, 0xB9, 0xBA, 0xBB, 0xBC, 0xBD, 0xBE, 0xBF, 0xF2, 0xF3, 0xA1,   0xA9 }
+{ 2,  $(ASLO2), 0xC0, 0xC1, 0xC2, 0xC3, 0xC4, 0xC5, 0xC6, 0xC7, 0xF4, 0xF5, 0xA2,   0xAA }
+{ 3,  $(ASLO3), 0xC8, 0xC9, 0xCA, 0xCB, 0xCC, 0xCD, 0xCE, 0xCF, 0xF6, 0xF7, 0xA3,   0xAB }
+{ 4,  $(ASLO4), 0xD0, 0xD1, 0xD2, 0xD3, 0xD4, 0xD5, 0xD6, 0xD7, 0xF8, 0xF9, 0xA4,   0xAC }
+{ 5,  $(ASLO5), 0xD8, 0xD9, 0xDA, 0xDB, 0xDC, 0xDD, 0xDE, 0xDF, 0xFA, 0xFB, 0xA5,   0xAD }
+{ 6,  $(ASLO6), 0xE0, 0xE1, 0xE2, 0xE3, 0xE4, 0xE5, 0xE6, 0xE7, 0xFC, 0xFD, 0xA6,   0xAE }
+{ 7,  $(ASLO7), 0xE8, 0xE9, 0xEA, 0xEB, 0xEC, 0xED, 0xEE, 0xEF, 0xFE, 0xFF, 0xA7,   0xAF }
 }
 
 #
@@ -89,54 +75,54 @@ global { PHAS="-3" }
 
 file "pico8_cap_chan.template" {
 pattern
-{ CH, SIG,    ADDR,   ASLO  }
-{ 0,  "AVG",  "0x10", "$(CYCTIME0)" }
-{ 1,  "AVG",  "0x24", "$(CYCTIME1)" }
-{ 2,  "AVG",  "0x38", "$(CYCTIME2)" }
-{ 3,  "AVG",  "0x4c", "$(CYCTIME3)" }
-{ 4,  "AVG",  "0x60", "$(CYCTIME4)" }
-{ 5,  "AVG",  "0x74", "$(CYCTIME5)" }
-{ 6,  "AVG",  "0x88", "$(CYCTIME6)" }
-{ 7,  "AVG",  "0x9c", "$(CYCTIME7)" }
+{ CH, SIG,    ADDR,   ASLO,       ESLO        }
+{ 0,  "AVG",  "0x10", "$(ASLO0)",  "1e-4"     }
+{ 1,  "AVG",  "0x24", "$(ASLO1)",  "1e-4"     }
+{ 2,  "AVG",  "0x38", "$(ASLO2)",  "1e-4"     }
+{ 3,  "AVG",  "0x4c", "$(ASLO3)",  "1e-4"     }
+{ 4,  "AVG",  "0x60", "$(ASLO4)",  "1e-4"     }
+{ 5,  "AVG",  "0x74", "$(ASLO5)",  "1e-4"     }
+{ 6,  "AVG",  "0x88", "$(ASLO6)",  "1e-4"     }
+{ 7,  "AVG",  "0x9c", "$(ASLO7)",  "1e-4"     }
 
-{ 0,  "MIN",  "0x14", "$(ASLO0)" }
-{ 1,  "MIN",  "0x28", "$(ASLO1)" }
-{ 2,  "MIN",  "0x3c", "$(ASLO2)" }
-{ 3,  "MIN",  "0x50", "$(ASLO3)" }
-{ 4,  "MIN",  "0x64", "$(ASLO4)" }
-{ 5,  "MIN",  "0x78", "$(ASLO5)" }
-{ 6,  "MIN",  "0x8c", "$(ASLO6)" }
-{ 7,  "MIN",  "0xa0", "$(ASLO7)" }
+{ 0,  "MIN",  "0x14", "$(ASLO0)",  "1"        }
+{ 1,  "MIN",  "0x28", "$(ASLO1)",  "1"        }
+{ 2,  "MIN",  "0x3c", "$(ASLO2)",  "1"        }
+{ 3,  "MIN",  "0x50", "$(ASLO3)",  "1"        }
+{ 4,  "MIN",  "0x64", "$(ASLO4)",  "1"        }
+{ 5,  "MIN",  "0x78", "$(ASLO5)",  "1"        }
+{ 6,  "MIN",  "0x8c", "$(ASLO6)",  "1"        }
+{ 7,  "MIN",  "0xa0", "$(ASLO7)",  "1"        }
 
-{ 0,  "MAX",  "0x18", "$(ASLO0)" }
-{ 1,  "MAX",  "0x2c", "$(ASLO1)" }
-{ 2,  "MAX",  "0x40", "$(ASLO2)" }
-{ 3,  "MAX",  "0x54", "$(ASLO3)" }
-{ 4,  "MAX",  "0x68", "$(ASLO4)" }
-{ 5,  "MAX",  "0x7c", "$(ASLO5)" }
-{ 6,  "MAX",  "0x90", "$(ASLO6)" }
-{ 7,  "MAX",  "0xa4", "$(ASLO7)" }
+{ 0,  "MAX",  "0x18", "$(ASLO0)",  "1"        }
+{ 1,  "MAX",  "0x2c", "$(ASLO1)",  "1"        }
+{ 2,  "MAX",  "0x40", "$(ASLO2)",  "1"        }
+{ 3,  "MAX",  "0x54", "$(ASLO3)",  "1"        }
+{ 4,  "MAX",  "0x68", "$(ASLO4)",  "1"        }
+{ 5,  "MAX",  "0x7c", "$(ASLO5)",  "1"        }
+{ 6,  "MAX",  "0x90", "$(ASLO6)",  "1"        }
+{ 7,  "MAX",  "0xa4", "$(ASLO7)",  "1"        }
 
 # Use AVEPK and SSQR to generate STD = SQRT( SSQR - AVEPK*AVEPK )
 # AVEPK already averaged during 10ms.  1e6 for A -> uA
-{ 0,  "AVGPK", "0x1c", "$(ASLO0)" }
-{ 1,  "AVGPK", "0x30", "$(ASLO1)" }
-{ 2,  "AVGPK", "0x44", "$(ASLO2)" }
-{ 3,  "AVGPK", "0x58", "$(ASLO3)" }
-{ 4,  "AVGPK", "0x6c", "$(ASLO4)" }
-{ 5,  "AVGPK", "0x80", "$(ASLO5)" }
-{ 6,  "AVGPK", "0x94", "$(ASLO6)" }
-{ 7,  "AVGPK", "0xa8", "$(ASLO7)" }
+{ 0,  "AVGPK", "0x1c", "$(ASLO0)", "1"        }
+{ 1,  "AVGPK", "0x30", "$(ASLO1)", "1"        }
+{ 2,  "AVGPK", "0x44", "$(ASLO2)", "1"        }
+{ 3,  "AVGPK", "0x58", "$(ASLO3)", "1"        }
+{ 4,  "AVGPK", "0x6c", "$(ASLO4)", "1"        }
+{ 5,  "AVGPK", "0x80", "$(ASLO5)", "1"        }
+{ 6,  "AVGPK", "0x94", "$(ASLO6)", "1"        }
+{ 7,  "AVGPK", "0xa8", "$(ASLO7)", "1"        }
 
 # SSQR already averaged during 10ms.  1e12 for A*A -> uA*uA
-{ 0,  "SSQR", "0x20", "$(ASLOSQ0)" }
-{ 1,  "SSQR", "0x34", "$(ASLOSQ1)" }
-{ 2,  "SSQR", "0x48", "$(ASLOSQ2)" }
-{ 3,  "SSQR", "0x5c", "$(ASLOSQ3)" }
-{ 4,  "SSQR", "0x70", "$(ASLOSQ4)" }
-{ 5,  "SSQR", "0x84", "$(ASLOSQ5)" }
-{ 6,  "SSQR", "0x98", "$(ASLOSQ6)" }
-{ 7,  "SSQR", "0xac", "$(ASLOSQ7)" }
+{ 0,  "SSQR", "0x20", "$(ASLO0)",  "$(ASLO0)" }
+{ 1,  "SSQR", "0x34", "$(ASLO1)",  "$(ASLO1)" }
+{ 2,  "SSQR", "0x48", "$(ASLO2)",  "$(ASLO2)" }
+{ 3,  "SSQR", "0x5c", "$(ASLO3)",  "$(ASLO3)" }
+{ 4,  "SSQR", "0x70", "$(ASLO4)",  "$(ASLO4)" }
+{ 5,  "SSQR", "0x84", "$(ASLO5)",  "$(ASLO5)" }
+{ 6,  "SSQR", "0x98", "$(ASLO6)",  "$(ASLO6)" }
+{ 7,  "SSQR", "0xac", "$(ASLO7)",  "$(ASLO7)" }
 }
 
 # Fast peak average

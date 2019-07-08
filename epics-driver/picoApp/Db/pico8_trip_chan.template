@@ -164,7 +164,7 @@ record(ai, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_10MLO_CSET") {
 
 record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_10MLO_CALC") {
     field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_10MLO_CSET")
-    field(CALC, "A / $(CYCTIME)")
+    field(CALC, "A / ($(ASLO)*1e-4)")
 }
 
 record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_10MLO_CSET_") {
@@ -189,7 +189,7 @@ record(ai, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_10MHI_CSET") {
 
 record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_10MHI_CALC") {
     field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_10MHI_CSET")
-    field(CALC, "A / $(CYCTIME)")
+    field(CALC, "A / ($(ASLO)*1e-4)")
 }
 
 record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_10MHI_CSET_") {
