@@ -13,7 +13,6 @@ Initiate from console:  python blm_processing_thread.py <picoDevPrefix1> <picoDe
 from blm_dev_support import *
 from cothread import WaitForQuit
 import sys
-import string
 
 """ Callbacks for cothread camonitor() """
 
@@ -24,7 +23,7 @@ def acqCBufCallback(value):
         disp('Callback DONE: ' + pvname + ' ' + time.ctime())
         return
     disp('Callback:     ' + pvname + ' ' + time.ctime())
-    dev = epicsDEV(string.replace(pvname, "_CTRL:acqDDRwave", ""));
+    dev = epicsDEV(pvname.replace("_CTRL:acqDDRwave", ""));
     numpts = dev.get("_CTRL:acqDDRnpts");  # numpts = pow(2,18);
     dat = getCBufData(dev, numpts);  # Get/process raw waveform
     #  Assign the soft channel outputs
