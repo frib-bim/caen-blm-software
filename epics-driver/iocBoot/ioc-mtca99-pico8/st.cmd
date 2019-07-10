@@ -40,5 +40,8 @@ reAddAlias "DIAG_MTCA99:PICO3_CH1:(.*)" "FS1_STRL:IC_D2233:$1"
 
 var picoSlewLimit 9e99
 
+# PICO python helper script
+system "python3 ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA99:PICO3 &"
+
 iocInit()
 
