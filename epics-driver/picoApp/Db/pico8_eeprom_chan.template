@@ -1,0 +1,12 @@
+record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):EEPROM_RNG0_RD") {
+    field(EGU,  "uA")
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):RNG0_EEGAIN_RD CP")
+    field(CALC, "A*(2**19)*$(ASLO)")
+}
+
+record(calc, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):EEPROM_RNG1_RD") {
+    field(EGU,  "uA")
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):RNG1_EEGAIN_RD CP")
+    field(CALC, "A*(2**19)*$(ASLO)")
+}
+

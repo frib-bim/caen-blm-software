@@ -151,6 +151,20 @@ file "pico8_eeprom_base.template" {
 }
 
 # Per channel EEPROM records
+file "pico8_eeprom_chan.template" {
+pattern
+{ CH, ASLO       }
+{ 0,  "$(ASLO0)" }
+{ 1,  "$(ASLO1)" }
+{ 2,  "$(ASLO2)" }
+{ 3,  "$(ASLO3)" }
+{ 4,  "$(ASLO4)" }
+{ 5,  "$(ASLO5)" }
+{ 6,  "$(ASLO6)" }
+{ 7,  "$(ASLO7)" }
+}
+
+# Per channel EEPROM registers
 file "pico8_eeprom_reg.template" {
 pattern
 { CH, SIG,           EEPROM, OFFSET, EGU    }

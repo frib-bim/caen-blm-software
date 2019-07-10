@@ -62,7 +62,7 @@ record(waveform, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):DDRWV_RD") {
 ## Added by Diego - Change range labels in mbbo
 record(scalcout,"$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):RNG_CMD_LABEL0")
 {
-    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH)::EEPROM_RNG0_RD CP")
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):EEPROM_RNG0_RD CP")
     field(OUT, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):RNG_CMD.ZRST PP")
     field(OOPT, "Every Time")
     field(CALC, "PRINTF(\"%.0f uA\", A)")
@@ -70,7 +70,7 @@ record(scalcout,"$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):RNG_CMD_LABEL0")
 
 record(scalcout,"$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):RNG_CMD_LABEL1")
 {
-    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH)::EEPROM_RNG1_RD CP")
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):EEPROM_RNG1_RD CP")
     field(OUT, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):RNG_CMD.ONST PP")
     field(OOPT, "Every Time")
     field(CALC, "PRINTF(\"%.0f uA\", A)")
