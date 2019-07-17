@@ -370,8 +370,6 @@ pattern
 { 7   }
 }
 
-# Saturation indicators
-
 # "Slow" min/max, based on 5Hz min/max
 global {
     SDEV="CH$(CH)",
@@ -403,6 +401,8 @@ pattern
 { 6,  "MAX", "Max" }
 { 7,  "MAX", "Max" }
 }
+
+# Saturation indicators
 
 global {
     RNGSEL="$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):RNG_CMD",
