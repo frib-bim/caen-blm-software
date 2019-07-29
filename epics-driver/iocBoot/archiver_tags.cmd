@@ -12,6 +12,7 @@ reAddInfo "^.*:DESC_RD$" "archive" "monitor:1.0, retention: inf"
 # Acquisition Ranges
 reAddInfo "^.*:EEPROM_RNG[01]_RD$" "archive" "monitor:1.0, retention: 12mo"
 reAddInfo "^.*:EMS_D.*[_:]AVG_RD$" "archive" "monitor:2.0, retention: 3mo"
+reAddInfo "^.*:PM_D.*[_:]AVG_RD$" "archive" "monitor:2.0, retention: 3mo"
 # EEPROM / FPGA gain / offset
 reAddInfo "^.*:RNG[01]_(EE|FPGA)(GAIN|OFST)_RD$" "archive" "monitor:1.0, retention: inf"
 reAddInfo "^.*:RNG_CMD$" "archive" "monitor:1.0, retention: 12mo"
@@ -26,4 +27,5 @@ reAddInfo "^.*:TRIP_LAVG(LO|HI|TIME)(EN_CMD|(_CSET|_RSTS))$" "archive" "monitor:
 reAddInfo "^.*:TRIP_RSTS$" "archive" "monitor:1.0, retention: inf"
 reAddInfo "^.*_CTRL:ISRMAX_RD$" "archive" "monitor:1.0, retention: inf"
 reAddInfo "^.*_CTRL:PLSCNT_RD$" "archive" "monitor:1.0, retention: inf"
+reAddInfo "^.*_D.*:.*PKAVG_RD$" "archive" "monitor:0.1, retention: 12mo"
 reAddInfo "^.*_FPS:NOK_RSTS$" "archive" "monitor:1.0, retention: inf"
