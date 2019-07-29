@@ -11,6 +11,8 @@ epicsEnvSet("DIAGSTD_DISABLE_STATS", "YES")
 dbLoadDatabase("../../dbd/pico.dbd",0,0)
 pico_registerRecordDeviceDriver(pdbbase)
 
+var reToolsVerbose 0
+
 # slot numbers from /sys/bus/pci/slots/*/address
 createPICO8("PICO11", "/dev/amc_pico_0000:0a:00.0")
 
@@ -23,17 +25,15 @@ dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA02,NAME=PICO11")
 # (SYS):(D)_CHX:Y_Z -> (A)Y_Z
 
 # Slot 11
-reAddAlias "DIAG_MTCA02:PICO11_CH0:(.*)" "BPM_DBG:BUT1:$1"
-reAddAlias "DIAG_MTCA02:PICO11_CH1:(.*)" "BPM_DBG:BUT2:$1"
-reAddAlias "DIAG_MTCA02:PICO11_CH2:(.*)" "BPM_DBG:CH2:$1"
-reAddAlias "DIAG_MTCA02:PICO11_CH3:(.*)" "BPM_DBG:CH3:$1"
-reAddAlias "DIAG_MTCA02:PICO11_CH4:(.*)" "BPM_DBG:BUT3:$1"
-reAddAlias "DIAG_MTCA02:PICO11_CH5:(.*)" "BPM_DBG:BUT4:$1"
-reAddAlias "DIAG_MTCA02:PICO11_CH6:(.*)" "BPM_DBG:CH6:$1"
-reAddAlias "DIAG_MTCA02:PICO11_CH7:(.*)" "BPM_DBG:CH7:$1"
+reAddAlias "DIAG_MTCA02:PICO11_CH0:(.*)" "LS1_CA01:HMR_D0001:$1"
+reAddAlias "DIAG_MTCA02:PICO11_CH1:(.*)" "LS1_CA01:HMR_D0002:$1"
+reAddAlias "DIAG_MTCA02:PICO11_CH2:(.*)" "LS1_CA01:HMR_D0003:$1"
+reAddAlias "DIAG_MTCA02:PICO11_CH3:(.*)" "LS1_CA01:HMR_D0004:$1"
+reAddAlias "DIAG_MTCA02:PICO11_CH4:(.*)" "LS1_CA01:HMR_D0005:$1"
+reAddAlias "DIAG_MTCA02:PICO11_CH5:(.*)" "LS1_CA01:HMR_D0006:$1"
+reAddAlias "DIAG_MTCA02:PICO11_CH6:(.*)" "LS1_CA01:HMR_D0007:$1"
+reAddAlias "DIAG_MTCA02:PICO11_CH7:(.*)" "LS1_CA01:HMR_D0008:$1"
 
-
-< $(TOP)/iocBoot/archiver_chan_tags.cmd
 
 ## Start the PICO python helper script
 system "python3 ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA02:PICO11 &"

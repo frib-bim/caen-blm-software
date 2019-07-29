@@ -11,6 +11,8 @@ epicsEnvSet("DIAGSTD_DISABLE_STATS", "YES")
 dbLoadDatabase("../../dbd/pico.dbd",0,0)
 pico_registerRecordDeviceDriver(pdbbase)
 
+var reToolsVerbose 0
+
 # slot numbers from /sys/bus/pci/slots/*/address
 {%- for card_num, card_data in mtca_data.cards|dictsort %}
 createPICO8("PICO{{ card_num }}", "/dev/amc_pico_0000:{{ card_data.addr }}:00.0")
@@ -31,8 +33,6 @@ dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA{{ mtca_num }},NAME=PI
 reAddAlias "DIAG_MTCA{{ mtca_num }}:PICO{{ card_num }}_CH{{ chan_num }}:(.*)" "{{ chan_data.dev }}$1"
   {%- endfor %}
 {% endfor %}
-
-< $(TOP)/iocBoot/archiver_chan_tags.cmd
 
 ## Start the PICO python helper script
 system "python3 ../../iocBoot/scripts/blm_processing_thread.py {% for card_num, d in mtca_data.cards|dictsort %}DIAG_MTCA{{ mtca_num }}:PICO{{ card_num }} {% endfor -%} &"

@@ -11,6 +11,8 @@ epicsEnvSet("DIAGSTD_DISABLE_STATS", "YES")
 dbLoadDatabase("../../dbd/pico.dbd",0,0)
 pico_registerRecordDeviceDriver(pdbbase)
 
+var reToolsVerbose 0
+
 # slot numbers from /sys/bus/pci/slots/*/address
 createPICO8("PICO8", "/dev/amc_pico_0000:0d:00.0")
 createPICO8("PICO9", "/dev/amc_pico_0000:07:00.0")
@@ -50,8 +52,6 @@ reAddAlias "DIAG_MTCA10:PICO10_CH4:(.*)" "FS1_BMS:PM_D2703:A_$1"
 reAddAlias "DIAG_MTCA10:PICO10_CH5:(.*)" "FS1_BMS:PM_D2703:B_$1"
 reAddAlias "DIAG_MTCA10:PICO10_CH6:(.*)" "FS1_BMS:PM_D2703:C_$1"
 
-
-< $(TOP)/iocBoot/archiver_chan_tags.cmd
 
 ## Start the PICO python helper script
 system "python3 ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA10:PICO8 DIAG_MTCA10:PICO9 DIAG_MTCA10:PICO10 &"
