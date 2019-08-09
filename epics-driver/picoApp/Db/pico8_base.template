@@ -623,9 +623,12 @@ record(bo, "$(SYS)_$(SSYS):$(DEV)_FPS:RST_CSET") {
     info(autosaveFields_pass0, "RVAL")
 }
 
-record(longout, "$(SYS)_$(SSYS):$(DEV)_FPS:DTASEL_CSET") {
+record(longout, "$(SYS)_$(SSYS):$(DEV):HWDEC_CSET") {
+    field(DESC, "Hardware decimation by 2^N, for triggered acqusitions")
     field(DTYP, "Pico8 User Reg UInt32")
     field(OUT , "@$(NAME) offset=0x30048")
+    field(HIGH, "15")
+    field(VAL , "0")
     info(autosaveFields_pass0, "VAL")
 }
 
