@@ -627,7 +627,7 @@ record(longout, "$(SYS)_$(SSYS):$(DEV)_CTRL:HWDEC_CSET") {
     field(DESC, "Hardware decimation by 2^N, for trig. acq.")
     field(DTYP, "Pico8 User Reg UInt32")
     field(OUT , "@$(NAME) offset=0x30048")
-    field(DRVH, "15")
+    field(DRVH, "12")
     field(DRVL, "0")
     field(VAL , "0")
     info(autosaveFields_pass0, "VAL")
