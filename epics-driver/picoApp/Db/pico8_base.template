@@ -638,6 +638,7 @@ record(calc, "$(SYS)_$(SSYS):$(DEV)_CTRL:HWDEC_RD") {
     field(INPA, "$(SYS)_$(SSYS):$(DEV)_CTRL:HWDEC_CSET CP")
     field(CALC, "1e6 / (2^A)")
     field(EGU,  "Hz")
+    field(PREC, "2")
 }
 
 record(fanout, "$(SYS)_$(SSYS):$(DEV)_FPS:FPSSTS_Fout_") {
