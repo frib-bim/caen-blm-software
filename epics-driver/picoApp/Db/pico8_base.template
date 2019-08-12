@@ -623,13 +623,21 @@ record(bo, "$(SYS)_$(SSYS):$(DEV)_FPS:RST_CSET") {
     info(autosaveFields_pass0, "RVAL")
 }
 
-record(longout, "$(SYS)_$(SSYS):$(DEV):HWDEC_CSET") {
-    field(DESC, "Hardware decimation by 2^N, for triggered acqusitions")
+record(longout, "$(SYS)_$(SSYS):$(DEV)_CTRL:HWDEC_CSET") {
+    field(DESC, "Hardware decimation by 2^N, for trig. acq.")
     field(DTYP, "Pico8 User Reg UInt32")
     field(OUT , "@$(NAME) offset=0x30048")
-    field(HIGH, "15")
+    field(DRVH, "15")
+    field(DRVL, "0")
     field(VAL , "0")
     info(autosaveFields_pass0, "VAL")
+}
+
+record(calc, "$(SYS)_$(SSYS):$(DEV)_CTRL:HWDEC_RD") {
+    field(DESC, "Acquisition freq after hw dec")
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_CTRL:HWDEC_CSET CP")
+    field(CALC, "1e6 / (2^A)")
+    field(EGU,  "Hz")
 }
 
 record(fanout, "$(SYS)_$(SSYS):$(DEV)_FPS:FPSSTS_Fout_") {
