@@ -641,6 +641,22 @@ record(calc, "$(SYS)_$(SSYS):$(DEV)_CTRL:HWDEC_RD") {
     field(PREC, "2")
 }
 
+record(acalcout, "$(SYS)_$(SSYS):$(DEV)_CTRL:IX_CALC") {
+    field(DESC, "X axis for raw acquisitions")
+    field(NELM, "$(NELM)")
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_CTRL:HWDEC_RD")
+    field(INAA, "$(SYS)_$(SSYS):$(DEV)_CH0:I_RD CP")
+    field(CALC, "IX/A")
+    field(OUT,  "$(SYS)_$(SSYS):$(DEV)_CTRL:IX_RD PP")
+}
+
+record(waveform, "$(SYS)_$(SSYS):$(DEV)_CTRL:IX_RD") {
+    field(DESC, "X axis for raw acquisitions")
+    field(EGU,  "sec")
+    field(FTVL, "DOUBLE")
+    field(NELM, "$(NELM)")
+}
+
 record(fanout, "$(SYS)_$(SSYS):$(DEV)_FPS:FPSSTS_Fout_") {
     field(LNK1, "$(SYS)_$(SSYS):$(DEV)_FPS:FRZ_RSTS")
     field(LNK2, "$(SYS)_$(SSYS):$(DEV)_FPS:NOKLTH_RSTS")
