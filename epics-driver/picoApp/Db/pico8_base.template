@@ -5,7 +5,7 @@
 #
 record(stringin, "$(SYS)_$(SSYS):$(DEV)_CTRL:ioc_version") {
     field(PINI, "YES")
-    field(VAL, "vBC04 (2019-Jun)")
+    field(VAL, "vBC04 (2019-Aug)")
 }
 
 record(waveform, "$(SYS)_$(SSYS):$(DEV)_CTRL:DESC_RD") {
