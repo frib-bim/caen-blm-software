@@ -19,8 +19,6 @@ createPICO8("PICO8", "/dev/amc_pico_0000:0d:00.0")
 # (SYS):(D)_CHX:Y_Z
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA07,NAME=PICO8")
 
-< $(TOP)/iocBoot/archiver_tags.cmd
-
 # record name aliases
 # (SYS):(D)_CHX:Y_Z -> (A)Y_Z
 
@@ -31,6 +29,8 @@ reAddAlias "DIAG_MTCA07:PICO8_CH2:(.*)" "LS1_CB09:ND_D1760:$1"
 reAddAlias "DIAG_MTCA07:PICO8_CH3:(.*)" "LS1_CB11:ND_D1908:$1"
 reAddAlias "DIAG_MTCA07:PICO8_CH4:(.*)" "LS1_BTS:ND_D2076:$1"
 
+
+< $(TOP)/iocBoot/archiver_tags.cmd
 
 ## Start the PICO python helper script
 system "python3 ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA07:PICO8 &"

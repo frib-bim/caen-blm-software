@@ -38,6 +38,8 @@ reAddAlias "DIAG_MTCA99:PICO3_CH0:(.*)" "FE_RFQ:ND_D1025:$1"
 # Ion chamber
 reAddAlias "DIAG_MTCA99:PICO3_CH1:(.*)" "FS1_STRL:IC_D2233:$1"
 
+< $(TOP)/iocBoot/archiver_tags.cmd
+
 var picoSlewLimit 9e99
 
 # PICO python helper script
