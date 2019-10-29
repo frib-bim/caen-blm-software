@@ -36,7 +36,7 @@ class PicoChannel:
         return 'PicoCh(%s)' % (self.dev,)
 
 wb = xlrd.open_workbook(source, on_demand=True)
-racks = [sheet for sheet in wb.sheet_names() if 'CAB_N' in sheet]
+racks = [sheet for sheet in wb.sheet_names() if '_N' in sheet]
 mtca = {}
 
 def get_mtca_map():
@@ -50,7 +50,6 @@ def get_mtca_map():
                 'Device Type', 'Function',
                 'MTCA Chassis', 'MTCA Slot', 'PICO Port')
 
-        rack = '_'.join(rack.split('_R1624CAB_'))
         # All columns must be present in this sheet
         if not set(cols).issubset(set(header)):
             continue
@@ -66,6 +65,8 @@ def get_mtca_map():
             chassis = '%02d' % int(chassis)
             slot = int(slot)
             ch = int(port[2])
+            if dev_type in ("bias","ground"):
+                continue
 
             m = mtca.get(chassis)
             if m is None:
