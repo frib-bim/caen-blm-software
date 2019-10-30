@@ -197,6 +197,8 @@ record(longout, "$(SYS)_$(SSYS):$(DEV)_CTRL:PTRG_CSET") {
     field(OUT , "@$(NAME)")
     field(VAL , "0")
     field(PINI, "YES")
+    field(DRVL, "0")
+    field(DRVH, "1023")
     info(autosaveFields_pass0, "VAL")
 }
 
