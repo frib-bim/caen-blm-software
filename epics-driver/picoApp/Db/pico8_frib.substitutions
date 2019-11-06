@@ -71,7 +71,7 @@ pattern
 }
 
 # Per channel 100Hz data
-global { PHAS="-3" }
+global { PHAS="-5" }
 
 file "pico8_cap_chan.template" {
 pattern
