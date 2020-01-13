@@ -19,7 +19,6 @@ createPICO8("PICO4", "/dev/amc_pico_0000:06:00.0")
 createPICO8("PICO5", "/dev/amc_pico_0000:09:00.0")
 createPICO8("PICO6", "/dev/amc_pico_0000:0b:00.0")
 createPICO8("PICO7", "/dev/amc_pico_0000:0f:00.0")
-createPICO8("PICO8", "/dev/amc_pico_0000:0d:00.0")
 
 # (SYS):(D)_CHX:Y_Z
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA15,NAME=PICO3")
@@ -27,7 +26,6 @@ dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA15,NAME=PICO4")
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA15,NAME=PICO5")
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA15,NAME=PICO6")
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA15,NAME=PICO7")
-dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA15,NAME=PICO8")
 
 # record name aliases
 # (SYS):(D)_CHX:Y_Z -> (A)Y_Z
@@ -65,21 +63,19 @@ reAddAlias "DIAG_MTCA15:PICO6_CH5:(.*)" "FS2_BTS:PM_D4009:B_$1"
 reAddAlias "DIAG_MTCA15:PICO6_CH6:(.*)" "FS2_BTS:PM_D4009:C_$1"
 
 # Slot 7
-reAddAlias "DIAG_MTCA15:PICO7_CH0:(.*)" "FS2_BBS:IC_D4055:$1"
+reAddAlias "DIAG_MTCA15:PICO7_CH0:(.*)" "FS2_BBS:IC_D3979:$1"
 reAddAlias "DIAG_MTCA15:PICO7_CH1:(.*)" "FS2_BBS:IC_D4018:$1"
-reAddAlias "DIAG_MTCA15:PICO7_CH2:(.*)" "FS2_BBS:IC_D3979:$1"
-reAddAlias "DIAG_MTCA15:PICO7_CH4:(.*)" "FS2_BTS:IC_D4018:$1"
-reAddAlias "DIAG_MTCA15:PICO7_CH5:(.*)" "FS2_BTS:IC_D3940:$1"
-reAddAlias "DIAG_MTCA15:PICO7_CH6:(.*)" "FS2_BBS:IC_D4102:$1"
-
-# Slot 8
-reAddAlias "DIAG_MTCA15:PICO8_CH2:(.*)" "FS2_BTS:IC_D4019:$1"
+reAddAlias "DIAG_MTCA15:PICO7_CH2:(.*)" "FS2_BBS:IC_D4055:$1"
+reAddAlias "DIAG_MTCA15:PICO7_CH3:(.*)" "FS2_BBS:IC_D4102:$1"
+reAddAlias "DIAG_MTCA15:PICO7_CH4:(.*)" "FS2_BTS:IC_D3940:$1"
+reAddAlias "DIAG_MTCA15:PICO7_CH5:(.*)" "FS2_BTS:IC_D4018:$1"
+reAddAlias "DIAG_MTCA15:PICO7_CH6:(.*)" "FS2_BTS:IC_D4019:$1"
 
 
 < $(TOP)/iocBoot/archiver_tags.cmd
 
 ## Start the PICO python helper script
-system "python3 ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA15:PICO3 DIAG_MTCA15:PICO4 DIAG_MTCA15:PICO5 DIAG_MTCA15:PICO6 DIAG_MTCA15:PICO7 DIAG_MTCA15:PICO8 &"
+system "python3 ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA15:PICO3 DIAG_MTCA15:PICO4 DIAG_MTCA15:PICO5 DIAG_MTCA15:PICO6 DIAG_MTCA15:PICO7 &"
 
 iocInit()
 
@@ -89,5 +85,4 @@ dbpf "DIAG_MTCA15:PICO4_FPS:SLT_CSET", "4"
 dbpf "DIAG_MTCA15:PICO5_FPS:SLT_CSET", "5"
 dbpf "DIAG_MTCA15:PICO6_FPS:SLT_CSET", "6"
 dbpf "DIAG_MTCA15:PICO7_FPS:SLT_CSET", "7"
-dbpf "DIAG_MTCA15:PICO8_FPS:SLT_CSET", "8"
 
