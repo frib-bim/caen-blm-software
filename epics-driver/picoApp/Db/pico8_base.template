@@ -5,7 +5,7 @@
 #
 record(stringin, "$(SYS)_$(SSYS):$(DEV)_CTRL:ioc_version") {
     field(PINI, "YES")
-    field(VAL, "vBC04 (2019-Aug)")
+    field(VAL, "vBC04 (2020-Jan)")
 }
 
 record(waveform, "$(SYS)_$(SSYS):$(DEV)_CTRL:DESC_RD") {
@@ -507,21 +507,24 @@ record(longout, "$(SYS)_$(SSYS):$(DEV)_CTRL:ISRMAXCLR_CMD") {
     field(VAL , "0")
 }
 
-record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:COMM_SUC") {
-    field(DESC, "# of EVR comm ok")
+record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:EVRCOMM_") {
     field(DTYP, "Pico8 User Reg UInt32")
-    field(INP , "@$(NAME) offset=0x3004c mask=0xffff0000")
+    field(INP , "@$(NAME) offset=0x3004c")
     field(SCAN, "1 second")
     field(FLNK, "$(SYS)_$(SSYS):$(DEV)_CTRL:COMM_ATT")
 }
-
 record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:COMM_ATT") {
     field(DESC, "# of EVR comm attempts")
-    field(DTYP, "Pico8 User Reg UInt32")
-    field(INP , "@$(NAME) offset=0x3004c mask=0x0000ffff")
+    field(INPA , "$(P):EVRCOMM_")
+    field(CALC , "A & 0xFFFF")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_CTRL:COMM_SUC")
+}
+record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:COMM_SUC") {
+    field(DESC, "# of EVR comm ok")
+    field(INPA , "$(P):EVRCOMM_")
+    field(CALC , "(A>>16) & 0xFFFF")
     field(FLNK, "$(SYS)_$(SSYS):$(DEV)_CTRL:EVRCOMM_RSTS")
 }
-
 record(calc, "$(SYS)_$(SSYS):$(DEV)_CTRL:EVRCOMM_RSTS") {
     field(INPA , "$(SYS)_$(SSYS):$(DEV)_CTRL:COMM_ATT")
     field(INPB , "$(SYS)_$(SSYS):$(DEV)_CTRL:COMM_SUC")

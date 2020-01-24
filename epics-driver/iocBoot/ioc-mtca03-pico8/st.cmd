@@ -16,10 +16,13 @@ var reToolsVerbose 0
 # slot numbers from /sys/bus/pci/slots/*/address
 createPICO8("PICO3", "/dev/amc_pico_0000:08:00.0")
 createPICO8("PICO4", "/dev/amc_pico_0000:06:00.0")
+createPICO8("PICO5", "/dev/amc_pico_0000:09:00.0")
 
 # (SYS):(D)_CHX:Y_Z
+# FC_D1224 (PICO4 CH0, 0-based) has 1/8 current divider
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA03,NAME=PICO3")
-dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA03,NAME=PICO4")
+dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA03,NAME=PICO4,ASLO0=8.0e6")
+dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA03,NAME=PICO5")
 
 # record name aliases
 # (SYS):(D)_CHX:Y_Z -> (A)Y_Z
@@ -34,20 +37,23 @@ reAddAlias "DIAG_MTCA03:PICO3_CH5:(.*)" "LS3_CD01:IC_D4385:$1"
 reAddAlias "DIAG_MTCA03:PICO3_CH6:(.*)" "LS3_CD03:IC_D4503:$1"
 
 # Slot 4
-reAddAlias "DIAG_MTCA03:PICO4_CH0:(.*)" "FS2_BMS:FC_D4253:$1"
-reAddAlias "DIAG_MTCA03:PICO4_CH1:(.*)" "LS1_WA03:FC_D1224:$1"
+reAddAlias "DIAG_MTCA03:PICO4_CH0:(.*)" "LS1_WA03:FC_D1224:$1"
 reAddAlias "DIAG_MTCA03:PICO4_CH4:(.*)" "FS2_BMS:HMR_D4328:$1"
 reAddAlias "DIAG_MTCA03:PICO4_CH5:(.*)" "LS3_WD04:HMR_D4576:$1"
+
+# Slot 5
+reAddAlias "DIAG_MTCA03:PICO5_CH0:(.*)" "FS2_BMS:FC_D4253:$1"
 
 
 < $(TOP)/iocBoot/archiver_tags.cmd
 
 ## Start the PICO python helper script
-system "python3 ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA03:PICO3 DIAG_MTCA03:PICO4 &"
+system "python3 ../../iocBoot/scripts/blm_processing_thread.py DIAG_MTCA03:PICO3 DIAG_MTCA03:PICO4 DIAG_MTCA03:PICO5 &"
 
 iocInit()
 
 ## Set PICO card AMC slot numbers on startup for each card.
 dbpf "DIAG_MTCA03:PICO3_FPS:SLT_CSET", "3"
 dbpf "DIAG_MTCA03:PICO4_FPS:SLT_CSET", "4"
+dbpf "DIAG_MTCA03:PICO5_FPS:SLT_CSET", "5"
 
