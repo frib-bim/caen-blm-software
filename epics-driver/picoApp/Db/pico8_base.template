@@ -700,7 +700,7 @@ record(acalcout, "$(SYS)_$(SSYS):$(DEV)_CTRL:IX_CALC") {
     field(DESC, "X axis for raw acquisitions")
     field(NELM, "$(NELM)")
     field(INPA, "$(SYS)_$(SSYS):$(DEV)_CTRL:HWDEC_RD.RVAL")
-    field(INAA, "$(SYS)_$(SSYS):$(DEV)_CH0:I_RD CP")
+    field(INAA, "$(SYS)_$(SSYS):$(DEV)_CH0:I_RD")
     field(CALC, "1000*IX/(1000000/(2^A))")
     field(OUT,  "$(SYS)_$(SSYS):$(DEV)_CTRL:IX_RD PP")
 }
