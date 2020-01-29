@@ -513,15 +513,15 @@ record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:EVRCOMM_") {
     field(SCAN, "1 second")
     field(FLNK, "$(SYS)_$(SSYS):$(DEV)_CTRL:COMM_ATT")
 }
-record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:COMM_ATT") {
+record(calc, "$(SYS)_$(SSYS):$(DEV)_CTRL:COMM_ATT") {
     field(DESC, "# of EVR comm attempts")
-    field(INPA , "$(P):EVRCOMM_")
+    field(INPA , "$(SYS)_$(SSYS):$(DEV)_CTRL:EVRCOMM_")
     field(CALC , "A & 0xFFFF")
     field(FLNK, "$(SYS)_$(SSYS):$(DEV)_CTRL:COMM_SUC")
 }
-record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:COMM_SUC") {
+record(calc, "$(SYS)_$(SSYS):$(DEV)_CTRL:COMM_SUC") {
     field(DESC, "# of EVR comm ok")
-    field(INPA , "$(P):EVRCOMM_")
+    field(INPA , "$(SYS)_$(SSYS):$(DEV)_CTRL:EVRCOMM_")
     field(CALC , "(A>>16) & 0xFFFF")
     field(FLNK, "$(SYS)_$(SSYS):$(DEV)_CTRL:EVRCOMM_RSTS")
 }
@@ -700,7 +700,7 @@ record(acalcout, "$(SYS)_$(SSYS):$(DEV)_CTRL:IX_CALC") {
     field(DESC, "X axis for raw acquisitions")
     field(NELM, "$(NELM)")
     field(INPA, "$(SYS)_$(SSYS):$(DEV)_CTRL:HWDEC_RD.RVAL")
-    field(INAA, "$(SYS)_$(SSYS):$(DEV)_CH0:I_RD CP")
+    field(INAA, "$(SYS)_$(SSYS):$(DEV)_CH0:I_RD")
     field(CALC, "1000*IX/(1000000/(2^A))")
     field(OUT,  "$(SYS)_$(SSYS):$(DEV)_CTRL:IX_RD PP")
 }
