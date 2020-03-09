@@ -78,6 +78,8 @@ reAddAlias "DIAG_MTCA19:PICO8_CH2:(.*)" "BDS_FFS:IC_D5740:$1"
 reAddAlias "DIAG_MTCA19:PICO8_CH3:(.*)" "BDS_FFS:IC_D5765:$1"
 reAddAlias "DIAG_MTCA19:PICO8_CH4:(.*)" "BDS_FFS:IC_D5800:$1"
 reAddAlias "DIAG_MTCA19:PICO8_CH5:(.*)" "BDS_FFS:IC_D5822:$1"
+reAddAlias "DIAG_MTCA19:PICO8_CH6:(.*)" "BDS_BTS:IC_D5661:$1"
+reAddAlias "DIAG_MTCA19:PICO8_CH7:(.*)" "BDS_BTS:IC_D5662:$1"
 
 
 < $(TOP)/iocBoot/archiver_tags.cmd
