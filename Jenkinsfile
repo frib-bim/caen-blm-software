@@ -8,6 +8,7 @@ diag_build([
     deb_packages: [
       'epics-seq-dev',
       'epics-sscan-dev',
+      'epics-tbuf-dev',
       'pico8-dev',
       'pico8-dkms',
       'python3-cothread',
