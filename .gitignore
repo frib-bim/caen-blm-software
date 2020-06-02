@@ -9,3 +9,9 @@
 *.pyc
 *.dbl
 as/
+/bin/
+/db/
+/dbd/
+/lib/
+O.*/
+envPaths

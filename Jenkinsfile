@@ -3,11 +3,12 @@
 diag_build([
   'diagioc_pico8': [
     deployed_as: 'caen-blm-software',
-    top_dir: 'epics-driver',
+    top_dir: '.',
     auto_restart: false,
     deb_packages: [
       'epics-seq-dev',
       'epics-sscan-dev',
+      'epics-tbuf-dev',
       'pico8-dev',
       'pico8-dkms',
       'python3-cothread',

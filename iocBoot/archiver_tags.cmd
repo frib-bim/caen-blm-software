@@ -10,6 +10,12 @@ reAddInfo "^.*:(FC|HMR|IC|ND)_D.*[_:]LAVG_RD$" "archive" "scan:1.0"
 reAddInfo "^.*:(FC|HMR|IC|ND)_D.*[_:]LAVG_RD$" "archive.policy" "3mo"
 reAddInfo "^.*:(FC|HMR|IC|ND)_D.*[_:]STD_RD$" "archive" "scan:1.0"
 reAddInfo "^.*:(FC|HMR|IC|ND)_D.*[_:]STD_RD$" "archive.policy" "3mo"
+# Average with noise
+reAddInfo "^.*:(FC|HMR|IC|ND|EMS|PM)_D.*[_:]AVGNSE_RD$" "archive" "scan:2.0"
+reAddInfo "^.*:(FC|HMR|IC|ND|EMS|PM)_D.*[_:]AVGNSE_RD$" "archive.policy" "3mo"
+# Std Dev with noise
+reAddInfo "^.*:(FC|HMR|IC|ND|EMS|PM)_D.*[_:]STDNSE_RD$" "archive" "scan:2.0"
+reAddInfo "^.*:(FC|HMR|IC|ND|EMS|PM)_D.*[_:]STDNSE_RD$" "archive.policy" "3mo"
 # IOC / Firmware versions
 reAddInfo "^.*:(ioc_version|FFWVER_RD)$" "archive" "monitor:1.0"
 reAddInfo "^.*:(ioc_version|FFWVER_RD)$" "archive.policy" "inf"

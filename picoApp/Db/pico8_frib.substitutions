@@ -322,9 +322,9 @@ pattern
 
 file "tbuf_smart_avg.template" {
 pattern
+{ CH, SIG,   Stat         }
 
 # Averages
-{ CH, SIG,   Stat         }
 { 0,  "AVG", "SpecialAvg" }
 { 1,  "AVG", "SpecialAvg" }
 { 2,  "AVG", "SpecialAvg" }
@@ -354,6 +354,31 @@ pattern
 { 6,  "PKAVG", "MaskedAvg" }
 { 7,  "PKAVG", "MaskedAvg" }
 
+}
+
+file "tbuf_smart_avg.template" {
+pattern
+{ CH, SIG,      SRC,                                       Stat                  }
+
+# Averages with noise
+{ 0,  "AVGNSE", "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):AVGF_RD", "SpecialAvgWithNoise" }
+{ 1,  "AVGNSE", "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):AVGF_RD", "SpecialAvgWithNoise" }
+{ 2,  "AVGNSE", "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):AVGF_RD", "SpecialAvgWithNoise" }
+{ 3,  "AVGNSE", "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):AVGF_RD", "SpecialAvgWithNoise" }
+{ 4,  "AVGNSE", "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):AVGF_RD", "SpecialAvgWithNoise" }
+{ 5,  "AVGNSE", "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):AVGF_RD", "SpecialAvgWithNoise" }
+{ 6,  "AVGNSE", "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):AVGF_RD", "SpecialAvgWithNoise" }
+{ 7,  "AVGNSE", "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):AVGF_RD", "SpecialAvgWithNoise" }
+
+# Stddev with noise
+{ 0,  "STDNSE", "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):STDF_RD", "MaskedAvgWithNoise" }
+{ 1,  "STDNSE", "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):STDF_RD", "MaskedAvgWithNoise" }
+{ 2,  "STDNSE", "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):STDF_RD", "MaskedAvgWithNoise" }
+{ 3,  "STDNSE", "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):STDF_RD", "MaskedAvgWithNoise" }
+{ 4,  "STDNSE", "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):STDF_RD", "MaskedAvgWithNoise" }
+{ 5,  "STDNSE", "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):STDF_RD", "MaskedAvgWithNoise" }
+{ 6,  "STDNSE", "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):STDF_RD", "MaskedAvgWithNoise" }
+{ 7,  "STDNSE", "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):STDF_RD", "MaskedAvgWithNoise" }
 }
 
 # Records for STD and AVGPK
