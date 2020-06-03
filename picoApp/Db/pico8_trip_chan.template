@@ -301,14 +301,6 @@ record(longin, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_PRE_RSTS") {
 # Trip Long Average
 #
 
-# Push to FIFO
-record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):LAVGPSH_CMD_") {
-    field(DTYP, "TBUF Push Sample")
-    field(OMSL, "closed_loop")
-    field(DOL , "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):AVGF_RD MS CP")
-    field(OUT , "@$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):LAVG")
-}
-
 # Settings
 
 record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGTIME_CSET") {
@@ -318,7 +310,7 @@ record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGTIME_CSET") {
     field(LINR, "LINEAR")
     field(EGU,  "s")
     field(PREC, "2")
-    field(DRVL, "0.01")
+    field(DRVL, "0.2")
     field(DRVH, "10")
     field(PINI, "YES")
     field(VAL,  "1")
@@ -326,32 +318,7 @@ record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGTIME_CSET") {
     info(autosaveFields_pass0, "VAL")
 }
 
-record(longout, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):LAVGNSAMP_CSET") {
-    field(DTYP, "TBUF Set Num Samples")
-    field(OUT , "@$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):LAVG")
-}
-
-record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):LAVGPRD_CSET") {
-    field(DTYP, "TBUF Set Period")
-    field(OUT , "@$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):LAVG")
-    field(VAL , "0.2")
-    field(PREC, "2")
-    field(PINI, "YES")
-}
-
-# Aggregate
-record(ai, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):LAVG_RD") {
-    field(DTYP, "TBUF Get Sample")
-    field(INP , "@$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):LAVG Average")
-    field(SCAN, "I/O Intr")
-    field(LINR, "LINEAR")
-    field(ASLO, "")
-    field(AOFF, "")
-    field(ESLO, "")
-    field(EOFF, "")
-    field(PREC, "")
-    field(EGU , "uA")
-    field(TSE , "-2")
+record(longin, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):LAVGNSAMP_CSET") {
 }
 
 record(ao, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):TRIP_LAVGLO_CSET") {
