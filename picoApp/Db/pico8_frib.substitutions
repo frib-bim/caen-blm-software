@@ -141,29 +141,6 @@ pattern
 { 7  }
 }
 
-#
-# Long Average
-#
-
-global {
-    SDEV="CH$(CH)", SIG="LAVG", PREC="6", WEIGHT="1",
-    SRC="$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):AVGF_RD",
-    NELM="$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):LAVGNSAMP_CSET",
-    SBUF_LEN="20", PHAS="0",
-}
-
-file "tbuf.template" {
-pattern
-{ CH, SIG,    Stat    }
-{ 0,  "LAVG",  "Min"   }
-{ 1,  "LAVG",  "Min"   }
-{ 2,  "LAVG",  "Min"   }
-{ 3,  "LAVG",  "Min"   }
-{ 4,  "LAVG",  "Min"   }
-{ 5,  "LAVG",  "Min"   }
-{ 6,  "LAVG",  "Min"   }
-{ 7,  "LAVG",  "Min"   }
-}
 
 #
 # EEPROM and FPGA records
@@ -475,3 +452,26 @@ pattern
 { 7   }
 }
 
+#
+# Long Average
+#
+
+global {
+    SDEV="CH$(CH)", SIG="LAVG", PREC="6", WEIGHT="1",
+    SRC="$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):AVGF_RD",
+    NELM="$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):LAVGNSAMP_CSET",
+    SBUF_LEN="20", PHAS="0", SCAN="Event"
+}
+
+file "tbuf.template" {
+pattern
+{ CH, SIG,     Stat        }
+{ 0,  "LAVG",  "Average"   }
+{ 1,  "LAVG",  "Average"   }
+{ 2,  "LAVG",  "Average"   }
+{ 3,  "LAVG",  "Average"   }
+{ 4,  "LAVG",  "Average"   }
+{ 5,  "LAVG",  "Average"   }
+{ 6,  "LAVG",  "Average"   }
+{ 7,  "LAVG",  "Average"   }
+}
