@@ -11,6 +11,7 @@ epicsEnvSet("DIAGSTD_DISABLE_STATS", "YES")
 dbLoadDatabase("../../dbd/pico.dbd",0,0)
 pico_registerRecordDeviceDriver(pdbbase)
 
+callbackParallelThreads 0 Low
 var reToolsVerbose 0
 
 # slot numbers from /sys/bus/pci/slots/*/address
