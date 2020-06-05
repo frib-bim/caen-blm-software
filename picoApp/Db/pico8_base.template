@@ -779,3 +779,31 @@ record(longin, "$(SYS)_$(SSYS):$(DEV)_FPS:NOK_TSTAMP_SUB") {
     field(INP , "@$(NAME) offset=0x30064")
 }
 
+record(ai, "$(SYS)_$(SSYS):$(DEV)_CTRL:100HZSTRT_RD") {
+    field(DESC, "100Hz event start timestamp")
+    field(DTYP, "Soft Timestamp")
+    field(SCAN, "Event")
+    field(EVNT, "$(NAME)_100HZ")
+    field(PHAS, "-100")
+}
+
+record(ai, "$(SYS)_$(SSYS):$(DEV)_CTRL:100HZEND_RD") {
+    field(DESC, "100Hz event end timestamp")
+    field(DTYP, "Soft Timestamp")
+    field(SCAN, "Event")
+    field(EVNT, "$(NAME)_100HZ")
+    field(PHAS, "100")
+    field(FLNK, "$(SYS)_$(SSYS):$(DEV)_CTRL:100HZPROC_RD")
+}
+
+record(calc, "$(SYS)_$(SSYS):$(DEV)_CTRL:100HZPROC_RD") {
+    field(DESC, "100Hz event proc time")
+    field(INPA, "$(SYS)_$(SSYS):$(DEV)_CTRL:100HZSTRT_RD")
+    field(INPB, "$(SYS)_$(SSYS):$(DEV)_CTRL:100HZEND_RD")
+    field(CALC, "1000*(B - A)")
+    field(PREC, "6")
+    field(EGU,  "ms")
+    field(HIGH, "5")
+    field(HIHI, "7.5")
+}
+
