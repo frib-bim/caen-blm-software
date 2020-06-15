@@ -2,6 +2,7 @@ import xlrd
 import os
 from collections import defaultdict
 from jinja2 import Environment, FileSystemLoader
+import sys
 
 source = 'Diagnostics Rack Wiring.xlsx'
 
@@ -92,6 +93,14 @@ mtca_map = get_mtca_map()
 
 env = Environment(loader=FileSystemLoader('./'))
 template = env.get_template('template.st.cmd')
+
+if '--debug' in sys.argv:
+    for mtca_num, mtca_data in sorted(mtca_map.items()):
+        print(f'MTCA {mtca_num}')
+        for card, card_data in sorted(mtca_data.cards.items()):
+            print(f'  Card {card}')
+            for ch, ch_data in sorted(card_data.chans.items()):
+                print(f'    Ch {ch}: {ch_data}')
 
 for mtca_num, mtca_data in mtca_map.items():
     target = '../iocBoot/ioc-mtca%s-pico8/st.cmd' % mtca_num
