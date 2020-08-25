@@ -38,6 +38,12 @@ reAddAlias "DIAG_MTCA99:PICO3_CH0:(.*)" "FE_RFQ:ND_D1025:$1"
 # Ion chamber
 reAddAlias "DIAG_MTCA99:PICO3_CH1:(.*)" "FS1_STRL:IC_D2233:$1"
 
+# Faraday Cups
+reAddAlias "DIAG_MTCA99:PICO3_CH2:(.*)" "FE_LEBT:FC_D0796:$1"
+reAddAlias "DIAG_MTCA99:PICO3_CH3:(.*)" "FE_LEBT:FC_D0814:$1"
+reAddAlias "DIAG_MTCA99:PICO3_CH4:(.*)" "FE_LEBT:FC_D0977:$1"
+reAddAlias "DIAG_MTCA99:PICO3_CH5:(.*)" "FE_LEBT:FC_D0998:$1"
+
 < $(TOP)/iocBoot/archiver_tags.cmd
 
 var picoSlewLimit 9e99
