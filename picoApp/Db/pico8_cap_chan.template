@@ -7,6 +7,7 @@ record(ai, "$(SYS)_$(SSYS):$(DEV)_$(SDEVCH):$(SIG)F_RD") {
     field(TSE , "$(TSEL=-2)")
     field(MDEL, "$(MDEL=-1)")
     field(PHAS, "$(PHAS=)")
+    field(PRIO, "$(PRIO=)")
     field(FLNK, "$(FLNK=)")
 
     field(LINR, "$(LINR=LINEAR)")
