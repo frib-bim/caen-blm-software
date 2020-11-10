@@ -7,7 +7,6 @@ epicsEnvSet("EPICS_CA_MAX_ARRAY_BYTES","10000000")
 dbLoadDatabase("../../dbd/pico.dbd",0,0)
 pico_registerRecordDeviceDriver(pdbbase)
 
-callbackParallelThreads 0 Low
 var reToolsVerbose 0
 
 # slot numbers from /sys/bus/pci/slots/*/address
