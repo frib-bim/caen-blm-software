@@ -4,7 +4,7 @@ PICO8 IOC Admin Guide
 Source code is found in
 
 ```
-git clone https://<username>@stash.nscl.msu.edu/scm/bcm/caen-blm-software.git
+git clone https://<username>@stash.nscl.msu.edu/scm/diag/caen-blm-software.git
 ```
 
 Two branches are found in this repository 'master' and 'devel'.
