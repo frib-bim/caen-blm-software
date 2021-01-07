@@ -45,9 +45,9 @@ reAddAlias "DIAG_MTCA99:PICO3_CH4:(.*)" "FE_LEBT:FC_D0977:$1"
 reAddAlias "DIAG_MTCA99:PICO3_CH5:(.*)" "FE_LEBT:FC_D0998:$1"
 
 # Profile Monitors
-reAddAlias "DIAG_MTCA01:PICO5_CH0:(.*)" "FE_LEBT:PM_D0783:A_$1"
-reAddAlias "DIAG_MTCA01:PICO5_CH1:(.*)" "FE_LEBT:PM_D0783:B_$1"
-reAddAlias "DIAG_MTCA01:PICO5_CH2:(.*)" "FE_LEBT:PM_D0783:C_$1"
+reAddAlias "DIAG_MTCA99:PICO3_CH0:(.*)" "FE_LEBT:PM_D0783:A_$1"
+reAddAlias "DIAG_MTCA99:PICO3_CH1:(.*)" "FE_LEBT:PM_D0783:B_$1"
+reAddAlias "DIAG_MTCA99:PICO3_CH2:(.*)" "FE_LEBT:PM_D0783:C_$1"
 
 < $(TOP)/iocBoot/archiver_tags.cmd
 
