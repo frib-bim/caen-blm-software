@@ -20,7 +20,7 @@ createPICO8("PICO9", "/dev/amc_pico_0000:07:00.0")
 
 # (SYS):(D)_CHX:Y_Z
 # FC_D2634 (PICO7 CH4, 0-based) has 1/8 current divider (calibrated value)
-dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA11,NAME=PICO7,ASLO4=7.84e6")
+dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA11,NAME=PICO7,ASLO4=7.84e6")   # Manual edit for 1/8 divider
 dbLoadRecords("../../db/pico8_frib.db","SYS=DIAG,SSYS=MTCA11,NAME=PICO9")
 
 # record name aliases
