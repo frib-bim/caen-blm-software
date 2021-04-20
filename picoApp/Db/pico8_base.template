@@ -417,6 +417,22 @@ record(longin, "$(SYS)_$(SSYS):$(DEV)_CTRL:CAPCNT_RD") {
     field(SCAN, "I/O Intr")
 }
 
+### Monitor for acquisition lockup error (CAPCNT frozen)
+record(calc,"$(SYS)_$(SSYS):$(DEV)_CTRL:ERRCHK_RSTS")
+{
+    field(INPA,"$(SYS)_$(SSYS):$(DEV)_CTRL:CAPCNT_RD MS")
+    field(INPB,"$(SYS)_$(SSYS):$(DEV)_CTRL:ERRCHK_RSTS.LA")
+    field(CALC,"A = B ? 1 : 0")
+    field(SCAN,"2 second")
+}
+record(bi,"$(SYS)_$(SSYS):$(DEV)_CTRL:CAPERR_RSTS")
+{
+    field(ONAM,"CAP_ERROR")
+    field(ZNAM,"CAP_OK")
+    field(INP,"$(SYS)_$(SSYS):$(DEV)_CTRL:ERRCHK_RSTS CP")
+}
+### End acquisition lockup error check
+
 record(waveform, "$(SYS)_$(SSYS):$(DEV)_CTRL:CAPMSG_RD") {
     field(DTYP, "Pico8 Capture Message")
     field(INP , "@$(NAME)")
